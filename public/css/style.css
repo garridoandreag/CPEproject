@@ -1,0 +1,36 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 12/07/2020, 12:59:51 PM
+    Author     : Sammy Guergachi <sguergachi at gmail.com>
+*/
+@import url('https://fonts.googleapis.com/css2?family=Itim&family=Montserrat:wght@400;600;700&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+font-family: 'Itim', cursive;
+}
+
+form .picture_profile{
+
+    margin-bottom: 15px;
+    width: 150px;
+}
+
+.navbar .container-profile{
+    border-radius: 900px;
+    width: 37px;
+    height: 37px;
+    overflow: hidden;
+}
+
+.navbar .container-profile img{
+    height: 100%;
+}
