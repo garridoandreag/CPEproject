@@ -12,7 +12,21 @@
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
         <script src="https://kit.fontawesome.com/e4f410c930.js" crossorigin="anonymous"></script>
+<!--<script>
+/* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+//  document.getElementById("app").style.marginLeft = "250px";
 
+}
+
+/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+//  document.getElementById("app").style.marginLeft = "0";
+
+}
+</script>-->
         <!-- Fonts -->
 
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -24,27 +38,32 @@
     </head>
     <body>
         <div id="app">
-            <nav class="navbar navbar-expand-md navbar-dark shadow-sm" style="background: rgb(5,128,251);
-                 background: linear-gradient(0deg, rgba(5,128,251,1) 0%, rgba(6,82,158,1) 100%);">
+            <nav class="navbar navbar-expand-md navbar-dark shadow-sm" style="background-color: #3A4F87" >
 
                 <!-- background: rgb(253,29,45);
 background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%, rgba(252,176,69,1) 33%, rgba(95,167,52,1) 51%, rgba(9,231,240,1) 71%, rgba(131,58,180,1) 90%);-->
                 <div class="container">
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        COLEGIO PEQUEÑAS ESTRELLAS <!--{{ config('app.name', 'Laravel') }}-->
+                        COLEGIO PEQUEÑAS ESTRELLAS<!--{{ config('app.name', 'Laravel') }}-->
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                         <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class="fas fa-align-left"></i>
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <!-- Left Side Of Navbar -->
                         <ul class="navbar-nav mr-auto">
 
+
+
                         </ul>
 
                         <!-- Right Side Of Navbar -->
                         <ul class="navbar-nav ml-auto">
+
                             <!-- Authentication Links -->
                             @guest
                             <li class="nav-item">
@@ -67,7 +86,7 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
-    document.getElementById('logout-form').submit();">
+                                               document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -85,9 +104,6 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
                 </div>
             </nav>
 
-            <!--  SIDE BAR   -->
-
-        
 
 
             <!--  CORTE DEL EXPERIMENTO -->
@@ -97,7 +113,85 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
                 @yield('content')
             </main>
         </div>
+        <!--  SIDE BAR   -->
+        <div id="sidebar" class="sidenav">
+             <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-home"></i>
+                        Home
+                    </a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li>
+                            <a href="#">Home 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Home 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Home 3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-briefcase"></i>
+                        About
+                    </a>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-copy"></i>
+                        Pages
+                    </a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="#">Page 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-image"></i>
+                        Portfolio
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-question"></i>
+                        FAQ
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-paper-plane"></i>
+                        Contact
+                    </a>
+                </li>
+            </ul>
 
+<!--            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>-->
+<!--            <a href="#"><i class="fas fa-user-graduate"></i>Estudiantes</a>
+            <a href="#">Cursos</a>
+            <a href="#">Pago Colegiatura</a>
+            <a href="#">Actividades</a>-->
+        </div>
+
+        <!-- jQuery CDN - Slim version (=without AJAX) -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#sidebarCollapse').on('click', function () {
+                        $('#sidebar').toggleClass('active');
+                        $('#app').toggleClass('active');
+                    });
+                });
+        </script>
 
     </body>
 </html>

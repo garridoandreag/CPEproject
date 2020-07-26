@@ -16,9 +16,7 @@ class CreatePersonTable extends Migration
         DB::statement("
             CREATE TABLE PERSON(
             id int unsigned not null,
-            first_name varchar(100) not null,
-            second_name varchar(100) not null,
-            other_name varchar(100),
+            name varchar(100) not null,
             first_surname varchar(100) not null,
             second_surname varchar(100) not null,
             other_surname varchar(100),

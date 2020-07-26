@@ -18,7 +18,8 @@
                     <div class="card-header">NUEVO ESTUDIANTE</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('user.update') }}" enctype="multipart/form-data"  aria-label="Configuración de mi cuenta">
+                       
+                        <form method="POST" action="{{ route('student.save') }}" enctype="multipart/form-data"  aria-label="Configuración de mi cuenta">
                             @csrf
 
 
@@ -27,7 +28,7 @@
                                     <a class="nav-link active" id="form_personal" data-toggle="tab" href="#personal" role="tab"  aria-controls="personal" aria-selected="true" >PERSONAL</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">ACADEMICO</a>				   	
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#academico" role="tab" aria-controls="academico" aria-selected="false">ACADEMICO</a>				   	
                                 </li>
                             </ul>
 
@@ -37,12 +38,12 @@
 
 
                                     <div class="form-group row">
-                                        <label for="first_name" class="col-md-4 col-form-label text-md-right">NOMBRE</label>
+                                        <label for="name" class="col-md-4 col-form-label text-md-right">NOMBRE</label>
 
                                         <div class="col-md-6">
-                                            <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{$student->person->first_name ?? '' }}"required autocomplete="first_name" autofocus>
+                                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{$student->person->name ?? '' }}"required autocomplete="name" autofocus>
 
-                                            @error('first_name')
+                                            @error('name')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -79,16 +80,13 @@
                                         </div>
                                     </div>
 
-
                                     <div class="form-group row">
-                                        <label for="picture" class="col-md-4 col-form-label text-md-right">FOTO PERFIL</label>
+                                        <label for="phone_number" class="col-md-4 col-form-label text-md-right">TELEFONO 1</label>
 
                                         <div class="col-md-6">
+                                            <input id="phone_number" type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{$student->person->phone_number ?? '' }}"required autocomplete="phone_number" autofocus>
 
-                                            @include('includes.picture_profile')
-                                            <input id="picture" type="file" class="form-control @error('picture') is-invalid @enderror" name="picture" required>
-
-                                            @error('picture')
+                                            @error('phone_number')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -96,23 +94,82 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group row">
+                                        <label for="cellphone_number" class="col-md-4 col-form-label text-md-right">TELEFONO 2</label>
+
+                                        <div class="col-md-6">
+                                            <input id="cellphone_number" type="text" class="form-control @error('cellphone_number') is-invalid @enderror" name="cellphone_number" value="{{$student->person->cellphone_number ?? '' }}"required autocomplete="cellphone_number" autofocus>
+
+                                            @error('cellphone_number')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row">
+                                        <label for="birthday" class="col-md-4 col-form-label text-md-right">FECHA DE NACIMIENTO</label>
+
+                                        <div class="col-md-6">
+                                            <input id="birthday" type="date" class="form-control @error('birthday') is-invalid @enderror" name="birthday" value="{{$student->person->birthday ?? '' }}"required autocomplete="birthday" autofocus>
+
+                                            @error('birthday')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="gender_id" class="col-md-4 col-form-label text-md-right">GÉNERO</label>
+
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="gender_id" id="FEMENINO" value="F">
+                                                <label class="form-check-label" for="FEMENINO">
+                                                    FEMENINO
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="gender_id" id="MASCULINO" value="M">
+                                                <label class="form-check-label" for="MASCULINO">
+                                                    MASCULINO
+                                                </label>
+                                            </div>
+
+                                            @error('gender_id')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+
                                     <div class="form-group row mb-0">
                                         <div class="col-md-6 offset-md-4">
-                                            <button type="submit" class="btn btn-primary">
-                                                Actualizar
+                                            <button type="submit" class="btn btn-primary" >
+                                                Guardar
                                             </button>
                                         </div>
                                     </div>
                                     <br />
                                 </div>
+                                
+                                <div class="tab-pane fade show active" id="academico" role="tabpanel" aria-labelledby="form_personal">
+                                    
+                                </div>
                             </div>
-                            
-                            
+
+
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
-    @endsection
+</div>
+@endsection

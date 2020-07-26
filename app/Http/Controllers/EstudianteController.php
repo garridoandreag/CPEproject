@@ -51,6 +51,8 @@ class EstudianteController extends Controller {
         return redirect()->action('EstudianteController@index')->with('status', 'Estudiante creado correctamente');
     }
 
+    
+    
     public function delete($id) {
         $estudiante = DB::table('estudiante')->where('id_estudiante', $id)->delete();
 

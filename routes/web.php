@@ -96,5 +96,6 @@ Route::get('/user/picture/{filename}','UserController@getImage')->name('user.pic
 Route::group(['prefix' => 'estudiante'], function() {
     Route::get('crear', 'StudentController@create')->name('student.create');
     Route::get('index', 'StudentController@index')->name('student.index');
+    Route::post('save', 'StudentController@save')->name('student.save');
     
 });
