@@ -4,15 +4,14 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRoleTable extends Migration
-{
+class CreateRoleTable extends Migration {
+
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
+    public function up() {
         DB::statement("
             CREATE TABLE ROLE(
             id INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -30,8 +29,11 @@ class CreateRoleTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
-        Schema::dropIfExists('role');
+    public function down() {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        Schema::drop('role');
+//        Schema::drop('estudiante_encargado');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
+
 }

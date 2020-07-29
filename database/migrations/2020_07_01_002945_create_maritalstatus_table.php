@@ -13,17 +13,7 @@ class CreateMaritalstatusTable extends Migration
      */
     public function up()
     {
-        DB::statement("
-            CREATE TABLE MARITALSTATUS(
-            id int UNSIGNED NOT NULL AUTO_INCREMENT,
-            name varchar(100),
-            description varchar(300),
-            created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
-            status enum('ACTIVO','INACTIVO') not null default 'ACTIVO',
-            CONSTRAINT pk_maritalstatus PRIMARY KEY (id)
-            )ENGINE=InnoDb;
-            ");
+
     }
 
     /**
