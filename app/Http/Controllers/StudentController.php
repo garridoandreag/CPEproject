@@ -31,23 +31,38 @@ class StudentController extends Controller {
 //    var_dump($student);
 ////    die();
 //        $num = DB::select('SELECT max(id) FROM person') ;
+//
+//          $num=\DB::table('person')->max('id');
+//
+//        $numero = $num + 1;
 
-          $num=\DB::table('person')->max('id');
+//        $person = DB::table('person')->insert(array(
+////            'id' => $numero,
+//            'favorite_name' => $request->input('favorite_name'),
+//            'names' => $request->input('names'),
+//            'first_surname' => $request->input('first_surname'),
+//            'second_surname' => $request->input('second_surname'),
+//            'phone_number' => $request->input('phone_number'),
+//            'gender_id' => $request->input('gender_id'),
+//            'student' => '1'
+//        ));
 
-        $numero = $num + 1;
+        $id = DB::table('person')->insertGetId(
+                ['favorite_name' => $request->input('favorite_name'),
+                    'names' => $request->input('names'),
+                    'first_surname' => $request->input('first_surname'),
+                    'second_surname' => $request->input('second_surname'),
+                    'phone_number' => $request->input('phone_number'),
+                    'gender_id' => $request->input('gender_id'),
+                    'student' => '1'
+                ]
+        );
 
-        $student = DB::table('person')->insert(array(
-            'id' => $numero,
-            'name' => $request->input('name'),
-            'first_surname' => $request->input('first_surname'),
-            'second_surname' => $request->input('second_surname'),
-            'phone_number' => $request->input('phone_number'),
-            'cellphone_number' => $request->input('cellphone_number'),
-            'birthday' => $request->input('birthday'),
-            'gender_id' => $request->input('gender_id'),
-            'student' => '1'
+
+        $student = DB::table('student')->insert(array(
+        'id' => $id,
+        'birthday' => $request->input('birthday'),
         ));
-
 
 //        $picture = $request->file('picture');
 //        if ($picture) {

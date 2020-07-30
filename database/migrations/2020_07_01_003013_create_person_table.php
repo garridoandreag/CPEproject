@@ -25,7 +25,6 @@ class CreatePersonTable extends Migration {
               `zone_id` int(10) UNSIGNED DEFAULT NULL,
               `home_address` varchar(300) DEFAULT NULL,
               `occupation` varchar(100) DEFAULT NULL,
-              `birthday` date DEFAULT NULL,
               `picture` varchar(300) DEFAULT NULL,
               `gender_id` char(20) NOT NULL,
               `employee` tinyint(1) DEFAULT '0',

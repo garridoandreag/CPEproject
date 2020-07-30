@@ -21,10 +21,10 @@ class Person extends Model {
         return $this->hasOne('App\Employee', 'id', 'id');
     }
 
-    public function person_employee() {
-
-        return $this->belongsTo('App\Employee', 'id');
-    }
+//    public function person_employee() {
+//
+//        return $this->belongsTo('App\Employee', 'id');
+//    }
 
     // uno a uno
     public function student() {
@@ -38,11 +38,6 @@ class Person extends Model {
         return $this->hasOne('App\Tutor', 'id', 'id');
     }
 
-    // muchos a uno
-    public function maritalstatus() {
-
-        return $this->belongsTo('App\MaritalStatus', 'maritalstatus_id');
-    }
 
     // muchos a uno
     public function gender() {

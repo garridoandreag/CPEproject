@@ -17,7 +17,7 @@ class CreateStudentTable extends Migration
             CREATE TABLE STUDENT(
             id int(255) unsigned not null,
             student_code varchar(100),
-            age int,
+          `birthday` date DEFAULT NULL,
             grade_id int(255) unsigned,
             created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,

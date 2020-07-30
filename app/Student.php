@@ -11,7 +11,7 @@ class Student extends Model {
 
     public function person() {
 
-        return $this->hasOne('App\Person', 'id', 'id');
+        return $this->belongsTo('App\Person', 'id', 'id');
     }
 
     public function tutor() {
