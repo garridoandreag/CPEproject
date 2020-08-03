@@ -11,8 +11,13 @@ class Student extends Model {
 
     public function person() {
 
-        return $this->belongsTo('App\Person', 'id', 'id');
+        return $this->belongsTo('App\Person', 'id','id');
     }
+
+//    public function person() {
+//
+//        return $this->hasOne('App\Person', 'id', 'id');
+//    }
 
     public function tutor() {
         return $this->belongsToMany('App\Tutor', 'StudentTutor', 'student_id', 'tutor_id');

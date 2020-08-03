@@ -19,7 +19,7 @@
 
                     <div class="card-body">
 
-                        <form method="POST" action="{{ route('student.save') }}" enctype="multipart/form-data"  aria-label="Configuración de mi cuenta">
+                        <form method="POST" action="{{ route('student.store') }}" enctype="multipart/form-data"  aria-label="Configuración de mi cuenta">
                             @csrf
 
 
@@ -37,7 +37,7 @@
                                 <div class="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="form_personal">
 
                                     <div class="form-group row">
-                                        <label for="favorite_name" class="col-md-4 col-form-label text-md-right">NOMBRE</label>
+                                        <label for="favorite_name" class="col-md-4 col-form-label text-md-right">COMO DESEA SER LLAMADO</label>
 
                                         <div class="col-md-6">
                                             <input id="favorite_name" type="text" class="form-control @error('favorite_name') is-invalid @enderror" name="favorite_name" value="{{$student->person->favorite_name ?? '' }}"required autocomplete="favorite_name" autofocus>
@@ -51,7 +51,7 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="names" class="col-md-4 col-form-label text-md-right">NOMBRE</label>
+                                        <label for="names" class="col-md-4 col-form-label text-md-right">NOMBRES</label>
 
                                         <div class="col-md-6">
                                             <input id="names" type="text" class="form-control @error('names') is-invalid @enderror" name="names" value="{{$student->person->names ?? '' }}"required autocomplete="names" autofocus>
@@ -94,7 +94,7 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="phone_number" class="col-md-4 col-form-label text-md-right">TELEFONO DE CASA:</label>
+                                        <label for="phone_number" class="col-md-4 col-form-label text-md-right">TELEFONO DE CASA</label>
 
                                         <div class="col-md-6">
                                             <input id="phone_number" type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{$student->person->phone_number ?? '' }}"required autocomplete="phone_number" autofocus>
@@ -139,6 +139,22 @@
                                             </div>
 
                                             @error('gender_id')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row">
+                                        <label for="picture" class="col-md-4 col-form-label text-md-right">{{ __('Foto Perfil') }}</label>
+
+                                        <div class="col-md-6">
+
+                                            <input id="picture" type="file" class="form-control @error('picture') is-invalid @enderror" name="picture" required>
+
+                                            @error('picture')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>

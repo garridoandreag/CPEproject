@@ -7,12 +7,12 @@ and open the template in the editor.
 @import url('https://fonts.googleapis.com/css2?family=Itim&family=Montserrat:wght@400;600;700&display=swap');
 
 *{
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  text-decoration: none;
-  box-sizing: border-box;
-font-family: 'Itim', cursive;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    box-sizing: border-box;
+    font-family: 'Itim', cursive;
 }
 
 form .picture_profile{
@@ -32,79 +32,92 @@ form .picture_profile{
     height: 100%;
 }
 
+/*td .picture_profile{
+
+    margin-bottom: 15px;
+    width: 100%;
+}*/
+
+.container-person_profile{
+    border-radius: 900px;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+}
+
+.container-person_profile img{
+    height: 100%;
+}
+
+/* ---------------------------------------------------
+    SIDENAV STYLE
+----------------------------------------------------- */
+
 
 /* The side navigation menu */
 .sidenav {
-  height: 100%; /* 100% Full-height */
-/*  width: 0;  0 width - change this with JavaScript */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
-  left: 0;
-  background-color: #A62422; /* Black*/
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 60px; /* Place content 60px from the top */
-  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
-  
-  
-      min-width: 250px;
+    height: 100%; /* 100% Full-height */
+    /*  width: 0;  0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #A62422; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+
+
+    min-width: 250px;
     max-width: 250px;
 
 }
 
 /* The navigation menu links */
 .sidenav a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
 }
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
-  color: #f1f1f1;
+    color: #f1f1f1;
 }
 
 /* Position and style the close button (top right corner) */
 .sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
 }
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #app {
-  transition: margin-left .3s;
-/*  padding: 20px;*/
+    transition: margin-left .3s;
+    /*  padding: 20px;*/
 }
+
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
-
-
-.checked {
-  color: #F5E11B ;
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
 }
 
 .card-header{
     background-color: #A62422;
-   color: white;
+    color: white;
 }
 
 .card-body{
     background-color: #f8fafc;
 }
-
-
-
-
 
 /* ---------------------------------------------------
     SIDEBAR STYLE
@@ -129,11 +142,6 @@ form .picture_profile{
 
 #app.active{
     margin-left: 80px;
-}
-
-#sidebar.active .sidebar-header h3,
-#sidebar.active .CTAs {
-    display: none;
 }
 
 #sidebar.active .sidebar-header strong {
@@ -223,18 +231,6 @@ ul ul a {
     padding-left: 30px !important;
     background: #BF8F21;
 }
-/*
-ul.CTAs {
-    padding: 20px;
-}
-
-ul.CTAs a {
-    text-align: center;
-    font-size: 0.9em !important;
-    display: block;
-    border-radius: 5px;
-    margin-bottom: 5px;
-}*/
 
 a.article,
 a.article:hover {
@@ -253,13 +249,13 @@ a.article:hover {
         text-align: center;
         margin-left: -80px !important;
     }
-    
- #app{
-    margin-left: 0px;
-}
+
+    #app{
+        margin-left: 0px;
+    }
     #app.active{
-    margin-left: 80px;
-}
+        margin-left: 80px;
+    }
     .dropdown-toggle::after {
         top: auto;
         bottom: 10px;

@@ -119,6 +119,7 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
                 <li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-home"></i>
+                        
                         Home
                     </a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
@@ -134,9 +135,9 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
                     </ul>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{route('student.index')}}">
                         <i class="fas fa-briefcase"></i>
-                        About
+                       Estudiantes
                     </a>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-copy"></i>

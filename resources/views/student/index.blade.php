@@ -13,32 +13,39 @@
 
                 <div class="card-body">
 
-                    <table class="table table-hover" class="table-responsive">
+                    <table class="table table-hover" class="table table-responsive">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Handle</th>
+                                <th scope="col">Nombres</th>
+                                <th scope="col">Apellidos</th>
+                                <th scope="col">Fecha Nacimiento</th>
+                                <th scope="col">Foto</th>
                             </tr>
                         </thead>
                         <tbody>
-                                @foreach($student as $student)
+                            @foreach($student as $student)
                             <tr>
-                                <th scope="row">1</th>
+                                <td scope="row">1</td>
                                 <td>
-                                    {{$student->person->first_name}}
+                                    {{$student->person->names}}
                                 </td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
+                                <td>
+                                    {{$student->person->first_surname}}
+                                    {{$student->person->second_surname}}
+                                </td>
+                                <td>
+                                    {{$student->birthday}}
+                                </td>
+                                <td>
+                                    @if($student->person->picture)
+                                    <div class="container-person_profile">
+                                        <img src="{{ route('student.picture', ['filename'=>$student->person->picture])}}"class="picture_profile"  />
+                                    </div>
+                                    @endif
+                                </td>
                             </tr>
-
-                            <tr>
-                                <th scope="row">3</th>
-                                <td colspan="2">Larry the Bird</td>
-                                <td>@twitter</td>
-                            </tr>
-                                @endforeach
+                            @endforeach
                         </tbody>
                     </table>
 
