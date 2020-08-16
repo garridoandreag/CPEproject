@@ -43,11 +43,24 @@ form .picture_profile{
     width: 50px;
     height: 50px;
     overflow: hidden;
+                margin-left: auto;
+    margin-right: auto;
+    display: block;
+
 }
 
 .container-person_profile img{
     height: 100%;
+
 }
+
+.icono-menu{
+    width: 35px; height: 35px;
+}
+
+
+
+
 
 /* ---------------------------------------------------
     SIDENAV STYLE
@@ -63,7 +76,7 @@ form .picture_profile{
     top: 0; /* Stay at the top */
     left: 0;
     background-color: #A62422; /* Black*/
-    overflow-x: hidden; /* Disable horizontal scroll */
+/*    overflow-x: hidden;  Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 
@@ -78,7 +91,7 @@ form .picture_profile{
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: #818181;
+    color: #fff;
     display: block;
     transition: 0.3s;
 }
@@ -115,9 +128,6 @@ form .picture_profile{
     color: white;
 }
 
-.card-body{
-    background-color: #f8fafc;
-}
 
 /* ---------------------------------------------------
     SIDEBAR STYLE
@@ -294,5 +304,89 @@ a.article:hover {
     }
     #sidebarCollapse span {
         display: none;
+    }
+}
+
+
+
+table {
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    table-layout: fixed;
+}
+
+table caption {
+    font-size: 1.5em;
+    margin: .5em 0 .75em;
+}
+
+table tr {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: .35em;
+}
+
+table th,
+table td {
+    padding: .625em;
+    text-align: center;
+}
+
+table th {
+    font-size: .85em;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+@media screen and (max-width: 600px) {
+    table {
+        border: 0;
+    }
+
+    table caption {
+        font-size: 1.3em;
+    }
+
+    table thead {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+
+    table tr {
+        border-bottom: 3px solid #ddd;
+        display: block;
+        margin-bottom: .625em;
+    }
+
+    table td {
+        border-bottom: 1px solid #ddd;
+        display: block;
+        font-size: .8em;
+        text-align: right;
+    }
+    
+
+    table td::before {
+        /*
+        * aria-label has no advantage, it won't be read inside a table
+        content: attr(aria-label);
+        */
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    table td:last-child {
+        border-bottom: 0;
     }
 }

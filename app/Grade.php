@@ -13,5 +13,10 @@ class Grade extends Model
     public function subject(){
 
         return $this->hasMany('App\Subject','grade_id','id');
-    }      
+    }  
+
+    public function student() {
+
+        return $this->hasMany('App\Student', 'grade_id', 'id');
+    }    
 }

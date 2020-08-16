@@ -12,6 +12,9 @@
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
         <script src="https://kit.fontawesome.com/e4f410c930.js" crossorigin="anonymous"></script>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!--<script>
 /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
 function openNav() {
@@ -112,13 +115,15 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
             <main class="py-4">
                 @yield('content')
             </main>
+
         </div>
+        @yield('script')
         <!--  SIDE BAR   -->
         <div id="sidebar" class="sidenav">
              <ul class="list-unstyled components">
                 <li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-home"></i>
+                        <i class="fas fa-school"></i>
                         
                         Home
                     </a>
@@ -136,12 +141,14 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
                 </li>
                 <li>
                     <a href="{{route('student.index')}}">
-                        <i class="fas fa-briefcase"></i>
+<!--                        <img class="icono-menu" src="{{ asset('images/curso.png') }}"  >-->
+                        <i class="fas fa-user-graduate"></i>
+                        
                        Estudiantes
                     </a>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-copy"></i>
-                        Pages
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        Maestros
                     </a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
@@ -157,20 +164,20 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
                 </li>
                 <li>
                     <a href="#">
-                        <i class="fas fa-image"></i>
-                        Portfolio
+                        <i class="fas fa-book"></i>
+                        Cursos
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <i class="fas fa-question"></i>
-                        FAQ
+                       <i class="fas fa-wallet"></i>
+                        Colegiatura
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <i class="fas fa-paper-plane"></i>
-                        Contact
+                        <i class="fas fa-calendar-alt"></i>
+                        Actividades
                     </a>
                 </li>
             </ul>
@@ -193,6 +200,8 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
                     });
                 });
         </script>
+        
+
 
     </body>
 </html>
