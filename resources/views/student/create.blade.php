@@ -177,12 +177,12 @@
                                 <div class="tab-pane fade" id="academico" role="tabpanel" aria-labelledby="form_personal">
 
                                     <div class="form-group row">
-                                        <label for="grade_id" class="col-md-4 col-form-label text-md-right">GRADO</label>
+                                        <label for="grade" class="col-md-4 col-form-label text-md-right">GRADO</label>
                                         <div class="col-md-6">
                                             <select id="grade" name="grade_id" class="form-control  @error('grade_id') is-invalid @enderror" >
                                                 @foreach($grades->get() as $index => $grade)
 
-                                                <option value="{{$index}}" >
+                                                <option value="{{$index}}" {{ old('grade_id') == $index ? 'selected' : '' }} >
                                                     {{ $grade }}
                                                 </option>
 
@@ -197,7 +197,7 @@
 
                                         <div class="col-md-6">
 
-                                            <select multiple class="form-control @error('grade_id') is-invalid @enderror"" id="subject" data-old="{{old('subject_id')}}" > </select>
+                                            <select multiple class="form-control @error('subject_id') is-invalid @enderror" id="subject" name="course_id" data-old="{{old('subject_id')}}" > </select>
                                             @if ($errors->has('subject_id'))
                                             <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('subject_id') }}</strong>

@@ -81,12 +81,16 @@ class StudentController extends Controller {
 
     public function getSubjects(Request $request){
         if($request->ajax()){
-            $subject = Subject::where('grade_id',$request->grade_id)->get();
+
+            $subjects = Subject::where('grade_id',$request->grade_id)->get();
+
             foreach($subjects as $subject){
-                $subjectsArray[$subject->id] = $subject->course->name;
+                die();
+
             }
             return response()->json($subjectsArray);
         }
+
     }
 
     
