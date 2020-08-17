@@ -37,9 +37,9 @@
                     </div>
                     <br>
 
-                    @if(session('message'))
+                    @if(session('status'))
                     <div class="alert alert-success">
-                        {{session('message')}}
+                        {{session('status')}}
                     </div>
                     @endif
                     <table class="table table-hover">

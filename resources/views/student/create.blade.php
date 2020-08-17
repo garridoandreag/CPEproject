@@ -16,12 +16,21 @@
             @endif
             <div class="card-group">
                 <div class="card">
+                    @if(isset($student) && is_object($student))
+                    <div class="card-header">MODIFICAR ESTUDIANTE</div>
+                    @else
                     <div class="card-header">NUEVO ESTUDIANTE</div>
+                    @endif
 
                     <div class="card-body">
 
-                        <form method="POST" action="{{ route('student.store') }}" enctype="multipart/form-data"  aria-label="Configuración de mi cuenta">
-                            @csrf
+                        <form method="POST" action="{{ isset($student) ? route('student.update') : route('student.store') }}" enctype="multipart/form-data"  aria-label="Configuración de mi cuenta">
+                        {{csrf_field()}}
+
+                            
+                            @if(isset($student) && is_object($student))
+                            <input type="hidden" name="id" value="{{$student->id}}"/><br>
+                            @endif
 
 
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -42,6 +51,7 @@
 
                                         <div class="col-md-6">
                                             <input id="favorite_name" type="text" class="form-control @error('favorite_name') is-invalid @enderror" name="favorite_name" value="{{$student->person->favorite_name ?? '' }}"required autocomplete="favorite_name" autofocus>
+                                            
 
                                             @error('favorite_name')
                                             <span class="invalid-feedback" role="alert">
@@ -126,6 +136,35 @@
                                         <label for="gender_id" class="col-md-4 col-form-label text-md-right">GÉNERO</label>
 
                                         <div class="col-md-6">
+                                        @switch($student->person->gender_id  ?? ''  ) 
+                                            @case('F')
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="gender_id" id="FEMENINO" value="F" checked>
+                                                <label class="form-check-label" for="FEMENINO">
+                                                    FEMENINO
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="gender_id" id="MASCULINO" value="M" >
+                                                <label class="form-check-label" for="MASCULINO">
+                                                    MASCULINO
+                                                </label>
+                                            </div>
+                                            @break
+                                            @case('M')
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="gender_id" id="FEMENINO" value="F">
+                                                <label class="form-check-label" for="FEMENINO">
+                                                    FEMENINO
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="gender_id" id="MASCULINO" value="M" checked>
+                                                <label class="form-check-label" for="MASCULINO">
+                                                    MASCULINO
+                                                </label>
+                                            </div>
+                                            @default
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="gender_id" id="FEMENINO" value="F">
                                                 <label class="form-check-label" for="FEMENINO">
@@ -139,6 +178,9 @@
                                                 </label>
                                             </div>
 
+                                            @break
+                                            @endswitch
+
                                             @error('gender_id')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -147,11 +189,16 @@
                                         </div>
                                     </div>
 
-
                                     <div class="form-group row">
-                                        <label for="picture" class="col-md-4 col-form-label text-md-right">{{ __('Foto Perfil') }}</label>
+                                        <label for="picture" class="col-md-4 col-form-label text-md-right">{{ __('FOTO') }}</label>
 
                                         <div class="col-md-6">
+
+                                            @if($student->person->picture ?? '' )
+                                            <div class="container-profile">
+                                                <img  src="{{ route('student.picture', ['filename'=>$student->person->picture ])}}"class="picture_profile"  />
+                                            </div>
+                                            @endif
 
                                             <input id="picture" type="file" class="form-control @error('picture') is-invalid @enderror" name="picture" required>
 
@@ -193,25 +240,19 @@
 
 
                                     <div class="form-group row">
-                                        <label for="subject" class="col-md-4 col-form-label text-md-right">CURSOS</label>
+                                        <label for="second_surname" class="col-md-4 col-form-label text-md-right">CÓDIGO ESTADÍSTICO</label>
 
                                         <div class="col-md-6">
+                                            <input id="student_code" type="text" class="form-control @error('student_code') is-invalid @enderror" name="student_code" value="{{$student->student_code ?? '' }}"required autocomplete="student_code" autofocus>
 
-                                            <select multiple class="form-control @error('subject_id') is-invalid @enderror" id="subject" name="course_id" data-old="{{old('subject_id')}}" > </select>
-                                            @if ($errors->has('subject_id'))
-                                            <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('subject_id') }}</strong>
-                                            </span>
-                                           
-                                            @endif
-
-                                            @error('subject_id')
+                                            @error('student_code')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                             @enderror
                                         </div>
                                     </div>
+
 
 
 

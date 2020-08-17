@@ -181,10 +181,8 @@
 
                                             <a href="{{action('StudentController@index')}}" class="btn btn-outline-primary">Regresar </a>
                                             <a class="btn btn-outline-primary" id="profile-tab" data-toggle="tab" href="#academico" role="tab" aria-controls="academico" aria-selected="false">Siguiente </a>
+                                            <a href="{{action('StudentController@edit',['id' => $student->id])}}" class="btn btn-primary">Editar</a>
 
-                                            <button type="submit" class="btn btn-primary">
-                                                Editar
-                                            </button>
                                         </div>
                                     </div>
 

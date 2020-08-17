@@ -58,9 +58,11 @@ class StudentController extends Controller {
         $student = DB::table('student')->insert(array(
             'id' => $id,
             'birthday' => $request->input('birthday'),
+            'student_code' => $request->input('student_code'),
+            'grade_id' => $request->input('grade_id')
         ));
         return redirect()->route('student.index')
-                        ->with(['message' => 'Estudiante creado correctamente']);
+                        ->with(['status' => 'Estudiante creado correctamente']);
     }
 
     public function getImage($filename) {
@@ -91,6 +93,72 @@ class StudentController extends Controller {
             return response()->json($subjectsArray);
         }
 
+    }
+
+    public function edit($id) {
+
+
+        $student = \App\Student::where('id', $id)->first();
+        //        var_dump($estudiante);
+        //        die();
+        
+                return view('student.create', [
+                    'student' => $student
+                ]);
+    }
+
+    public function update(Request $request) {
+    
+        //guardar el registro
+        $id = $request->input('id');
+
+                
+        $picture = $request->file('picture');
+
+        if ($picture) {
+
+            //colocarle un nombre unico
+            $picture_name = time() . $picture->getClientOriginalName();
+
+            //guardar en la carpeta storage (storage/app/users)
+            Storage::disk('users')->put($picture_name, File::get($picture));
+            $person = DB::table('person')->where('id', $id)
+                ->update(array(
+            'favorite_name' => $request->input('favorite_name'),
+            'names' => $request->input('names'),
+            'first_surname' => $request->input('first_surname'),
+            'second_surname' => $request->input('second_surname'),
+            'phone_number' => $request->input('phone_number'),
+            'picture' => $picture_name,
+            'gender_id' => $request->input('gender_id'),
+        ));
+        }else{
+            $person = DB::table('person')->where('id', $id)
+            ->update(array(
+        'favorite_name' => $request->input('favorite_name'),
+        'names' => $request->input('names'),
+        'first_surname' => $request->input('first_surname'),
+        'second_surname' => $request->input('second_surname'),
+        'phone_number' => $request->input('phone_number'),
+        'gender_id' => $request->input('gender_id'),
+    ));
+
+        }
+
+
+        $student = DB::table('student')->where('id', $id)
+        ->update(array(
+            'birthday' => $request->input('birthday'),
+            'student_code' => $request->input('student_code'),
+            'grade_id' => $request->input('grade_id')
+        ));
+
+
+
+
+
+
+        return redirect()->action('StudentController@index')->with('status', 'Estudiante actualizado correctamente');
     }
 
     
