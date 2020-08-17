@@ -58,7 +58,7 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => ['auth', '1']], function() {
-    Route::get('/dashboard', function () {
+    Route::get('/', function () {
         return view('admin.dashboard');
     });
 });
@@ -98,4 +98,6 @@ Route::group(['prefix' => 'estudiante'], function() {
     Route::get('/', 'StudentController@index')->name('student.index');
     Route::post('store', 'StudentController@store')->name('student.store');
     Route::get('picture/{filename}','StudentController@getImage')->name('student.picture');
+    Route::get('detalle/{id}', 'StudentController@detail')->name('student.detail');
+    Route::get('/subjects', 'StudentController@getSubjects');
 });

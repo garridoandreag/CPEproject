@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use App\Grade;
 
 class StudentController extends Controller {
 
@@ -66,5 +67,32 @@ class StudentController extends Controller {
         $file = Storage::disk('users')->get($filename);
         return new Response($file, 200);
     }
+
+    public function detail($id) {
+//        $student = DB::table('student')->where('id', '=', $id)->first();
+        $student = \App\Student::where('id', $id)->first();
+//        var_dump($estudiante);
+//        die();
+
+        return view('student.detail', [
+            'student' => $student
+        ]);
+    }
+
+    public function getSubjects(Request $request){
+        if($request->ajax()){
+
+            $subjects = Subject::where('grade_id',$request->grade_id)->get();
+
+            foreach($subjects as $subject){
+                die();
+
+            }
+            return response()->json($subjectsArray);
+        }
+
+    }
+
+    
 
 }
