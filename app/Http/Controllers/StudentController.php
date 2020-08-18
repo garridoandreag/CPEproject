@@ -32,6 +32,16 @@ class StudentController extends Controller {
 
     public function store(Request $request) {
 
+        $validate = $this->validate($request,[
+            'person_id' => ['required', 'string', 'max:255'],
+            'names' => ['required', 'string', 'max:255'],
+            'first_surname' => ['required', 'string', 'max:255'],
+            'second_surname' => ['required', 'string', 'max:255'],
+            'phone_number' => ['required', 'string', 'max:8'],
+            'gender_id' => ['required', 'string', 'max:1'],
+
+]);
+
         $picture = $request->file('picture');
 
         if ($picture) {
@@ -149,8 +159,8 @@ class StudentController extends Controller {
         $student = DB::table('student')->where('id', $id)
         ->update(array(
             'birthday' => $request->input('birthday'),
-            'student_code' => $request->input('student_code'),
-            'grade_id' => $request->input('grade_id')
+            'grade_id' => $request->input('grade_id'),
+            'student_code' => $request->input('student_code')
         ));
 
 

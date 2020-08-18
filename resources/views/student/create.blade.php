@@ -40,6 +40,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link" id="form_personal" data-toggle="tab" href="#academico" role="tab" aria-controls="academico" aria-selected="false">ACADEMICO</a>				   	
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="form_personal" data-toggle="tab" href="#academico" role="tab" aria-controls="academico" aria-selected="false">PADRES</a>				   	
+                                </li>
                             </ul>
 
 
@@ -164,6 +167,7 @@
                                                     MASCULINO
                                                 </label>
                                             </div>
+                                            @break
                                             @default
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="gender_id" id="FEMENINO" value="F">
@@ -213,6 +217,7 @@
 
                                     <div class="form-group row mb-0">
                                         <div class="col-md-6 offset-md-4">
+                                        <a class="btn btn-outline-primary" id="profile-tab" data-toggle="tab" href="#academico" role="tab" aria-controls="academico" aria-selected="false">Siguiente </a>
                                             <button type="submit" class="btn btn-primary" >
                                                 Guardar
                                             </button>
@@ -229,9 +234,9 @@
                                             <select id="grade" name="grade_id" class="form-control  @error('grade_id') is-invalid @enderror" >
                                                 @foreach($grades->get() as $index => $grade)
 
-                                                <option value="{{$index}}" {{ old('grade_id') == $index ? 'selected' : '' }} >
+                                                <option value="{{$index}}" {{ old('grade_id',$student->grade_id ?? '' ) == $index ? 'selected' : '' }} >
                                                     {{ $grade }}
-                                                </option>
+                                                </option> 
 
                                                 @endforeach
                                             </select>
@@ -252,6 +257,16 @@
                                             @enderror
                                         </div>
                                     </div>
+
+                                    <div class="form-group row mb-0">
+                                        <div class="col-md-6 offset-md-4">
+                                        
+                                            <button type="submit" class="btn btn-primary" >
+                                                Guardar
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <br />
 
 
 

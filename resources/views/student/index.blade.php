@@ -55,7 +55,9 @@
                         <tbody  id="myTable">
                             @foreach($student as $student)
                             <tr>
-                                <td data-label="Código" scope="row">1</td>
+                                <td data-label="Código" scope="row"><a href="{{action('StudentController@detail',['id' => $student->id])}}" />
+                                {{$student->student_code}}
+                                </td>
                                 <td data-label="Nombres"><a href="{{action('StudentController@detail',['id' => $student->id])}}" />
                                     {{$student->person->names}}
                                     </a>

@@ -7,12 +7,13 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'Colegio Pequeñas Estrellas') }}</title>
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
+        <script src="{{ asset('js/jquery-3.5.1.js') }}" defer></script>
         <script src="https://kit.fontawesome.com/e4f410c930.js" crossorigin="anonymous"></script>
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!--   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   
 <!--<script>
@@ -32,11 +33,12 @@ function closeNav() {
 </script>-->
         <!-- Fonts -->
 
-        <link rel="dns-prefetch" href="//fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
+        <!-- <link rel="dns-prefetch" href="//fonts.gstatic.com">  -->
+        <!--  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> -->
+        <link href="{{ asset('css/font-nunito.css') }}" rel="stylesheet">
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        
         <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     </head>
     <body>
