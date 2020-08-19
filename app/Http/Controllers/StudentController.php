@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use App\Grade;
-
+use App\Student;
 class StudentController extends Controller {
 
     //
@@ -18,12 +18,12 @@ class StudentController extends Controller {
     }
 
     public function index() {
-        $student = \App\Student::all();
+        $students = \App\Student::paginate(2);
+
 //         $person = DB::table('person')->orderBy('id', 'desc')->get();
 
-        return view('student.index', [
-            'student' => $student
-        ]);
+//        return view('student.index', [ 'student' => $student ]);
+          return view('student.index', compact('students'));
     }
 
     public function create() {
@@ -33,7 +33,6 @@ class StudentController extends Controller {
     public function store(Request $request) {
 
         $validate = $this->validate($request,[
-            'person_id' => ['required', 'string', 'max:255'],
             'names' => ['required', 'string', 'max:255'],
             'first_surname' => ['required', 'string', 'max:255'],
             'second_surname' => ['required', 'string', 'max:255'],
@@ -71,6 +70,8 @@ class StudentController extends Controller {
             'student_code' => $request->input('student_code'),
             'grade_id' => $request->input('grade_id')
         ));
+        
+        
         return redirect()->route('student.index')
                         ->with(['status' => 'Estudiante creado correctamente']);
     }

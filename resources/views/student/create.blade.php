@@ -25,9 +25,9 @@
                     <div class="card-body">
 
                         <form method="POST" action="{{ isset($student) ? route('student.update') : route('student.store') }}" enctype="multipart/form-data"  aria-label="Configuración de mi cuenta">
-                        {{csrf_field()}}
+                            {{csrf_field()}}
 
-                            
+
                             @if(isset($student) && is_object($student))
                             <input type="hidden" name="id" value="{{$student->id}}"/><br>
                             @endif
@@ -40,9 +40,6 @@
                                 <li class="nav-item">
                                     <a class="nav-link" id="form_personal" data-toggle="tab" href="#academico" role="tab" aria-controls="academico" aria-selected="false">ACADEMICO</a>				   	
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="form_personal" data-toggle="tab" href="#academico" role="tab" aria-controls="academico" aria-selected="false">PADRES</a>				   	
-                                </li>
                             </ul>
 
 
@@ -54,7 +51,7 @@
 
                                         <div class="col-md-6">
                                             <input id="favorite_name" type="text" class="form-control @error('favorite_name') is-invalid @enderror" name="favorite_name" value="{{$student->person->favorite_name ?? '' }}"required autocomplete="favorite_name" autofocus>
-                                            
+
 
                                             @error('favorite_name')
                                             <span class="invalid-feedback" role="alert">
@@ -139,7 +136,7 @@
                                         <label for="gender_id" class="col-md-4 col-form-label text-md-right">GÉNERO</label>
 
                                         <div class="col-md-6">
-                                        @switch($student->person->gender_id  ?? ''  ) 
+                                            @switch($student->person->gender_id  ?? ''  ) 
                                             @case('F')
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="gender_id" id="FEMENINO" value="F" checked>
@@ -217,7 +214,8 @@
 
                                     <div class="form-group row mb-0">
                                         <div class="col-md-6 offset-md-4">
-                                        <a class="btn btn-outline-primary" id="profile-tab" data-toggle="tab" href="#academico" role="tab" aria-controls="academico" aria-selected="false">Siguiente </a>
+                                            <a class="btn btn-outline-primary" id="profile-tab" data-toggle="tab" href="#academico" role="tab" aria-controls="academico" aria-selected="false">Siguiente </a>
+
                                             <button type="submit" class="btn btn-primary" >
                                                 Guardar
                                             </button>
@@ -235,66 +233,73 @@
                                                 @foreach($grades->get() as $index => $grade)
 
                                                 <option value="{{$index}}" {{ old('grade_id',$student->grade_id ?? '' ) == $index ? 'selected' : '' }} >
-                                                    {{ $grade }}
-                                                </option> 
+                                                        {{ $grade }}
+                                            </option> 
 
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                            @endforeach
+                                        </select>
                                     </div>
-
-
-                                    <div class="form-group row">
-                                        <label for="second_surname" class="col-md-4 col-form-label text-md-right">CÓDIGO ESTADÍSTICO</label>
-
-                                        <div class="col-md-6">
-                                            <input id="student_code" type="text" class="form-control @error('student_code') is-invalid @enderror" name="student_code" value="{{$student->student_code ?? '' }}"required autocomplete="student_code" autofocus>
-
-                                            @error('student_code')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row mb-0">
-                                        <div class="col-md-6 offset-md-4">
-                                        
-                                            <button type="submit" class="btn btn-primary" >
-                                                Guardar
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <br />
-
-
-
-
                                 </div>
+
+
+                                <div class="form-group row">
+                                    <label for="second_surname" class="col-md-4 col-form-label text-md-right">CÓDIGO ESTADÍSTICO</label>
+
+                                    <div class="col-md-6">
+                                        <input id="student_code" type="text" class="form-control @error('student_code') is-invalid @enderror" name="student_code" value="{{$student->student_code ?? '' }}"required autocomplete="student_code" autofocus>
+
+                                        @error('student_code')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row">
+                                    <label for="name" class="col-md-4 col-form-label text-md-right">NOMBRE</label>
+
+                                    <div class="col-md-6">
+                                        <input id="name_caregiver" type="text" class="form-control @error('name_caregiver') is-invalid @enderror" name="name_caregiver" value="{{$student->caregiver->name ?? '' }}"required autocomplete="student_code" autofocus>
+
+                                        @error('student_code')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <br />
+
+
+
+
                             </div>
+                        </div>
 
 
-                        </form>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+</div>
 @endsection
 
 @section('script')
 <script>
-    $(document).ready(function(){
-        $('#grade').on('change',function(){
+    $(document).ready(function () {
+        $('#grade').on('change', function () {
             var grade_id = $(this).val();
-            if($.trim(grade_id) != ''){       
-                $.get('subjects',{grade_id: grade_id}, function(subjects){
+            if ($.trim(grade_id) != '') {
+                $.get('subjects', {grade_id: grade_id}, function (subjects) {
                     $('#subject').empty();
                     $('#subject').append("<option value=''>Seleccione los cursos</option>");
-                    $.each(subjects,function(index, value){
-                        $('#subject').append("<option value='"+ index + "'>" + alue + "</option>");
+                    $.each(subjects, function (index, value) {
+                        $('#subject').append("<option value='" + index + "'>" + alue + "</option>");
                     })
 
                 });

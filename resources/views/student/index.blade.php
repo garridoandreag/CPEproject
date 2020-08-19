@@ -26,14 +26,14 @@
 
 
                 <div class="card-body">
-                    
+
                     <div class="row justify-content-md-center">
                         <div class="col">
-                    <a href="{{action('StudentController@create')}}" class="btn btn-primary">Nuevo </a>
+                            <a href="{{action('StudentController@create')}}" class="btn btn-primary">Nuevo </a>
                         </div>
-                    <div class="col-md-auto">
-                    <input class="form-control" id="myInput" type="text" placeholder="Buscar...">
-                    </div>
+                        <div class="col-md-auto">
+                            <input class="form-control" id="myInput" type="text" placeholder="Buscar...">
+                        </div>
                     </div>
                     <br>
 
@@ -53,10 +53,10 @@
                             </tr>
                         </thead>
                         <tbody  id="myTable">
-                            @foreach($student as $student)
+                            @foreach($students as $student)
                             <tr>
                                 <td data-label="Código" scope="row"><a href="{{action('StudentController@detail',['id' => $student->id])}}" />
-                                {{$student->student_code}}
+                                    {{$student->student_code}}
                                 </td>
                                 <td data-label="Nombres"><a href="{{action('StudentController@detail',['id' => $student->id])}}" />
                                     {{$student->person->names}}
@@ -81,12 +81,23 @@
                                 </td>
                             </tr>
                             @endforeach
+
+
                         </tbody>
+
                     </table>
 
+                    {{ $students->links() }}
+
+
+
+
                 </div>
+
+
             </div>
         </div>
     </div>
 </div>
+
 @endsection
