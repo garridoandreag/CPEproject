@@ -15,6 +15,7 @@ class CreateSubdivisionTable extends Migration
     {
         Schema::create('subdivision', function (Blueprint $table) {
           $table->string('code')->primary();
+          $table->boolean('status')->default(1);
           $table->string('country_code');
           $table->string('name', 100);
           $table->text('description');
@@ -30,6 +31,6 @@ class CreateSubdivisionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Subdivision');
+        Schema::dropIfExists('subdivision');
     }
 }
