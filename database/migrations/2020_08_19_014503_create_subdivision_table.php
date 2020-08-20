@@ -19,8 +19,9 @@ class CreateSubdivisionTable extends Migration
           $table->string('country_code');
           $table->string('name', 100);
           $table->text('description');
-          $table->foreign('country_code')->references('code')->on('countries');
+          $table->foreign('country_code')->references('code')->on('country');
           $table->timestamps();
+          $table->engine = "InnoDB";
         });
     }
 

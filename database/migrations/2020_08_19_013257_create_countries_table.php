@@ -13,7 +13,7 @@ class CreateCountriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('countries', function (Blueprint $table) {
+        Schema::create('country', function (Blueprint $table) {
             $table->string('code')->primary();
             $table->boolean('status')->default(1);
             $table->string('name', 100);
@@ -21,8 +21,12 @@ class CreateCountriesTable extends Migration
             $table->string('alpha2', 2)->unique();
             $table->string('alpha3', 3);
             $table->timestamps();
+            $table->engine = "InnoDB";
         });
+
     }
+
+
 
     /**
      * Reverse the migrations.
@@ -31,6 +35,9 @@ class CreateCountriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('countries');
+
+        Schema::dropIfExists('country');
+//        Schema::drop('estudiante_encargado');
+      
     }
 }

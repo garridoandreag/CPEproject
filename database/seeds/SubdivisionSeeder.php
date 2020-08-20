@@ -11,7 +11,7 @@ class SubdivisionSeeder extends Seeder
      */
     public function run()
     {
-      DB::table('countries')->insert([
+      DB::table('country')->insert([
         [
           'code' => '01',
           'country_code' => '320',
