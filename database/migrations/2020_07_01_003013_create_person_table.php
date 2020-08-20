@@ -21,8 +21,6 @@ class CreatePersonTable extends Migration {
               `favorite_name` varchar(100) DEFAULT NULL,
               `phone_number` varchar(100) DEFAULT NULL,
               `cellphone_number` varchar(100) DEFAULT NULL,
-              `country_id` int(10) UNSIGNED DEFAULT NULL,
-              `subdivision_id` int(10) UNSIGNED DEFAULT NULL,
               `home_address` varchar(300) DEFAULT NULL,
               `occupation` varchar(100) DEFAULT NULL,
               `picture` varchar(300) DEFAULT NULL,

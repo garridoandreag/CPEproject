@@ -257,19 +257,51 @@
                                 </div>
 
 
-                                <div class="form-group row">
-                                    <label for="name" class="col-md-4 col-form-label text-md-right">NOMBRE</label>
-
-                                    <div class="col-md-6">
-                                        <input id="name_caregiver" type="text" class="form-control @error('name_caregiver') is-invalid @enderror" name="name_caregiver" value="{{$student->caregiver->name ?? '' }}"required autocomplete="student_code" autofocus>
-
-                                        @error('student_code')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
+                                <div class="row">
+                                <div class="col-sm" style="text-align: center">
+                                SI MIS PADRES NO PUEDEN RECOGERME EN EL COLEGIO, ME PUEDO IR CON:
+                                
                                 </div>
+                                </div>
+
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-auto">
+                                        <div class="form-group row">
+                                        <label for="name" class="col-md-4 col-form-label text-md-right">NOMBRE</label>
+
+                                            <div class="col-md-6">
+                                                <input id="name_caregiver" type="text" class="form-control @error('name_caregiver') is-invalid @enderror" name="name_caregiver" value="{{$student->caregiver->name ?? '' }}"required autocomplete="student_code" autofocus>
+
+                                                @error('student_code')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-auto">
+                                        <div class="form-group row">
+                                        <label for="name" class="col-md-4 col-form-label text-md-right">APELLIDO</label>
+
+                                            <div class="col-md-6">
+                                                <input id="name_caregiver" type="text" class="form-control @error('name_caregiver') is-invalid @enderror" name="name_caregiver" value="{{$student->caregiver->name ?? '' }}"required autocomplete="student_code" autofocus>
+
+                                                @error('student_code')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                
 
                                 <br />
 
