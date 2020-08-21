@@ -18,7 +18,7 @@ class StudentController extends Controller {
     }
 
     public function index() {
-        $students = \App\Student::paginate(2);
+        $students = \App\Student::paginate(30);
 
 //         $person = DB::table('person')->orderBy('id', 'desc')->get();
 
@@ -58,6 +58,8 @@ class StudentController extends Controller {
                     'first_surname' => $request->input('first_surname'),
                     'second_surname' => $request->input('second_surname'),
                     'phone_number' => $request->input('phone_number'),
+                    'country_code' => '320',
+                    'subdivision_code' => $request->input('subdivision_code'),
                     'picture' => $picture_name,
                     'gender_id' => $request->input('gender_id'),
                     'student' => '1'
@@ -69,6 +71,15 @@ class StudentController extends Controller {
             'birthday' => $request->input('birthday'),
             'student_code' => $request->input('student_code'),
             'grade_id' => $request->input('grade_id')
+        ));
+
+        $caregiver = DB::table('caregiver')->insert(array(
+            'student_id' => $id,
+            'name' => $request->input('name_caregiver'),
+            'surname' => $request->input('surname_caregiver'),
+            'relationship' => $request->input('relationship'),
+            'phone_number' => $request->input('phone_number_caregiver'),
+
         ));
         
         
@@ -110,8 +121,7 @@ class StudentController extends Controller {
 
 
         $student = \App\Student::where('id', $id)->first();
-        //        var_dump($estudiante);
-        //        die();
+
         
                 return view('student.create', [
                     'student' => $student
@@ -151,6 +161,8 @@ class StudentController extends Controller {
         'first_surname' => $request->input('first_surname'),
         'second_surname' => $request->input('second_surname'),
         'phone_number' => $request->input('phone_number'),
+        'country_code' => '320',
+        'subdivision_code' => $request->input('subdivision_code'),
         'gender_id' => $request->input('gender_id'),
     ));
 
@@ -164,7 +176,17 @@ class StudentController extends Controller {
             'student_code' => $request->input('student_code')
         ));
 
+        $caregiver = DB::table('caregiver')->where('student_id', $id)
+        ->update(array(
+            'name' => $request->input('name_caregiver'),
+            'surname' => $request->input('surname_caregiver'),
+            'relationship' => $request->input('relationship'),
+            'phone_number' => $request->input('phone_number_caregiver'),
 
+        ));
+
+        var_dump($student);
+        die();
 
 
 

@@ -24,6 +24,13 @@ class Student extends Model {
     }
     
     public function grade() {
-        return $this->belongsToMany('App\Grade');
+        return $this->belongsToMany('App\Grade','grade_id');
     }
+
+    public function caregiver() {
+    
+        return $this->hasMany('App\Caregiver','student_id');
+    }
+
+
 }

@@ -2,6 +2,7 @@
 
 @section('content')
 @inject('grades','App\Services\Grades')
+@inject('subdivisions','App\Services\Subdivisions')
 
 
 <div class="container">
@@ -24,7 +25,7 @@
 
                     <div class="card-body">
 
-                        <form method="POST" action="{{ isset($student) ? route('student.update') : route('student.store') }}" enctype="multipart/form-data"  aria-label="Configuración de mi cuenta">
+                        <form id="studentForm" method="POST" action="{{ isset($student) ? route('student.update') : route('student.store') }}" enctype="multipart/form-data"  aria-label="Configuración de mi cuenta">
                             {{csrf_field()}}
 
 
@@ -117,6 +118,22 @@
                                             @enderror
                                         </div>
                                     </div>
+
+                                    <div class="form-group row">
+                                        <label for="subdivision_code" class="col-md-4 col-form-label text-md-right">DEPARTAMENTO</label>
+                                        <div class="col-md-6">
+                                            <select id="subdivision_code" name="subdivision_code" class="form-control  @error('subdivision_code') is-invalid @enderror" >
+                                                @foreach($subdivisions->get() as $index => $subdivision)
+
+                                                <option value="{{$index}}" {{ old('subdivision_code',$student->person->subdivision_code ?? '' ) == $index ? 'selected' : '' }} >
+                                                        {{ $subdivision }}
+                                            </option> 
+
+                                            @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
 
                                     <div class="form-group row">
                                         <label for="birthday" class="col-md-4 col-form-label text-md-right">FECHA DE NACIMIENTO</label>
@@ -223,6 +240,7 @@
                                     </div>
                                     <br />
                                 </div>
+                                
 
                                 <div class="tab-pane fade" id="academico" role="tabpanel" aria-labelledby="form_personal">
 
@@ -237,9 +255,9 @@
                                             </option> 
 
                                             @endforeach
-                                        </select>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
 
 
                                 <div class="form-group row">
@@ -255,50 +273,88 @@
                                         @enderror
                                     </div>
                                 </div>
-
-
-                                <div class="row">
-                                <div class="col-sm" style="text-align: center">
-                                SI MIS PADRES NO PUEDEN RECOGERME EN EL COLEGIO, ME PUEDO IR CON:
-                                
-                                </div>
-                                </div>
-
                                 <br>
-                                <div class="row">
-                                    <div class="col-md-auto">
-                                        <div class="form-group row">
-                                        <label for="name" class="col-md-4 col-form-label text-md-right">NOMBRE</label>
 
-                                            <div class="col-md-6">
-                                                <input id="name_caregiver" type="text" class="form-control @error('name_caregiver') is-invalid @enderror" name="name_caregiver" value="{{$student->caregiver->name ?? '' }}"required autocomplete="student_code" autofocus>
 
-                                                @error('student_code')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                                @enderror
+
+                                <p class="card-text text-center"><small class="text-muted">
+                                QUIEN PUEDE RECOGER AL ESTUDIANTE:
+                                </small></p>
+        
+
+                                @foreach($student->caregiver as $caregiver)
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label for="name_caregiver" class="col-md-4 col-form-label text-md-right">NOMBRE</label>
+
+                                                <div class="col-md-6">
+                                                    <input id="name_caregiver" type="text" class="form-control form-control-sm @error('name_caregiver') is-invalid @enderror" name="name_caregiver" value="{{$caregiver->name ?? '' }}"required autocomplete="name_caregiver" autofocus>
+
+                                                    @error('name_caregiver')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="col-md-auto">
-                                        <div class="form-group row">
-                                        <label for="name" class="col-md-4 col-form-label text-md-right">APELLIDO</label>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                            <label for="surname_caregiver" class="col-md-4 col-form-label text-md-right">APELLIDO</label>
 
-                                            <div class="col-md-6">
-                                                <input id="name_caregiver" type="text" class="form-control @error('name_caregiver') is-invalid @enderror" name="name_caregiver" value="{{$student->caregiver->name ?? '' }}"required autocomplete="student_code" autofocus>
+                                                <div class="col-md-6">
+                                                    <input id="surname_caregiver" type="text" class="form-control form-control-sm @error('surname_caregiver') is-invalid @enderror" name="surname_caregiver" value="{{$caregiver->surname ?? '' }}"required autocomplete="surname_caregiver" autofocus>
 
-                                                @error('student_code')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                                @enderror
+                                                    @error('surname_caregiver')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
                                             </div>
                                         </div>
+
                                     </div>
 
-                                </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label for="relationship" class="col-md-4 col-form-label text-md-right">PARENTESCO</label>
+
+                                                <div class="col-md-6">
+                                                    <input id="relationship" type="text" class="form-control form-control-sm @error('relationship') is-invalid @enderror" name="relationship" value="{{$caregiver->relationship ?? '' }}"required autocomplete="relationship" autofocus>
+
+                                                    @error('relationship')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                            <label for="phone_number_caregiver" class="col-md-4 col-form-label text-md-right">TELEFONO</label>
+
+                                                <div class="col-md-6">
+                                                    <input id="phone_number_caregiver" type="text" class="form-control form-control-sm @error('phone_number_caregiver') is-invalid @enderror" name="phone_number_caregiver" value="{{$caregiver->phone_number ?? '' }}"required autocomplete="phone_number_caregiver" autofocus>
+
+                                                    @error('phone_number_caregiver')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    @endforeach
+
 
 
                                 
@@ -323,23 +379,9 @@
 
 @section('script')
 <script>
-    $(document).ready(function () {
-        $('#grade').on('change', function () {
-            var grade_id = $(this).val();
-            if ($.trim(grade_id) != '') {
-                $.get('subjects', {grade_id: grade_id}, function (subjects) {
-                    $('#subject').empty();
-                    $('#subject').append("<option value=''>Seleccione los cursos</option>");
-                    $.each(subjects, function (index, value) {
-                        $('#subject').append("<option value='" + index + "'>" + alue + "</option>");
-                    })
-
-                });
-            }
-
-        });
 
 
-    });
+
+
 </script>
 @endsection
