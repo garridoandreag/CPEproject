@@ -16,9 +16,8 @@ class AddCountriesToPersonTable extends Migration
        Schema::table('person', function (Blueprint $table) {
             //
             $table->string('country_code');
-           
             $table->string('subdivision_code');
-            
+            $table->foreign('country_code')->references('code')->on('countries');
         });
 
        Schema::table('person', function (Blueprint $table) {
@@ -28,8 +27,8 @@ class AddCountriesToPersonTable extends Migration
 
        /* DB::statement("
         ALTER TABLE person ADD CONSTRAINT fk_person_country FOREIGN KEY (`country_code`) REFERENCES country(`code`);
-        
-        
+
+
         ");
 */
 

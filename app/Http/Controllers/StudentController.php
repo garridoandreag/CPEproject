@@ -10,19 +10,14 @@ use Illuminate\Support\Facades\File;
 use App\Grade;
 use App\Student;
 class StudentController extends Controller {
-
-    //
-
-    public function __construct() {
-        $this->middleware('auth');
-    }
-
     public function index() {
         $students = \App\Student::paginate(30);
 
 //         $person = DB::table('person')->orderBy('id', 'desc')->get();
 
 //        return view('student.index', [ 'student' => $student ]);
+          //return view('student.index', compact('students'));
+
           return view('student.index', compact('students'));
     }
 
@@ -81,9 +76,8 @@ class StudentController extends Controller {
             'phone_number' => $request->input('phone_number_caregiver'),
 
         ));
-        
-        
-        return redirect()->route('student.index')
+
+      return redirect()->route('student.index')
                         ->with(['status' => 'Estudiante creado correctamente']);
     }
 
@@ -122,18 +116,17 @@ class StudentController extends Controller {
 
         $student = \App\Student::where('id', $id)->first();
 
-        
                 return view('student.create', [
                     'student' => $student
                 ]);
     }
 
     public function update(Request $request) {
-    
+
         //guardar el registro
         $id = $request->input('id');
 
-                
+
         $picture = $request->file('picture');
 
         if ($picture) {
@@ -194,6 +187,6 @@ class StudentController extends Controller {
         return redirect()->action('StudentController@index')->with('status', 'Estudiante actualizado correctamente');
     }
 
-    
+
 
 }
