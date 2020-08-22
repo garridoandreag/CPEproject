@@ -103,3 +103,12 @@ Route::group(['prefix' => 'estudiante'], function() {
     Route::get('detalle/{id}', 'StudentController@detail')->name('student.detail');
     Route::get('/subjects', 'StudentController@getSubjects');
 });
+
+
+Route::group(['prefix' => 'padre'], function() {
+    Route::get('crear', 'TutorController@create')->name('tutor.create');
+    Route::get('/', 'TutorController@index')->name('tutor.index');
+    Route::post('store', 'TutorController@store')->name('tutor.store');
+    Route::get('detalle/{id}', 'TutorController@detail')->name('tutor.detail');
+
+});

@@ -75,7 +75,7 @@ form .picture_profile{
     z-index: 1; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
-    background-color: #A62422; /* Black*/
+    background-color: #19294F; /* Black*/
 /*    overflow-x: hidden;  Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
@@ -200,7 +200,7 @@ form .picture_profile{
 
 #sidebar ul.components {
     padding: 20px 0;
-    border-bottom: 1px solid #A62523;
+    border-bottom: 1px solid #19294F;
 }
 
 #sidebar ul li a {

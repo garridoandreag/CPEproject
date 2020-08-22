@@ -8,10 +8,18 @@ class Tutor extends Model {
 
     //
     protected $table = 'tutor';
-    
+
+    protected $primaryKey = 'id';
+
+    protected $fillable = ['dpi','occupation'];
+
+   
+
+
+    //Uno a uno
     public function person() {
 
-        return $this->hasOne('App\Person', 'id', 'id');
+        return $this->belongsTo('App\Person', 'id', 'id');
     }
 
     public function student() {
