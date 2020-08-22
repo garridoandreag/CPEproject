@@ -33,6 +33,23 @@ class TutorController extends Controller
     public function store(Request $request)
     {
         //
+
+        $data = $request()->validate([
+            'names' => ['required', 'string', 'max:50'],
+            'first_surname' => ['required', 'string', 'max:50'],
+            'second_surname' => ['required', 'string', 'max:50'],
+            'phone_number' => ['required', 'string', 'max:8'],
+            'cellphone_number' => ['required', 'string', 'max:8'],
+            'home_address' => ['required', 'string', 'max:250'],
+            'occupation' => ['required', 'string', 'max:50'],
+            
+
+            
+
+
+
+
+        ])
     }
 
 
