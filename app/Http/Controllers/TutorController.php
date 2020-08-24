@@ -84,9 +84,16 @@ class TutorController extends Controller
     }
 
 
-    public function show($id)
+    public function detail($id)
     {
         //
+        $tutor = \App\Tutor::where('id', $id)->first();
+        //        var_dump($estudiante);
+        //        die();
+        
+                return view('tutor.detail', [
+                    'tutor' => $tutor
+                ]);
     }
 
 

@@ -59,6 +59,15 @@ form .picture_profile{
 }
 
 
+#menu-admin{
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+
+
 
 
 
@@ -121,6 +130,8 @@ form .picture_profile{
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
+
+
 }
 
 .card-header{
@@ -253,6 +264,20 @@ a.article:hover {
 ----------------------------------------------------- */
 
 @media (max-width: 768px) {
+
+    a .btn-menu{
+        width: 35px; height: 35px;
+        
+    }
+
+    #menu-admin{
+        font-size: 0.85em;
+        margin-left: 6px;
+        margin-right: 6px;
+        margin-top: 6px;
+        margin-bottom: 6px;
+    }
+    
     #sidebar {
         min-width: 80px;
         max-width: 80px;

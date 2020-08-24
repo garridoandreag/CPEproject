@@ -2,6 +2,7 @@
 
 @section('content')
   @inject('subdivisions','App\Services\Subdivisions')
+  
 
 
 

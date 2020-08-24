@@ -57,12 +57,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['middleware' => ['auth', '1']], function() {
+/*Route::group(['middleware' => ['auth', '1']], function() {
     Route::get('/', function () {
         return view('admin.dashboard');
     });
 });
-
+*/
 
 
 
@@ -88,6 +88,10 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
+Route::get('/administracion', function () {
+    return view('admin.administracion');
+})->name('admin.admin');
+
 Route::get('/configuracion','UserController@config')->name('config');
 Route::post('/user/update','UserController@update')->name('user.update');
 
@@ -110,5 +114,6 @@ Route::group(['prefix' => 'padre'], function() {
     Route::get('/', 'TutorController@index')->name('tutor.index');
     Route::post('store', 'TutorController@store')->name('tutor.store');
     Route::get('detalle/{id}', 'TutorController@detail')->name('tutor.detail');
+    Route::post('actualizar', 'TutorController@update')->name('tutor.update');
 
 });

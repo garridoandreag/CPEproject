@@ -51,7 +51,7 @@ function closeNav() {
 background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%, rgba(252,176,69,1) 33%, rgba(95,167,52,1) 51%, rgba(9,231,240,1) 71%, rgba(131,58,180,1) 90%);-->
       <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
-          COLEGIO PEQUEÑAS ESTRELLAS
+          Colegio Pequeñas Estrellas
           <!--{{ config('app.name', 'Laravel') }}-->
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -95,7 +95,7 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
+                                                   document.getElementById('logout-form').submit();">
                     {{ __('Logout') }}
                   </a>
 
@@ -129,24 +129,40 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
     <ul class="list-unstyled components">
 
       <li>
+
+        <a href="{{ route('admin.admin') }}">
+          <!--                        <img class="icono-menu" src="{{ asset('images/curso.png') }}"  >-->
+          <i class="fas fa-users-cog"></i>
+
+          Admin
+        </a>
+
         <a href="{{ route('student.index') }}">
           <!--                        <img class="icono-menu" src="{{ asset('images/curso.png') }}"  >-->
           <i class="fas fa-user-graduate"></i>
 
           Estudiantes
         </a>
+
         <a href="{{ route('tutor.index') }}">
-                             
+
           <i class="fas fa-user-friends"></i>
 
           Padres
         </a>
 
+        <a href="{{ route('tutor.index') }}">
 
-        
-        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
           <i class="fas fa-chalkboard-teacher"></i>
+
           Maestros
+        </a>
+
+
+
+        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+          <i class="fas fa-wallet"></i>
+          Colegiatura
         </a>
         <ul class="collapse list-unstyled" id="pageSubmenu">
           <li>
@@ -166,12 +182,7 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
           Cursos
         </a>
       </li>
-      <li>
-        <a href="#">
-          <i class="fas fa-wallet"></i>
-          Colegiatura
-        </a>
-      </li>
+
       <li>
         <a href="#">
           <i class="fas fa-calendar-alt"></i>
