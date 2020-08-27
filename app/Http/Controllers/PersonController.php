@@ -12,17 +12,23 @@ class PersonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
+
         //
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth:api');
     }
 
-   
+
     public function index()
     {
         //
+    }
+
+    public function searchPersonWithName(Request $request)
+    {
+      $search = $request->input();
+      return $search;
     }
 
     /**
@@ -78,7 +84,7 @@ class PersonController extends Controller
     public function update(Request $request)
     {
         //
-        
+
 
     }
 

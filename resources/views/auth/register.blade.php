@@ -1,7 +1,16 @@
 @extends('layouts.unauthenticated')
-
+<script src="{{ asset('js/app.js') }}"></script>
+<script>
+  const token = "{{csrf_token()}}";
+  const response = axios.post('search-person', { name: 'test' })
+    .then(response => response)
+    .catch(err => console.log(err));
+$('#test').ready(function() {
+  console.log('tst');
+});
+</script>
 @section('content')
-<div class="container">
+<div class="container" id="test">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -86,4 +95,3 @@
         </div>
     </div>
 </div>
-@endsection
