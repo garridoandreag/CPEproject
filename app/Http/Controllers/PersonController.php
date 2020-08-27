@@ -16,7 +16,7 @@ class PersonController extends Controller
         //
     public function __construct()
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth');
     }
 
 
@@ -27,7 +27,9 @@ class PersonController extends Controller
 
     public function searchPersonWithName(Request $request)
     {
-      $search = $request->input();
+      $search = $request->input('name');
+      //$person = DB::table('person');
+
       return $search;
     }
 
