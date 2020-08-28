@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Person;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PersonController extends Controller
 {
@@ -28,9 +29,11 @@ class PersonController extends Controller
     public function searchPersonWithName(Request $request)
     {
       $search = $request->input('name');
-      //$person = DB::table('person');
+      $person = DB::table('person')
+        ->where('first_surname', 'like', '%'.$search)
+        ->get();
 
-      return $search;
+      return $person;
     }
 
     /**

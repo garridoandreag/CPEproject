@@ -2,14 +2,6 @@
 
 @section('content')
 <script src="{{ asset('js/app.js') }}"></script>
-<script>
-  console.log(window.select2);
-  function serchPerson(name) {
-    const response = axios.post('search-person', { name })
-      .then(response => console.log(response.data))
-      .catch(err => console.log(err));
-  }
-</script>
 <div class="container">
   <button type="button" id="test">test</button>
   <input id="inputSearch" style="width: 200px; height: 50px;"/>
