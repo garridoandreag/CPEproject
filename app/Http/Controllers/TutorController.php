@@ -23,9 +23,6 @@ class TutorController extends Controller
 
         $tutors = \App\Tutor::paginate(30);
 
-        //         $person = DB::table('person')->orderBy('id', 'desc')->get();
-        
-        //        return view('student.index', [ 'student' => $student ]);
                   return view('tutor.index', compact('tutors'));
     }
 

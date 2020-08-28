@@ -8,6 +8,10 @@ class Grade extends Model
 {
     //
     protected $table = 'grade';
+
+    protected $primaryKey = 'id';
+
+    protected $fillable = ['name','section'];
     
     // uno a muchos
     public function subject(){

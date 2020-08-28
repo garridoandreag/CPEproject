@@ -2,7 +2,9 @@
 
 @section('content')
   @inject('subdivisions','App\Services\Subdivisions')
-  
+   @inject('students','App\Services\Students')
+
+   
 
 
 
@@ -203,6 +205,24 @@
                       </div>
                     </div>
 
+                    <div class="form-group row">
+                      <label for="student_id" class="col-md-4 col-form-label text-md-right">ESTUDIANTE</label>
+                      <div class="col-md-6">
+                        <select  name="student_id" data-show-subtext="true" data-live-search="true"
+                          class="selectpicker @error('student_id') is-invalid @enderror" >
+                          <option value="" disabled selected>Elije al estudiante</option>
+                          @foreach ($students->get() as $index => $student)
+
+                            <option value="{{ $index }}" data-subtext="{{ $student }}"
+                              {{ old('student_id', $tutor->student->id ?? '') == $index ? 'selected' : '' }}>
+                              {{ $student }}
+                            </option>
+
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+                  
 
 
                     <div class="form-group row mb-0">
@@ -238,10 +258,12 @@
 @endsection
 
 @section('script')
-  <script>
 
-
-
-
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>-->
+<script>
+  // Material Select Initialization
+//$(document).ready(function() {
+//$('.form-control').materialSelect();
+//});
   </script>
 @endsection

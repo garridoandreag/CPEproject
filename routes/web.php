@@ -101,7 +101,7 @@ Route::group(['prefix' => 'estudiante'], function() {
     Route::get('crear', 'StudentController@create')->name('student.create');
     Route::get('/', 'StudentController@index')->name('student.index');
     Route::post('store', 'StudentController@store')->name('student.store');
-    Route::get('editar/{id}', 'StudentController@edit')->name('student.edit');;
+    Route::get('editar/{id}', 'StudentController@edit')->name('student.edit');
     Route::post('actualizar', 'StudentController@update')->name('student.update');
     Route::get('picture/{filename}','StudentController@getImage')->name('student.picture');
     Route::get('detalle/{id}', 'StudentController@detail')->name('student.detail');
@@ -115,5 +115,16 @@ Route::group(['prefix' => 'padre'], function() {
     Route::post('store', 'TutorController@store')->name('tutor.store');
     Route::get('detalle/{id}', 'TutorController@detail')->name('tutor.detail');
     Route::post('actualizar', 'TutorController@update')->name('tutor.update');
+
+});
+
+Route::group(['prefix' => 'grado'], function() {
+    Route::get('crear', 'GradeController@create')->name('grade.create');
+    Route::get('/', 'GradeController@index')->name('grade.index');
+    Route::post('store', 'GradeController@store')->name('grade.store');
+    Route::get('editar/{id}', 'GradeController@edit')->name('grade.edit');;
+    Route::get('detalle/{id}', 'GradeController@detail')->name('grade.detail');
+    Route::post('actualizar', 'GradeController@update')->name('grade.update');
+    Route::get('eliminar/{id}', 'GradeController@destroy')->name('grade.destroy');
 
 });

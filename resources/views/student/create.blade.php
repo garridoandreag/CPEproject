@@ -315,7 +315,7 @@
                       </small></p>
 
 
-                    @foreach ($student->caregiver as $caregiver)
+                    //foreach ($student->caregiver as $caregiver)
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group row">
@@ -399,7 +399,7 @@
 
                       </div>
 
-                    @endforeach
+                    //endforeach
 
 
 

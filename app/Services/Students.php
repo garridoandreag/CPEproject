@@ -7,11 +7,11 @@ class Students {
     
     public function get(){
         
-        $students = Subdivision::get();
-        $studentsArray['']='Selecciona un estudiante';
+        $students = Student::get();
+        
         
         foreach($students as $student){
-            $studentsArray[$student->id] = $student->names.' '.$student->first_surname.' '.$student->second_surname;
+            $studentsArray[$student->id] = $student->person->names.' '.$student->person->first_surname.' '.$student->person->second_surname;
         }
         return $studentsArray;
     }
