@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Person;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 
 class PersonController extends Controller
 {
@@ -30,10 +31,11 @@ class PersonController extends Controller
     {
       $search = $request->input('name');
       $person = DB::table('person')
+        ->select('id', 'first_surname', 'second_surname')
         ->where('first_surname', 'like', '%'.$search)
         ->get();
 
-      return $person;
+      return response()->json(['data' => $person]);
     }
 
     /**
