@@ -2,16 +2,7 @@
 
 @section('content')
 <script src="{{ asset('js/app.js') }}"></script>
-<script>
-  function serchPerson(name) {
-    const response = axios.post('search-person', { name })
-      .then(response => console.log(response.data))
-      .catch(err => console.log(err));
-  }
-</script>
 <div class="container">
-  <button type="button" id="test">test</button>
-  <input id="inputSearch" style="width: 200px; height: 50px;"/>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -30,11 +21,4 @@
         </div>
     </div>
 </div>
-<script>
-  $('#inputSearch').keyup(function() {
-    const valueIputSearch = $('#inputSearch').val();
-    if (valueIputSearch.length <= 0) return;
-    serchPerson(valueIputSearch);
-  });
-</script>
 @endsection
