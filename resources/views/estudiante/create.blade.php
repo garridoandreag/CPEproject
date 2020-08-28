@@ -5,7 +5,15 @@
 @endif
 
 <div class="container">
-    <form action="{{isset($estudiante) ? action('EstudianteController@update') : action('EstudianteController@save')}}" method="POST"><!-- codigo_estudiante nombre1 nombre 2 nombre 3 apellido1 apellido2 fecha nacimiento fecha_inscripion email estado -->
+    <form
+      action="
+        {{
+          isset($estudiante)
+          ? action('EstudianteController@update')
+          : action('EstudianteController@save')
+        }}"
+      method="POST"
+    ><!-- codigo_estudiante nombre1 nombre 2 nombre 3 apellido1 apellido2 fecha nacimiento fecha_inscripion email estado -->
         {{csrf_field()}}
 
         @if(isset($estudiante) && is_object($estudiante))
