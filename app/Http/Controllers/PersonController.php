@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Person;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PersonController extends Controller
 {
@@ -12,17 +13,27 @@ class PersonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
+
         //
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-   
+
     public function index()
     {
         //
+    }
+
+    public function searchPersonWithName(Request $request)
+    {
+      $search = $request->input('name');
+      $person = DB::table('person')
+        ->where('first_surname', 'like', '%'.$search)
+        ->get();
+
+      return $person;
     }
 
     /**
@@ -78,7 +89,7 @@ class PersonController extends Controller
     public function update(Request $request)
     {
         //
-        
+
 
     }
 

@@ -11,7 +11,7 @@ class CountriesSeeder extends Seeder
      */
     public function run()
     {
-      DB::table('countries')->insert([
+      DB::table('country')->insert([
         [
           'code' => '320',
           'status' => 1,

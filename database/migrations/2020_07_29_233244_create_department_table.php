@@ -13,20 +13,7 @@ class CreateDepartmentTable extends Migration {
      */
     public function up() {
 
-        DB::statement("
-            CREATE TABLE DEPARTMENT (
-              id int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-              name varchar(100) NOT NULL,
-              created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-              updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-              status enum('ACTIVO','INACTIVO') NOT NULL DEFAULT 'ACTIVO',
-              PRIMARY KEY (id)
-            ) ENGINE=InnoDB;
-            ");
 
-        Schema::table('person', function (Blueprint $table) {
-        $table->foreign('department_id')->references('id')->on('department');
-        });
         
     }
 
@@ -37,8 +24,9 @@ class CreateDepartmentTable extends Migration {
          */
         public function down()
         {
+            Schema::dropIfExists('department');
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-        Schema::drop('department');
+        Schema::dropIfExists('department');
 //        Schema::drop('estudiante_encargado');
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
         }

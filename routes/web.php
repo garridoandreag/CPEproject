@@ -87,6 +87,7 @@ Route::get('/home', function () {
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::post('/search-person', 'PersonController@searchPersonWithName');
 
 Route::get('/configuracion','UserController@config')->name('config');
 Route::post('/user/update','UserController@update')->name('user.update');
@@ -97,6 +98,8 @@ Route::group(['prefix' => 'estudiante'], function() {
     Route::get('crear', 'StudentController@create')->name('student.create');
     Route::get('/', 'StudentController@index')->name('student.index');
     Route::post('store', 'StudentController@store')->name('student.store');
+    Route::get('editar/{id}', 'StudentController@edit')->name('student.edit');;
+    Route::post('actualizar', 'StudentController@update')->name('student.update');
     Route::get('picture/{filename}','StudentController@getImage')->name('student.picture');
     Route::get('detalle/{id}', 'StudentController@detail')->name('student.detail');
     Route::get('/subjects', 'StudentController@getSubjects');

@@ -8,22 +8,17 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use App\Grade;
-
+use App\Student;
 class StudentController extends Controller {
-
-    //
-
-    public function __construct() {
-        $this->middleware('auth');
-    }
-
     public function index() {
-        $student = \App\Student::all();
+        $students = \App\Student::paginate(30);
+
 //         $person = DB::table('person')->orderBy('id', 'desc')->get();
 
-        return view('student.index', [
-            'student' => $student
-        ]);
+//        return view('student.index', [ 'student' => $student ]);
+          //return view('student.index', compact('students'));
+
+          return view('student.index', compact('students'));
     }
 
     public function create() {
@@ -31,6 +26,15 @@ class StudentController extends Controller {
     }
 
     public function store(Request $request) {
+
+        $validate = $this->validate($request,[
+            'names' => ['required', 'string', 'max:255'],
+            'first_surname' => ['required', 'string', 'max:255'],
+            'second_surname' => ['required', 'string', 'max:255'],
+            'phone_number' => ['required', 'string', 'max:8'],
+            'gender_id' => ['required', 'string', 'max:1'],
+
+]);
 
         $picture = $request->file('picture');
 
@@ -49,6 +53,8 @@ class StudentController extends Controller {
                     'first_surname' => $request->input('first_surname'),
                     'second_surname' => $request->input('second_surname'),
                     'phone_number' => $request->input('phone_number'),
+                    'country_code' => '320',
+                    'subdivision_code' => $request->input('subdivision_code'),
                     'picture' => $picture_name,
                     'gender_id' => $request->input('gender_id'),
                     'student' => '1'
@@ -58,9 +64,21 @@ class StudentController extends Controller {
         $student = DB::table('student')->insert(array(
             'id' => $id,
             'birthday' => $request->input('birthday'),
+            'student_code' => $request->input('student_code'),
+            'grade_id' => $request->input('grade_id')
         ));
-        return redirect()->route('student.index')
-                        ->with(['message' => 'Estudiante creado correctamente']);
+
+        $caregiver = DB::table('caregiver')->insert(array(
+            'student_id' => $id,
+            'name' => $request->input('name_caregiver'),
+            'surname' => $request->input('surname_caregiver'),
+            'relationship' => $request->input('relationship'),
+            'phone_number' => $request->input('phone_number_caregiver'),
+
+        ));
+
+      return redirect()->route('student.index')
+                        ->with(['status' => 'Estudiante creado correctamente']);
     }
 
     public function getImage($filename) {
@@ -93,6 +111,82 @@ class StudentController extends Controller {
 
     }
 
-    
+    public function edit($id) {
+
+
+        $student = \App\Student::where('id', $id)->first();
+
+                return view('student.create', [
+                    'student' => $student
+                ]);
+    }
+
+    public function update(Request $request) {
+
+        //guardar el registro
+        $id = $request->input('id');
+
+
+        $picture = $request->file('picture');
+
+        if ($picture) {
+
+            //colocarle un nombre unico
+            $picture_name = time() . $picture->getClientOriginalName();
+
+            //guardar en la carpeta storage (storage/app/users)
+            Storage::disk('users')->put($picture_name, File::get($picture));
+            $person = DB::table('person')->where('id', $id)
+                ->update(array(
+            'favorite_name' => $request->input('favorite_name'),
+            'names' => $request->input('names'),
+            'first_surname' => $request->input('first_surname'),
+            'second_surname' => $request->input('second_surname'),
+            'phone_number' => $request->input('phone_number'),
+            'picture' => $picture_name,
+            'gender_id' => $request->input('gender_id'),
+        ));
+        }else{
+            $person = DB::table('person')->where('id', $id)
+            ->update(array(
+        'favorite_name' => $request->input('favorite_name'),
+        'names' => $request->input('names'),
+        'first_surname' => $request->input('first_surname'),
+        'second_surname' => $request->input('second_surname'),
+        'phone_number' => $request->input('phone_number'),
+        'country_code' => '320',
+        'subdivision_code' => $request->input('subdivision_code'),
+        'gender_id' => $request->input('gender_id'),
+    ));
+
+        }
+
+
+        $student = DB::table('student')->where('id', $id)
+        ->update(array(
+            'birthday' => $request->input('birthday'),
+            'grade_id' => $request->input('grade_id'),
+            'student_code' => $request->input('student_code')
+        ));
+
+        $caregiver = DB::table('caregiver')->where('student_id', $id)
+        ->update(array(
+            'name' => $request->input('name_caregiver'),
+            'surname' => $request->input('surname_caregiver'),
+            'relationship' => $request->input('relationship'),
+            'phone_number' => $request->input('phone_number_caregiver'),
+
+        ));
+
+        var_dump($student);
+        die();
+
+
+
+
+        return redirect()->action('StudentController@index')->with('status', 'Estudiante actualizado correctamente');
+    }
+
+
 
 }

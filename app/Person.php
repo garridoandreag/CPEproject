@@ -45,5 +45,19 @@ class Person extends Model {
         return $this->belongsTo('App\Gender', 'gender_id');
     }
 
+        // muchos a uno
+        public function country() {
+
+            return $this->belongsTo('App\Country', 'country_code','code');
+        }
+
+
+
+            // muchos a uno
+    public function subdivision() {
+
+        return $this->belongsTo('App\Subdivision', 'subdivision_code','code');
+    }
+
 //    
 }
