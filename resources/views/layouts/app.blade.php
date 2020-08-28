@@ -35,12 +35,13 @@ function closeNav() {
   <!-- Fonts -->
 
   <!-- <link rel="dns-prefetch" href="//fonts.gstatic.com">  -->
-  <!--  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> -->
+ <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
   <link href="{{ asset('css/font-nunito.css') }}" rel="stylesheet">
   <!-- Styles -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+  
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+  
 
  
 </head>
@@ -148,7 +149,7 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
 
         <a href="{{ route('tutor.index') }}">
 
-          <i class="fas fa-user-friends"></i>
+          <i class="fa fa-user"></i>
 
           Padres
         </a>

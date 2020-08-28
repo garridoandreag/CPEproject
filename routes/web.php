@@ -126,5 +126,13 @@ Route::group(['prefix' => 'grado'], function() {
     Route::get('detalle/{id}', 'GradeController@detail')->name('grade.detail');
     Route::post('actualizar', 'GradeController@update')->name('grade.update');
     Route::get('eliminar/{id}', 'GradeController@destroy')->name('grade.destroy');
+});
+
+
+Route::group(['prefix' => 'colegio'], function() {
+    Route::get('crear', 'ColegioController@create')->name('colegio.create');
+    Route::get('/', 'ColegioController@index')->name('colegio.index');
+    Route::post('store', 'ColegioController@store')->name('colegio.store');
 
 });
+

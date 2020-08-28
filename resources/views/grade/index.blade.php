@@ -45,8 +45,8 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Sección</th>
+                                <th scope="col">@sortablelink('name','Nombre')</th>
+                                <th scope="col">@sortablelink('section','Sección')</th>
                             </tr>
                         </thead>
                         <tbody  id="myTable">
@@ -68,7 +68,7 @@
 
                     </table>
 
-                    {{ $grades->links() }}
+                    {{ $grades->appends(Request::except('page'))->render()}}
 
                     <p>
                         Se muestran {{$grades->count()}} de {{$grades->total()}} grados.

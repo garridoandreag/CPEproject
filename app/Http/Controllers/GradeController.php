@@ -21,7 +21,7 @@ class GradeController extends Controller
     public function index()
     {
         //
-        $grades = \App\Grade::paginate(30);
+        $grades = \App\Grade::sortable()->paginate(30);
 
         return view('grade.index', compact('grades'));
     }
