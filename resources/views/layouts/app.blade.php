@@ -169,7 +169,7 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
         </ul>
       </li>
       <li>
-        <a href="#">
+        <a href="{{ route('course.index') }}">
           <i class="fas fa-book"></i>
           Cursos
         </a>
