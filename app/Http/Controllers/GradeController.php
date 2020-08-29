@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
+use Illuminate\Database\Eloquent\Collection;
 use App\Grade;
 
 class GradeController extends Controller
@@ -25,6 +24,8 @@ class GradeController extends Controller
 
         return view('grade.index', compact('grades'));
     }
+
+
 
     public function create()
     {
@@ -97,9 +98,27 @@ class GradeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+
+        $id = $request->input('id');
+        $grade = Grade::find($id);
+
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:50'],
+            'section' => ['required']
+        ]);
+       
+            $grade->name =  $data['name'];
+            $grade->section =  $data['section'];
+
+            $grade->update();
+
+        return redirect()->route('grade.index')
+                        ->with(['status' => 'Grado actualizado correctamente.']);
+
+
     }
 
     /**
@@ -110,10 +129,14 @@ class GradeController extends Controller
      */
     public function destroy($id)
     {
-        //
-        $grade = Grade::find($id);
-        $grade->delete();
-        return redirect()->route('grade.index')
-        ->with(['status' => 'Grado eliminado correctamente.']);
+
+            $grade = Grade::find($id);
+
+
+            
+            return redirect()->route('grade.index')
+            ->with(['status' => 'Grado eliminado correctamente.' ]);
+
+
     }
 }

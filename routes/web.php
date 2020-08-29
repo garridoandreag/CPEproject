@@ -130,9 +130,10 @@ Route::group(['prefix' => 'grado'], function() {
 
 
 Route::group(['prefix' => 'colegio'], function() {
-    Route::get('crear', 'ColegioController@create')->name('colegio.create');
-    Route::get('/', 'ColegioController@index')->name('colegio.index');
-    Route::post('store', 'ColegioController@store')->name('colegio.store');
+    Route::get('crear', 'SchoolController@create')->name('school.create');
+    Route::get('/', 'SchoolController@index')->name('school.index');
+    Route::post('store', 'SchoolController@store')->name('school.store');
+    Route::get('detalle/{id}', 'SchoolController@detail')->name('school.detail');
 
 });
 

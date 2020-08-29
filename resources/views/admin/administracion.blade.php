@@ -32,7 +32,7 @@
               <br>
             Usuarios</a>
 
-            <a href="#" class="btn btn-light" id="menu-admin" >
+            <a href="{{route('school.index')}}" class="btn btn-light" id="menu-admin" >
               <img src="images/colegio.png" class="btn-menu">
               <br>
             Colegio</a>
