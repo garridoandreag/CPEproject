@@ -17,7 +17,8 @@ class EstudianteController extends Controller {
     }
 
     public function detail($id) {
-        $estudiante = DB::table('estudiante')->where('id_estudiante', '=', $id)->first();
+        $estudiante = DB::table('estudiante')
+        ->where('id_estudiante', '=', $id)->first();
 
 //        var_dump($estudiante);
 //        die();

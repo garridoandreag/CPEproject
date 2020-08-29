@@ -13,5 +13,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call('RoleSeeder');
         $this->call('CountriesSeeder');
+        $this->call('SubdivisionSeeder');
+        $this->call('gender_seed');
+        $this->call('grade_seed');
     }
 }

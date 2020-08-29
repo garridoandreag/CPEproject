@@ -2,83 +2,72 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 
 class CourseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+  public function __construct() {
+    $this->middleware('auth');
+  }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+  public function index () {
+    $courses = DB::table('course')
+      ->select('id', 'name', 'status')
+      ->get();
+    return view('course.index', compact('courses'));
+  }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+  public function detail ($id) {
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    $course = DB::table('course')
+      ->select('id', 'name', 'status')
+      ->where('id', '=', $id)
+      ->get()->first();
+    return view('course.create', [
+      'course' => $course
+    ]);
+  }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+  public function create() {
+    return view('course.create');
+  }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+  public function store (Request $request) {
+    $course = DB::table('course')->insert(array(
+        'name' => $request->input('name')
+    ));
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    return redirect()->action('CourseController@index')->with('status', 'Curso creado correctamente');
+  }
+
+  public function status (Request $request) {
+    $status = $request->input('status');
+    $id = $request->input('id');
+
+    $status = ($status == 'ACTIVO') ? 'INACTIVO' : 'ACTIVO';
+
+    $course = DB::table('course')->where('id', $id)
+      ->update(array(
+        'status' => $status,
+      ));
+
+    return response()->json(
+      [
+        'data' => ['status' => $status]
+      ]
+    );
+  }
+  
+  public function update (Request $request) {
+    $id = $request->input('id');
+
+    $course = DB::table('course')->where('id', $id)
+      ->update(array(
+        'name' => $request->input('name'),
+      ));
+    return redirect()->action('CourseController@index')->with('status', 'Curso actualizado correctamente');
+  }
 }

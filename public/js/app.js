@@ -1452,7 +1452,6 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
 
 // Headers whose duplicates are ignored by node
-// c.f. https://nodejs.org/api/http.html#http_message_headers
 var ignoreDuplicateOf = [
   'age', 'authorization', 'content-length', 'content-type', 'etag',
   'expires', 'from', 'host', 'if-modified-since', 'if-unmodified-since',
@@ -62021,7 +62020,7 @@ function injectIntoDevTools(devToolsConfig) {
     // Enables DevTools to append owner stacks to error messages in DEV mode.
     getCurrentFiber:  function () {
       return current;
-    } 
+    }
   }));
 }
 var IsSomeRendererActing$1 = ReactSharedInternals.IsSomeRendererActing;

@@ -22,6 +22,7 @@ class CreateCountriesTable extends Migration
             $table->string('alpha3', 3);
             $table->timestamps();
             $table->engine = "InnoDB";
+            $table->collation = 'utf8mb4_unicode_ci';
         });
 
     }
@@ -38,6 +39,6 @@ class CreateCountriesTable extends Migration
 
         Schema::dropIfExists('country');
 //        Schema::drop('estudiante_encargado');
-      
+
     }
 }

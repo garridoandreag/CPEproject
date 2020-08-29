@@ -161,6 +161,13 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
           Maestros
         </a>
 
+        <a href="{{ route('course.index') }}">
+
+          <i class="fas fa-chalkboard-teacher"></i>
+
+          Cursos
+        </a>
+
 
 
         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
