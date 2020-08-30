@@ -15,12 +15,7 @@
         @endif
         <div class="card-group">
           <div class="card">
-            @if (isset($grade) && is_object($grade))
-              <div class="card-header">DETALLES DEL GRADO</div>
-            @else
-              <div class="card-header">DETALLES DEL GRADO</div>
-            @endif
-
+            <div class="card-header">DETALLES DEL GRADO</div>
             <div class="card-body">
 
               <form id="gradeForm" method="POST"
@@ -64,22 +59,15 @@
                     </select>
                   </div>
                 </div>
-
-
+                
                 <div class="form-group row mb-0">
                   <div class="col-md-6 offset-md-4">
-
-
                     <a href="{{ action('GradeController@index') }}" class="btn btn-outline-primary">Regresar </a>
                     <a href="{{action('GradeController@edit',['id' => $grade->id])}}" class="btn btn-primary">Editar</a>
-
                   </div>
                 </div>
-
                 <br />
             </div>
-
-
             </form>
           </div>
         </div>
