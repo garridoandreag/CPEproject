@@ -16,17 +16,11 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-
-
-
             <div class="card">
                 <div class="card-header">PADRES O ENCARGADOS
+               </div>
 
-                </div>
-
-
-                <div class="card-body">
-
+               <div class="card-body">
                     <div class="row justify-content-md-center">
                         <div class="col">
                             <a href="{{action('TutorController@create')}}" class="btn btn-primary">Nuevo </a>
@@ -84,18 +78,12 @@
                             </tr>
                             @endforeach
 
-
                         </tbody>
-
                     </table>
 
                     {{ $tutors->links() }}
 
-
-
-
-                </div>
-
+             </div>
 
             </div>
         </div>
