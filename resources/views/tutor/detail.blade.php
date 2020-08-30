@@ -17,11 +17,8 @@
         @endif
         <div class="card-group">
           <div class="card">
-            @if (isset($tutor) && is_object($tutor))
-              <div class="card-header">MODIFICAR PADRE O ENCARGADO</div>
-            @else
-              <div class="card-header">NUEVO PADRE O ENCARGADO</div>
-            @endif
+            
+              <div class="card-header">Detalle Padre o Encargado</div>
 
             <div class="card-body">
 
@@ -204,7 +201,7 @@
                     <div class="form-group row mb-0">
                       <div class="col-md-6 offset-md-4">
                         <button type="submit" class="btn btn-primary">
-                          Guardar
+                          Editar
                         </button>
                       </div>
                     </div>
