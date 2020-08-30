@@ -15,11 +15,14 @@
         @endif
         <div class="card-group">
           <div class="card">
+          
+          <div class="card-header">
             @if (isset($grade) && is_object($grade))
-              <div class="card-header">MODIFICAR GRADO</div>
+              MODIFICAR GRADO
             @else
-              <div class="card-header">NUEVO GRADO</div>
+              NUEVO GRADO
             @endif
+            </div>
 
             <div class="card-body">
 
@@ -71,15 +74,13 @@
                   <div class="col-md-6 offset-md-4">
                     <a href="{{ route('grade.index') }}" class="btn btn-outline-primary">Regresar </a>
 
+                  <button type="submit" class="btn btn-primary">
                     @if (isset($grade) && is_object($grade))
-                    <button type="submit" class="btn btn-primary">
-                      Actualizar
-                    </button>
+                    Actualizar
                     @else
-                    <button type="submit" class="btn btn-primary">
                       Guardar
-                    </button>
                     @endif
+                    </button>
 
                     @if (isset($grade) && is_object($grade))
                       <a href="{{ route('grade.destroy',['id'=>$grade->id]) }}" class="btn btn-danger">Eliminar</a>
