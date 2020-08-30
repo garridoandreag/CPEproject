@@ -20,12 +20,14 @@
         @endif
         <div class="card-group">
           <div class="card">
+          <div class="card-header">
             @if (isset($tutor) && is_object($tutor))
-              <div class="card-header">MODIFICAR PADRE O ENCARGADO</div>
+              MODIFICAR PADRE O ENCARGADO
             @else
-              <div class="card-header">NUEVO PADRE O ENCARGADO</div>
+              NUEVO PADRE O ENCARGADO
             @endif
-
+            </div>
+            
             <div class="card-body">
 
               <form id="tutorForm" method="POST"
