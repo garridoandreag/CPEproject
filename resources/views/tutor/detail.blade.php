@@ -25,11 +25,9 @@
                 aria-label="Configuración de mi cuenta">
                 {{ csrf_field() }}
 
-
                 @if (isset($tutor) && is_object($tutor))
                   <input type="hidden" name="id" value="{{ $tutor->id }}" /><br>
                 @endif
-
 
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                   <li class="nav-item">
@@ -208,8 +206,4 @@
       </div>
     </div>
   </div>
-@endsection
-@section('script')
-  <script>
-  </script>
 @endsection
