@@ -14,43 +14,6 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::get('/', function () {
-
-//    $estudiantes = App\Estudiante::all();
-//
-////     $estudiantes = App\Estudiante::find(1)->encargados()->orderBy('id_estudiante')->get();
-//    foreach ($estudiantes as $estudiante) {
-//        echo $estudiante->nombre1 . "<br/>";
-//        echo $estudiante->nombre2 . "<br/>";
-//        echo $estudiante->apellido1 . "<br/>";
-//
-//
-//        echo '<h4>ENCARGADOS:</h4>';
-//        echo count($estudiante->encargados)."<br/>";
-//        foreach ($estudiante->encargados as $encargado) {
-//            echo $encargado->nombre1 . ' ' . $encargado->apellido1 . "<br/>";
-//            echo $encargado->direccion . "<br/>";
-////            echo $encargado->usuario->name . "<br/>";
-//        }
-//
-//        echo "<hr/>";
-//    }
-//    $people = App\Person::all();
-//
-//    foreach ($people as $person) {
-//        echo $person->first_name . "<br/>";
-//
-//        echo $person->gender->name . "<br/>";
-//
-//        IF ($person->employee == 1) {
-//            echo $person->person_employee->job . "<br/>";
-//        }
-//        // var_dump($person);
-//        foreach ($person->user as $user) {
-//            echo $user->email . "<br/>";
-//        }
-//            echo "<hr/>";
-//    }
-
     return view('welcome');
 });
 
@@ -65,33 +28,21 @@ Route::get('/home', function () {
     return view('home');
 });
 
-//Route::group(['prefix' => 'estudiante'], function() {
-//
-//
-//    Route::get('index', 'EstudianteController@index');
-//    Route::get('detail/{id}', 'EstudianteController@detail');
-//    Route::get('create', 'EstudianteController@create');
-//    Route::post('save', 'EstudianteController@save');
-//    Route::get('delete/{id}', 'EstudianteController@delete');
-//    Route::get('edit/{id}', 'EstudianteController@edit');
-//    Route::post('update', 'EstudianteController@update');
-//});
-
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::post('/search-person', 'PersonController@searchPersonWithName');
 
-Route::get('/administracion', function () {
-    return view('admin.administracion');
+Route::get('/admin', function () {
+    return view('admin.administration');
 })->name('admin.admin');
 
-Route::get('/configuracion','UserController@config')->name('config');
+Route::get('/configuration','UserController@config')->name('config');
 Route::post('/user/update','UserController@update')->name('user.update');
 
 Route::get('/user/picture/{filename}','UserController@getImage')->name('user.picture');
 
-Route::group(['prefix' => 'estudiante'], function() {
+Route::group(['prefix' => 'student'], function() {
     Route::get('create', 'StudentController@create')->name('student.create');
     Route::get('/', 'StudentController@index')->name('student.index');
     Route::post('store', 'StudentController@store')->name('student.store');
@@ -111,7 +62,7 @@ Route::group(['prefix' => 'course'], function() {
   Route::post('/status', 'CourseController@status')->name('course.status');
 });
 
-Route::group(['prefix' => 'padre'], function() {
+Route::group(['prefix' => 'tutor'], function() {
     Route::get('create', 'TutorController@create')->name('tutor.create');
     Route::get('/', 'TutorController@index')->name('tutor.index');
     Route::post('store', 'TutorController@store')->name('tutor.store');
@@ -119,19 +70,21 @@ Route::group(['prefix' => 'padre'], function() {
     Route::post('update', 'TutorController@update')->name('tutor.update');
 });
 
-Route::group(['prefix' => 'grado'], function() {
+Route::group(['prefix' => 'grade'], function() {
     Route::get('crear', 'GradeController@create')->name('grade.create');
     Route::get('/', 'GradeController@index')->name('grade.index');
     Route::post('store', 'GradeController@store')->name('grade.store');
-    Route::get('edit/{id}', 'GradeController@edit')->name('grade.edit');;
+    Route::get('edit/{id}', 'GradeController@edit')->name('grade.edit');
     Route::get('detail/{id}', 'GradeController@detail')->name('grade.detail');
     Route::post('update', 'GradeController@update')->name('grade.update');
     Route::get('delete/{id}', 'GradeController@destroy')->name('grade.destroy');
 });
 
-Route::group(['prefix' => 'colegio'], function() {
+Route::group(['prefix' => 'school'], function() {
     Route::get('create', 'SchoolController@create')->name('school.create');
     Route::get('/', 'SchoolController@index')->name('school.index');
     Route::post('store', 'SchoolController@store')->name('school.store');
     Route::get('detail/{id}', 'SchoolController@detail')->name('school.detail');
+    Route::get('edit/{id}', 'SchoolController@edit')->name('school.edit');
+    Route::post('update', 'SchoolController@update')->name('school.update');
 });
