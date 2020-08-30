@@ -293,6 +293,10 @@
                       </div>
                     </div>
 
+                            <option value="{{ $index }}"
+                              {{ old('grade_id', $student->grade_id ?? '') == $index ? 'selected' : '' }}>
+                              {{ $grade }}
+                            </option>
 
                     <div class="form-group row">
                       <label for="second_surname" class="col-md-4 col-form-label text-md-right">CÓDIGO
@@ -312,7 +316,19 @@
                     </div>
                     <br>
 
+                      <div class="col-md-6">
+                        <input id="student_code" type="text"
+                          class="form-control @error('student_code') is-invalid @enderror" name="student_code"
+                          value="{{ $student->student_code ?? '' }}" required autocomplete="student_code" autofocus>
 
+                        @error('student_code')
+                        <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                      </div>
+                    </div>
+                    <br>
 
                     <p class="card-text text-center"><small class="text-muted">
                         QUIEN PUEDE RECOGER AL ESTUDIANTE:

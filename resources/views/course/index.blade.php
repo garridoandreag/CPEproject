@@ -1,11 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<script src="{{ asset('js/app.js') }}"></script>
+  <script src="{{ asset('js/app.js') }}"></script>
   <style>
     .status {
       cursor: pointer;
     }
+
   </style>
   <div class="container">
     @if (session('status'))
@@ -39,19 +40,20 @@
                   </td>
                   <td>
                     @if ($course->status == 'INACTIVO')
-                      <span id="status{{$course->id}}" onclick="changeStatus({{$course->id}})" class="status badge badge-danger">
+                      <span id="status{{ $course->id }}" onclick="changeStatus({{ $course->id }})"
+                        class="status badge badge-danger">
                         {{ $course->status }}
                       </span>
                     @else
-                      <span id="status{{$course->id}}" onclick="changeStatus({{$course->id}})" class="status badge badge-success">
+                      <span id="status{{ $course->id }}" onclick="changeStatus({{ $course->id }})"
+                        class="status badge badge-success">
                         {{ $course->status }}
                       </span>
                     @endif
                   </td>
                   <td>
-                    <a
-                        href="{{ action('CourseController@detail', ['id' => $course->id]) }}">
-                        Edit
+                    <a href="{{ action('CourseController@detail', ['id' => $course->id]) }}">
+                      Edit
                     </a>
                   </td>
                 </tr>
@@ -64,24 +66,37 @@
   </div>
   <script>
     async function changeStatus(id) {
-      const badge = $(`#status${id}`);
-      let status = badge.text().trim();
-      
-      status = await axios.post('/course/status', {
-        id,
-        status
-      })
-      .then(data => {
-        const response = data.data;
-        const { status } = response.data;
-        return status;
-      })
-      .catch(err => console.error(err));
+      try {
+        const badge = $(`#status${id}`);
+        let status = badge.text().trim();
 
-      badge
-      .removeClass(status === 'INACTIVO' ? 'badge-success' : 'badge-danger')
-      .addClass(status === 'INACTIVO' ? 'badge-danger' : 'badge-success');
-      badge.text(status);
+        status = await axios.post('/course/status', {
+            id,
+            status
+          })
+          .then(data => {
+            const response = data.data;
+            const {
+              status
+            } = response.data;
+
+            badge
+              .removeClass(status === 'INACTIVO' ? 'badge-success' : 'badge-danger')
+              .addClass(status === 'INACTIVO' ? 'badge-danger' : 'badge-success');
+            badge.text(status);
+
+            return status;
+          })
+          .catch(err => console.error(err));
+
+
+
+      } catch (error) {
+        console.error(error);
+
+      }
+
     }
+
   </script>
 @endsection

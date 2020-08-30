@@ -9,6 +9,11 @@ class Person extends Model {
     //
     protected $table = 'person';
 
+    protected $primaryKey = 'id';
+
+    protected $fillable = ['names','first_surname','second_surname','favorite_name','phone_number','cellphone_number','home_address','picture','country_code','subdivision_code','gender_id'];
+
+
     // uno a muchos
     public function user() {
 

@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use App\{Tutor, Person};
+
 
 class TutorController extends Controller
 {
@@ -15,11 +21,8 @@ class TutorController extends Controller
     {
         //
 
-        $students = \App\Student::paginate(30);
+        $tutors = \App\Tutor::paginate(30);
 
-        //         $person = DB::table('person')->orderBy('id', 'desc')->get();
-        
-        //        return view('student.index', [ 'student' => $student ]);
                   return view('tutor.index', compact('tutors'));
     }
 
@@ -33,12 +36,61 @@ class TutorController extends Controller
     public function store(Request $request)
     {
         //
+
+        $data = $request->validate([
+            'names' => ['required', 'string', 'max:50'],
+            'first_surname' => ['required', 'string', 'max:50'],
+            'second_surname' => ['required', 'string', 'max:50'],
+            'phone_number' => ['required', 'string', 'max:8'],
+            'cellphone_number' => ['nullable', 'string', 'max:8'],
+            'subdivision_code' => ['required'],
+            'home_address' => ['required', 'string', 'max:250'],
+            'dpi' => ['required', 'string', 'max:13'],
+            'occupation' => ['required', 'string', 'max:50'],
+        ]);
+
+        
+
+        DB::transaction(function() use ($data) {
+            $person = Person::create([
+                'names' => $data['names'],
+                'first_surname' => $data['first_surname'],
+                'second_surname' => $data['second_surname'],
+                'phone_number' => $data['phone_number'],
+                'cellphone_number' => $data['cellphone_number'],
+                'country_code' => '320',
+                'subdivision_code' => $data['subdivision_code'],
+                'home_address' => $data['home_address'],
+                'gender_id' => 'M',
+                'tutor' => '1'
+            ]);
+    
+            $person->tutor()->create([
+                'dpi' => $data['dpi'],
+                'occupation' => $data['occupation']
+            ]);
+
+
+
+        });
+
+        return redirect()->route('tutor.index');
+
+
+
     }
 
 
-    public function show($id)
+    public function detail($id)
     {
         //
+        $tutor = \App\Tutor::where('id', $id)->first();
+        //        var_dump($estudiante);
+        //        die();
+        
+                return view('tutor.detail', [
+                    'tutor' => $tutor
+                ]);
     }
 
 

@@ -35,23 +35,26 @@ function closeNav() {
   <!-- Fonts -->
 
   <!-- <link rel="dns-prefetch" href="//fonts.gstatic.com">  -->
-  <!--  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> -->
+ <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
   <link href="{{ asset('css/font-nunito.css') }}" rel="stylesheet">
   <!-- Styles -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+  
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+  
+
+ 
 </head>
 
 <body>
   <div id="app">
-    <nav class="navbar navbar-expand-md navbar-dark shadow-sm" style="background-color: #3A4F87">
+    <nav class="navbar navbar-expand-md navbar-dark shadow-sm" style="background-color: #435F9F">
 
       <!-- background: rgb(253,29,45);
 background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%, rgba(252,176,69,1) 33%, rgba(95,167,52,1) 51%, rgba(9,231,240,1) 71%, rgba(131,58,180,1) 90%);-->
       <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
-          COLEGIO PEQUEÑAS ESTRELLAS
+          Colegio Pequeñas Estrellas
           <!--{{ config('app.name', 'Laravel') }}-->
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -95,7 +98,7 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
+                                                   document.getElementById('logout-form').submit();">
                     {{ __('Logout') }}
                   </a>
 
@@ -127,34 +130,49 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
   <!--  SIDE BAR   -->
   <div id="sidebar" class="sidenav">
     <ul class="list-unstyled components">
-      <li class="active">
-        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-          <i class="fas fa-school"></i>
 
-          Home
-        </a>
-        <ul class="collapse list-unstyled" id="homeSubmenu">
-          <li>
-            <a href="#">Home 1</a>
-          </li>
-          <li>
-            <a href="#">Home 2</a>
-          </li>
-          <li>
-            <a href="#">Home 3</a>
-          </li>
-        </ul>
-      </li>
       <li>
+
+        <a href="{{ route('admin.admin') }}">
+          <!--                        <img class="icono-menu" src="{{ asset('images/curso.png') }}"  >-->
+          <i class="fas fa-users-cog"></i>
+
+          Admin
+        </a>
+
         <a href="{{ route('student.index') }}">
           <!--                        <img class="icono-menu" src="{{ asset('images/curso.png') }}"  >-->
           <i class="fas fa-user-graduate"></i>
 
           Estudiantes
         </a>
-        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+
+        <a href="{{ route('tutor.index') }}">
+
+          <i class="fa fa-user"></i>
+
+          Padres
+        </a>
+
+        <a href="{{ route('tutor.index') }}">
+
           <i class="fas fa-chalkboard-teacher"></i>
+
           Maestros
+        </a>
+
+        <a href="{{ route('course.index') }}">
+
+          <i class="fas fa-chalkboard-teacher"></i>
+
+          Cursos
+        </a>
+
+
+
+        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+          <i class="fas fa-wallet"></i>
+          Colegiatura
         </a>
         <ul class="collapse list-unstyled" id="pageSubmenu">
           <li>
@@ -169,17 +187,12 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
         </ul>
       </li>
       <li>
-        <a href="{{ route('course.index') }}">
+        <a href="#">
           <i class="fas fa-book"></i>
           Cursos
         </a>
       </li>
-      <li>
-        <a href="#">
-          <i class="fas fa-wallet"></i>
-          Colegiatura
-        </a>
-      </li>
+
       <li>
         <a href="#">
           <i class="fas fa-calendar-alt"></i>
