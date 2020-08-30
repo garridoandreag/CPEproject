@@ -14,11 +14,13 @@
         @endif
         <div class="card-group">
           <div class="card">
+            <div class="card-header">
             @if (isset($school) && is_object($school))
-              <div class="card-header">MODIFICAR COLEGIO</div>
+              MODIFICAR COLEGIO
             @else
-              <div class="card-header">NUEVO COLEGIO</div>
+              NUEVO COLEGIO
             @endif
+            </div>
 
             <div class="card-body">
 
@@ -158,22 +160,17 @@
                 <div class="form-group row mb-0">
                   <div class="col-md-6 offset-md-4">
                     <a href="{{ route('school.index') }}" class="btn btn-outline-primary">Regresar </a>
-
+                    <button type="submit" class="btn btn-primary">
                     @if (isset($school) && is_object($school))
-                    <button type="submit" class="btn btn-primary">
-                      Actualizar
-                    </button>
+                       Actualizar
                     @else
-                    <button type="submit" class="btn btn-primary">
-                      Guardar
-                    </button>
+                       Guardar
                     @endif
-
+                    </button>
                   </div>
                 </div>
                 <br />
             </div>
-
 
             </form>
           </div>
