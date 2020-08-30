@@ -117,7 +117,6 @@ Route::group(['prefix' => 'padre'], function() {
     Route::post('store', 'TutorController@store')->name('tutor.store');
     Route::get('detail/{id}', 'TutorController@detail')->name('tutor.detail');
     Route::post('update', 'TutorController@update')->name('tutor.update');
-
 });
 
 Route::group(['prefix' => 'grado'], function() {
@@ -135,6 +134,4 @@ Route::group(['prefix' => 'colegio'], function() {
     Route::get('/', 'SchoolController@index')->name('school.index');
     Route::post('store', 'SchoolController@store')->name('school.store');
     Route::get('detail/{id}', 'SchoolController@detail')->name('school.detail');
-
 });
-
