@@ -3,8 +3,6 @@
 @section('content')
   @inject('subdivisions','App\Services\Subdivisions')
 
-
-
   <div class="container">
     <div class="row justify-content-center ">
 
@@ -38,15 +36,12 @@
                     <a class="nav-link active" id="form_personal" data-toggle="tab" href="#personal" role="tab"
                       aria-controls="personal" aria-selected="true">PERSONAL</a>
                   </li>
-    
-                </ul>
-
+                    </ul>
 
                 <div class="tab-content" id="myTabContent" style="margin-top:16px;">
                   <div class="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="form_personal">
 
-
-                    <div class="form-group row">
+                   <div class="form-group row">
                       <label for="names" class="col-md-4 col-form-label text-md-right">NOMBRES</label>
 
                       <div class="col-md-6">
@@ -60,7 +55,6 @@
                         @enderror
                       </div>
                     </div>
-
 
                     <div class="form-group row">
                       <label for="first_name" class="col-md-4 col-form-label text-md-right">PRIMER
@@ -142,7 +136,6 @@
                               {{ old('subdivision_code', $tutor->person->subdivision_code ?? '') == $index ? 'selected' : '' }}>
                               {{ $subdivision }}
                             </option>
-
                           @endforeach
                         </select>
                       </div>
@@ -163,7 +156,6 @@
                         @enderror
                       </div>
                     </div>
-
 
                     <div class="form-group row">
                       <label for="dpi" class="col-md-4 col-form-label text-md-right">DPI</label>
@@ -196,8 +188,6 @@
                       </div>
                     </div>
 
-
-
                     <div class="form-group row mb-0">
                       <div class="col-md-6 offset-md-4">
                         <button type="submit" class="btn btn-primary">
@@ -207,19 +197,9 @@
                     </div>
                     <br />
                   </div>
-
-
                   <div class="tab-pane fade" id="academico" role="tabpanel" aria-labelledby="form_personal">
-
-
-
-
-
-
-
                   </div>
                 </div>
-
 
               </form>
             </div>
@@ -229,12 +209,7 @@
     </div>
   </div>
 @endsection
-
 @section('script')
   <script>
-
-
-
-
   </script>
 @endsection
