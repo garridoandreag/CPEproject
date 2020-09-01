@@ -13,7 +13,7 @@ class School extends Model
 
         protected $primaryKey = 'id';
     
-        protected $fillable = ['name','phone_number','cellphone_number','address','vision','mision','history','facebook_url'];
+        protected $fillable = ['name','phone_number','cellphone_number','address','vision','mision','history','facebook_url','email'];
     
         public $sortable = ['name','phone_number','address'];
     

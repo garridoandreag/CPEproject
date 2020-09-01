@@ -30,7 +30,7 @@
               <br>
               Colegio</a>
 
-            <a href="#" class="btn btn-light" id="menu-admin">
+            <a href="{{ route('course.index') }}" class="btn btn-light" id="menu-admin">
               <img src="images/cursos.png" class="btn-menu">
               <br>
               Cursos</a>
@@ -40,12 +40,12 @@
               <br>
               Grados</a>
 
-            <a href="#" class="btn btn-light" id="menu-admin">
+            <a href="{{ route('cycle.index') }}" class="btn btn-light" id="menu-admin">
               <img src="images/reloj.png" class="btn-menu">
               <br>
               Ciclo</a>
 
-            <a href="#" class="btn btn-light" id="menu-admin">
+            <a href="{{ route('announcement.index') }}" class="btn btn-light" id="menu-admin">
               <img src="images/announcement.png" class="btn-menu">
               <br>
               Avisos</a>

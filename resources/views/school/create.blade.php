@@ -103,7 +103,7 @@
                   <label for="mision" class="col-md-4 col-form-label text-md-right">Mision</label>
                   <div class="col-md-6">
                     <textarea id="mision" type="text" rows="5" class="form-control  @error('mision') is-invalid @enderror"
-                      name="mision" value="{{ $school->mision ?? '' }}" autofocus></textarea>
+                      name="mision" value="{{ $school->mision ?? '' }}" autocomplete="mision" autofocus></textarea>
                     @error('mision')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
@@ -132,6 +132,19 @@
                     <input id="facebook_url" type="text" class="form-control @error('facebook_url') is-invalid @enderror"
                       name="facebook_url" value="{{ $school->facebook_url ?? '' }}" autocomplete="facebook_url" autofocus>
                     @error('facebook_url')
+                    <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="email" class="col-md-4 col-form-label text-md-right">Correo Electrónico</label>
+                  <div class="col-md-6">
+                    <input id="email" type="text" class="form-control @error('email') is-invalid @enderror"
+                      name="email" value="{{ $school->email ?? '' }}" autocomplete="email" autofocus>
+                    @error('email')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
                     </span>

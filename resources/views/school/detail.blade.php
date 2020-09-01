@@ -72,7 +72,7 @@
                 <div class="form-group row">
                   <label for="address" class="col-md-4 col-form-label text-md-right">Dirección</label>
                   <div class="col-md-6">
-                    <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address"
+                    <input id="address" class="form-control @error('address') is-invalid @enderror" name="address"
                       value="{{ $school->address ?? '' }}" required autocomplete="address" autofocus  readonly>
                     @error('address')
                     <span class="invalid-feedback" role="alert">
@@ -85,8 +85,8 @@
                 <div class="form-group row">
                   <label for="vision" class="col-md-4 col-form-label text-md-right">Vision</label>
                   <div class="col-md-6">
-                    <textarea id="vision" type="text" rows="5" class="form-control  @error('vision') is-invalid @enderror" name="vision"
-                      value="{{ $school->vision ?? '' }}" autofocus readonly ></textarea>
+                    <textarea id="vision" rows="5" class="form-control  @error('vision') is-invalid @enderror" name="vision"
+                      value="{{ $school->vision ?? '' }}" autofocus readonly></textarea>
                     @error('vision')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
@@ -98,7 +98,7 @@
                 <div class="form-group row">
                   <label for="mision" class="col-md-4 col-form-label text-md-right">Mision</label>
                   <div class="col-md-6">
-                    <textarea id="mision" type="text" rows="5" class="form-control  @error('mision') is-invalid @enderror" name="mision"
+                    <textarea id="mision" rows="5" class="form-control  @error('mision') is-invalid @enderror" name="mision"
                       value="{{ $school->mision ?? '' }}" autofocus  readonly ></textarea>
                     @error('mision')
                     <span class="invalid-feedback" role="alert">
@@ -127,6 +127,19 @@
                     <input id="facebook_url" type="text" class="form-control @error('facebook_url') is-invalid @enderror" name="facebook_url"
                       value="{{ $school->facebook_url ?? '' }}" autocomplete="facebook_url" autofocus  readonly>
                     @error('facebook_url')
+                    <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="email" class="col-md-4 col-form-label text-md-right">Correo Electrónico</label>
+                  <div class="col-md-6">
+                    <input id="email" type="text" class="form-control @error('email') is-invalid @enderror"
+                      name="email" value="{{ $school->email ?? '' }}" autocomplete="email" autofocus readonly>
+                    @error('email')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
                     </span>

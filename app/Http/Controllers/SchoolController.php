@@ -15,7 +15,7 @@ class SchoolController extends Controller
 
     public function index()
     {
-        $schools = \App\School::paginate(30);
+        $schools = \App\School::sortable()->paginate(30);
 
         return view('school.index', compact('schools'));
     }
@@ -36,8 +36,10 @@ class SchoolController extends Controller
             'mision' => ['nullable','max:500'],
             'history' => ['nullable','max:500'],
             'facebook_url' => ['nullable','max:300'],
+            'email' => ['unique:school','email','nullable','max:50'],
         ]);
 
+        
         school::create([
             'name' => $data['name'],
             'phone_number' => $data['phone_number'],
@@ -46,7 +48,8 @@ class SchoolController extends Controller
             'vision'=> $data['vision'],
             'mision'=> $data['mision'],
             'history'=> $data['history'],
-            'facebook_url'=> $data['facebook_url']
+            'facebook_url'=> $data['facebook_url'],
+            'email' => $data['email'],
         ]);
 
         return redirect()->route('school.index')
@@ -84,6 +87,7 @@ class SchoolController extends Controller
             'mision' => ['nullable','max:500'],
             'history' => ['nullable','max:500'],
             'facebook_url' => ['nullable','max:300'],
+            'email' => ['unique:school,email,'. $id,'email','nullable','max:50'],
         ]);
 
         $school->name =  $data['name'];
@@ -94,6 +98,7 @@ class SchoolController extends Controller
         $school->mision =  $data['mision'];
         $school->history =  $data['history'];
         $school->facebook_url =  $data['facebook_url'];
+        $school->email =  $data['email'];
 
         $school->update();
 

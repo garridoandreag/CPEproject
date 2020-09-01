@@ -35,7 +35,7 @@ Route::post('/search-person', 'PersonController@searchPersonWithName');
 
 Route::get('/admin', function () {
     return view('admin.administration');
-})->name('admin.admin');
+})->name('admin.admin')->middleware('auth');;
 
 Route::get('/configuration','UserController@config')->name('config');
 Route::post('/user/update','UserController@update')->name('user.update');
@@ -87,4 +87,22 @@ Route::group(['prefix' => 'school'], function() {
     Route::get('detail/{id}', 'SchoolController@detail')->name('school.detail');
     Route::get('edit/{id}', 'SchoolController@edit')->name('school.edit');
     Route::post('update', 'SchoolController@update')->name('school.update');
+});
+
+Route::group(['prefix' => 'cycle'], function() {
+    Route::get('create', 'CycleController@create')->name('cycle.create');
+    Route::get('/', 'CycleController@index')->name('cycle.index');
+    Route::post('store', 'CycleController@store')->name('cycle.store');
+    Route::get('detail/{id}', 'CycleController@detail')->name('cycle.detail');
+    Route::get('edit/{id}', 'CycleController@edit')->name('cycle.edit');
+    Route::post('update', 'CycleController@update')->name('cycle.update');
+});
+
+Route::group(['prefix' => 'announcement'], function() {
+    Route::get('create', 'AnnouncementController@create')->name('announcement.create');
+    Route::get('/', 'AnnouncementController@index')->name('announcement.index');
+    Route::post('store', 'AnnouncementController@store')->name('announcement.store');
+    Route::get('detail/{id}', 'AnnouncementController@detail')->name('announcement.detail');
+    Route::get('edit/{id}', 'AnnouncementController@edit')->name('announcement.edit');
+    Route::post('update', 'AnnouncementController@update')->name('announcement.update');
 });
