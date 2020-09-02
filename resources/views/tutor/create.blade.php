@@ -2,17 +2,12 @@
 
 @section('content')
   @inject('subdivisions','App\Services\Subdivisions')
-   @inject('students','App\Services\Students')
-
-   
-
-
+  @inject('students','App\Services\Students')
 
   <div class="container">
     <div class="row justify-content-center ">
 
       <div class="col-md-8">
-
         @if (session('message'))
           <div class="alert alert-success">
             {{ session('message') }}
@@ -20,26 +15,23 @@
         @endif
         <div class="card-group">
           <div class="card">
-          <div class="card-header">
-            @if (isset($tutor) && is_object($tutor))
-              MODIFICAR PADRE O ENCARGADO
-            @else
-              NUEVO PADRE O ENCARGADO
-            @endif
+            <div class="card-header">
+              @if (isset($tutor) && is_object($tutor))
+                MODIFICAR PADRE O ENCARGADO
+              @else
+                NUEVO PADRE O ENCARGADO
+              @endif
             </div>
-            
-            <div class="card-body">
 
+            <div class="card-body">
               <form id="tutorForm" method="POST"
                 action="{{ isset($tutor) ? route('tutor.update') : route('tutor.store') }}" enctype="multipart/form-data"
                 aria-label="Configuración de mi cuenta">
                 {{ csrf_field() }}
 
-
                 @if (isset($tutor) && is_object($tutor))
                   <input type="hidden" name="id" value="{{ $tutor->id }}" /><br>
                 @endif
-
 
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                   <li class="nav-item">
@@ -52,10 +44,8 @@
                   </li>
                 </ul>
 
-
                 <div class="tab-content" id="myTabContent" style="margin-top:16px;">
                   <div class="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="form_personal">
-
 
                     <div class="form-group row">
                       <label for="names" class="col-md-4 col-form-label text-md-right">NOMBRES</label>
@@ -63,7 +53,6 @@
                       <div class="col-md-6">
                         <input id="names" type="text" class="form-control @error('names') is-invalid @enderror"
                           name="names" value="{{ $tutor->person->names ?? '' }}" required autocomplete="names" autofocus>
-
                         @error('names')
                         <span class="invalid-feedback" role="alert">
                           <strong>{{ $message }}</strong>
@@ -72,17 +61,14 @@
                       </div>
                     </div>
 
-
                     <div class="form-group row">
                       <label for="first_name" class="col-md-4 col-form-label text-md-right">PRIMER
                         APELLIDO</label>
-
                       <div class="col-md-6">
                         <input id="first_surname" type="text"
                           class="form-control @error('first_surname') is-invalid @enderror" name="first_surname"
                           value="{{ $tutor->person->first_surname ?? '' }}" required autocomplete="first_surname"
                           autofocus>
-
                         @error('first_surname')
                         <span class="invalid-feedback" role="alert">
                           <strong>{{ $message }}</strong>
@@ -93,13 +79,11 @@
 
                     <div class="form-group row">
                       <label for="second_surname" class="col-md-4 col-form-label text-md-right">SEGUNDO APELLIDO</label>
-
                       <div class="col-md-6">
                         <input id="second_surname" type="text"
                           class="form-control @error('second_surname') is-invalid @enderror" name="second_surname"
                           value="{{ $tutor->person->second_surname ?? '' }}" required autocomplete="second_surname"
                           autofocus>
-
                         @error('second_surname')
                         <span class="invalid-feedback" role="alert">
                           <strong>{{ $message }}</strong>
@@ -111,12 +95,10 @@
                     <div class="form-group row">
                       <label for="phone_number" class="col-md-4 col-form-label text-md-right">TELEFONO
                         DE CASA</label>
-
                       <div class="col-md-6">
                         <input id="phone_number" type="text"
                           class="form-control @error('phone_number') is-invalid @enderror" name="phone_number"
                           value="{{ $tutor->person->phone_number ?? '' }}" required autocomplete="phone_number" autofocus>
-
                         @error('phone_number')
                         <span class="invalid-feedback" role="alert">
                           <strong>{{ $message }}</strong>
@@ -127,20 +109,19 @@
 
 
                     <div class="form-group row">
-                        <label for="cellphone_number" class="col-md-4 col-form-label text-md-right">TELEFONO</label>
-  
-                        <div class="col-md-6">
-                          <input id="cellphone_number" type="text"
-                            class="form-control @error('cellphone_number') is-invalid @enderror" name="cellphone_number"
-                            value="{{ $tutor->person->cellphone_number ?? '' }}" required autocomplete="cellphone_number" autofocus>
-  
-                          @error('cellphone_number')
-                          <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                          </span>
-                          @enderror
-                        </div>
+                      <label for="cellphone_number" class="col-md-4 col-form-label text-md-right">TELEFONO</label>
+                      <div class="col-md-6">
+                        <input id="cellphone_number" type="text"
+                          class="form-control @error('cellphone_number') is-invalid @enderror" name="cellphone_number"
+                          value="{{ $tutor->person->cellphone_number ?? '' }}" required autocomplete="cellphone_number"
+                          autofocus>
+                        @error('cellphone_number')
+                        <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                       </div>
+                    </div>
 
                     <div class="form-group row">
                       <label for="subdivision_code" class="col-md-4 col-form-label text-md-right">DEPARTAMENTO</label>
@@ -148,12 +129,10 @@
                         <select id="subdivision_code" name="subdivision_code"
                           class="form-control  @error('subdivision_code') is-invalid @enderror">
                           @foreach ($subdivisions->get() as $index => $subdivision)
-
                             <option value="{{ $index }}"
                               {{ old('subdivision_code', $tutor->person->subdivision_code ?? '') == $index ? 'selected' : '' }}>
                               {{ $subdivision }}
                             </option>
-
                           @endforeach
                         </select>
                       </div>
@@ -161,12 +140,10 @@
 
                     <div class="form-group row">
                       <label for="home_address" class="col-md-4 col-form-label text-md-right">DIRECCIÓN DE CASA</label>
-
                       <div class="col-md-6">
                         <input id="home_address" type="text"
                           class="form-control @error('home_address') is-invalid @enderror" name="home_address"
                           value="{{ $tutor->person->home_address ?? '' }}" required autocomplete="home_address" autofocus>
-
                         @error('phone_number')
                         <span class="invalid-feedback" role="alert">
                           <strong>{{ $message }}</strong>
@@ -175,14 +152,11 @@
                       </div>
                     </div>
 
-
                     <div class="form-group row">
                       <label for="dpi" class="col-md-4 col-form-label text-md-right">DPI</label>
-
                       <div class="col-md-6">
                         <input id="dpi" type="text" class="form-control @error('dpi') is-invalid @enderror" name="dpi"
                           value="{{ $tutor->dpi ?? '' }}" required autocomplete="dpi" autofocus>
-
                         @error('dpi')
                         <span class="invalid-feedback" role="alert">
                           <strong>{{ $message }}</strong>
@@ -193,12 +167,10 @@
 
                     <div class="form-group row">
                       <label for="occupation" class="col-md-4 col-form-label text-md-right">OCUPACIÓN</label>
-
                       <div class="col-md-6">
                         <input id="occupation" type="text" class="form-control @error('occupation') is-invalid @enderror"
                           name="occupation" value="{{ $tutor->occupation ?? '' }}" required autocomplete="occupation"
                           autofocus>
-
                         @error('occupation')
                         <span class="invalid-feedback" role="alert">
                           <strong>{{ $message }}</strong>
@@ -210,22 +182,18 @@
                     <div class="form-group row">
                       <label for="student_id" class="col-md-4 col-form-label text-md-right">ESTUDIANTE</label>
                       <div class="col-md-6">
-                        <select  name="student_id" data-show-subtext="true" data-live-search="true"
-                          class="selectpicker @error('student_id') is-invalid @enderror" >
+                        <select name="student_id" data-show-subtext="true" data-live-search="true"
+                          class="selectpicker @error('student_id') is-invalid @enderror">
                           <option value="" disabled selected>Elije al estudiante</option>
                           @foreach ($students->get() as $index => $student)
-
                             <option value="{{ $index }}" data-subtext="{{ $student }}"
                               {{ old('student_id', $tutor->student->id ?? '') == $index ? 'selected' : '' }}>
                               {{ $student }}
                             </option>
-
                           @endforeach
                         </select>
                       </div>
                     </div>
-                  
-
 
                     <div class="form-group row mb-0">
                       <div class="col-md-6 offset-md-4">
@@ -236,19 +204,9 @@
                     </div>
                     <br />
                   </div>
-
-
                   <div class="tab-pane fade" id="academico" role="tabpanel" aria-labelledby="form_personal">
-
-
-
-
-
-
-
                   </div>
                 </div>
-
 
               </form>
             </div>
@@ -257,15 +215,4 @@
       </div>
     </div>
   </div>
-@endsection
-
-@section('script')
-
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>-->
-<script>
-  // Material Select Initialization
-//$(document).ready(function() {
-//$('.form-control').materialSelect();
-//});
-  </script>
 @endsection

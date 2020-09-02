@@ -10,12 +10,10 @@ use App\Grade;
 
 class GradeController extends Controller
 {
-
-    
+   
     public function __construct() {
         $this->middleware('auth');
     }
-
 
     public function index()
     {
@@ -25,20 +23,15 @@ class GradeController extends Controller
         return view('grade.index', compact('grades'));
     }
 
-
-
     public function create()
     {
         //
         return view('grade.create');
     }
 
-  
-
     public function store(Request $request)
     {
         //
-
         $data = $request->validate([
             'name' => ['required', 'string', 'max:50'],
             'section' => ['required']
@@ -48,42 +41,23 @@ class GradeController extends Controller
             'name' => $data['name'],
             'section' => $data['section']
         ]);
-
-           
+     
         return redirect()->route('grade.index')
                         ->with(['status' => 'Grado agregado correctamente.']);
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function detail($id)
     {
-        //
-
         $grade = \App\Grade::where('id', $id)->first();
-        //        var_dump($estudiante);
-        //        die();
-        
+
                 return view('grade.detail', [
                     'grade' => $grade
                 ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
-       
         $grade = \App\Grade::where('id', $id)->first();
         
                 return view('grade.create', [
@@ -91,17 +65,8 @@ class GradeController extends Controller
                 ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request)
     {
-        //
-
         $id = $request->input('id');
         $grade = Grade::find($id);
 
@@ -121,22 +86,12 @@ class GradeController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
-
             $grade = Grade::find($id);
-
-
             
             return redirect()->route('grade.index')
             ->with(['status' => 'Grado eliminado correctamente.' ]);
-
-
     }
 }

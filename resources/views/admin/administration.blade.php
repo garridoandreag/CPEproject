@@ -17,67 +17,54 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-12">
-
-
-
         <div class="card">
-          <div class="card-header">Administración
-
-          </div>
-
+          <div class="card-header">Administración</div>
           <div class="card-body">
-
-            <a href="#" class="btn btn-light" id="menu-admin" >
+            <a href="#" class="btn btn-light" id="menu-admin">
               <img src="images/usuario.png" class="btn-menu">
               <br>
-            Usuarios</a>
+              Usuarios</a>
 
-            <a href="{{route('school.index')}}" class="btn btn-light" id="menu-admin" >
+            <a href="{{ route('school.index') }}" class="btn btn-light" id="menu-admin">
               <img src="images/colegio.png" class="btn-menu">
               <br>
-            Colegio</a>
+              Colegio</a>
 
-            <a href="#" class="btn btn-light" id="menu-admin" >
+            <a href="{{ route('course.index') }}" class="btn btn-light" id="menu-admin">
               <img src="images/cursos.png" class="btn-menu">
               <br>
-            Cursos</a>
+              Cursos</a>
 
-            <a href="{{route('grade.index')}}" class="btn btn-light" id="menu-admin" >
+            <a href="{{ route('grade.index') }}" class="btn btn-light" id="menu-admin">
               <img src="images/grado.png" class="btn-menu">
               <br>
-            Grados</a>
+              Grados</a>
 
-            <a href="#" class="btn btn-light" id="menu-admin" >
+            <a href="{{ route('cycle.index') }}" class="btn btn-light" id="menu-admin">
               <img src="images/reloj.png" class="btn-menu">
               <br>
-            Ciclo</a>
+              Ciclo</a>
 
-
-
-            <a href="#" class="btn btn-light" id="menu-admin" >
+            <a href="{{ route('announcement.index') }}" class="btn btn-light" id="menu-admin">
               <img src="images/announcement.png" class="btn-menu">
               <br>
-            Avisos</a>
+              Avisos</a>
 
-            <a href="#" class="btn btn-light" id="menu-admin" >
+            <a href="#" class="btn btn-light" id="menu-admin">
               <img src="images/calendario.png" class="btn-menu">
               <br>
-            Eventos</a>
+              Eventos</a>
 
-            <a href="#" class="btn btn-light" id="menu-admin" >
+            <a href="#" class="btn btn-light" id="menu-admin">
               <img src="images/cuenta.png" class="btn-menu">
               <br>
-            Categoria pago</a>
+              Categoria pago</a>
 
           </div>
-
-
-        </div>
-
-
         </div>
       </div>
     </div>
+  </div>
   </div>
 
 @endsection
