@@ -104,3 +104,16 @@ Route::group(['prefix' => 'estudiante'], function() {
     Route::get('detalle/{id}', 'StudentController@detail')->name('student.detail');
     Route::get('/subjects', 'StudentController@getSubjects');
 });
+
+Route::group(['prefix' => 'course'], function() {
+  Route::get('/', 'CourseController@index')->name('course.index');
+  Route::get('/create', 'CourseController@create')->name('course.create');
+  Route::post('/store', 'CourseController@store')->name('course.store');
+  Route::get('/detail/{id}', 'CourseController@detail')->name('course.detail');
+  Route::post('/update', 'CourseController@update')->name('course.udpate');
+  Route::post('/status', 'CourseController@status')->name('course.status');
+});
+
+Route::group(['prefix' => 'event'], function () {
+  Route::get('/', 'EventController@index')->name('event.index');
+});

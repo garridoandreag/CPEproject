@@ -41,6 +41,7 @@
                     @if ($course->status == 'INACTIVO')
                       <span
                         id="status{{$course->id}}" onclick="changeStatus({{$course->id}})" class="status badge badge-danger">
+                      <span id="status{{$course->id}}" onclick="changeStatus({{$course->id}})" class="status badge badge-danger">
                         {{ $course->status }}
                       </span>
                     @else
@@ -67,7 +68,7 @@
     async function changeStatus(id) {
       const badge = $(`#status${id}`);
       let status = badge.text().trim();
-      
+
       status = await axios.post('/course/status', {
         id,
         status
