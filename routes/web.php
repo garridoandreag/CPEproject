@@ -106,3 +106,12 @@ Route::group(['prefix' => 'announcement'], function() {
     Route::get('edit/{id}', 'AnnouncementController@edit')->name('announcement.edit');
     Route::post('update', 'AnnouncementController@update')->name('announcement.update');
 });
+
+Route::group(['prefix' => 'paymentcategory'], function() {
+    Route::get('create', 'PaymentcategoryController@create')->name('paymentcategory.create');
+    Route::get('/', 'PaymentcategoryController@index')->name('paymentcategory.index');
+    Route::post('store', 'PaymentcategoryController@store')->name('paymentcategory.store');
+    Route::get('detail/{id}', 'PaymentcategoryController@detail')->name('paymentcategory.detail');
+    Route::get('edit/{id}', 'PaymentcategoryController@edit')->name('paymentcategory.edit');
+    Route::post('update', 'PaymentcategoryController@update')->name('paymentcategory.update');
+});

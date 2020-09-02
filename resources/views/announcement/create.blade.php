@@ -18,9 +18,9 @@
 
             <div class="card-header">
               @if (isset($announcement) && is_object($announcement))
-                Modificar Ciclo
+                Modificar Aviso
               @else
-                Nuevo Ciclo
+                Nuevo Aviso
               @endif
             </div>
 
@@ -28,7 +28,7 @@
 
               <form id="announcementForm" method="POST"
                 action="{{ isset($announcement) ? route('announcement.update') : route('announcement.store') }}"
-                enctype="multipart/form-data" aria-label="Ciclos">
+                enctype="multipart/form-data" aria-label="Avisos">
                 {{ csrf_field() }}
 
                 @if (isset($announcement) && is_object($announcement))
