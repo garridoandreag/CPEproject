@@ -55,7 +55,7 @@
               <br>
               Eventos</a>
 
-            <a href="#" class="btn btn-light" id="menu-admin">
+            <a href="{{ route('paymentcategory.index') }}" class="btn btn-light" id="menu-admin">
               <img src="images/cuenta.png" class="btn-menu">
               <br>
               Categoria pago</a>

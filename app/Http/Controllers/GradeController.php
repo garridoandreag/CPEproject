@@ -82,8 +82,6 @@ class GradeController extends Controller
 
         return redirect()->route('grade.index')
                         ->with(['status' => 'Grado actualizado correctamente.']);
-
-
     }
 
 
