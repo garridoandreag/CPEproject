@@ -115,3 +115,12 @@ Route::group(['prefix' => 'paymentcategory'], function() {
     Route::get('edit/{id}', 'PaymentcategoryController@edit')->name('paymentcategory.edit');
     Route::post('update', 'PaymentcategoryController@update')->name('paymentcategory.update');
 });
+
+Route::group(['prefix' => 'employee'], function() {
+    Route::get('create', 'EmployeeController@create')->name('employee.create');
+    Route::get('/', 'EmployeeController@index')->name('employee.index');
+    Route::post('store', 'EmployeeController@store')->name('employee.store');
+    Route::get('detail/{id}', 'EmployeeController@detail')->name('employee.detail');
+    Route::get('edit/{id}', 'EmployeeController@edit')->name('employee.edit');
+    Route::post('update', 'EmployeeController@update')->name('employee.update');
+});

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class gender_seed extends Seeder {
+class GenderSeeder extends Seeder {
 
     /**
      * Run the database seeds.
@@ -11,18 +11,15 @@ class gender_seed extends Seeder {
      */
     public function run() {
         //
-
-
         DB::table('gender')->insert(array(
-            'id' => 'M',
-            'name' => 'MASCULINO'
+            'id' => 1,
+            'name' => 'Femenino'
                 )
         );
 
-
         DB::table('gender')->insert(array(
-            'id' => 'F',
-            'name' => 'FEMENINO'
+            'id' => 2,
+            'name' => 'Masculino'
                 )
         );
 

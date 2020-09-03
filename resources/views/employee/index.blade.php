@@ -39,8 +39,11 @@
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th scope="col">@sortablelink('name','Nombre')</th>
-                  <th scope="col">@sortablelink('section','Sección')</th>
+                  <th scope="col">@sortablelink('names','Nombre')</th>
+                  <th scope="col">@sortablelink('first_surname','Apellido')</th>
+                  <th scope="col">@sortablelink('job_id','Puesto')</th>
+                  <th scope="col">@sortablelink('professor','Docente')</th>
+                  <th scope="col">@sortablelink('status','Estado')</th>
                 </tr>
               </thead>
               <tbody id="myTable">
@@ -48,14 +51,42 @@
                   <tr>
                     <td data-label="Nombre" scope="row"><a
                         href="{{ action('EmployeeController@detail', ['id' => $employee->id]) }}" />
-                      {{ $employee->person->name }}
+                      {{ $employee->person->names }}
+                    </td>
+
+                    <td data-label="Apellido" scope="row"><a
+                        href="{{ action('EmployeeController@detail', ['id' => $employee->id]) }}" />
                       {{ $employee->person->first_surname }}
                     </td>
 
-                    <td data-label=""><a
+                    <td data-label="Puesto"><a
                         href="{{ action('EmployeeController@detail', ['id' => $employee->id]) }}" />
-                      {{ $employee->section }}
+                      {{ $employee->job->job }}
                       </a>
+                    </td>
+
+                    <td data-label="Docente"><a
+                        href="{{ action('EmployeeController@detail', ['id' => $employee->id]) }}" />
+                      @if ($employee->professor == 1)
+                        Si
+                      @else
+                        No
+                      @endif
+                      </a>
+                    </td>
+
+                    <td data-label="Estado">
+                      @if ($employee->status == 'INACTIVO')
+                        <span id="status{{ $employee->id }}" onclick="changeStatus({{ $employee->id }})"
+                          class="status badge badge-danger">
+                          {{ $employee->status }}
+                        </span>
+                      @else
+                        <span id="status{{ $employee->id }}" onclick="changeStatus({{ $employee->id }})"
+                          class="status badge badge-success">
+                          {{ $employee->status }}
+                        </span>
+                      @endif
                     </td>
 
                   </tr>
@@ -66,7 +97,7 @@
             {{ $employees->appends(Request::except('page'))->render() }}
 
             <p>
-              Se muestran {{ $employees->count() }} de {{ $employees->total() }} grados.
+              Se muestran {{ $employees->count() }} de {{ $employees->total() }} empleados.
             </P>
 
           </div>
@@ -75,5 +106,36 @@
       </div>
     </div>
   </div>
+
+  <script>
+    async function changeStatus(id) {
+      try {
+        const badge = $(`#status${id}`);
+        let status = badge.text().trim();
+
+        status = await axios.post('/employee/status', {
+            id,
+            status
+          })
+          .then(data => {
+            const response = data.data;
+            const {
+              status
+            } = response.data;
+
+            badge
+              .removeClass(status === 'INACTIVO' ? 'badge-success' : 'badge-danger')
+              .addClass(status === 'INACTIVO' ? 'badge-danger' : 'badge-success');
+            badge.text(status);
+
+            return status;
+          })
+          .catch(err => console.error(err));
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+  </script>
 
 @endsection
