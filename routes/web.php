@@ -135,3 +135,7 @@ Route::group(['prefix' => 'colegio'], function() {
     Route::post('store', 'SchoolController@store')->name('school.store');
     Route::get('detail/{id}', 'SchoolController@detail')->name('school.detail');
 });
+
+Route::group(['prefix' => 'event'], function () {
+  Route::get('/', 'EventController@index')->name('event.index');
+});

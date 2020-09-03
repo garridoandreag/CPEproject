@@ -42,6 +42,9 @@
                     @if ($course->status == 'INACTIVO')
                       <span id="status{{ $course->id }}" onclick="changeStatus({{ $course->id }})"
                         class="status badge badge-danger">
+                      <span
+                        id="status{{$course->id}}" onclick="changeStatus({{$course->id}})" class="status badge badge-danger">
+                      <span id="status{{$course->id}}" onclick="changeStatus({{$course->id}})" class="status badge badge-danger">
                         {{ $course->status }}
                       </span>
                     @else
@@ -95,8 +98,6 @@
         console.error(error);
 
       }
-
     }
-
   </script>
 @endsection
