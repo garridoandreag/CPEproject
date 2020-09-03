@@ -23,11 +23,10 @@
           <div class="col-md-12">
             <a href="{{ action('CourseController@create') }}" class="btn btn-primary">Nuevo </a>
           </div>
-          <div class="table"></div>
-          <table>
+          <table class="table">
             <thead>
               <tr>
-                <td>Name</td>
+                <td>Nombre</td>
                 <td>Estado</td>
                 <td>Opciones</td>
               </tr>

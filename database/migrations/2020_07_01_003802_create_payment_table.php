@@ -17,6 +17,7 @@ class CreatePaymentTable extends Migration
             CREATE TABLE PAYMENT(
             id int(255) UNSIGNED NOT NULL AUTO_INCREMENT,
             paymentcategory_id int(255) UNSIGNED NOT NULL,
+            cycle_id int(255) UNSIGNED NOT NULL,
             amount decimal(10,2) not null,
             code_reference varchar(100) not null,
             student_id int(255) UNSIGNED NOT NULL,

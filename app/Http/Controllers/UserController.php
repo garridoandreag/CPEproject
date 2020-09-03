@@ -16,26 +16,15 @@ class UserController extends Controller {
         $this->middleware('auth');
     }
 
-
     public function config() {
         return view('user.config');
     }
 
     public function update(Request $request) {
-
-
-
         $user = \Auth::user();
         
         $id = $user->id;
         
-//        $person = App\Person::find(4);
-
-        
-        
-        
-    
-
         //VALIDACION DEL FORMULARIO
         $validate = $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],

@@ -22,17 +22,16 @@ class CreatePersonTable extends Migration {
               `phone_number` varchar(100) DEFAULT NULL,
               `cellphone_number` varchar(100) DEFAULT NULL,
               `home_address` varchar(300) DEFAULT NULL,
-              `occupation` varchar(100) DEFAULT NULL,
               `picture` varchar(300) DEFAULT NULL,
-              `gender_id` char(20) NOT NULL,
+              `gender_id` int(10) UNSIGNED NOT NULL,
               `employee` tinyint(1) DEFAULT '0',
               `tutor` tinyint(1) DEFAULT '0',
               `student` tinyint(1) DEFAULT '0',
               `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
               `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
               `status` enum('ACTIVO','INACTIVO') NOT NULL DEFAULT 'ACTIVO',
-              PRIMARY KEY (`id`),
-              KEY `fk_person_gender` (`gender_id`)
+              CONSTRAINT pk_person PRIMARY KEY (id),
+              CONSTRAINT fk_person_gender FOREIGN KEY (gender_id) REFERENCES gender(id)
             ) ENGINE=InnoDB;
             ");
 

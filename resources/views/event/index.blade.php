@@ -5,6 +5,14 @@
   <script src="{{ asset('js/calendar/main.js') }}"></script>
   <script src="{{ asset('js/calendar/locales/es.js') }}"></script>
   <link href="{{ asset('js/calendar/main.min.css') }}" rel='stylesheet' />
+  <style>
+    .calendar-responsive {
+      overflow: auto;
+    }
+    #calendar {
+      width: 800px;
+    }
+  </style>
   <script>
     function loadCalendar() {
       var calendarEl = document.getElementById('calendar')
@@ -73,31 +81,12 @@
             Eventos
           </div>
           <div class="card-body">
-            <div id="calendar"></div>
+            <div class="calendar-responsive">
+              <div id="calendar" class="fc fc-media-screen fc-direction-ltr fc-theme-standard"></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <script>
-    const calendarEl = document.getElementById('calendar');
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-      events: [{
-          title: 'event1',
-          start: '2020-08-31'
-        },
-        {
-          title: 'event2',
-          start: '2020-08-31',
-          end: '2020-09-07'
-        },
-        {
-          title: 'event3',
-          start: '2020-09-02T12:30:00',
-          allDay: false // will make the time show
-        }
-      ]
-    });
-
-  </script>
 @endsection

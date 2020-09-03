@@ -3,11 +3,19 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class Cycle extends Model
 {
-    //
+    use Sortable;
+
     protected $table = 'cycle';
+
+    protected $primaryKey = 'id';
+
+    protected $fillable = ['name','school_id','start_date','end_date', 'status'];
+
+    public $sortable = ['name','school_id','start_date','end_date','status'];
     
     // uno a muchos
     public function subject(){

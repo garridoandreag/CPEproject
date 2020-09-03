@@ -3,80 +3,110 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Collection;
+use App\Cycle; 
 
 class CycleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        //
+        $cycles = \App\Cycle::sortable()->paginate(30);
+
+        return view('cycle.index', compact('cycles'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return view('cycle.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:50'],
+            'school_id' => ['required'],
+            'start_date' => ['required', 'date'],
+            'end_date' => ['required', 'date'],
+            
+        ]);
+
+        Cycle::create([
+            'name' => $data['name'],
+            'school_id' => $data['school_id'],
+            'start_date' => $data['start_date'],
+            'end_date' => $data['end_date'],
+        ]);
+     
+        return redirect()->route('cycle.index')
+                        ->with(['status' => 'Ciclo creado correctamente.']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function detail($id)
     {
-        //
+        $cycle = \App\Cycle::where('id', $id)->first();
+
+        return view('cycle.detail', [
+            'cycle' => $cycle
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        $cycle = \App\Cycle::where('id', $id)->first();
+        
+        return view('cycle.create', [
+            'cycle' => $cycle
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+
+    public function update(Request $request)
     {
-        //
+        $id = $request->input('id');
+        $cycle = Cycle::find($id);
+
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:50'],
+            'school_id' => ['required'],
+            'start_date' => ['required', 'date'],
+            'end_date' => ['required', 'date'],
+        ]);
+       
+            $cycle->name =  $data['name'];
+            $cycle->school_id =  $data['school_id'];
+            $cycle->start_date = $data['start_date'];
+            $cycle->end_date = $data['end_date'];
+
+            $cycle->update();
+
+        return redirect()->route('cycle.index')
+                        ->with(['status' => 'Ciclo actualizado correctamente.']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function status (Request $request) {
+        $status = $request->input('status');
+        $id = $request->input('id');
+    
+        $status = ($status == 'ACTIVO') ? 'INACTIVO' : 'ACTIVO';
+    
+        $cycle = DB::table('cycle')->where('id', $id)
+          ->update(array(
+            'status' => $status,
+          ));
+    
+        return response()->json(
+          [
+            'data' => ['status' => $status]
+          ]
+        );
+      }
+
     public function destroy($id)
     {
         //

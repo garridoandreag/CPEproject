@@ -2,7 +2,7 @@
 <br>
 
 
-<table>
+<table class="table">
 
     <tr style="text-align: left">
         <th>Nombre</th>
@@ -20,8 +20,8 @@
             {{$estudiante->apellido2}}
         </td>
     </tr>
-    
-    
+
+
     <tr style="text-align: left">
         <th>Codigo Estudiante</th>
         <td>
