@@ -61,7 +61,7 @@ form .picture_profile{
 
 a .btn-menu{
     width: 105px; height: 105px;
-    
+
 }
 
 #menu-admin{
@@ -70,7 +70,7 @@ a .btn-menu{
     margin-top: 25px;
     margin-bottom: 25px;
 
-    
+
 }
 
 
@@ -273,7 +273,7 @@ a.article:hover {
 
     a .btn-menu{
         width: 35px; height: 35px;
-        
+
     }
 
     #menu-admin{
@@ -286,7 +286,7 @@ a.article:hover {
         padding-right: 1px;
         width: 83px; height: 83px;
     }
-    
+
     #sidebar {
         min-width: 80px;
         max-width: 80px;
@@ -343,7 +343,7 @@ a.article:hover {
 
 
 
-table {
+.table table {
     border: 1px solid #ccc;
     border-collapse: collapse;
     margin: 0;
@@ -352,39 +352,39 @@ table {
     table-layout: fixed;
 }
 
-table caption {
+.table table caption {
     font-size: 1.5em;
     margin: .5em 0 .75em;
 }
 
-table tr {
+.table table tr {
     background-color: #f8f8f8;
     border: 1px solid #ddd;
     padding: .35em;
 }
 
-table th,
-table td {
+.table table th,
+.table table td {
     padding: .625em;
     text-align: center;
 }
 
-table th {
+.table table th {
     font-size: .85em;
     letter-spacing: .1em;
     text-transform: uppercase;
 }
 
 @media screen and (max-width: 600px) {
-    table {
+    .table table {
         border: 0;
     }
 
-    table caption {
+    .table table caption {
         font-size: 1.3em;
     }
 
-    table thead {
+    .table table thead {
         border: none;
         clip: rect(0 0 0 0);
         height: 1px;
@@ -395,20 +395,20 @@ table th {
         width: 1px;
     }
 
-    table tr {
+    .table table tr {
         border-bottom: 3px solid #ddd;
         display: block;
         margin-bottom: .625em;
     }
 
-    table td {
+    .table table td {
         border-bottom: 1px solid #ddd;
         display: block;
         font-size: .9em;
         text-align: right;
     }
 
-    table td::before {
+    .table table td::before {
         /*
         * aria-label has no advantage, it won't be read inside a table
         content: attr(aria-label);
@@ -419,7 +419,7 @@ table th {
         text-transform: uppercase;
     }
 
-    table td:last-child {
+    .table table td:last-child {
         border-bottom: 0;
     }
 }

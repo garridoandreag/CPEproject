@@ -124,3 +124,7 @@ Route::group(['prefix' => 'employee'], function() {
     Route::get('edit/{id}', 'EmployeeController@edit')->name('employee.edit');
     Route::post('update', 'EmployeeController@update')->name('employee.update');
 });
+
+Route::group(['prefix' => 'event'], function () {
+  Route::get('/', 'EventController@index')->name('event.index');
+});

@@ -7,9 +7,9 @@
         <div class="card">
           <div class="card-header">
             @if (isset($course) && is_object($course))
-              MODIFICAR ESTUDIANTE
+              MODIFICAR CURSO
             @else
-              NUEVO ESTUDIANTE
+              NUEVO CURSO
             @endif
           </div>
           <div class="card-body">
@@ -23,7 +23,7 @@
               @endif
 
               <div class="form-group row">
-                <label for="name" class="col-md-4 col-form-label text-md-right">FECHA DE
+                <label for="name" class="col-md-4 col-form-label text-md-right">
                   Nombre</label>
 
                 <div class="col-md-6">

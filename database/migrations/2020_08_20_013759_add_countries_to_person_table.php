@@ -23,7 +23,6 @@ class AddCountriesToPersonTable extends Migration
             $table->foreign('country_code')->references('code')->on('country');
             $table->foreign('subdivision_code')->references('code')->on('subdivision');
         });
-
        /* DB::statement("
         ALTER TABLE person ADD CONSTRAINT fk_person_country FOREIGN KEY (`country_code`) REFERENCES country(`code`);
 
