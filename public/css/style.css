@@ -59,13 +59,19 @@ form .picture_profile{
 }
 
 
+a .btn-menu{
+    width: 105px; height: 105px;
+    
+}
+
 #menu-admin{
     margin-left: 25px;
     margin-right: 25px;
     margin-top: 25px;
     margin-bottom: 25px;
-}
 
+    
+}
 
 
 
@@ -272,10 +278,13 @@ a.article:hover {
 
     #menu-admin{
         font-size: 0.85em;
-        margin-left: 6px;
-        margin-right: 6px;
-        margin-top: 6px;
-        margin-bottom: 6px;
+        margin-left: 5px;
+        margin-right: 5px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        padding-left: 1px;
+        padding-right: 1px;
+        width: 83px; height: 83px;
     }
     
     #sidebar {

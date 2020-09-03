@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEmployeeTable extends Migration
+class CreateJobTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,19 +14,20 @@ class CreateEmployeeTable extends Migration
     public function up()
     {
         DB::statement("
-            CREATE TABLE EMPLOYEE(
+            CREATE TABLE JOB(
             id int(255) unsigned not null,
-            dpi varchar(100) not null,
+            job varchar(100) not null,
             job_id int(255) unsigned not null,
-            salary decimal(10,2),
-            professor BOOLEAN DEFAULT FALSE,
             created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
             status enum('ACTIVO','INACTIVO') not null default 'ACTIVO',
-            CONSTRAINT pk_employee PRIMARY KEY (id),
-            CONSTRAINT fk_employee_person FOREIGN KEY (id) REFERENCES person(id)
+            CONSTRAINT pk_job PRIMARY KEY (id)
             )ENGINE=InnoDb;
             ");
+
+            Schema::table('employee', function (Blueprint $table) {
+                $table->foreign('job_id')->references('id')->on('job');
+            });
     }
 
     /**
@@ -36,6 +37,6 @@ class CreateEmployeeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employee');
+        Schema::dropIfExists('job');
     }
 }

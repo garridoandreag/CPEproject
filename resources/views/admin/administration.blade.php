@@ -60,6 +60,16 @@
               <br>
               Categoria pago</a>
 
+            <a href="{{ route('paymentcategory.index') }}" class="btn btn-light" id="menu-admin">
+              <img src="images/employee.png" class="btn-menu">
+              <br>
+              Empleados</a>
+
+            <a href="{{ route('paymentcategory.index') }}" class="btn btn-light" id="menu-admin">
+              <img src="images/clase.png" class="btn-menu">
+              <br>
+              Asignación</a>
+
           </div>
         </div>
       </div>

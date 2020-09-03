@@ -17,7 +17,6 @@ class AddCountriesToPersonTable extends Migration
             //
             $table->string('country_code');
             $table->string('subdivision_code');
-            $table->foreign('country_code')->references('code')->on('countries');
         });
 
        Schema::table('person', function (Blueprint $table) {
