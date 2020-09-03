@@ -3,7 +3,7 @@
 namespace App\Services;
 
 
-class Sections {
+class Status {
     
     public function get(){
         

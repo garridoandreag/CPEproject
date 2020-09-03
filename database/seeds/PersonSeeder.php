@@ -18,7 +18,7 @@ class PersonSeeder extends Seeder
             'names' => 'CPE',
             'first_surname' => 'Admin',
             'second_surname' => 'Admin',
-            'gender_id' => 'M',
+            'gender_id' => 2,
             'employee' => '1',
             'country_code' => '320',
             'subdivision_code' => '01',

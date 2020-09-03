@@ -60,7 +60,7 @@
               <br>
               Categoria pago</a>
 
-            <a href="{{ route('paymentcategory.index') }}" class="btn btn-light" id="menu-admin">
+            <a href="{{ route('employee.index') }}" class="btn btn-light" id="menu-admin">
               <img src="images/employee.png" class="btn-menu">
               <br>
               Empleados</a>

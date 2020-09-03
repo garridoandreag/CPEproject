@@ -17,7 +17,6 @@ class CreateJobTable extends Migration
             CREATE TABLE JOB(
             id int(255) unsigned not null,
             job varchar(100) not null,
-            job_id int(255) unsigned not null,
             created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
             status enum('ACTIVO','INACTIVO') not null default 'ACTIVO',
