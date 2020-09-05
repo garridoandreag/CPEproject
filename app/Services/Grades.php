@@ -7,7 +7,7 @@ class Grades {
     
     public function get(){
         
-        $grades = Grade::get();
+        $grades = Grade::get()->where('status','ACTIVO');
         $gradesArray['']='Selecciona un grado';
         foreach($grades as $grade){
             $gradesArray[$grade->id] = $grade->name;

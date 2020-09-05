@@ -76,7 +76,7 @@
                   </tr>
                 @endforeach
               </tbody>
-            </table>
+            </table >
 
             {{ $tutors->links() }}
 
