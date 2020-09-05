@@ -343,7 +343,7 @@ a.article:hover {
 
 
 
-.table table {
+.table {
     border: 1px solid #ccc;
     border-collapse: collapse;
     margin: 0;
@@ -352,39 +352,39 @@ a.article:hover {
     table-layout: fixed;
 }
 
-.table table caption {
+.table caption {
     font-size: 1.5em;
     margin: .5em 0 .75em;
 }
 
-.table table tr {
+.table tr {
     background-color: #f8f8f8;
     border: 1px solid #ddd;
     padding: .35em;
 }
 
-.table table th,
-.table table td {
+.table th,
+.table td {
     padding: .625em;
     text-align: center;
 }
 
-.table table th {
+.table th {
     font-size: .85em;
     letter-spacing: .1em;
     text-transform: uppercase;
 }
 
 @media screen and (max-width: 600px) {
-    .table table {
+    .table {
         border: 0;
     }
 
-    .table table caption {
+    .table caption {
         font-size: 1.3em;
     }
 
-    .table table thead {
+    .table thead {
         border: none;
         clip: rect(0 0 0 0);
         height: 1px;
@@ -395,20 +395,21 @@ a.article:hover {
         width: 1px;
     }
 
-    .table table tr {
+    .table tr {
         border-bottom: 3px solid #ddd;
         display: block;
         margin-bottom: .625em;
     }
 
-    .table table td {
+    .table td {
         border-bottom: 1px solid #ddd;
         display: block;
         font-size: .9em;
         text-align: right;
+        padding-bottom: 0.5cm;
     }
 
-    .table table td::before {
+    .table td::before {
         /*
         * aria-label has no advantage, it won't be read inside a table
         content: attr(aria-label);
@@ -419,7 +420,7 @@ a.article:hover {
         text-transform: uppercase;
     }
 
-    .table table td:last-child {
+    .table td:last-child {
         border-bottom: 0;
     }
 }

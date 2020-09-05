@@ -5,6 +5,7 @@
   @inject('subdivisions','App\Services\Subdivisions')
   @inject('genders','App\Services\Genders')
   @inject('status','App\Services\Status')
+  @inject('itsprofessor','App\Services\ItsProfessor')
 
   <div class="container">
     <div class="row justify-content-center ">
@@ -80,6 +81,21 @@
                       autofocus>
 
                     @error('second_surname')
+                    <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="dpi" class="col-md-4 col-form-label text-md-right">DPI</label>
+
+                  <div class="col-md-6">
+                    <input id="dpi" type="text" class="form-control @error('dpi') is-invalid @enderror" name="dpi"
+                      value="{{ $employee->person->dpi ?? '' }}" required autocomplete="dpi" autofocus>
+
+                    @error('dpi')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
                     </span>
@@ -181,6 +197,38 @@
 
                       @endforeach
                     </select>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="professor" class="col-md-4 col-form-label text-md-right">Docente</label>
+                  <div class="col-md-6">
+                    <select id="professor" name="professor"
+                      class="form-control  @error('professor') is-invalid @enderror">
+                      @foreach ($itsprofessor->get() as $index => $professor)
+
+                        <option value="{{ $index }}"
+                          {{ old('professor', $employee->professor ?? '') == $index ? 'selected' : '' }}>
+                          {{ $professor }}
+                        </option>
+
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="salary" class="col-md-4 col-form-label text-md-right">Salario</label>
+
+                  <div class="col-md-6">
+                    <input id="salary" type="text" class="form-control @error('salary') is-invalid @enderror"
+                      name="salary" value="{{ $employee->salary ?? '' }}" autocomplete="salary" autofocus>
+
+                    @error('salary')
+                    <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                   </div>
                 </div>
 

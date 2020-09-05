@@ -7,7 +7,7 @@ class Jobs {
     
     public function get(){
         
-        $jobs = Job::get();
+        $jobs = Job::get()->where('status','ACTIVO');
         $jobsArray['']='Selecciona un puesto de trabajo';
         
         foreach($jobs as $job){
