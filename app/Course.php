@@ -10,8 +10,8 @@ class Course extends Model
     protected $table = 'course';
     
     // uno a muchos
-    public function subject(){
+    public function coursegrade(){
 
-        return $this->hasMany('App\Subject','course_id','id');
+        return $this->hasMany('App\Coursegrade','course_id','id');
     }    
 }

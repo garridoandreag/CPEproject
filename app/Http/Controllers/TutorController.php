@@ -44,6 +44,7 @@ class TutorController extends Controller
             'phone_number' => ['required', 'string', 'max:8'],
             'cellphone_number' => ['nullable', 'string', 'max:8'],
             'subdivision_code' => ['required'],
+            'gender_id' => $data['gender_id'],
             'home_address' => ['required', 'string', 'max:250'],
             'dpi' => ['required', 'string', 'max:13'],
             'occupation' => ['required', 'string', 'max:50'],
@@ -61,7 +62,7 @@ class TutorController extends Controller
                 'country_code' => '320',
                 'subdivision_code' => $data['subdivision_code'],
                 'home_address' => $data['home_address'],
-                'gender_id' => 'M',
+                'gender_id' => $data['gender_id'],
                 'tutor' => '1'
             ]);
     

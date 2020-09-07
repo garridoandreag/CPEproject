@@ -50,7 +50,7 @@ Route::group(['prefix' => 'student'], function() {
     Route::post('update', 'StudentController@update')->name('student.update');
     Route::get('picture/{filename}','StudentController@getImage')->name('student.picture');
     Route::get('detail/{id}', 'StudentController@detail')->name('student.detail');
-    Route::get('/subjects', 'StudentController@getSubjects');
+    Route::get('/Coursegrades', 'StudentController@getCoursegrades');
 });
 
 Route::group(['prefix' => 'course'], function() {
@@ -127,4 +127,13 @@ Route::group(['prefix' => 'employee'], function() {
 
 Route::group(['prefix' => 'event'], function () {
   Route::get('/', 'EventController@index')->name('event.index');
+});
+
+Route::group(['prefix' => 'coursegrade'], function() {
+    Route::get('create', 'CoursegradeController@create')->name('coursegrade.create');
+    Route::get('/', 'CoursegradeController@index')->name('coursegrade.index');
+    Route::post('store', 'CoursegradeController@store')->name('coursegrade.store');
+    Route::get('detail/{id}', 'coursegradeController@detail')->name('coursegrade.detail');
+    Route::get('edit/{id}', 'CoursegradeController@edit')->name('coursegrade.edit');
+    Route::post('update', 'CoursegradeController@update')->name('coursegrade.update');
 });

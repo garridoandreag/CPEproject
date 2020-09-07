@@ -18,12 +18,12 @@
     <div class="row justify-content-center">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header">Grados</div>
+          <div class="card-header">Planeación de cursos</div>
           <div class="card-body">
 
             <div class="row justify-content-md-center">
               <div class="col">
-                <a href="{{ action('GradeController@create') }}" class="btn btn-primary">Nuevo </a>
+                <a href="{{ action('CoursegradeController@create') }}" class="btn btn-primary">Nuevo </a>
               </div>
               <div class="col-md-auto">
                 <input class="form-control" id="myInput" type="text" placeholder="Buscar...">
@@ -39,33 +39,48 @@
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th scope="col">@sortablelink('name','Nombre')</th>
-                  <th scope="col">@sortablelink('section','Sección')</th>
+                  <th scope="col">@sortablelink('cycle_id','Ciclo')</th>
+                  <th scope="col">@sortablelink('course_id','Curso')</th>
+                  <th scope="col">@sortablelink('grade_id','Grado')</th>
+                  <th scope="col">@sortablelink('employee_id','Docente')</th>
                   <th scope="col">@sortablelink('status','Estado')</th>
                 </tr>
               </thead>
               <tbody id="myTable">
-                @foreach ($grades as $grade)
+                @foreach ($coursegrades as $coursegrade)
                   <tr>
-                    <td data-label="Nombre" scope="row"><a
-                        href="{{ action('GradeController@detail', ['id' => $grade->id]) }}" />
-                      {{ $grade->name }}
+                    <td data-label="Ciclo" scope="row"><a
+                      href="{{ action('CoursegradeController@detail', ['id' => $coursegrade->id]) }}" />
+                      {{ $coursegrade->cycle->name }}
                     </td>
-                    <td data-label="Sección"><a href="{{ action('GradeController@detail', ['id' => $grade->id]) }}" />
-                      {{ $grade->section }}
+
+                    <td data-label="Curso" scope="row"><a
+                      href="{{ action('CoursegradeController@detail', ['id' => $coursegrade->id]) }}" />
+                      {{ $coursegrade->course->name }}
+                    </td>
+
+                    <td data-label="Grado" scope="row"><a
+                      href="{{ action('CoursegradeController@detail', ['id' => $coursegrade->id]) }}" />
+                      {{ $coursegrade->grade->name }}
+                    </td>
+
+                    <td data-label="Docente"><a
+                        href="{{ action('CoursegradeController@detail', ['id' => $coursegrade->id]) }}" />
+                      {{ $coursegrade->employee->person->names }}
+                      {{ $coursegrade->employee->person->first_surname }}
                       </a>
                     </td>
-                    
+
                     <td data-label="Estado">
-                      @if ($grade->status == 'INACTIVO')
-                        <span id="status{{ $grade->id }}" onclick="changeStatus({{ $grade->id }})"
+                      @if ($coursegrade->status == 'INACTIVO')
+                        <span id="status{{ $coursegrade->id }}" onclick="changeStatus({{ $coursegrade->id }})"
                           class="status badge badge-danger">
-                          {{ $grade->status }}
+                          {{ $coursegrade->status }}
                         </span>
                       @else
-                        <span id="status{{ $grade->id }}" onclick="changeStatus({{ $grade->id }})"
+                        <span id="status{{ $coursegrade->id }}" onclick="changeStatus({{ $coursegrade->id }})"
                           class="status badge badge-success">
-                          {{ $grade->status }}
+                          {{ $coursegrade->status }}
                         </span>
                       @endif
                     </td>
@@ -75,10 +90,10 @@
               </tbody>
             </table>
 
-            {{ $grades->appends(Request::except('page'))->render() }}
+            {{ $coursegrades->appends(Request::except('page'))->render() }}
 
             <p>
-              Se muestran {{ $grades->count() }} de {{ $grades->total() }} grados.
+              Se muestran {{ $coursegrades->count() }} de {{ $coursegrades->total() }} cursos planeados.
             </P>
 
           </div>
@@ -94,7 +109,7 @@
         const badge = $(`#status${id}`);
         let status = badge.text().trim();
 
-        status = await axios.post('/grade/status', {
+        status = await axios.post('/subject/status', {
             id,
             status
           })
@@ -118,4 +133,5 @@
     }
 
   </script>
+
 @endsection

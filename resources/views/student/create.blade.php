@@ -2,6 +2,7 @@
 
 @section('content')
   @inject('grades','App\Services\Grades')
+  @inject('genders','App\Services\Genders')
   @inject('subdivisions','App\Services\Subdivisions')
 
   <div class="container">
@@ -14,24 +15,19 @@
         @endif
         <div class="card-group">
           <div class="card">
-            @if (isset($student) && is_object($student))
-              <div class="card-header">MODIFICAR ESTUDIANTE</div>
-            @else
-              <div class="card-header">NUEVO ESTUDIANTE</div>
-            @endif
+            <div class="card-header">
+              @if (isset($student) && is_object($student))
+                Modificar Estudiante
+              @else
+                Nuevo Estudiante
+              @endif
+            </div>
 
             <div class="card-body">
 
-              <form
-                id="studentForm"
-                method="POST"
-                action="
-                  {{ isset($student)
-                    ? route('student.update')
-                    : route('student.store')
-                }}"
-                enctype="multipart/form-data"
-                aria-label="Configuración de mi cuenta">
+              <form id="studentForm" method="POST" action="
+                              {{ isset($student) ? route('student.update') : route('student.store') }}"
+                enctype="multipart/form-data" aria-label="Configuración de mi cuenta">
                 {{ csrf_field() }}
 
 
@@ -43,11 +39,11 @@
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                   <li class="nav-item">
                     <a class="nav-link active" id="form_personal" data-toggle="tab" href="#personal" role="tab"
-                      aria-controls="personal" aria-selected="true">PERSONAL</a>
+                      aria-controls="personal" aria-selected="true">Personal</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" id="form_personal" data-toggle="tab" href="#academico" role="tab"
-                      aria-controls="academico" aria-selected="false">ACADEMICO</a>
+                      aria-controls="academico" aria-selected="false">Academico</a>
                   </li>
                 </ul>
 
@@ -56,15 +52,14 @@
                   <div class="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="form_personal">
 
                     <div class="form-group row">
-                      <label for="favorite_name" class="col-md-4 col-form-label text-md-right">COMO
-                        DESEA SER LLAMADO</label>
+                      <label for="favorite_name" class="col-md-4 col-form-label text-md-right">Cómo desea ser
+                        llamado</label>
 
                       <div class="col-md-6">
                         <input id="favorite_name" type="text"
                           class="form-control @error('favorite_name') is-invalid @enderror" name="favorite_name"
                           value="{{ $student->person->favorite_name ?? '' }}" required autocomplete="favorite_name"
                           autofocus>
-
 
                         @error('favorite_name')
                         <span class="invalid-feedback" role="alert">
@@ -75,7 +70,7 @@
                     </div>
 
                     <div class="form-group row">
-                      <label for="names" class="col-md-4 col-form-label text-md-right">NOMBRES</label>
+                      <label for="names" class="col-md-4 col-form-label text-md-right">Nombre</label>
 
                       <div class="col-md-6">
                         <input id="names" type="text" class="form-control @error('names') is-invalid @enderror"
@@ -92,8 +87,7 @@
 
 
                     <div class="form-group row">
-                      <label for="first_name" class="col-md-4 col-form-label text-md-right">PRIMER
-                        APELLIDO</label>
+                      <label for="first_name" class="col-md-4 col-form-label text-md-right">Primer Apellido</label>
 
                       <div class="col-md-6">
                         <input id="first_surname" type="text"
@@ -110,7 +104,7 @@
                     </div>
 
                     <div class="form-group row">
-                      <label for="second_surname" class="col-md-4 col-form-label text-md-right">SEGUNDO APELLIDO</label>
+                      <label for="second_surname" class="col-md-4 col-form-label text-md-right">Segundo Apellido</label>
 
                       <div class="col-md-6">
                         <input id="second_surname" type="text"
@@ -127,8 +121,7 @@
                     </div>
 
                     <div class="form-group row">
-                      <label for="phone_number" class="col-md-4 col-form-label text-md-right">TELEFONO
-                        DE CASA</label>
+                      <label for="phone_number" class="col-md-4 col-form-label text-md-right">Teléfono de casa</label>
 
                       <div class="col-md-6">
                         <input id="phone_number" type="text"
@@ -145,7 +138,7 @@
                     </div>
 
                     <div class="form-group row">
-                      <label for="subdivision_code" class="col-md-4 col-form-label text-md-right">DEPARTAMENTO</label>
+                      <label for="subdivision_code" class="col-md-4 col-form-label text-md-right">Departamento</label>
                       <div class="col-md-6">
                         <select id="subdivision_code" name="subdivision_code"
                           class="form-control  @error('subdivision_code') is-invalid @enderror">
@@ -163,8 +156,7 @@
 
 
                     <div class="form-group row">
-                      <label for="birthday" class="col-md-4 col-form-label text-md-right">FECHA DE
-                        NACIMIENTO</label>
+                      <label for="birthday" class="col-md-4 col-form-label text-md-right">Fecha de Nacimiento</label>
 
                       <div class="col-md-6">
                         <input id="birthday" type="date" class="form-control @error('birthday') is-invalid @enderror"
@@ -180,65 +172,24 @@
                     </div>
 
                     <div class="form-group row">
-                      <label for="gender_id" class="col-md-4 col-form-label text-md-right">GÉNERO</label>
-
+                      <label for="gender_id" class="col-md-4 col-form-label text-md-right">Género</label>
                       <div class="col-md-6">
-                        @switch($student->person->gender_id ?? '' )
-                          @case('F')
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gender_id" id="FEMENINO" value="F" checked>
-                            <label class="form-check-label" for="FEMENINO">
-                              FEMENINO
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gender_id" id="MASCULINO" value="M">
-                            <label class="form-check-label" for="MASCULINO">
-                              MASCULINO
-                            </label>
-                          </div>
-                          @break
-                          @case('M')
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gender_id" id="FEMENINO" value="F">
-                            <label class="form-check-label" for="FEMENINO">
-                              FEMENINO
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gender_id" id="MASCULINO" value="M" checked>
-                            <label class="form-check-label" for="MASCULINO">
-                              MASCULINO
-                            </label>
-                          </div>
-                          @break
-                          @default
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gender_id" id="FEMENINO" value="F">
-                            <label class="form-check-label" for="FEMENINO">
-                              FEMENINO
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gender_id" id="MASCULINO" value="M">
-                            <label class="form-check-label" for="MASCULINO">
-                              MASCULINO
-                            </label>
-                          </div>
+                        <select id="gender_id" name="gender_id"
+                          class="form-control  @error('gender_id') is-invalid @enderror">
+                          @foreach ($genders->get() as $index => $gender)
 
-                          @break
-                        @endswitch
+                            <option value="{{ $index }}"
+                              {{ old('gender_id', $student->person->gender_id ?? '') == $index ? 'selected' : '' }}>
+                              {{ $gender }}
+                            </option>
 
-                        @error('gender_id')
-                        <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
+                          @endforeach
+                        </select>
                       </div>
                     </div>
 
                     <div class="form-group row">
-                      <label for="picture" class="col-md-4 col-form-label text-md-right">{{ __('FOTO') }}</label>
+                      <label for="picture" class="col-md-4 col-form-label text-md-right">{{ __('Foto') }}</label>
 
                       <div class="col-md-6">
 
@@ -260,7 +211,6 @@
                       </div>
                     </div>
 
-
                     <div class="form-group row mb-0">
                       <div class="col-md-6 offset-md-4">
                         <a class="btn btn-outline-primary" id="profile-tab" data-toggle="tab" href="#academico" role="tab"
@@ -274,11 +224,10 @@
                     <br />
                   </div>
 
-
                   <div class="tab-pane fade" id="academico" role="tabpanel" aria-labelledby="form_personal">
 
                     <div class="form-group row">
-                      <label for="grade" class="col-md-4 col-form-label text-md-right">GRADO</label>
+                      <label for="grade" class="col-md-4 col-form-label text-md-right">Grado</label>
                       <div class="col-md-6">
                         <select id="grade" name="grade_id" class="form-control  @error('grade_id') is-invalid @enderror">
                           @foreach ($grades->get() as $index => $grade)
@@ -293,14 +242,8 @@
                       </div>
                     </div>
 
-                            <option value="{{ $index }}"
-                              {{ old('grade_id', $student->grade_id ?? '') == $index ? 'selected' : '' }}>
-                              {{ $grade }}
-                            </option>
-
                     <div class="form-group row">
-                      <label for="second_surname" class="col-md-4 col-form-label text-md-right">CÓDIGO
-                        ESTADÍSTICO</label>
+                      <label for="second_surname" class="col-md-4 col-form-label text-md-right">Código Estadístico</label>
 
                       <div class="col-md-6">
                         <input id="student_code" type="text"
@@ -315,196 +258,59 @@
                       </div>
                     </div>
                     <br>
-
-                      <div class="col-md-6">
-                        <input id="student_code" type="text"
-                          class="form-control @error('student_code') is-invalid @enderror" name="student_code"
-                          value="{{ $student->student_code ?? '' }}" required autocomplete="student_code" autofocus>
-
-                        @error('student_code')
-                        <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                      </div>
-                    </div>
                     <br>
 
                     <p class="card-text text-center"><small class="text-muted">
                         QUIEN PUEDE RECOGER AL ESTUDIANTE:
                       </small></p>
 
-                    @if (isset($student) && is_object($student))
-                      @foreach ($student->caregiver as $caregiver)
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label for="name_caregiver" class="col-md-4 col-form-label text-md-right">NOMBRE</label>
-
-                              <div class="col-md-6">
-                                <input id="name_caregiver" type="text"
-                                  class="form-control form-control-sm @error('name_caregiver') is-invalid @enderror"
-                                  name="name_caregiver" value="{{ $caregiver->name ?? '' }}" required
-                                  autocomplete="name_caregiver" autofocus>
-
-                                @error('name_caregiver')
-                                <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label for="surname_caregiver"
-                                class="col-md-4 col-form-label text-md-right">APELLIDO</label>
-
-                              <div class="col-md-6">
-                                <input id="surname_caregiver" type="text"
-                                  class="form-control form-control-sm @error('surname_caregiver') is-invalid @enderror"
-                                  name="surname_caregiver" value="{{ $caregiver->surname ?? '' }}" required
-                                  autocomplete="surname_caregiver" autofocus>
-
-                                @error('surname_caregiver')
-                                <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                              </div>
-                            </div>
-                          </div>
-
-                        </div>
-
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label for="relationship" class="col-md-4 col-form-label text-md-right">PARENTESCO</label>
-
-                              <div class="col-md-6">
-                                <input id="relationship" type="text"
-                                  class="form-control form-control-sm @error('relationship') is-invalid @enderror"
-                                  name="relationship" value="{{ $caregiver->relationship ?? '' }}" required
-                                  autocomplete="relationship" autofocus>
-
-                                @error('relationship')
-                                <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label for="phone_number_caregiver"
-                                class="col-md-4 col-form-label text-md-right">TELEFONO</label>
-
-                              <div class="col-md-6">
-                                <input id="phone_number_caregiver" type="text"
-                                  class="form-control form-control-sm @error('phone_number_caregiver') is-invalid @enderror"
-                                  name="phone_number_caregiver" value="{{ $caregiver->phone_number ?? '' }}" required
-                                  autocomplete="phone_number_caregiver" autofocus>
-
-                                @error('phone_number_caregiver')
-                                <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                              </div>
-                            </div>
-                          </div>
-
-                        </div>
-
-                      @endforeach
-                    @else
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label for="name_caregiver" class="col-md-4 col-form-label text-md-right">NOMBRE</label>
-
-                            <div class="col-md-6">
-                              <input id="name_caregiver" type="text"
-                                class="form-control form-control-sm @error('name_caregiver') is-invalid @enderror"
-                                name="name_caregiver" value="{{ $caregiver->name ?? '' }}" required
-                                autocomplete="name_caregiver" autofocus>
-
-                              @error('name_caregiver')
-                              <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                              </span>
-                              @enderror
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label for="surname_caregiver" class="col-md-4 col-form-label text-md-right">APELLIDO</label>
-
-                            <div class="col-md-6">
-                              <input id="surname_caregiver" type="text"
-                                class="form-control form-control-sm @error('surname_caregiver') is-invalid @enderror"
-                                name="surname_caregiver" value="{{ $caregiver->surname ?? '' }}" required
-                                autocomplete="surname_caregiver" autofocus>
-
-                              @error('surname_caregiver')
-                              <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                              </span>
-                              @enderror
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label for="relationship" class="col-md-4 col-form-label text-md-right">PARENTESCO</label>
-
-                            <div class="col-md-6">
-                              <input id="relationship" type="text"
-                                class="form-control form-control-sm @error('relationship') is-invalid @enderror"
-                                name="relationship" value="{{ $caregiver->relationship ?? '' }}" required
-                                autocomplete="relationship" autofocus>
-
-                              @error('relationship')
-                              <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                              </span>
-                              @enderror
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label for="phone_number_caregiver"
-                              class="col-md-4 col-form-label text-md-right">TELEFONO</label>
-
-                            <div class="col-md-6">
-                              <input id="phone_number_caregiver" type="text"
-                                class="form-control form-control-sm @error('phone_number_caregiver') is-invalid @enderror"
-                                name="phone_number_caregiver" value="{{ $caregiver->phone_number ?? '' }}" required
-                                autocomplete="phone_number_caregiver" autofocus>
-
-                              @error('phone_number_caregiver')
-                              <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                              </span>
-                              @enderror
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-                    @endif
+                    <table class="table table-bordered" id="myTable">
+                      <thead>
+                        <tr>
+                          <th>Nombre</th>
+                          <th>Apellido</th>
+                          <th>Parentesco</th>
+                          <th>Teléfono</th>
+                          <th><a href="#" class="addRow" id="addRow">
+                              <i class="fas fa-plus-circle"></i>
+                            </a>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <input id="name_caregiver" type="text"
+                              class="form-control form-control-sm @error('name_caregiver') is-invalid @enderror"
+                              name="name_caregiver[]" value="{{ $caregiver->name ?? '' }}" required
+                              autocomplete="name_caregiver" autofocus>
+                          </td>
+                          <td>
+                            <input id="surname_caregiver" type="text"
+                              class="form-control form-control-sm @error('surname_caregiver') is-invalid @enderror"
+                              name="surname_caregiver[]" value="{{ $caregiver->surname ?? '' }}" required
+                              autocomplete="surname_caregiver" autofocus>
+                          </td>
+                          <td>
+                            <input id="relationship" type="text"
+                              class="form-control form-control-sm @error('relationship') is-invalid @enderror"
+                              name="relationship[]" value="{{ $caregiver->relationship ?? '' }}" required
+                              autocomplete="relationship" autofocus>
+                          </td>
+                          <td>
+                            <input id="phone_number_caregiver" type="text"
+                              class="form-control form-control-sm @error('phone_number_caregiver') is-invalid @enderror"
+                              name="phone_number_caregiver[]" value="{{ $caregiver->phone_number ?? '' }}" required
+                              autocomplete="phone_number_caregiver" autofocus>
+                          </td>
+                          <td>
+                            <a href="#" class="btn btn-danger btn-sm remove">
+                              <i class="fas fa-minus-circle"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
 
                     <br />
 
@@ -517,9 +323,20 @@
       </div>
     </div>
   </div>
-@endsection
+  <script type="text/javascript">
+    $('.addRow').on('click', function() {
+      addRow();
+    });
 
-@section('script')
-  <script>
+    function addRow() {
+      var tr = '<tr>' +
+        '<td><input type="text" class="form-control form-control-sm" name = "name_caregiver[]" value = "{{ $caregiver->name ?? '' }}" required></td>'+
+        '<td><input type="text" class="form-control form-control-sm" name = "surname_caregiver[]" value = "{{ $caregiver->surname ?? '' }}" required></td>'+
+        '<td><input type="text" class="form-control form-control-sm" name = "relationship[]" value = "{{ $caregiver->relationship ?? '' }}" required></td>'+
+        '<td><input type="text" class="form-control form-control-sm" name = "phone_number_caregiver[]" value = "{{ $caregiver->phone_number ?? '' }}" required></td>'+
+        '<td><a href="#" class="btn btn-danger btn-sm remove"><i class="fas fa-minus-circle"></i></a></td>'+'</tr>';
+      $('tbody').append(tr);
+    };
+
   </script>
 @endsection

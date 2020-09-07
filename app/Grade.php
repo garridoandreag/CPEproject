@@ -19,9 +19,9 @@ class Grade extends Model
     public $sortable = ['name','section'];
     
     // uno a muchos
-    public function subject(){
+    public function coursegrade(){
 
-        return $this->hasMany('App\Subject','grade_id','id');
+        return $this->hasMany('App\Coursegrade','grade_id','id');
     }  
 
     public function student() {
