@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
-use App\Student;
+use App\{Student, Person, Caregiver};
 
 class StudentController extends Controller {
 
@@ -35,14 +35,21 @@ class StudentController extends Controller {
             'second_surname' => ['required', 'string', 'max:50'],
             'phone_number' => ['required', 'string', 'max:8'],
             'subdivision_code' => ['required'],
-            'gender_id' => $data['gender_id'],
+            'gender_id' => ['required'],
             'home_address' => ['required', 'string', 'max:250'],
             'student_code' => ['required', 'string', 'max:15'],
-            'birthday' => ['required', 'date'],
-            'grade_id' => ['nullable']
+            'birthday' => ['required'],
+            'picture' => ['nullable'],
+            'grade_id' => ['nullable'],
+            'name_caregiver' => ['nullable'],
+            'surname_caregiver' =>  ['nullable'],
+            'relationship' =>  ['nullable'],
+            'phone_number_caregiver' =>  ['nullable'],
+
         ]);
 
         $picture = $request->file('picture');
+        $picture_name = 'student.png';
 
         if ($picture) {
 
@@ -53,7 +60,7 @@ class StudentController extends Controller {
             Storage::disk('users')->put($picture_name, File::get($picture));
         }
 
-        DB::transaction(function() use ($data) {
+        DB::transaction(function() use ($data,$picture_name,$request) {
             $person = Person::create([
                 'favorite_name' => $data['favorite_name'],
                 'names' => $data['names'],
@@ -63,24 +70,36 @@ class StudentController extends Controller {
                 'country_code' => '320',
                 'subdivision_code' => $data['subdivision_code'],
                 'home_address' => $data['home_address'],
+                'picture' => $picture_name,
                 'gender_id' => $data['gender_id'],
                 'student' => '1'
             ]);
 
-            $person->student()->create([
+            $student = $person->student()->create([
                 'student_code' => $data['student_code'],
+                'grade_id'  => $data['grade_id'],
                 'birthday' => $data['birthday']
             ]);
 
-            $caregiver = DB::table('caregiver')->insert(array(
+          /*  Caregiver::create([
+                'student_id' => $student->id,
+                'name' => $data['name_caregiver'],
+                'surname'  => $data['surname_caregiver'],
+                'relationship' => $data['relationship'],
+                'phone_number' => $data['phone_number_caregiver']
+            ]);*/
+
+          /* $caregiver = DB::table('caregiver')->insert(array(
                 'student_id' => $person->id,
                 'name' => $request->input('name_caregiver'),
                 'surname' => $request->input('surname_caregiver'),
                 'relationship' => $request->input('relationship'),
                 'phone_number' => $request->input('phone_number_caregiver'),
-
-            ));
+        
+            ));*/
     });       
+
+
 
       return redirect()->route('student.index')
                         ->with(['status' => 'Estudiante creado correctamente']);
