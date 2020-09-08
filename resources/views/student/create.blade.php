@@ -157,7 +157,7 @@
                         @enderror
                       </div>
                     </div>
-                    
+
                     <div class="form-group row">
                       <label for="birthday" class="col-md-4 col-form-label text-md-right">Fecha de Nacimiento</label>
 
@@ -279,7 +279,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
+                        <tr id="1">
                           <td>
                             <input id="name_caregiver" type="text"
                               class="form-control form-control-sm @error('name_caregiver') is-invalid @enderror"
@@ -305,9 +305,7 @@
                               autocomplete="phone_number_caregiver" autofocus>
                           </td>
                           <td>
-                            <a href="#" id="remove" class="remove">
-                              <i class="fas fa-minus-circle"></i>
-                            </a>
+                            <button type="button" onclick="removeRow(1)" class="remove"><i class="fas fa-minus-circle"></i></button>
                           </td>
                         </tr>
                       </tbody>
@@ -335,24 +333,24 @@
     </div>
   </div>
   <script type="text/javascript">
+    var row = 1;
     $('.addRow').on('click', function() {
       addRow();
     });
 
     function addRow() {
-      var tr = `<tr id>
+      row++;
+      var tr = `<tr id="${row}">
         <td><input type="text" class="form-control form-control-sm" name = "name_caregiver[]" value = "{{ $caregiver->name ?? '' }}" required></td>
         <td><input type="text" class="form-control form-control-sm" name = "surname_caregiver[]" value = "{{ $caregiver->surname ?? '' }}" required></td>
         <td><input type="text" class="form-control form-control-sm" name = "relationship[]" value = "{{ $caregiver->relationship ?? '' }}" required></td>
         <td><input type="text" class="form-control form-control-sm" name = "phone_number_caregiver[]" value = "{{ $caregiver->phone_number ?? '' }}" required></td>
-        <td><button type="button" onclick="remove" class="remove"><i class="fas fa-minus-circle"></i></button></td>'+'</tr>`;
+        <td><button type="button" onclick="removeRow(${row})" class="remove"><i class="fas fa-minus-circle"></i></button></td></tr>`;
       $('tbody').append(tr);
     };
 
-    $('.remove').on('click',function(){
-        $(this).parent().parent().remove();     
-    });
-
-
+    function removeRow(id) {
+      $(`#${id}`).remove();
+    }
   </script>
 @endsection
