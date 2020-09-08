@@ -24,9 +24,9 @@ class Employee extends Model
     }
     
         // uno a muchos
-    public function subject() {
+    public function coursegrade() {
 
-        return $this->hasMany('App\Subject','employee_id','id');
+        return $this->hasMany('App\Coursegrade','employee_id','id');
     }
 
         // muchos a uno

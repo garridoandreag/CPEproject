@@ -16,9 +16,7 @@ class CreateScheduleTable extends Migration
         DB::statement("
                 CREATE TABLE SCHEDULE(
                 id int(255) UNSIGNED NOT NULL AUTO_INCREMENT,
-                grade_id int(255) UNSIGNED NOT NULL,
-                course_id int(255) UNSIGNED NOT NULL,
-                cycle_id int(255) UNSIGNED NOT NULL,
+                coursegrade_id int(255) UNSIGNED NOT NULL,
                 day_id char(20) not null,
                 start_time time,
                 end_time time,
@@ -27,9 +25,7 @@ class CreateScheduleTable extends Migration
                 status enum('ACTIVO','INACTIVO') not null default 'ACTIVO',
                 CONSTRAINT pk_schedule PRIMARY KEY (id),
                 CONSTRAINT fk_schedule_day FOREIGN KEY (day_id) REFERENCES day(id),
-                CONSTRAINT fk_schedule_subject1 FOREIGN KEY (grade_id) REFERENCES subject(grade_id),
-                CONSTRAINT fk_schedule_subject2 FOREIGN KEY (course_id) REFERENCES subject(course_id),
-                CONSTRAINT fk_schedule_subject3 FOREIGN KEY (cycle_id) REFERENCES subject(cycle_id)
+                CONSTRAINT fk_schedule_coursegrade FOREIGN KEY (coursegrade_id) REFERENCES coursegrade(id)
                 )ENGINE=InnoDb;
             ");
     }
