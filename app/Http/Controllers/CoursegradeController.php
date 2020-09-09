@@ -27,26 +27,40 @@ class CoursegradeController extends Controller
 
     public function store(Request $request)
     {
-        $courses = $request->input('course_id');
+        $courses = $request->input('course');
 
         $data = $request->validate([
-            'grade_id' => ['required'],
-            'course_id' => ['required'],
-            'cycle_id' => ['required'],
-            'employee_id' => ['required'],           
+            'grade_id' => ['nullable'],
+            'course_id' => ['nullable'],
+            'cycle_id' => ['nullable'],
+            'employee_id' => ['nullable'],           
         ]);
 
-        Coursegrade::create([
-            'grade_id' => ['grade_id'],
-            'cycle_id' => ['cycle_id'],
-            'employee_id' => ['employee_id'],
-            'course_id' => ['course_id'],
-        ]);
+
+        DB::transaction(function() use ($data,$courses) {
+
+            foreach($courses as $course){
+                Coursegrade::create([
+                    'cycle_id' =>  $data['cycle_id'],
+                    'grade_id' => $data['grade_id'],
+                    'course_id' =>  $course,
+                    'employee_id' =>  $data['employee_id'],
+                ]);
+            }
+        });
      
         return redirect()->route('coursegrade.index')
-                        ->with(['status' => 'Cursos y grados asignados correctamente.']);
+                         ->with(['status' => 'Cursos y grados asignados correctamente.']);
     }
+
+
     public function detail(){
+        $coursegrade = \App\Coursegrade::where('id', $id)->first();
+
+        return view('coursegrade.detail', [
+            'coursegrade' => $coursegrade
+        ]);
+
 
     }
 

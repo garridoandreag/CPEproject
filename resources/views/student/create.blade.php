@@ -279,6 +279,10 @@
                         </tr>
                       </thead>
                       <tbody>
+                        @if (isset($student->caregiver))
+                        @foreach ($student->caregiver as $caregiver)
+                        @endforeach                       
+                        @endif  
                         <tr id="1">
                           <td>
                             <input id="name_caregiver" type="text"
@@ -307,7 +311,8 @@
                           <td>
                             <button type="button" onclick="removeRow(1)" class="remove"><i class="fas fa-minus-circle"></i></button>
                           </td>
-                        </tr>
+                        </tr> 
+                       
                       </tbody>
                     </table>
 

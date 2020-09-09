@@ -133,7 +133,7 @@ Route::group(['prefix' => 'coursegrade'], function() {
     Route::get('create', 'CoursegradeController@create')->name('coursegrade.create');
     Route::get('/', 'CoursegradeController@index')->name('coursegrade.index');
     Route::post('store', 'CoursegradeController@store')->name('coursegrade.store');
-    Route::get('detail/{id}', 'coursegradeController@detail')->name('coursegrade.detail');
+    Route::get('detail/{id}', 'CoursegradeController@detail')->name('coursegrade.detail');
     Route::get('edit/{id}', 'CoursegradeController@edit')->name('coursegrade.edit');
     Route::post('update', 'CoursegradeController@update')->name('coursegrade.update');
 });

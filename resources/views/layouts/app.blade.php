@@ -16,7 +16,7 @@
   <script src="https://kit.fontawesome.com/e4f410c930.js" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+  <script src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
   <!--<script>
 /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
 function openNav() {
@@ -38,9 +38,9 @@ function closeNav() {
  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
   <link href="{{ asset('css/font-nunito.css') }}" rel="stylesheet">
   <!-- Styles -->
-  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-  
+  <link href="{{ asset('css/app.css') }}" rel="stylesheet"> 
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/bootstrap-multiselect.css') }}" rel="stylesheet">
   
 
  
