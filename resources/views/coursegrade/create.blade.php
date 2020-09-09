@@ -29,9 +29,9 @@
 
             <div class="card-body">
 
-              <form id="gradeForm" method="POST"
-                action="{{ isset($coursegrade) ? route('coursegrade.update') : route('coursegrade.store') }}" enctype="multipart/form-data"
-                aria-label="Ciclos">
+              <form id="coursegradeForm" method="POST"
+                action="{{ isset($coursegrade) ? route('coursegrade.update') : route('coursegrade.store') }}"
+                enctype="multipart/form-data" aria-label="Ciclos">
                 {{ csrf_field() }}
 
                 @if (isset($coursegrade) && is_object($coursegrade))
@@ -41,8 +41,7 @@
                 <div class="form-group row">
                   <label for="cycle_id" class="col-md-4 col-form-label text-md-right">Ciclo</label>
                   <div class="col-md-6">
-                    <select id="cycle_id" name="cycle_id"
-                      class="form-control  @error('cycle_id') is-invalid @enderror">
+                    <select id="cycle_id" name="cycle_id" class="form-control  @error('cycle_id') is-invalid @enderror">
                       @foreach ($cycles->get() as $index => $cycle)
 
                         <option value="{{ $index }}"
@@ -58,13 +57,12 @@
                 <div class="form-group row">
                   <label for="grade_id" class="col-md-4 col-form-label text-md-right">Grado</label>
                   <div class="col-md-6">
-                    <select id="grade_id" name="grade_id"
-                      class="form-control  @error('grade_id') is-invalid @enderror">
+                    <select id="grade_id" name="grade_id" class="form-control  @error('grade_id') is-invalid @enderror">
                       @foreach ($grades->get() as $index => $grade)
 
                         <option value="{{ $index }}"
                           {{ old('grade_id', $coursegrade->grade_id ?? '') == $index ? 'selected' : '' }}>
-                          {{ $grade}}
+                          {{ $grade }}
                         </option>
 
                       @endforeach
@@ -73,18 +71,19 @@
                 </div>
 
                 <div class="form-group row">
-                  <label for="professor_id" class="col-md-4 col-form-label text-md-right">Docente</label>
+                  <label for="employee_id" class="col-md-4 col-form-label text-md-right">Docente</label>
                   <div class="col-md-6">
-                    <select id="professor_id" name="professor_id"
-                      class="form-control  @error('professor_id') is-invalid @enderror">
-                      @foreach ($professors->get() as $index => $professor)
+                    <select id="employee_id" name="employee_id"
+                      class="form-control  @error('employee_id') is-invalid @enderror">
+                      @foreach ($professors->get() as $index => $employee)
 
                         <option value="{{ $index }}"
                           {{ old('employee_id', $coursegrade->employee_id ?? '') == $index ? 'selected' : '' }}>
-                          {{ $professor}}
+                          {{ $employee }}
                         </option>
 
                       @endforeach
+
                     </select>
                   </div>
                 </div>
@@ -92,19 +91,18 @@
                 <div class="form-group row">
                   <label for="course_id" class="col-md-4 col-form-label text-md-right">Curso</label>
                   <div class="col-md-6">
-                    <select id="course_id" name="course_id"
-                      class="form-control  @error('course_id') is-invalid @enderror">
+                    <select id="course" name="course[]" class="custom-select" multiple="multiple">
                       @foreach ($courses->get() as $index => $course)
-
                         <option value="{{ $index }}"
                           {{ old('course_id', $coursegrade->course_id ?? '') == $index ? 'selected' : '' }}>
-                          {{ $course}}
+                          {{ $course }}
                         </option>
-
+                
                       @endforeach
                     </select>
                   </div>
                 </div>
+
 
                 <div class="form-group row mb-0">
                   <div class="col-md-6 offset-md-4">
@@ -128,4 +126,5 @@
     </div>
   </div>
   </div>
+
 @endsection

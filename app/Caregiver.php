@@ -13,13 +13,13 @@ class Caregiver extends Model
 
     protected $primaryKey = 'id';
 
-    protected $fillable = ['name','surname','relationship','phone_number'];
+    protected $fillable = ['name','surname','relationship','phone_number','student_id'];
 
     public $sortable = ['name','surname','relationship','phone_number'];
     
     public function student() {
 
-        return $this->belongsTo('App\Student', 'student_id');
+        return $this->belongsTo('App\Student', 'student_id','id');
     }
 
 

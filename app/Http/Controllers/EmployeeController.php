@@ -40,10 +40,10 @@ class EmployeeController extends Controller
             'subdivision_code' => ['required'],
             'gender_id' => ['required'],
             'home_address' => ['required', 'string', 'max:250'],
-            'dpi' => ['required', 'numeric', 'max:13'],
+            'dpi' => ['required', 'max:14'],
             'job_id' => ['required'],
             'professor' => ['nullable'],
-            'salary' => ['nullable','numeric']
+            'salary' => ['nullable']
         ]);
 
         DB::transaction(function() use ($data) {

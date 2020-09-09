@@ -27,6 +27,11 @@ class StudentController extends Controller {
 
     public function store(Request $request) {
 
+        $caregivers = sizeof($request->input('name_caregiver'));
+        $name_caregivers = $request->input('name_caregiver');
+        $surname_caregivers = $request->input('surname_caregiver');
+        $relationship = $request->input('relationship');
+        $phone_number = $request->input('phone_number_caregiver');
 
         $data = $request->validate([
             'favorite_name' => ['required', 'string', 'max:50'],
@@ -41,26 +46,21 @@ class StudentController extends Controller {
             'birthday' => ['required'],
             'picture' => ['nullable'],
             'grade_id' => ['nullable'],
-            'name_caregiver' => ['nullable'],
-            'surname_caregiver' =>  ['nullable'],
-            'relationship' =>  ['nullable'],
-            'phone_number_caregiver' =>  ['nullable'],
-
+            'name_caregiver' => ['nullable', 'string', 'max:50'],
+            'surname_caregiver' =>  ['nullable', 'string', 'max:50'],
+            'relationship' =>  ['nullable', 'string', 'max:50'],
+            'phone_number_caregiver' =>  ['nullable', 'string', 'max:8'],
         ]);
 
         $picture = $request->file('picture');
         $picture_name = 'student.png';
 
         if ($picture) {
-
-            //colocarle un nombre unico
-            $picture_name = time() . $picture->getClientOriginalName();
-
-            //guardar en la carpeta storage (storage/app/users)
-            Storage::disk('users')->put($picture_name, File::get($picture));
+            $picture_name = time() . $picture->getClientOriginalName();//colocarle un nombre unico
+            Storage::disk('users')->put($picture_name, File::get($picture));//guardar en la carpeta storage (storage/app/users)
         }
 
-        DB::transaction(function() use ($data,$picture_name,$request) {
+        DB::transaction(function() use ($data,$picture_name,$caregivers,$name_caregivers, $surname_caregivers,$relationship,$phone_number) {
             $person = Person::create([
                 'favorite_name' => $data['favorite_name'],
                 'names' => $data['names'],
@@ -81,26 +81,16 @@ class StudentController extends Controller {
                 'birthday' => $data['birthday']
             ]);
 
-          /*  Caregiver::create([
-                'student_id' => $student->id,
-                'name' => $data['name_caregiver'],
-                'surname'  => $data['surname_caregiver'],
-                'relationship' => $data['relationship'],
-                'phone_number' => $data['phone_number_caregiver']
-            ]);*/
-
-          /* $caregiver = DB::table('caregiver')->insert(array(
-                'student_id' => $person->id,
-                'name' => $request->input('name_caregiver'),
-                'surname' => $request->input('surname_caregiver'),
-                'relationship' => $request->input('relationship'),
-                'phone_number' => $request->input('phone_number_caregiver'),
-        
-            ));*/
+            for($i = 0; $i < $caregivers; $i++){
+                Caregiver::create([
+                    'student_id' => $person->id,
+                    'name' => $name_caregivers[$i],
+                    'surname'  => $surname_caregivers[$i],
+                    'relationship' => $relationship[$i],
+                    'phone_number' => $phone_number[$i]
+                ]);
+            }
     });       
-
-
-
       return redirect()->route('student.index')
                         ->with(['status' => 'Estudiante creado correctamente']);
     }
@@ -131,6 +121,13 @@ class StudentController extends Controller {
 
         $id = $request->input('id');
         $person = Person::find($id);
+        $student = Student::find($id);
+
+        $caregivers = sizeof($request->input('name_caregiver'));
+        $name_caregivers = $request->input('name_caregiver');
+        $surname_caregivers = $request->input('surname_caregiver');
+        $relationship = $request->input('relationship');
+        $phone_number = $request->input('phone_number_caregiver');
 
         $picture = $request->file('picture');
 
@@ -141,12 +138,26 @@ class StudentController extends Controller {
             'second_surname' => ['required', 'string', 'max:50'],
             'phone_number' => ['required', 'string', 'max:8'],
             'subdivision_code' => ['required'],
-            'gender_id' => $data['gender_id'],
+            'gender_id' => ['required'],
             'home_address' => ['required', 'string', 'max:250'],
             'student_code' => ['required', 'string', 'max:15'],
-            'birthday' => ['required', 'date'],
-            'grade_id' => ['nullable']
+            'birthday' => ['required'],
+            'picture' => ['nullable'],
+            'grade_id' => ['nullable'],
+            'name_caregiver' => ['nullable', 'string', 'max:50'],
+            'surname_caregiver' =>  ['nullable', 'string', 'max:50'],
+            'relationship' =>  ['nullable', 'string', 'max:50'],
+            'phone_number_caregiver' =>  ['nullable', 'string', 'max:8'],
         ]);
+
+        if ($picture) {
+            
+            $picture_name = time() . $picture->getClientOriginalName();//colocarle un nombre unico
+    
+            Storage::disk('users')->put($picture_name, File::get($picture));//guardar en la carpeta storage (storage/app/users)
+
+            $person->picture = $picture_name;
+        }
 
         $person->favorite_name =  $data['favorite_name'];
         $person->names =  $data['names'];
@@ -155,29 +166,22 @@ class StudentController extends Controller {
         $person->phone_number =  $data['phone_number'];
         $person->subdivision_code =  $data['subdivision_code'];
         $person->home_address =  $data['home_address'];
-        $person->student->student_code =  $data['student_code'];
-        $person->student->birthday =  $data['birthday'];
-        $person->student->grade_id =  $data['grade_id'];
-
-        if ($picture) {
-            //colocarle un nombre unico
-            $picture_name = time() . $picture->getClientOriginalName();
-            //guardar en la carpeta storage (storage/app/users)
-            Storage::disk('users')->put($picture_name, File::get($picture));
-
-            $person->picture = $picture_name;
-        }
+        $student->student_code =  $data['student_code'];
+        $student->birthday =  $data['birthday'];
+        $student->grade_id =  $data['grade_id'];
 
         $person->update();
-        
-        $caregiver = DB::table('caregiver')->where('student_id', $id)
-        ->update(array(
-            'name' => $request->input('name_caregiver'),
-            'surname' => $request->input('surname_caregiver'),
-            'relationship' => $request->input('relationship'),
-            'phone_number' => $request->input('phone_number_caregiver'),
+        $student->update();
 
-        ));
+        for($i = 0; $i < $caregivers; $i++){
+            Caregiver::updateOrCreate([
+                'student_id' => $person->id,
+                'name' => $name_caregivers[$i],
+                'surname'  => $surname_caregivers[$i],
+                'relationship' => $relationship[$i],
+                'phone_number' => $phone_number[$i]
+            ]);
+        }
 
         return redirect()->action('StudentController@index')->with('status', 'Estudiante actualizado correctamente');
     }

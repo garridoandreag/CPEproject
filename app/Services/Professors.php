@@ -8,7 +8,9 @@ class Professors {
     public function get(){
         
         $professors = Employee::get()->where('professor','1');
-        $professorsArray['']='Selecciona un grado';
+
+        $professorsArray['']='Selecciona un professor';
+
         foreach($professors as $employee){
             $professorsArray[$employee->id] = $employee->person->names.' '.$employee->person->first_surname;
         }
