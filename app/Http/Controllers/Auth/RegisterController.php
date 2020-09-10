@@ -35,8 +35,12 @@ use RegistersUsers;
      *
      * @return void
      */
-    public function __construct() {
+    /*public function __construct() {
         $this->middleware('guest');
+    }*/
+
+    public function __construct() {
+        $this->middleware('auth');
     }
 
     /**

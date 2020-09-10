@@ -27,8 +27,8 @@
                 aria-label="Ciclos">
                 {{ csrf_field() }}
 
-                @if (isset($ciclo) && is_object($ciclo))
-                  <input type="hidden" name="id" value="{{ $ciclo->id }}" /><br>
+                @if (isset($cycle) && is_object($cycle))
+                  <input type="hidden" name="id" value="{{ $cycle->id }}" /><br>
                 @endif
 
                 <div class="form-group row">

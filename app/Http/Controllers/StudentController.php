@@ -46,10 +46,10 @@ class StudentController extends Controller {
             'birthday' => ['required'],
             'picture' => ['nullable'],
             'grade_id' => ['nullable'],
-            'name_caregiver' => ['nullable', 'string', 'max:50'],
-            'surname_caregiver' =>  ['nullable', 'string', 'max:50'],
-            'relationship' =>  ['nullable', 'string', 'max:50'],
-            'phone_number_caregiver' =>  ['nullable', 'string', 'max:8'],
+            'name_caregiver' => ['nullable'],
+            'surname_caregiver' =>  ['nullable'],
+            'relationship' =>  ['nullable'],
+            'phone_number_caregiver' =>  ['nullable'],
         ]);
 
         $picture = $request->file('picture');
@@ -62,14 +62,14 @@ class StudentController extends Controller {
 
         DB::transaction(function() use ($data,$picture_name,$caregivers,$name_caregivers, $surname_caregivers,$relationship,$phone_number) {
             $person = Person::create([
-                'favorite_name' => $data['favorite_name'],
-                'names' => $data['names'],
-                'first_surname' => $data['first_surname'],
-                'second_surname' => $data['second_surname'],
+                'favorite_name' => strtoupper($data['favorite_name']),
+                'names' => strtoupper($data['names']),
+                'first_surname' => strtoupper($data['first_surname']),
+                'second_surname' => strtoupper($data['second_surname']),
                 'phone_number' => $data['phone_number'],
                 'country_code' => '320',
                 'subdivision_code' => $data['subdivision_code'],
-                'home_address' => $data['home_address'],
+                'home_address' => strtoupper($data['home_address']),
                 'picture' => $picture_name,
                 'gender_id' => $data['gender_id'],
                 'student' => '1'
@@ -84,10 +84,10 @@ class StudentController extends Controller {
             for($i = 0; $i < $caregivers; $i++){
                 Caregiver::create([
                     'student_id' => $person->id,
-                    'name' => $name_caregivers[$i],
-                    'surname'  => $surname_caregivers[$i],
-                    'relationship' => $relationship[$i],
-                    'phone_number' => $phone_number[$i]
+                    'name' => strtoupper($name_caregivers[$i]),
+                    'surname'  => strtoupper($surname_caregivers[$i]),
+                    'relationship' => strtoupper($relationship[$i]),
+                    'phone_number' => strtoupper($phone_number[$i])
                 ]);
             }
     });       
@@ -159,13 +159,13 @@ class StudentController extends Controller {
             $person->picture = $picture_name;
         }
 
-        $person->favorite_name =  $data['favorite_name'];
-        $person->names =  $data['names'];
-        $person->first_surname =  $data['first_surname'];
-        $person->second_surname =  $data['second_surname'];
+        $person->favorite_name =  strtoupper($data['favorite_name']);
+        $person->names =  strtoupper($data['names']);
+        $person->first_surname =  strtoupper($data['first_surname']);
+        $person->second_surname =  strtoupper($data['second_surname']);
         $person->phone_number =  $data['phone_number'];
         $person->subdivision_code =  $data['subdivision_code'];
-        $person->home_address =  $data['home_address'];
+        $person->home_address =  strtoupper($data['home_address']);
         $student->student_code =  $data['student_code'];
         $student->birthday =  $data['birthday'];
         $student->grade_id =  $data['grade_id'];
@@ -176,9 +176,9 @@ class StudentController extends Controller {
         for($i = 0; $i < $caregivers; $i++){
             Caregiver::updateOrCreate([
                 'student_id' => $person->id,
-                'name' => $name_caregivers[$i],
-                'surname'  => $surname_caregivers[$i],
-                'relationship' => $relationship[$i],
+                'name' => strtoupper($name_caregivers[$i]),
+                'surname'  => strtoupper($surname_caregivers[$i]),
+                'relationship' => strtoupper($relationship[$i]),
                 'phone_number' => $phone_number[$i]
             ]);
         }
