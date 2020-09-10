@@ -5,6 +5,7 @@ and open the template in the editor.
 */
 
 @import url('https://fonts.googleapis.com/css2?family=Itim&family=Montserrat:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap');
 
 *{
     margin: 0;
@@ -12,7 +13,14 @@ and open the template in the editor.
     list-style: none;
     text-decoration: none;
     box-sizing: border-box;
-    font-family: 'Itim', cursive;
+    font-family: 'Nunito', cursive;
+    font-size: 5xp;
+
+}
+
+.col-form-label{
+    font-family: 'Nunito', sans-serif;
+
 }
 
 form .picture_profile{
@@ -196,7 +204,7 @@ a .btn-menu{
     padding: 10px !important;
 }
 
-#sidebar.active .dropdown-toggle::after {
+#sidebar.active .menu-dropdown-toggle::after {
     top: auto;
     bottom: 10px;
     right: 50%;
@@ -235,17 +243,12 @@ a .btn-menu{
     margin-right: 10px;
 }
 
-#sidebar ul li.active>a,
-a[aria-expanded="true"] {
-    color: #fff;
-    background: #D0A932;
-}
 
 a[data-toggle="collapse"] {
     position: relative;
 }
 
-.dropdown-toggle::after {
+.menu-dropdown-toggle::after {
     display: block;
     position: absolute;
     top: 50%;
@@ -300,7 +303,7 @@ a.article:hover {
     #app.active{
         margin-left: 80px;
     }
-    .dropdown-toggle::after {
+    .menu-dropdown-toggle::after {
         top: auto;
         bottom: 10px;
         right: 50%;

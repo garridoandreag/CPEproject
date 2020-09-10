@@ -129,6 +129,7 @@ Route::group(['prefix' => 'event'], function () {
   Route::get('/', 'EventController@index')->name('event.index');
 });
 
+// esto esta pendiente aún
 Route::group(['prefix' => 'coursegrade'], function() {
     Route::get('create', 'CoursegradeController@create')->name('coursegrade.create');
     Route::get('/', 'CoursegradeController@index')->name('coursegrade.index');
@@ -136,4 +137,19 @@ Route::group(['prefix' => 'coursegrade'], function() {
     Route::get('detail/{id}', 'CoursegradeController@detail')->name('coursegrade.detail');
     Route::get('edit/{id}', 'CoursegradeController@edit')->name('coursegrade.edit');
     Route::post('update', 'CoursegradeController@update')->name('coursegrade.update');
+});
+
+Route::group(['prefix' => 'activity'], function() {
+    Route::get('create', 'ActivityController@create')->name('activity.create');
+    Route::get('/', 'ActivityController@index')->name('activity.index');
+    Route::post('store', 'ActivityController@store')->name('activity.store');
+    Route::get('detail/{id}', 'ActivityController@detail')->name('activity.detail');
+    Route::get('edit/{id}', 'ActivityController@edit')->name('activity.edit');
+    Route::post('update', 'ActivityController@update')->name('activity.update');
+});
+
+Route::group(['prefix' => 'courseprofessor'], function() {
+    Route::get('/', 'CoursegradeController@courseprofessor')->name('courseprofessor.index');
+    Route::get('activity/{coursegrade_id}', 'ActivityController@courseprofessoractivity')->name('courseprofessor.activity');
+    Route::get('activity/{coursegrade_id}/{unit_id}', 'ActivityController@courseprofessoractivityunit')->name('courseprofessor.activityunit');
 });

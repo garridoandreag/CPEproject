@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use App\Coursegrade; 
+use App\Person; 
 
 class CoursegradeController extends Controller
 {
@@ -54,13 +55,25 @@ class CoursegradeController extends Controller
     }
 
 
-    public function detail(){
+    public function detail($id){
         $coursegrade = \App\Coursegrade::where('id', $id)->first();
 
         return view('coursegrade.detail', [
             'coursegrade' => $coursegrade
         ]);
 
+    }
+
+    public function courseprofessor(){
+
+        $user = \Auth::user();
+        
+        $id = $user->person_id;
+
+
+        $coursegrades=Coursegrade::where('employee_id', $id)->firstOrFail()->sortable()->paginate(30);
+
+        return view('courseprofessor.index', compact('coursegrades'));
 
     }
 

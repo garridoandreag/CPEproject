@@ -26,7 +26,7 @@
             <div class="card-body">
 
               <form id="studentForm" method="POST" action="
-                              {{ isset($student) ? route('student.update') : route('student.store') }}"
+                                  {{ isset($student) ? route('student.update') : route('student.store') }}"
                 enctype="multipart/form-data" aria-label="Configuración de mi cuenta">
                 {{ csrf_field() }}
 
@@ -70,11 +70,12 @@
                     </div>
 
                     <div class="form-group row">
-                      <label for="names" class="col-md-4 col-form-label text-md-right">NOMBRES</label>
+                      <label for="names" class="col-md-4 col-form-label text-md-right">Nombre</label>
 
                       <div class="col-md-6">
                         <input id="names" type="text" class="form-control @error('names') is-invalid @enderror"
-                          name="names" value="{{ $student->person->names ?? '' }}" required autocomplete="names" autofocus>
+                          name="names" value="{{ $student->person->names ?? '' }}" required autocomplete="names"
+                          autofocus>
                         @error('names')
                         <span class="invalid-feedback" role="alert">
                           <strong>{{ $message }}</strong>
@@ -84,8 +85,7 @@
                     </div>
 
                     <div class="form-group row">
-                      <label for="first_name" class="col-md-4 col-form-label text-md-right">PRIMER
-                        APELLIDO</label>
+                      <label for="first_name" class="col-md-4 col-form-label text-md-right">Primer apellido</label>
                       <div class="col-md-6">
                         <input id="first_surname" type="text"
                           class="form-control @error('first_surname') is-invalid @enderror" name="first_surname"
@@ -100,7 +100,7 @@
                     </div>
 
                     <div class="form-group row">
-                      <label for="second_surname" class="col-md-4 col-form-label text-md-right">SEGUNDO APELLIDO</label>
+                      <label for="second_surname" class="col-md-4 col-form-label text-md-right">Segundo apellido</label>
                       <div class="col-md-6">
                         <input id="second_surname" type="text"
                           class="form-control @error('second_surname') is-invalid @enderror" name="second_surname"
@@ -115,12 +115,12 @@
                     </div>
 
                     <div class="form-group row">
-                      <label for="phone_number" class="col-md-4 col-form-label text-md-right">TELEFONO
-                        DE CASA</label>
+                      <label for="phone_number" class="col-md-4 col-form-label text-md-right">Teléfono de casa</label>
                       <div class="col-md-6">
                         <input id="phone_number" type="text"
                           class="form-control @error('phone_number') is-invalid @enderror" name="phone_number"
-                          value="{{ $student->person->phone_number ?? '' }}" required autocomplete="phone_number" autofocus>
+                          value="{{ $student->person->phone_number ?? '' }}" required autocomplete="phone_number"
+                          autofocus>
                         @error('phone_number')
                         <span class="invalid-feedback" role="alert">
                           <strong>{{ $message }}</strong>
@@ -130,7 +130,7 @@
                     </div>
 
                     <div class="form-group row">
-                      <label for="subdivision_code" class="col-md-4 col-form-label text-md-right">DEPARTAMENTO</label>
+                      <label for="subdivision_code" class="col-md-4 col-form-label text-md-right">Departamento</label>
                       <div class="col-md-6">
                         <select id="subdivision_code" name="subdivision_code"
                           class="form-control  @error('subdivision_code') is-invalid @enderror">
@@ -145,11 +145,13 @@
                     </div>
 
                     <div class="form-group row">
-                      <label for="home_address" class="col-md-4 col-form-label text-md-right">DIRECCIÓN DE CASA</label>
+                      <label for="home_address" class="col-md-4 col-form-label text-md-right">Dirección de
+                        domicilio</label>
                       <div class="col-md-6">
                         <input id="home_address" type="text"
                           class="form-control @error('home_address') is-invalid @enderror" name="home_address"
-                          value="{{ $student->person->home_address ?? '' }}" required autocomplete="home_address" autofocus>
+                          value="{{ $student->person->home_address ?? '' }}" required autocomplete="home_address"
+                          autofocus>
                         @error('phone_number')
                         <span class="invalid-feedback" role="alert">
                           <strong>{{ $message }}</strong>
@@ -159,7 +161,7 @@
                     </div>
 
                     <div class="form-group row">
-                      <label for="birthday" class="col-md-4 col-form-label text-md-right">Fecha de Nacimiento</label>
+                      <label for="birthday" class="col-md-4 col-form-label text-md-right">Fecha de nacimiento</label>
 
                       <div class="col-md-6">
                         <input id="birthday" type="date" class="form-control @error('birthday') is-invalid @enderror"
@@ -229,9 +231,9 @@
                   <div class="tab-pane fade" id="academico" role="tabpanel" aria-labelledby="form_personal">
 
                     <div class="form-group row">
-                      <label for="grade" class="col-md-4 col-form-label text-md-right">Grado</label>
+                      <label for="grade_id" class="col-md-4 col-form-label text-md-right">Grado</label>
                       <div class="col-md-6">
-                        <select id="grade" name="grade_id" class="form-control  @error('grade_id') is-invalid @enderror">
+                        <select id="grade_id" name="grade_id" class="form-control  @error('grade_id') is-invalid @enderror">
                           @foreach ($grades->get() as $index => $grade)
 
                             <option value="{{ $index }}"
@@ -260,10 +262,9 @@
                       </div>
                     </div>
                     <br>
-
-                    <p class="card-text text-center"><small class="text-muted">
-                        QUIEN PUEDE RECOGER AL ESTUDIANTE:
-                      </small></p>
+                    <p class="text-center"><b>
+                      PERSONAS AUTORIZADAS PARA RECOGER AL ESTUDIANTE:
+                    </b></p>
 
                     <table class="table table-bordered" id="myTable">
                       <thead>
@@ -280,39 +281,71 @@
                       </thead>
                       <tbody>
                         @if (isset($student->caregiver))
-                        @foreach ($student->caregiver as $caregiver)
-                        @endforeach                       
-                        @endif  
-                        <tr id="1">
-                          <td>
-                            <input id="name_caregiver" type="text"
-                              class="form-control form-control-sm @error('name_caregiver') is-invalid @enderror"
-                              name="name_caregiver[]" value="{{ $caregiver->name ?? '' }}"
-                              autocomplete="name_caregiver" autofocus>
-                          </td>
-                          <td>
-                            <input id="surname_caregiver" type="text"
-                              class="form-control form-control-sm @error('surname_caregiver') is-invalid @enderror"
-                              name="surname_caregiver[]" value="{{ $caregiver->surname ?? '' }}"
-                              autocomplete="surname_caregiver" autofocus>
-                          </td>
-                          <td>
-                            <input id="relationship" type="text"
-                              class="form-control form-control-sm @error('relationship') is-invalid @enderror"
-                              name="relationship[]" value="{{ $caregiver->relationship ?? '' }}"
-                              autocomplete="relationship" autofocus>
-                          </td>
-                          <td>
-                            <input id="phone_number_caregiver" type="text"
-                              class="form-control form-control-sm @error('phone_number_caregiver') is-invalid @enderror"
-                              name="phone_number_caregiver[]" value="{{ $caregiver->phone_number ?? '' }}"
-                              autocomplete="phone_number_caregiver" autofocus>
-                          </td>
-                          <td>
-                            <button type="button" onclick="removeRow(1)" class="remove"><i class="fas fa-minus-circle"></i></button>
-                          </td>
-                        </tr> 
-                       
+                          @foreach ($student->caregiver as $caregiver)
+                            <tr id="1">
+                              <td>
+                                <input id="name_caregiver" type="text"
+                                  class="form-control form-control-sm @error('name_caregiver') is-invalid @enderror"
+                                  name="name_caregiver[]" value="{{ $caregiver->name ?? '' }}"
+                                  autocomplete="name_caregiver" autofocus>
+                              </td>
+                              <td>
+                                <input id="surname_caregiver" type="text"
+                                  class="form-control form-control-sm @error('surname_caregiver') is-invalid @enderror"
+                                  name="surname_caregiver[]" value="{{ $caregiver->surname ?? '' }}"
+                                  autocomplete="surname_caregiver" autofocus>
+                              </td>
+                              <td>
+                                <input id="relationship" type="text"
+                                  class="form-control form-control-sm @error('relationship') is-invalid @enderror"
+                                  name="relationship[]" value="{{ $caregiver->relationship ?? '' }}"
+                                  autocomplete="relationship" autofocus>
+                              </td>
+                              <td>
+                                <input id="phone_number_caregiver" type="text"
+                                  class="form-control form-control-sm @error('phone_number_caregiver') is-invalid @enderror"
+                                  name="phone_number_caregiver[]" value="{{ $caregiver->phone_number ?? '' }}"
+                                  autocomplete="phone_number_caregiver" autofocus>
+                              </td>
+                              <td>
+                                <button type="button" onclick="removeRow(1)" class="remove"><i
+                                    class="fas fa-minus-circle"></i></button>
+                              </td>
+                            </tr>
+                          @endforeach
+                        @else
+                          <tr id="1">
+                            <td>
+                              <input id="name_caregiver" type="text"
+                                class="form-control form-control-sm @error('name_caregiver') is-invalid @enderror"
+                                name="name_caregiver[]" value="{{ $caregiver->name ?? '' }}" autocomplete="name_caregiver"
+                                autofocus>
+                            </td>
+                            <td>
+                              <input id="surname_caregiver" type="text"
+                                class="form-control form-control-sm @error('surname_caregiver') is-invalid @enderror"
+                                name="surname_caregiver[]" value="{{ $caregiver->surname ?? '' }}"
+                                autocomplete="surname_caregiver" autofocus>
+                            </td>
+                            <td>
+                              <input id="relationship" type="text"
+                                class="form-control form-control-sm @error('relationship') is-invalid @enderror"
+                                name="relationship[]" value="{{ $caregiver->relationship ?? '' }}"
+                                autocomplete="relationship" autofocus>
+                            </td>
+                            <td>
+                              <input id="phone_number_caregiver" type="text"
+                                class="form-control form-control-sm @error('phone_number_caregiver') is-invalid @enderror"
+                                name="phone_number_caregiver[]" value="{{ $caregiver->phone_number ?? '' }}"
+                                autocomplete="phone_number_caregiver" autofocus>
+                            </td>
+                            <td>
+                              <button type="button" onclick="removeRow(1)" class="remove"><i
+                                  class="fas fa-minus-circle"></i></button>
+                            </td>
+                          </tr>
+                        @endif
+
                       </tbody>
                     </table>
 
@@ -345,17 +378,19 @@
 
     function addRow() {
       row++;
-      var tr = `<tr id="${row}">
-        <td><input type="text" class="form-control form-control-sm" name = "name_caregiver[]" value = "{{ $caregiver->name ?? '' }}" required></td>
-        <td><input type="text" class="form-control form-control-sm" name = "surname_caregiver[]" value = "{{ $caregiver->surname ?? '' }}" required></td>
-        <td><input type="text" class="form-control form-control-sm" name = "relationship[]" value = "{{ $caregiver->relationship ?? '' }}" required></td>
-        <td><input type="text" class="form-control form-control-sm" name = "phone_number_caregiver[]" value = "{{ $caregiver->phone_number ?? '' }}" required></td>
-        <td><button type="button" onclick="removeRow(${row})" class="remove"><i class="fas fa-minus-circle"></i></button></td></tr>`;
+      var tr =
+        `<tr id="${row}">
+            <td><input type="text" class="form-control form-control-sm" name = "name_caregiver[]" value = "{{ $caregiver->name ?? '' }}" required></td>
+            <td><input type="text" class="form-control form-control-sm" name = "surname_caregiver[]" value = "{{ $caregiver->surname ?? '' }}" required></td>
+            <td><input type="text" class="form-control form-control-sm" name = "relationship[]" value = "{{ $caregiver->relationship ?? '' }}" required></td>
+            <td><input type="text" class="form-control form-control-sm" name = "phone_number_caregiver[]" value = "{{ $caregiver->phone_number ?? '' }}" required></td>
+            <td><button type="button" onclick="removeRow(${row})" class="remove"><i class="fas fa-minus-circle"></i></button></td></tr>`;
       $('tbody').append(tr);
     };
 
     function removeRow(id) {
       $(`#${id}`).remove();
     }
+
   </script>
 @endsection
