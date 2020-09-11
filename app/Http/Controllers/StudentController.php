@@ -90,7 +90,7 @@ class StudentController extends Controller {
                     'phone_number' => strtoupper($phone_number[$i])
                 ]);
             }
-    });       
+    });
       return redirect()->route('student.index')
                         ->with(['status' => 'Estudiante creado correctamente']);
     }
@@ -115,6 +115,22 @@ class StudentController extends Controller {
                 return view('student.create', [
                     'student' => $student
                 ]);
+    }
+
+    public function searchStudentByName(Request $request) {
+      $name = $request->input('name');
+      $persons = [];
+
+      if (strlen($name) == 0) {
+        return $persons;
+      }
+
+      $persons = DB::table('person')
+        ->join('student', 'student.id', '=', 'person.id')
+        ->select('person.id','person.first_surname as text')
+        ->where('person.first_surname', 'like', $name.'%')
+        ->get();
+      return $persons;
     }
 
     public function update(Request $request) {
@@ -151,9 +167,9 @@ class StudentController extends Controller {
         ]);
 
         if ($picture) {
-            
+
             $picture_name = time() . $picture->getClientOriginalName();//colocarle un nombre unico
-    
+
             Storage::disk('users')->put($picture_name, File::get($picture));//guardar en la carpeta storage (storage/app/users)
 
             $person->picture = $picture_name;
