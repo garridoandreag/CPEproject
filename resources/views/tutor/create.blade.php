@@ -3,7 +3,14 @@
 @section('content')
   @inject('subdivisions','App\Services\Subdivisions')
   @inject('students','App\Services\Students')
-
+<script src="{{asset('js/app.js')}}"></script>
+<style>
+  .select-search {
+    width: 100%;
+  }
+</style>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js" defer></script>
   <div class="container">
     <div class="row justify-content-center ">
 
@@ -182,16 +189,7 @@
                     <div class="form-group row">
                       <label for="student_id" class="col-md-4 col-form-label text-md-right">ESTUDIANTE</label>
                       <div class="col-md-6">
-                        <select name="student_id" data-show-subtext="true" data-live-search="true"
-                          class="selectpicker @error('student_id') is-invalid @enderror">
-                          <option value="" disabled selected>Elije al estudiante</option>
-                          @foreach ($students->get() as $index => $student)
-                            <option value="{{ $index }}" data-subtext="{{ $student }}"
-                              {{ old('student_id', $tutor->student->id ?? '') == $index ? 'selected' : '' }}>
-                              {{ $student }}
-                            </option>
-                          @endforeach
-                        </select>
+                        <select name="student_id" class="select-search" id="select"></select>
                       </div>
                     </div>
 
@@ -215,4 +213,30 @@
       </div>
     </div>
   </div>
+  <script>
+    $(document).ready(function() {
+      const select = $('#select');
+      select.select2({
+        theme: "classic",
+        ajax: {
+          type: 'POST',
+          url: '/student/search-student',
+          data: function(params) {
+            return {
+              name: params.term,
+            };
+          },
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          processResults: function (data) {
+            // Transforms the top-level key of the response object from 'items' to 'results'
+            return {
+              results: data
+            };
+          }
+        }
+      });
+    });
+  </script>
 @endsection

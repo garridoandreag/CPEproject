@@ -51,6 +51,7 @@ Route::group(['prefix' => 'student'], function() {
     Route::get('picture/{filename}','StudentController@getImage')->name('student.picture');
     Route::get('detail/{id}', 'StudentController@detail')->name('student.detail');
     Route::get('/Coursegrades', 'StudentController@getCoursegrades');
+    Route::post('/search-student', 'StudentController@searchStudentByName')->name('student.search-student');
 });
 
 Route::group(['prefix' => 'course'], function() {
