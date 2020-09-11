@@ -230,7 +230,6 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
           processResults: function (data) {
-            // Transforms the top-level key of the response object from 'items' to 'results'
             return {
               results: data
             };
