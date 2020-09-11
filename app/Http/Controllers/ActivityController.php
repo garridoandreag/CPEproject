@@ -38,7 +38,7 @@ class ActivityController extends Controller
             'delivery_date' => ['require','date'],
         ]);
 
-        Cycle::create([
+        Activity::create([
             'unit_id' => $data['unit_id'],
             'coursegrade_id' => $data['coursegrade_id'],
             'name' => $data['name'],
@@ -47,7 +47,7 @@ class ActivityController extends Controller
             'delivery_date'=> $data['delivery_date'],
         ]);
      
-        return redirect()->route('cycle.index')
+        return redirect()->route('courseprofessor.activity')
                         ->with(['status' => 'Ciclo creado correctamente.']);
     }
 
