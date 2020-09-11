@@ -34,10 +34,18 @@
               <div class="col">
                 <a href="{{ action('CoursegradeController@courseprofessor') }}" class="btn btn-outline-primary">Regresar
                 </a>
-                @foreach ($units->get() as $index => $unit)
-                  <a href="{{ action('ActivityController@courseprofessoractivityunit', ['coursegrade_id' => end($activities->coursegrade->id), 'unit_id' => $index]) }}"
-                    class="btn btn-primary">{{ $unit }}</a>
-                @endforeach
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <label class="btn btn-light active">
+                    <input type="radio" name="options" id="unit_all" checked> Todo
+                  </label>
+                  @foreach ($activities as $activity)
+                    <label class="btn btn-light">
+                      <input type="radio" name="unit" id="{{ 'unit' . $activity->unit_id }}"
+                        value="{{ $activity->unit_id }}">{{ $activity->unit->name }}
+                    </label>
+                  @endforeach
+                </div>
+
               </div>
               <div class="col-md-auto">
                 <input class="form-control" id="myInput" type="text" placeholder="Buscar...">
@@ -54,6 +62,7 @@
             <table class="table table-hover">
               <thead>
                 <tr>
+                  <th scope="col">@sortablelink('unit_id','Unidad')</th>
                   <th scope="col">@sortablelink('course_id','Asignatura')</th>
                   <th scope="col">@sortablelink('grade_id','Grado')</th>
                   <th scope="col">@sortablelink('name','Actividad')</th>
@@ -65,6 +74,10 @@
               <tbody id="myTable">
                 @foreach ($activities as $activity)
                   <tr>
+                    <td data-label="Asignatura" scope="row"><a
+                        href="{{ action('ActivityController@detail', ['id' => $activity->id]) }}" />
+                      {{ $activity->unit->name }}
+                    </td>
                     <td data-label="Asignatura" scope="row"><a
                         href="{{ action('ActivityController@detail', ['id' => $activity->id]) }}" />
                       {{ $activity->coursegrade->course->name }}
