@@ -16,7 +16,7 @@ class StudentController extends Controller {
     }
 
     public function index() {
-        $students = \App\Student::sortable()->paginate(30);
+        $students = \App\Student::sortable()->paginate(2);
 
         return view('student.index', compact('students'));
     }

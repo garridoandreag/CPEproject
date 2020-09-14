@@ -1,13 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<script src="{{ asset('js/app.js') }}"></script>
-<style>
-  .status {
-    cursor: pointer;
-  }
+  <style>
+    .status {
+      cursor: pointer;
+    }
 
-</style>
+  </style>
   <script>
     $(document).ready(function() {
       $("#myInput").on("keyup", function() {
@@ -25,7 +24,7 @@
       <div class="col-md-12">
 
         <div class="card">
-          <div class="card-header">ESTUDIANTES
+          <div class="card-header">Estudiantes
           </div>
 
           <div class="card-body">
@@ -77,20 +76,21 @@
                       {{ $student->birthday }}
                       </a>
                     </td>
-                    <td  data-label="Estado">
+                    <td data-label="Estado">
                       @if ($student->status == 'INACTIVO')
                         <span id="status{{ $student->id }}" onclick="changeStatus({{ $student->id }})"
                           class="status badge badge-danger">
-                        <span
-                          id="status{{$student->id}}" onclick="changeStatus({{$student->id}})" class="status badge badge-danger">
-                        <span id="status{{$student->id}}" onclick="changeStatus({{$student->id}})" class="status badge badge-danger">
-                          {{ $student->status }}
-                        </span>
-                      @else
-                        <span id="status{{ $student->id }}" onclick="changeStatus({{ $student->id }})"
-                          class="status badge badge-success">
-                          {{ $student->status }}
-                        </span>
+                          <span id="status{{ $student->id }}" onclick="changeStatus({{ $student->id }})"
+                            class="status badge badge-danger">
+                            <span id="status{{ $student->id }}" onclick="changeStatus({{ $student->id }})"
+                              class="status badge badge-danger">
+                              {{ $student->status }}
+                            </span>
+                          @else
+                            <span id="status{{ $student->id }}" onclick="changeStatus({{ $student->id }})"
+                              class="status badge badge-success">
+                              {{ $student->status }}
+                            </span>
                       @endif
                     </td>
                     <td data-label="Foto"><a href="{{ action('StudentController@detail', ['id' => $student->id]) }}" />
@@ -109,8 +109,13 @@
               </tbody>
 
             </table>
+            <br>
 
-            {{ $students->links() }}
+            {{ $students->appends(Request::except('page'))->render() }}
+            <br>
+            <p>
+              Se muestran {{ $students->count() }} de {{ $students->total() }} estudiantes.
+            </P>
 
           </div>
         </div>
@@ -147,5 +152,6 @@
 
       }
     }
+
   </script>
 @endsection

@@ -7,6 +7,16 @@ and open the template in the editor.
 @import url('https://fonts.googleapis.com/css2?family=Itim&family=Montserrat:wght@400;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap');
 
+
+:root{
+    --navbar-color: #204075;
+    --primary-color:  #346BC2;
+    --second-color: #346BC2;
+    --third-color: #F5BA42;
+    --fourth-color: #FFFFFF ;
+    --fifth-color: #DAE2F7;
+}
+
 *{
     margin: 0;
     padding: 0;
@@ -14,7 +24,6 @@ and open the template in the editor.
     text-decoration: none;
     box-sizing: border-box;
     font-family: 'Nunito', cursive;
-    font-size: 5xp;
 
 }
 
@@ -81,7 +90,20 @@ a .btn-menu{
 
 }
 
+.container-logo{
+    width: 250px;
+    height: 250px;
+    overflow: hidden;
 
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.container-logo img{
+    height: 100%;
+
+}
 
 
 
@@ -98,9 +120,9 @@ a .btn-menu{
     z-index: 1; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
-    background-color: #19294F; /* Black*/
+    background-color: var(--primary-color); /* Black*/
 /*    overflow-x: hidden;  Disable horizontal scroll */
-    padding-top: 60px; /* Place content 60px from the top */
+    padding-top: 70px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 
 
@@ -114,14 +136,14 @@ a .btn-menu{
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: #fff;
+    color: var(--fourth-color);
     display: block;
     transition: 0.3s;
 }
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
-    color: #f1f1f1;
+    color: var(--fourth-color);
 }
 
 /* Position and style the close button (top right corner) */
@@ -149,8 +171,14 @@ a .btn-menu{
 }
 
 .card-header{
-    background-color: #A62422;
-    color: white;
+    background-color: var(--second-color);
+    color: var(--fourth-color);
+    font-size: 17px
+}
+
+#announcement{
+    background-color: white;
+    color: var(--fourth-color);
 }
 
 
@@ -161,7 +189,7 @@ a .btn-menu{
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    color: #fff;
+    color: var(--fourth-color);
     transition: all 0.3s;
 }
 
@@ -196,7 +224,7 @@ a .btn-menu{
 #sidebar.active ul li a i {
     margin-right: 0;
     display: block;
-    font-size: 1.8em;
+    font-size: 1.9em;
     margin-bottom: 5px;
 }
 
@@ -215,7 +243,7 @@ a .btn-menu{
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #6d7fcc;
+    background: var(--fifth-color);
 }
 
 #sidebar .sidebar-header strong {
@@ -224,19 +252,18 @@ a .btn-menu{
 }
 
 #sidebar ul.components {
-    padding: 20px 0;
-    border-bottom: 1px solid #19294F;
+    padding: 5px 0;
 }
 
 #sidebar ul li a {
-    padding: 10px;
-    font-size: 1.1em;
+    padding: 10px 40px;
+    font-size: 1.2em;
     display: block;
 }
 
 #sidebar ul li a:hover {
-    color: #A62523;
-    background: #fff;
+    color: var(--second-color);
+    background: var(--fourth-color);
 }
 
 #sidebar ul li a i {
@@ -259,13 +286,13 @@ a[data-toggle="collapse"] {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #BF8F21;
+    background: var(--third-color);
 }
 
 a.article,
 a.article:hover {
-    background: #6d7fcc !important;
-    color: #fff !important;
+    background: var(--fifth-color) !important;
+    color: var(--fourth-color) !important;
 }
 
 /* ---------------------------------------------------

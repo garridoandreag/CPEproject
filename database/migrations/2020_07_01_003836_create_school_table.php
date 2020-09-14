@@ -23,6 +23,7 @@ class CreateSchoolTable extends Migration
               vision mediumtext,
               mision mediumtext,
               history mediumtext,
+              logo varchar(300),
               facebook_url varchar(300),
               email varchar(300),
               created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,

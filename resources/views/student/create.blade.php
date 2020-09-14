@@ -7,7 +7,7 @@
 
   <div class="container">
     <div class="row justify-content-center ">
-      <div class="col-md-8">
+      <div class="col-md-10">
         @if (session('message'))
           <div class="alert alert-success">
             {{ session('message') }}
@@ -283,25 +283,25 @@
                         @if (isset($student->caregiver))
                           @foreach ($student->caregiver as $caregiver)
                             <tr id="1">
-                              <td>
+                              <td data-label="Nombre" scope="row">
                                 <input id="name_caregiver" type="text"
                                   class="form-control form-control-sm @error('name_caregiver') is-invalid @enderror"
                                   name="name_caregiver[]" value="{{ $caregiver->name ?? '' }}"
                                   autocomplete="name_caregiver" autofocus>
                               </td>
-                              <td>
+                              <td  data-label="Apellido" scope="row" >
                                 <input id="surname_caregiver" type="text"
                                   class="form-control form-control-sm @error('surname_caregiver') is-invalid @enderror"
                                   name="surname_caregiver[]" value="{{ $caregiver->surname ?? '' }}"
                                   autocomplete="surname_caregiver" autofocus>
                               </td>
-                              <td>
+                              <td data-label="Parentesco" scope="row">
                                 <input id="relationship" type="text"
                                   class="form-control form-control-sm @error('relationship') is-invalid @enderror"
                                   name="relationship[]" value="{{ $caregiver->relationship ?? '' }}"
                                   autocomplete="relationship" autofocus>
                               </td>
-                              <td>
+                              <td  data-label="Teléfono" scope="row" >
                                 <input id="phone_number_caregiver" type="text"
                                   class="form-control form-control-sm @error('phone_number_caregiver') is-invalid @enderror"
                                   name="phone_number_caregiver[]" value="{{ $caregiver->phone_number ?? '' }}"
@@ -315,25 +315,25 @@
                           @endforeach
                         @else
                           <tr id="1">
-                            <td>
+                            <td data-label="Nombre" scope="row">
                               <input id="name_caregiver" type="text"
                                 class="form-control form-control-sm @error('name_caregiver') is-invalid @enderror"
                                 name="name_caregiver[]" value="{{ $caregiver->name ?? '' }}" autocomplete="name_caregiver"
                                 autofocus>
                             </td>
-                            <td>
+                            <td data-label="Apellido" scope="row" >
                               <input id="surname_caregiver" type="text"
                                 class="form-control form-control-sm @error('surname_caregiver') is-invalid @enderror"
                                 name="surname_caregiver[]" value="{{ $caregiver->surname ?? '' }}"
                                 autocomplete="surname_caregiver" autofocus>
                             </td>
-                            <td>
+                            <td data-label="Parentesco" scope="row">
                               <input id="relationship" type="text"
                                 class="form-control form-control-sm @error('relationship') is-invalid @enderror"
                                 name="relationship[]" value="{{ $caregiver->relationship ?? '' }}"
                                 autocomplete="relationship" autofocus>
                             </td>
-                            <td>
+                            <td data-label="Teléfono" scope="row">
                               <input id="phone_number_caregiver" type="text"
                                 class="form-control form-control-sm @error('phone_number_caregiver') is-invalid @enderror"
                                 name="phone_number_caregiver[]" value="{{ $caregiver->phone_number ?? '' }}"

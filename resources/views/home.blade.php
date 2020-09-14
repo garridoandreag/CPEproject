@@ -1,24 +1,40 @@
 @extends('layouts.app')
 
 @section('content')
-<script src="{{ asset('js/app.js') }}"></script>
-<div class="container">
+  @inject('announcements','App\Services\Announcements')
+
+  <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
+        <div class="col-md-9">
+            <div class="card border-primary">
+                <div class="card-header">
+                    Dashboard
+                </div>
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
                 </div>
             </div>
         </div>
+        <br>
+      <div class="col-md-3">
+
+        @foreach ($announcements->get() as $index => $announcement)
+          <div class="card border-primary mb-3">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><b>Aviso: {{ $announcement->title }}</b></li>
+            </ul>
+
+            <div class="card-body">
+
+              <p class="card-text">{{ $announcement->description }}</p>
+
+            </div>
+            <div class="card-footer text-muted">
+              <small class="text-muted"> Publicado en: {{ $announcement->start_time }}</small>
+            </div>
+          </div>
+        @endforeach
+
+      </div>
     </div>
-</div>
+  </div>
 @endsection

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use Illuminate\Filesystem\Filesystem;
 use App\School;
 
 class SchoolController extends Controller
@@ -39,6 +42,14 @@ class SchoolController extends Controller
             'email' => ['unique:school','email','nullable','max:50'],
         ]);
 
+        $picture = $request->file('logo');
+        $picture_name = 'logo.png';
+
+        if ($picture) {
+            $picture_name = time() . $picture->getClientOriginalName();//colocarle un nombre unico
+            Storage::disk('school')->put($picture_name, File::get($picture));//guardar en la carpeta storage (storage/app/users)
+        }
+
         
         school::create([
             'name' => $data['name'],
@@ -48,6 +59,7 @@ class SchoolController extends Controller
             'vision'=> $data['vision'],
             'mision'=> $data['mision'],
             'history'=> $data['history'],
+            'logo' => $picture_name,
             'facebook_url'=> $data['facebook_url'],
             'email' => $data['email'],
         ]);
@@ -55,6 +67,11 @@ class SchoolController extends Controller
         return redirect()->route('school.index')
                         ->with(['status' => 'Colegio creado correctamente.']);
 
+    }
+
+    public function getImage($filename) {
+        $file = Storage::disk('school')->get($filename);
+        return new Response($file, 200);
     }
 
     public function detail($id)
@@ -77,6 +94,15 @@ class SchoolController extends Controller
     {
         $id = $request->input('id');
         $school = School::find($id);
+        $picture = $request->file('logo');
+        if ($picture) {
+
+            $picture_name = time() . $picture->getClientOriginalName();//colocarle un nombre unico
+
+            Storage::disk('school')->put($picture_name, File::get($picture));//guardar en la carpeta storage (storage/app/users)
+
+            $school->logo = $picture_name;
+        }
 
         $data = $request->validate([
             'name' => ['required', 'string', 'max:50'],
@@ -97,6 +123,7 @@ class SchoolController extends Controller
         $school->vision =  $data['vision'];
         $school->mision =  $data['mision'];
         $school->history =  $data['history'];
+        $school->logo = $picture_name;
         $school->facebook_url =  $data['facebook_url'];
         $school->email =  $data['email'];
 

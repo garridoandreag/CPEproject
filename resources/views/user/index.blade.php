@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
   <script>
     $(document).ready(function() {
       $("#myInput").on("keyup", function() {
@@ -14,16 +13,23 @@
 
   </script>
 
+  <style>
+    .status {
+      cursor: pointer;
+    }
+
+  </style>
+
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header">Profesor: Mis cursos</div>
+          <div class="card-header">Usuarios</div>
           <div class="card-body">
 
             <div class="row justify-content-md-center">
               <div class="col">
-                <a href="{{ action('CoursegradeController@create') }}" class="btn btn-primary">Nuevo </a>
+                <a href="{{ action('RegisterController@create') }}" class="btn btn-primary">Nuevo </a>
               </div>
               <div class="col-md-auto">
                 <input class="form-control" id="myInput" type="text" placeholder="Buscar...">
@@ -39,44 +45,56 @@
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th scope="col">@sortablelink('cycle_id','Ciclo')</th>
-                  <th scope="col">@sortablelink('course_id','Curso')</th>
-                  <th scope="col">@sortablelink('grade_id','Grado')</th>
-                  <th scope="col">@sortablelink('employee_id','Docente')</th>
+                  <th scope="col">@sortablelink('email','ID Usuario')</th>
+                  <th scope="col">@sortablelink('name','Nombre a mostrar')</th>
+                  <th scope="col">@sortablelink('names','Nombre Completo')</th>
+                  <th scope="col">@sortablelink('role_id','Rol')</th>
+                  <th scope="col">@sortablelink('start_date','Fecha Inicio')</th>
+                  <th scope="col">@sortablelink('end_date','Fecha Fin')</th>
                   <th scope="col">@sortablelink('status','Estado')</th>
                 </tr>
               </thead>
               <tbody id="myTable">
-                @foreach ($coursegrades as $coursegrade)
+                @foreach ($users as $user)
                   <tr>
-                    <td data-label="Ciclo" scope="row"><a href="{{ action('ActivityController@courseprofessoractivity', ['coursegrade_id' =>$coursegrade->id]) }}" />
-                      {{ $coursegrade->cycle->name }}
+                    <td data-label="ID Usuario"><a href="{{ action('UserController@detail', ['id' => $user->id]) }}" />
+                      {{ $user->email }}
+                      </a>
                     </td>
-
-                    <td data-label="Curso" scope="row"><a href="{{ action('ActivityController@courseprofessoractivity', ['coursegrade_id' =>$coursegrade->id]) }}" />
-                      {{ $coursegrade->course->name }}
+                    <td data-label="Nombre a mostrar" scope="row"><a
+                        href="{{ action('UserController@detail', ['id' => $user->id]) }}" />
+                      {{ $user->name }}
                     </td>
-
-                    <td data-label="Grado" scope="row"><a href="{{ action('ActivityController@courseprofessoractivity', ['coursegrade_id' =>$coursegrade->id]) }}" />
-                      {{ $coursegrade->grade->name }}
-                    </td>
-
-                    <td data-label="Docente"><a href="{{ action('ActivityController@courseprofessoractivity', ['coursegrade_id' =>$coursegrade->id]) }}" />
-                      {{ $coursegrade->employee->person->names }}
-                      {{ $coursegrade->employee->person->first_surname }}
+                    <td data-label="Nombre Completo"><a href="{{ action('UserController@detail', ['id' => $user->id]) }}" />
+                      {{ $user->person->names }}
+                      {{ $user->person->first_surname }}
+                      {{ $user->person->second_surname }}
                       </a>
                     </td>
 
+                    <td data-label="Rol"><a
+                        href="{{ action('UserController@detail', ['id' => $user->id]) }}" />
+                      {{ $user->role->name }}
+                      </a>
+                    </td>
+                    <td data-label="Nombre Completo"><a href="{{ action('UserController@detail', ['id' => $user->id]) }}" />
+                      {{$user->person->student}}
+                      </a>
+                    </td>
+                    <td data-label="Creado"><a href="{{ action('UserController@detail', ['id' => $user->id]) }}" />
+                      {{ $user->created_at }}
+                      </a>
+                    </td>
                     <td data-label="Estado">
-                      @if ($coursegrade->status == 'INACTIVO')
-                        <span id="status{{ $coursegrade->id }}" onclick="changeStatus({{ $coursegrade->id }})"
+                      @if ($user->status == 'INACTIVO')
+                        <span id="status{{ $user->id }}" onclick="changeStatus({{ $user->id }})"
                           class="status badge badge-danger">
-                          {{ $coursegrade->status }}
+                          {{ $user->status }}
                         </span>
                       @else
-                        <span id="status{{ $coursegrade->id }}" onclick="changeStatus({{ $coursegrade->id }})"
+                        <span id="status{{ $user->id }}" onclick="changeStatus({{ $user->id }})"
                           class="status badge badge-success">
-                          {{ $coursegrade->status }}
+                          {{ $user->status }}
                         </span>
                       @endif
                     </td>
@@ -86,10 +104,10 @@
               </tbody>
             </table>
 
-            {{ $coursegrades->appends(Request::except('page'))->render() }}
+            {{ $users->appends(Request::except('page'))->render() }}
 
             <p>
-              Se muestran {{ $coursegrades->count() }} de {{ $coursegrades->total() }} cursos planeados.
+              Se muestran {{ $users->count() }} de {{ $users->total() }} usuarios.
             </P>
 
           </div>
@@ -105,7 +123,7 @@
         const badge = $(`#status${id}`);
         let status = badge.text().trim();
 
-        status = await axios.post('/subject/status', {
+        status = await axios.post('/user/status', {
             id,
             status
           })
