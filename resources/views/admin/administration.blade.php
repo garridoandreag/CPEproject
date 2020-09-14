@@ -20,7 +20,7 @@
         <div class="card">
           <div class="card-header">Administración</div>
           <div class="card-body">
-            <a href="#" class="btn btn-light" id="menu-admin">
+            <a href="{{ route('user.index') }}" class="btn btn-light" id="menu-admin">
               <img src="images/usuario.png" class="btn-menu">
               <br>
               Usuarios</a>
@@ -65,7 +65,7 @@
               <br>
               Empleados</a>
 
-            <a href="{{ route('paymentcategory.index') }}" class="btn btn-light" id="menu-admin">
+            <a href="{{ route('coursegrade.index') }}" class="btn btn-light" id="menu-admin">
               <img src="images/clase.png" class="btn-menu">
               <br>
               Asignación</a>

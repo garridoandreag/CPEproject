@@ -5,10 +5,12 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Kyslik\ColumnSortable\Sortable;
 
 class User extends Authenticatable {
 
     use Notifiable;
+    use Sortable;
     
     protected $table = 'users';
 
@@ -19,6 +21,10 @@ class User extends Authenticatable {
      */
     protected $fillable = [
         'role_id','person_id','name', 'email', 'password',
+    ];
+
+    public $sortable = [
+        'role_id','person_id','name', 'email','created_at',
     ];
 
     /**

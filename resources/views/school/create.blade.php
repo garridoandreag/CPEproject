@@ -127,6 +127,29 @@
                 </div>
 
                 <div class="form-group row">
+                  <label for="logo" class="col-md-4 col-form-label text-md-right">{{ __('Foto') }}</label>
+
+                  <div class="col-md-6">
+
+                    @if ($school->logo ?? '')
+                      <div class="container-profile">
+                        <img src="{{ route('school.logo', ['filename' => $school->logo]) }}"
+                          class="picture_profile" />
+                      </div>
+                    @endif
+
+                    <input id="logo" type="file" class="form-control @error('logo') is-invalid @enderror"
+                      name="logo">
+
+                    @error('logo')
+                    <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                  </div>
+                </div>
+                
+                <div class="form-group row">
                   <label for="facebook_url" class="col-md-4 col-form-label text-md-right">Facebook (URL) </label>
                   <div class="col-md-6">
                     <input id="facebook_url" type="text" class="form-control @error('facebook_url') is-invalid @enderror"

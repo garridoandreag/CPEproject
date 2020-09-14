@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Filesystem\Filesystem;
+use App\User;
          
 class UserController extends Controller {
 
@@ -28,7 +29,7 @@ class UserController extends Controller {
         //VALIDACION DEL FORMULARIO
         $validate = $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $id], //PARA VALIDAR QUE EL EMAIL ES UNICO Y NO PERTENECE AL REGISTRO QUE SE ESTA ACTUALIZANDO
+            'email' => ['required', 'string', 'regex:/^([a-zA-Z]){3}.([a-zA-Z]){3,}/', 'max:255', 'unique:users,email,' . $id], //PARA VALIDAR QUE EL EMAIL ES UNICO Y NO PERTENECE AL REGISTRO QUE SE ESTA ACTUALIZANDO
         ]);
 
         //RECOGER LOS DATOS DEL FORMULARIO
@@ -76,6 +77,14 @@ class UserController extends Controller {
     public function  getImage($filename){
         $file = Storage::disk('users')->get($filename);
         return new Response($file,200);
+    }
+
+    public function index(){
+        $users = User::orderBy('id','desc')->paginate(30);
+
+        return view('user.index', [
+            'users' => $users
+        ]);
     }
 
 }

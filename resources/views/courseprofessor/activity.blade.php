@@ -27,7 +27,7 @@
       <div class="col-md-12">
 
         <div class="card">
-          <div class="card-header">ACTIVIDADES</div>
+          <div class="card-header">Actividades</div>
           <div class="card-body">
 
             <div class="row justify-content-md-center">
@@ -67,6 +67,7 @@
                   <th scope="col">@sortablelink('grade_id','Grado')</th>
                   <th scope="col">@sortablelink('name','Actividad')</th>
                   <th scope="col">@sortablelink('score','Puntos')</th>
+                  <th scope="col">Tareas</th>
                   <th scope="col">@sortablelink('delivery_date','Fecha Entrega')</th>
                   <th scope="col">@sortablelink('status','Estado')</th>
                 </tr>
@@ -96,6 +97,11 @@
                       {{ $activity->score }}
                       </a>
                     </td>
+                    <td data-label="Puntos"><a
+                      href="{{ action('HomeworkController@create', ['activity_id' => $activity->id]) }}" />
+                      Listar estudiantes
+                    </a>
+                  </td>
                     <td data-label="Fecha de Entrega"><a
                         href="{{ action('ActivityController@detail', ['id' => $activity->id]) }}" />
                       {{ $activity->delivery_date }}

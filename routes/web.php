@@ -38,9 +38,17 @@ Route::get('/admin', function () {
 })->name('admin.admin')->middleware('auth');;
 
 Route::get('/configuration','UserController@config')->name('config');
-Route::post('/user/update','UserController@update')->name('user.update');
 
-Route::get('/user/picture/{filename}','UserController@getImage')->name('user.picture');
+Route::group(['prefix' => 'user'], function() {
+    Route::post('update','UserController@update')->name('user.update');
+    Route::get('/','UserController@index')->name('user.index');
+    Route::get('register','RegisterController@create')->name('user.register');
+    Route::get('detail/{id}', 'UserController@detail')->name('user.detail');
+    Route::get('/picture/{filename}','UserController@getImage')->name('user.picture');
+
+});
+
+Route::get('/school/logo/{filename}', 'ShowLogoController@getImage')->name('school.logo');
 
 Route::group(['prefix' => 'student'], function() {
     Route::get('create', 'StudentController@create')->name('student.create');
@@ -148,6 +156,13 @@ Route::group(['prefix' => 'activity'], function() {
     Route::get('edit/{id}', 'ActivityController@edit')->name('activity.edit');
     Route::post('update', 'ActivityController@update')->name('activity.update');
 });
+
+Route::group(['prefix' => 'homework'], function() {
+    Route::get('/{activity_id}', 'HomeworkController@create')->name('homework.index');
+    Route::get('detail/{id}', 'HomeworkController@detail')->name('homework.detail');
+});
+
+
 
 Route::group(['prefix' => 'courseprofessor'], function() {
     Route::get('/', 'CoursegradeController@courseprofessor')->name('courseprofessor.index');

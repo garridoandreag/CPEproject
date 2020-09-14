@@ -35,20 +35,20 @@ function closeNav() {
   <!-- Fonts -->
 
   <!-- <link rel="dns-prefetch" href="//fonts.gstatic.com">  -->
- <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
   <link href="{{ asset('css/font-nunito.css') }}" rel="stylesheet">
   <!-- Styles -->
-  <link href="{{ asset('css/app.css') }}" rel="stylesheet"> 
+  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
   <link href="{{ asset('css/bootstrap-multiselect.css') }}" rel="stylesheet">
-  
 
- 
+
+
 </head>
 
 <body>
   <div id="app">
-    <nav class="navbar navbar-expand-md navbar-dark shadow-sm" style="background-color: #435F9F">
+    <nav class="navbar navbar-expand-md navbar-dark shadow-sm" style="background-color: var(--navbar-color);">
 
       <!-- background: rgb(253,29,45);
 background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%, rgba(252,176,69,1) 33%, rgba(95,167,52,1) 51%, rgba(9,231,240,1) 71%, rgba(131,58,180,1) 90%);-->
@@ -98,7 +98,7 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                   document.getElementById('logout-form').submit();">
+                                                     document.getElementById('logout-form').submit();">
                     {{ __('Logout') }}
                   </a>
 
@@ -129,46 +129,36 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
   @yield('script')
   <!--  SIDE BAR   -->
   <div id="sidebar" class="sidenav">
-    <ul class="list-unstyled components">
+    <ul class="components">
 
       <li>
 
         <a href="{{ route('admin.admin') }}">
-          <!--                        <img class="icono-menu" src="{{ asset('images/curso.png') }}"  >-->
           <i class="fas fa-users-cog"></i>
 
-          Admin
+          Menú Admón.
         </a>
 
         <a href="{{ route('student.index') }}">
-          <!--                        <img class="icono-menu" src="{{ asset('images/curso.png') }}"  >-->
           <i class="fas fa-user-graduate"></i>
 
           Estudiantes
         </a>
 
         <a href="{{ route('tutor.index') }}">
-
           <i class="fa fa-user"></i>
-
           Padres
         </a>
 
-        <a href="{{ route('tutor.index') }}">
-
+        <a href="{{ route('courseprofessor.index') }}">
           <i class="fas fa-chalkboard-teacher"></i>
-
-          Maestros
-        </a>
-
-        <a href="{{ route('course.index') }}">
-
-          <i class="fas fa-chalkboard-teacher"></i>
-
           Cursos
         </a>
 
-
+        <a href="{{ route('course.index') }}">
+          <i class="fas fa-chalkboard-teacher"></i>
+          Cursos
+        </a>
 
         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="menu-dropdown-toggle">
           <i class="fas fa-wallet"></i>
@@ -186,26 +176,7 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
           </li>
         </ul>
       </li>
-      <li>
-        <a href="#">
-          <i class="fas fa-book"></i>
-          Cursos
-        </a>
-      </li>
-
-      <li>
-        <a href="#">
-          <i class="fas fa-calendar-alt"></i>
-          Actividades
-        </a>
-      </li>
     </ul>
-
-    <!--            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>-->
-    <!--            <a href="#"><i class="fas fa-user-graduate"></i>Estudiantes</a>
-            <a href="#">Cursos</a>
-            <a href="#">Pago Colegiatura</a>
-            <a href="#">Actividades</a>-->
   </div>
 
   <!-- jQuery CDN - Slim version (=without AJAX) -->

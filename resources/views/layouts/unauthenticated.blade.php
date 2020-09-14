@@ -18,7 +18,7 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     </head>
-    <body style="background-image: url('images/starsBlue.png'); background-size: 30%; ">
+    <body style="background-image: url('images/stars2.gif'); background-size: 35%; background-color: var(--navbar-color)">
         <div>
             <main class="py-4">
                 @yield('content')
