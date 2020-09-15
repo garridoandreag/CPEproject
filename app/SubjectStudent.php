@@ -3,12 +3,19 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class SubjectStudent extends Model
 {
-    //
-    protected $table = 'subjectstudent';
+    use Sortable;
     
+    protected $table = 'subjectstudent';
+
+    protected $primaryKey = 'id';
+
+    protected $fillable = ['student_id','coursegrade_id','grade_id','cycle_id','score_subject','status'];
+
+    public $sortable = ['student_id','coursegrade_id','grade_id','cycle_id','score_subject','status'];
     
     // uno a muchos
     public function homework() {

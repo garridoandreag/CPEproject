@@ -223,7 +223,7 @@
           url: '/student/search-student',
           data: function(params) {
             return {
-              name: params.term,
+              code: params.term,
             };
           },
           headers: {

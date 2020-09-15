@@ -59,7 +59,7 @@ Route::group(['prefix' => 'student'], function() {
     Route::get('picture/{filename}','StudentController@getImage')->name('student.picture');
     Route::get('detail/{id}', 'StudentController@detail')->name('student.detail');
     Route::get('/Coursegrades', 'StudentController@getCoursegrades');
-    Route::post('/search-student', 'StudentController@searchStudentByName')->name('student.search-student');
+    Route::post('/search-student', 'StudentController@searchStudentByCode')->name('student.search-student');
 });
 
 Route::group(['prefix' => 'course'], function() {
@@ -159,7 +159,9 @@ Route::group(['prefix' => 'activity'], function() {
 
 Route::group(['prefix' => 'homework'], function() {
     Route::get('/{activity_id}', 'HomeworkController@create')->name('homework.index');
+    Route::get('course/{coursegrade_id}', 'HomeworkController@homeworkcourse')->name('homework.course');
     Route::get('detail/{id}', 'HomeworkController@detail')->name('homework.detail');
+    Route::post('update', 'HomeworkControllerr@update')->name('homework.update');
 });
 
 
