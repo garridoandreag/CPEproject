@@ -10,7 +10,7 @@ class Subjectstudents {
         $subjectstudents = Subjectstudent::get()->where('coursegrade_id',$id);
         
         foreach($subjectstudents as $subjectstudent){
-            $subjectstudentsArray[$subjectstudent->id] = $subjectstudent->student_id;
+            $subjectstudentsArray[$subjectstudent->id] = $subjectstudent;
         }
         return $subjectstudentsArray;
     }

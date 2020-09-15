@@ -15,7 +15,7 @@ class Activity extends Model
 
     protected $fillable = ['unit_id','coursegrade_id','name','description','score','delivery_date','status'];
 
-    public $sortable = ['unit_id','coursegrade_id','name','description','score','delivery_date','status'];
+    public $sortable = ['id','unit_id','coursegrade_id','name','description','score','delivery_date','status'];
 
     // uno a muchos
     public function homework() {

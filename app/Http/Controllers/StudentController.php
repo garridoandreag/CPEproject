@@ -117,18 +117,18 @@ class StudentController extends Controller {
                 ]);
     }
 
-    public function searchStudentByName(Request $request) {
-      $name = $request->input('name');
+    public function searchStudentByCode(Request $request) {
+      $code = $request->input('code');
       $persons = [];
 
-      if (strlen($name) == 0) {
+      if (strlen($code) == 0) {
         return $persons;
       }
 
       $persons = DB::table('person')
         ->join('student', 'student.id', '=', 'person.id')
-        ->select('person.id','person.first_surname as text')
-        ->where('person.first_surname', 'like', $name.'%')
+        ->select('person.id',DB::raw('CONCAT(student.student_code," - ", person.first_surname," ",person.names) as text'))
+        ->where('student.student_code', 'like', $code.'%')
         ->get();
       return $persons;
     }

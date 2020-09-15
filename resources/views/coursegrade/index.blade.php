@@ -43,6 +43,7 @@
                   <th scope="col">@sortablelink('course_id','Curso')</th>
                   <th scope="col">@sortablelink('grade_id','Grado')</th>
                   <th scope="col">@sortablelink('employee_id','Docente')</th>
+                  <th scope="col">@sortablelink('homework','Tareas')</th>
                   <th scope="col">@sortablelink('status','Estado')</th>
                 </tr>
               </thead>
@@ -69,6 +70,11 @@
                       {{ $coursegrade->employee->person->names }}
                       {{ $coursegrade->employee->person->first_surname }}
                       </a>
+                    </td>
+
+                    <td data-label="Tareas" scope="row"><a
+                      href="{{ action('HomeworkController@homeworkcourse', ['coursegrade_id' => $coursegrade->id]) }}" />
+                      Tareas
                     </td>
 
                     <td data-label="Estado">
