@@ -77,6 +77,7 @@ Route::group(['prefix' => 'tutor'], function() {
     Route::post('store', 'TutorController@store')->name('tutor.store');
     Route::get('detail/{id}', 'TutorController@detail')->name('tutor.detail');
     Route::post('update', 'TutorController@update')->name('tutor.update');
+    Route::post('/search-tutor', 'TutorController@searchTutorByDPI')->name('tutor.search-tutor');
 });
 
 Route::group(['prefix' => 'grade'], function() {
@@ -161,7 +162,7 @@ Route::group(['prefix' => 'homework'], function() {
     Route::get('/{activity_id}', 'HomeworkController@create')->name('homework.index');
     Route::get('course/{coursegrade_id}', 'HomeworkController@homeworkcourse')->name('homework.course');
     Route::get('detail/{id}', 'HomeworkController@detail')->name('homework.detail');
-    Route::post('update', 'HomeworkControllerr@update')->name('homework.update');
+    Route::post('update', 'HomeworkController@update')->name('homework.update');
 });
 
 
@@ -172,4 +173,13 @@ Route::group(['prefix' => 'courseprofessor'], function() {
 
     Route::get('activity/{unit_id}', 'ActivityController@courseprofessoractivityunit')->name('courseprofessor.activityunit');
     Route::get('activity/{coursegrade_id}/{unit_id}', 'ActivityController@courseprofessoractivityunit')->name('courseprofessor.activityunit');
+});
+
+
+Route::group(['prefix' => 'payment'], function() {
+    Route::get('create', 'PaymentController@create')->name('payment.create');
+    Route::get('/', 'PaymentController@index')->name('payment.index');
+    Route::get('detail/{id}', 'PaymentController@detail')->name('payment.detail');
+    Route::post('store', 'PaymentController@store')->name('payment.store');
+
 });

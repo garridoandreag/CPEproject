@@ -3,11 +3,19 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class Payment extends Model
 {
-    //
+    use Sortable;
+
     protected $table = 'payment';
+
+    protected $primaryKey = 'id';
+
+    protected $fillable = ['paymentcategory_id','cycle_id','amount','code_reference','student_id','tutor_id','status'];
+
+    public $sortable =['paymentcategory_id','cycle_id','amount','code_reference','student_id','tutor_id','status'];
     
     // muchos a uno
     public function student() {
@@ -21,7 +29,7 @@ class Payment extends Model
     
         // muchos a uno
     public function paymentcategory() {
-        return $this->belongsTo('App\PaymentCategory','paymentcategory_id');
+        return $this->belongsTo('App\PaymentCategory','paymentcategory_id','id');
     }     
     
 }

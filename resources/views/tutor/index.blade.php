@@ -13,12 +13,18 @@
     });
 
   </script>
+    <style>
+      .status {
+        cursor: pointer;
+      }
+  
+    </style>
 
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header">PADRES O ENCARGADOS</div>
+          <div class="card-header">Padres (Encargados)</div>
           <div class="card-body">
             <div class="row justify-content-md-center">
               <div class="col">
@@ -38,32 +44,30 @@
               <thead>
                 <tr>
                   <th scope="col">Estudiante</th>
-                  <th scope="col">Grado</th>
-                  <th scope="col">Nombres</th>
-                  <th scope="col">Apellidos</th>
+                  <th scope="col">Padre / Madre /Encargado</th>
                   <th scope="col">Numero Teléfonico</th>
+                  <th scope="col">Status</th>
                 </tr>
               </thead>
               <tbody id="myTable">
                 @foreach ($tutors as $tutor)
                   <tr>
-                    <td data-label="Estudiante" scope="row"><a
-                        href="{{ action('StudentController@detail', ['id' => $tutor->id]) }}" />
-                    </td>
-                    <td data-label="Grado"><a href="{{ action('StudentController@detail', ['id' => $tutor->id]) }}" />
-                      @if ($tutor->person->picture)
-                        <div class="container-person_profile">
-                          <img src="{{ route('student.picture', ['filename' => $tutor->person->picture]) }}"
-                            class="picture_profile" />
-                        </div>
-                      @endif
+                    <td data-label="Padre / Madre /Encargado"><a
+                        href="{{ action('TutorController@detail', ['id' => $tutor->id]) }}" />
+                        @foreach ($students as $student)
+                        @if($student->tutor_id == $tutor->id)
+                        {{ $student->student_code }} - 
+                        {{ $student->names }}
+                        {{ $student->first_surname }}
+                        @endif
+                        @endforeach
+                      
                       </a>
                     </td>
-                    <td data-label="Nombres"><a href="{{ action('TutorController@detail', ['id' => $tutor->id]) }}" />
+
+                    <td data-label="Padre / Madre /Encargado"><a
+                        href="{{ action('TutorController@detail', ['id' => $tutor->id]) }}" />
                       {{ $tutor->person->names }}
-                      </a>
-                    </td>
-                    <td data-label="Apellidos"><a href="{{ action('TutorController@detail', ['id' => $tutor->id]) }}" />
                       {{ $tutor->person->first_surname }}
                       {{ $tutor->person->second_surname }}
                       </a>
@@ -71,12 +75,30 @@
                     <td data-label="Numero Telefónico"><a
                         href="{{ action('TutorController@detail', ['id' => $tutor->id]) }}" />
                       {{ $tutor->person->phone_number }}
+                      <br>
+                      {{ $tutor->person->cellphone_number }}
                       </a>
+                    </td>
+                    <td>
+                      @if ($tutor->status == 'INACTIVO')
+                        <span id="status{{ $tutor->id }}" onclick="changeStatus({{ $tutor->id }})"
+                          class="status badge badge-danger">
+                        <span
+                          id="status{{$tutor->id}}" onclick="changeStatus({{$tutor->id}})" class="status badge badge-danger">
+                        <span id="status{{$tutor->id}}" onclick="changeStatus({{$tutor->id}})" class="status badge badge-danger">
+                          {{ $tutor->status }}
+                        </span>
+                      @else
+                        <span id="status{{ $tutor->id }}" onclick="changeStatus({{ $tutor->id }})"
+                          class="status badge badge-success">
+                          {{ $tutor->status }}
+                        </span>
+                      @endif
                     </td>
                   </tr>
                 @endforeach
               </tbody>
-            </table >
+            </table>
 
             {{ $tutors->links() }}
 
@@ -85,4 +107,38 @@
       </div>
     </div>
   </div>
+
+  <script>
+    async function changeStatus(id) {
+      try {
+        const badge = $(`#status${id}`);
+        let status = badge.text().trim();
+
+        status = await axios.post('/tutor/status', {
+            id,
+            status
+          })
+          .then(data => {
+            const response = data.data;
+            const {
+              status
+            } = response.data;
+
+            badge
+              .removeClass(status === 'INACTIVO' ? 'badge-success' : 'badge-danger')
+              .addClass(status === 'INACTIVO' ? 'badge-danger' : 'badge-success');
+            badge.text(status);
+
+            return status;
+          })
+          .catch(err => console.error(err));
+
+
+
+      } catch (error) {
+        console.error(error);
+
+      }
+    }
+  </script>
 @endsection

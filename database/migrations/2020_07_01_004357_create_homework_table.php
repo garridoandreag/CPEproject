@@ -21,6 +21,7 @@ class CreateHomeworkTable extends Migration
             student_id int(255) UNSIGNED NOT NULL,
             unit_id int(255) UNSIGNED NOT NULL,
             points decimal(10,0) not null default '0',
+            PM tinyint(1) DEFAULT '0',
             delivery_date date,
             created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,

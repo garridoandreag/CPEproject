@@ -23,7 +23,7 @@ class Student extends Model {
     }
 
     public function tutor() {
-        return $this->belongsToMany('App\Tutor', 'StudentTutor', 'student_id', 'tutor_id');
+        return $this->belongsToMany('App\Tutor', 'Studenttutor', 'student_id', 'tutor_id');
     }
     
     public function grade() {

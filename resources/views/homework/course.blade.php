@@ -22,9 +22,6 @@
 
 
             <div class="row justify-content-md-center">
-              <div class="col">
-                <a href="{{ action('CycleController@create') }}" class="btn btn-primary">Nuevo </a>
-              </div>
               <div class="col-md-auto">
                 <input class="form-control" id="myInput" type="text" placeholder="Buscar...">
               </div>
@@ -64,13 +61,13 @@
                         @if ($subjectstudent->id == $homework->subjectstudent_id)
                           <td data-label="{{ $homework->activity->name }}" scope="row">
                             <div class="input-group input-group-sm mb-3">
-                              <input id="points" type="number"
-                                class="form-control form-control-sm @error('points') is-invalid @enderror" name="points[]"
+                              <input id="points" type="number" step="any"
+                                class="form-control form-control-sm @error('points') is-invalid @enderror" name="points"
                                 value="{{ $homework->points ?? '' }}" autocomplete="points" autofocus>
                               <div class="input-group-prepend">
-                                <span class="input-group-text form-control-sm" value="1">P.M.</span>
+                                <span  class="input-group-text form-control-sm" >P.M.</span>
                                 <div class="input-group-text">
-                                  <input type="checkbox" aria-label="Checkbox for following text input">
+                                  <input id="PM"  type="checkbox" value="1">
                                 </div>
                               </div>
 
@@ -91,6 +88,7 @@
                   <button type="submit" class="btn btn-primary">
                     Guardar
                   </button>
+                  
                 </div>
               </div>
 
