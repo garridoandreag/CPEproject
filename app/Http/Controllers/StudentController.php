@@ -42,7 +42,7 @@ class StudentController extends Controller {
             'subdivision_code' => ['required'],
             'gender_id' => ['required'],
             'home_address' => ['required', 'string', 'max:250'],
-            'student_code' => ['required', 'string', 'max:15'],
+            'student_code' => ['required', 'string', 'max:15','unique:student,student_code,'],
             'birthday' => ['required'],
             'picture' => ['nullable'],
             'grade_id' => ['nullable'],

@@ -261,10 +261,11 @@
                         @enderror
                       </div>
                     </div>
+
                     <br>
-                    <p class="text-center"><b>
-                      PERSONAS AUTORIZADAS PARA RECOGER AL ESTUDIANTE:
-                    </b></p>
+                    <div class="card-footer">
+                    <p class="card-text text-center "><b>El estudiante podrá ser recodigo del colegio por: </b></p>
+                    </div>
 
                     <table class="table table-bordered" id="myTable">
                       <thead>

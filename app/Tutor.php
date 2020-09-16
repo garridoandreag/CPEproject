@@ -3,19 +3,20 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class Tutor extends Model {
 
-    //
+    use Sortable;
+
     protected $table = 'tutor';
 
     protected $primaryKey = 'id';
 
     protected $fillable = ['dpi','occupation'];
 
+    public $sortable =['dpi','occupation'];
    
-
-
     //Uno a uno
     public function person() {
 
@@ -27,6 +28,7 @@ class Tutor extends Model {
     }*/
 
     public function student() {
-        return $this->belongsToMany('App\Student', 'StudentTutor');}
+        return $this->belongsToMany('App\Student', 'Studenttutor', 'student_id', 'tutor_id');
+    }
 
 }

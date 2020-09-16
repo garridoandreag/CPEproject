@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Collection;
 use App\Subjectstudent;
 Use App\Homework;
@@ -19,8 +20,6 @@ class HomeworkController extends Controller
 
         $subjectstudents = Subjectstudent::where('coursegrade_id', $activity->coursegrade_id)->get();
 
-        $homeworks = Homework::sortable()->paginate(30);
-
         foreach ($subjectstudents as $index => $subjectstudent){
             
             $homeworks=Homework::firstOrCreate(
@@ -29,6 +28,8 @@ class HomeworkController extends Controller
             )->sortable()->paginate(30);
         };
 
+        $homeworks = Homework::where('activity_id', $activity_id)->sortable()->paginate(30);
+
         return view('homework.index', compact('homeworks'));
     }
 
@@ -36,7 +37,7 @@ class HomeworkController extends Controller
 
     }
 
-    public function homeworkcourse($coursegrade_id){
+    public function homeworkcourse($coursegrade_id){//no funciona aún
 
         $coursegrade = Subjectstudent::where('coursegrade_id', $coursegrade_id)->get();
         $subjectstudents = Subjectstudent::where('coursegrade_id', $coursegrade_id)->get();
@@ -56,6 +57,16 @@ class HomeworkController extends Controller
 
         return view('homework.course', compact('homeworks','activities','subjectstudents'));
 
+
+    }
+
+
+    public function update(Request $request) {
+
+  
+        
+
+        return redirect()->action('CoursegradeController@courseprofessor')->with('status', 'Estudiante actualizado correctamente');
 
     }
 

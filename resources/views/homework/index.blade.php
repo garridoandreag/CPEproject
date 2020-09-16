@@ -22,7 +22,7 @@
 
             <div class="row justify-content-md-center">
               <div class="col">
-                <a href="{{ action('CycleController@create') }}" class="btn btn-primary">Nuevo </a>
+                
               </div>
               <div class="col-md-auto">
                 <input class="form-control" id="myInput" type="text" placeholder="Buscar...">
@@ -59,7 +59,7 @@
                     </td>
                     <td data-label="Unidad" scope="row"><a
                         href="{{ action('HomeworkController@detail', ['id' => $homework->id]) }}" />
-                      {{ $homework->unit->name }}
+                      {{ $homework->unit_id }}
                     </td>
 
                     <td data-label="Puntos" scope="row">

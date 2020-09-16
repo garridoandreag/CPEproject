@@ -24,12 +24,12 @@
     <div class="row justify-content-center">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header">Ciclo Escolar</div>
+          <div class="card-header">Control de Pagos</div>
           <div class="card-body">
 
             <div class="row justify-content-md-center">
               <div class="col">
-                <a href="{{ action('CycleController@create') }}" class="btn btn-primary">Nuevo </a>
+                <a href="{{ action('PaymentController@create') }}" class="btn btn-primary">Nuevo </a>
               </div>
               <div class="col-md-auto">
                 <input class="form-control" id="myInput" type="text" placeholder="Buscar...">
@@ -45,43 +45,51 @@
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th scope="col">@sortablelink('name','Nombre')</th>
-                  <th scope="col">@sortablelink('school_id','Colegio')</th>
-                  <th scope="col">@sortablelink('start_date','Fecha Inicio')</th>
-                  <th scope="col">@sortablelink('end_date','Fecha Fin')</th>
-                  <th scope="col">@sortablelink('status','Estado')</th>
+                  <th scope="col">@sortablelink('paymentcategory_id','Categoría')</th>
+                  <th scope="col">@sortablelink('cycle_id','Ciclo')</th>
+                  <th scope="col">@sortablelink('amount','Monto')</th>
+                  <th scope="col">@sortablelink('code_reference','Referencia')</th>
+                  <th scope="col">@sortablelink('student_id','Estudiante')</th>
+                  <th scope="col">@sortablelink('tutor_id','Padre / Encargado')</th>
                 </tr>
               </thead>
               <tbody id="myTable">
-                @foreach ($cycles as $cycle)
+                @foreach ($payments as $payment)
                   <tr>
-                    <td data-label="Nombre" scope="row"><a
-                        href="{{ action('CycleController@detail', ['id' => $cycle->id]) }}" />
-                      {{ $cycle->name }}
+                    <td data-label="Categoría" scope="row"><a
+                        href="{{ action('PaymentController@detail', ['id' => $payment->id]) }}" />
+                      {{ $payment->paymentcategory->name }}
                     </td>
-                    <td data-label="Colegio"><a href="{{ action('CycleController@detail', ['id' => $cycle->id]) }}" />
-                      {{ $cycle->school->name }}
+                    <td data-label="Colegio"><a href="{{ action('PaymentController@detail', ['id' => $payment->id]) }}" />
+                      {{ $payment->cycle->name }}
                       </a>
                     </td>
                     <td data-label="Fecha Inicio"><a
-                        href="{{ action('CycleController@detail', ['id' => $cycle->id]) }}" />
-                      {{ $cycle->start_date }}
+                        href="{{ action('PaymentController@detail', ['id' => $payment->id]) }}" />
+                      {{ $payment->amount }}
                       </a>
                     </td>
-                    <td data-label="Fecha Fin"><a href="{{ action('CycleController@detail', ['id' => $cycle->id]) }}" />
-                      {{ $cycle->end_date }}
+                    <td data-label="Fecha Fin"><a
+                        href="{{ action('PaymentController@detail', ['id' => $payment->id]) }}" />
+                      {{ $payment->code_reference }}
                       </a>
                     </td>
+                    <td data-label="Fecha Fin"><a
+                        href="{{ action('PaymentController@detail', ['id' => $payment->id]) }}" />
+                      {{ $payment->student->names }}
+                      </a>
+                    </td>
+
                     <td data-label="Estado">
-                      @if ($cycle->status == 'INACTIVO')
-                        <span id="status{{ $cycle->id }}" onclick="changeStatus({{ $cycle->id }})"
+                      @if ($payment->status == 'INACTIVO')
+                        <span id="status{{ $payment->id }}" onclick="changeStatus({{ $payment->id }})"
                           class="status badge badge-danger">
-                          {{ $cycle->status }}
+                          {{ $payment->status }}
                         </span>
                       @else
-                        <span id="status{{ $cycle->id }}" onclick="changeStatus({{ $cycle->id }})"
+                        <span id="status{{ $payment->id }}" onclick="changeStatus({{ $payment->id }})"
                           class="status badge badge-success">
-                          {{ $cycle->status }}
+                          {{ $payment->status }}
                         </span>
                       @endif
                     </td>
@@ -90,15 +98,13 @@
                 @endforeach
               </tbody>
             </table>
-
-            {{ $cycles->appends(Request::except('page'))->render() }}
-
-            <p>
-              Se muestran {{ $cycles->count() }} de {{ $cycles->total() }} ciclos.
-            </P>
+            <br>
+            {{ $payments->appends(Request::except('page'))->render() }}
+            <br>
+            Se muestran {{ $payments->count() }} de {{ $payments->total() }} pagos
+            registrados.
 
           </div>
-
         </div>
       </div>
     </div>
