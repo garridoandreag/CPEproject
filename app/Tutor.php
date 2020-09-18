@@ -28,7 +28,7 @@ class Tutor extends Model {
     }*/
 
     public function student() {
-        return $this->belongsToMany('App\Student', 'Studenttutor', 'student_id', 'tutor_id');
+        return $this->belongsToMany('App\Student', 'StudentTutor', 'student_id', 'tutor_id');
     }
 
 }

@@ -47,7 +47,6 @@
                 <tr>
                   <th scope="col">@sortablelink('paymentcategory_id','Categoría')</th>
                   <th scope="col">@sortablelink('cycle_id','Ciclo')</th>
-                  <th scope="col">@sortablelink('amount','Monto')</th>
                   <th scope="col">@sortablelink('code_reference','Referencia')</th>
                   <th scope="col">@sortablelink('student_id','Estudiante')</th>
                   <th scope="col">@sortablelink('tutor_id','Padre / Encargado')</th>
@@ -60,38 +59,30 @@
                         href="{{ action('PaymentController@detail', ['id' => $payment->id]) }}" />
                       {{ $payment->paymentcategory->name }}
                     </td>
-                    <td data-label="Colegio"><a href="{{ action('PaymentController@detail', ['id' => $payment->id]) }}" />
+                    <td data-label="Ciclo"><a href="{{ action('PaymentController@detail', ['id' => $payment->id]) }}" />
                       {{ $payment->cycle->name }}
                       </a>
                     </td>
-                    <td data-label="Fecha Inicio"><a
-                        href="{{ action('PaymentController@detail', ['id' => $payment->id]) }}" />
-                      {{ $payment->amount }}
-                      </a>
-                    </td>
-                    <td data-label="Fecha Fin"><a
+                    <td data-label="Referencia"><a
                         href="{{ action('PaymentController@detail', ['id' => $payment->id]) }}" />
                       {{ $payment->code_reference }}
                       </a>
                     </td>
-                    <td data-label="Fecha Fin"><a
+                    <td data-label="Estudiante"><a
                         href="{{ action('PaymentController@detail', ['id' => $payment->id]) }}" />
-                      {{ $payment->student->names }}
+                      {{ $payment->student->student_code }}
+                      <br>
+                      {{ $payment->student->person->names }}
+                      {{ $payment->student->person->first_surname }}
                       </a>
                     </td>
-
-                    <td data-label="Estado">
-                      @if ($payment->status == 'INACTIVO')
-                        <span id="status{{ $payment->id }}" onclick="changeStatus({{ $payment->id }})"
-                          class="status badge badge-danger">
-                          {{ $payment->status }}
-                        </span>
-                      @else
-                        <span id="status{{ $payment->id }}" onclick="changeStatus({{ $payment->id }})"
-                          class="status badge badge-success">
-                          {{ $payment->status }}
-                        </span>
-                      @endif
+                    <td data-label="Estudiante"><a
+                        href="{{ action('PaymentController@detail', ['id' => $payment->id]) }}" />
+                      {{ $payment->tutor->dpi }}
+                      <br>
+                      {{ $payment->tutor->person->names }}
+                      {{ $payment->tutor->person->first_surname }}
+                      </a>
                     </td>
 
                   </tr>

@@ -401,6 +401,7 @@ a.article:hover {
 .table td {
     padding: .625em;
     text-align: center;
+    vertical-align: middle;
 }
 
 .table th {
@@ -433,6 +434,7 @@ a.article:hover {
         border-bottom: 3px solid #ddd;
         display: block;
         margin-bottom: .625em;
+
     }
 
     .table td {
