@@ -168,11 +168,11 @@ Route::group(['prefix' => 'homework'], function() {
 
 
 Route::group(['prefix' => 'courseprofessor'], function() {
-    Route::get('/', 'CoursegradeController@courseprofessor')->name('courseprofessor.index');
-    Route::get('activity/{coursegrade_id}', 'ActivityController@courseprofessoractivity')->name('courseprofessor.activity');
+    Route::get('/{cycle_id?}', 'CoursegradeController@courseprofessor')->name('courseprofessor.index');
+    Route::get('activity/{coursegrade_id?}/{unit_id?}', 'ActivityController@courseprofessoractivity')->name('courseprofessor.activity');
 
-    Route::get('activity/{unit_id}', 'ActivityController@courseprofessoractivityunit')->name('courseprofessor.activityunit');
-    Route::get('activity/{coursegrade_id}/{unit_id}', 'ActivityController@courseprofessoractivityunit')->name('courseprofessor.activityunit');
+    //Route::get('activity/{unit_id}', 'ActivityController@courseprofessoractivityunit')->name('courseprofessor.activityunit');
+    //Route::get('activity/{coursegrade_id}/{unit_id}', 'ActivityController@courseprofessoractivityunit')->name('courseprofessor.activityunit');
 });
 
 

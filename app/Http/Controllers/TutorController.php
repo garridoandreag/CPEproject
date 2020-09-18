@@ -54,7 +54,7 @@ class TutorController extends Controller
             'subdivision_name' => ['required'],
             'gender_id' => ['required'],
             'home_address' => ['required', 'string', 'max:250'],
-            'dpi' => ['required', 'string', 'max:13'],
+            'dpi' => ['required', 'string', 'regex:/^[1-9]{1}\d{12}/','unique:tutor,dpi,'],
             'occupation' => ['required', 'string', 'max:50'],
         ]);
 

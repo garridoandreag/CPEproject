@@ -6,8 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
-use App\Coursegrade; 
-use App\Activity; 
+use App\{Coursegrade, Activity};
 
 class ActivityController extends Controller
 {
@@ -51,22 +50,26 @@ class ActivityController extends Controller
                         ->with(['status' => 'Ciclo creado correctamente.']);
     }
 
-    public function courseprofessoractivity($coursegrade_id)
+    public function courseprofessoractivity($coursegrade_id, $unit_id = '')
     {
-        $activities=Activity::where('coursegrade_id', $coursegrade_id)
-                                ->firstOrFail()->sortable()->paginate(30);
 
-        return view('courseprofessor.activity', compact('activities','coursegrade_id'));
-    }
+        $coursegradeprof = Coursegrade::where('id', $coursegrade_id)->first();
+        $grade_name = $coursegradeprof->grade->name;
+        $course_name = $coursegradeprof->course->name;
 
-    public function courseprofessoractivityunit($unit_id)
-    {
-        $activities=Activity::Where('unit_id',$unit_id)
-                                ->firstOrFail()->orderby('unit_id')->sortable()->paginate(30);
+        try{
+            if(empty($unit_id)){
 
-                               // var_dump($activities);
-                               // die();
-            return view('courseprofessor.activityunit', compact('activities','coursegrade_id'));
+                $activities=Activity::where('coursegrade_id', $coursegrade_id)->sortable()->paginate(10);
+            }else{
+                $activities=Activity::where('coursegrade_id', $coursegrade_id)->where('unit_id',$unit_id)->sortable()->paginate(10);
+
+            }
+        }catch(\Exception $e){
+            return view('courseprofessor.activity',compact('coursegrade_id','grade_name','course_name'));
+        }
+
+        return view('courseprofessor.activity', compact('coursegrade_id','activities','grade_name','course_name'));
     }
 
     public function edit($id)
