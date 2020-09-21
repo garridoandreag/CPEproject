@@ -26,12 +26,14 @@
       <div class="col-md-12">
 
         <div class="card">
-        <div class="card-header">Actividades: {{$course_name}} {{$grade_name}}</div>
+          <div class="card-header">Actividades: {{ $course_name }} {{ $grade_name }}</div>
           <div class="card-body">
 
             <div class="row justify-content-md-center">
               <div class="col">
                 <a href="{{ action('CoursegradeController@courseprofessor') }}" class="btn btn-outline-primary">Regresar
+                </a>
+                <a href="{{ action('ActivityController@create') }}" class="btn btn-primary">Nuevo
                 </a>
                 <div class="btn-group" role="group">
                   <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
@@ -40,7 +42,8 @@
                   </button>
                   <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                     <a class="dropdown-item"
-                    href="{{ action('ActivityController@courseprofessoractivity', ['coursegrade_id' => $coursegrade_id]) }}">Mostrar todo</a>
+                      href="{{ action('ActivityController@courseprofessoractivity', ['coursegrade_id' => $coursegrade_id]) }}">Mostrar
+                      todo</a>
                     @foreach ($units->get() as $index => $unit)
                       <a class="dropdown-item"
                         href="{{ action('ActivityController@courseprofessoractivity', ['coursegrade_id' => $coursegrade_id, 'unit_id' => $index]) }}">{{ $unit }}</a>
@@ -60,6 +63,7 @@
                 {{ session('status') }}
               </div>
             @endif
+            
             @if (isset($activities))
               <table class="table table-hover">
                 <thead>
@@ -95,12 +99,12 @@
                         </a>
                       </td>
                       <td data-label="Puntos"><a class="btn btn-primary btn-sm"
-                        href="{{ action('HomeworkController@create', ['activity_id' => $activity->id]) }}" />
+                          href="{{ action('HomeworkController@edit', ['activity_id' => $activity->id]) }}" />
                         <i class="fas fa-list-alt"></i>
-                      Calificar
-                      </a>
-                    </td>
-                  </tr>
+                        Calificar
+                        </a>
+                      </td>
+                    </tr>
                   @endforeach
 
 
