@@ -159,10 +159,11 @@ Route::group(['prefix' => 'activity'], function() {
 });
 
 Route::group(['prefix' => 'homework'], function() {
-    Route::get('/{activity_id}', 'HomeworkController@create')->name('homework.index');
+    Route::get('edit/{activity_id}', 'HomeworkController@edit')->name('homework.edit');
     Route::get('course/{coursegrade_id}', 'HomeworkController@homeworkcourse')->name('homework.course');
     Route::get('detail/{id}', 'HomeworkController@detail')->name('homework.detail');
     Route::post('update', 'HomeworkController@update')->name('homework.update');
+    Route::post('store', 'HomeworkController@store')->name('homework.store');
 });
 
 
@@ -181,5 +182,6 @@ Route::group(['prefix' => 'payment'], function() {
     Route::get('/', 'PaymentController@index')->name('payment.index');
     Route::get('detail/{id}', 'PaymentController@detail')->name('payment.detail');
     Route::post('store', 'PaymentController@store')->name('payment.store');
+    
 
 });

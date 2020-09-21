@@ -175,13 +175,13 @@ class StudentController extends Controller {
             $person->picture = $picture_name;
         }
 
-        $person->favorite_name =  strtoupper($data['favorite_name']);
-        $person->names =  strtoupper($data['names']);
-        $person->first_surname =  strtoupper($data['first_surname']);
-        $person->second_surname =  strtoupper($data['second_surname']);
+        $person->favorite_name =  $data['favorite_name'];
+        $person->names =  $data['names'];
+        $person->first_surname =  $data['first_surname'];
+        $person->second_surname =  $data['second_surname'];
         $person->phone_number =  $data['phone_number'];
         $person->subdivision_code =  $data['subdivision_code'];
-        $person->home_address =  strtoupper($data['home_address']);
+        $person->home_address =  $data['home_address'];
         $student->student_code =  $data['student_code'];
         $student->birthday =  $data['birthday'];
         $student->grade_id =  $data['grade_id'];

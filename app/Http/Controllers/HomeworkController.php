@@ -14,9 +14,15 @@ Use App\Activity;
 class HomeworkController extends Controller
 {
     
-    public function create($activity_id)
+    public function edit($activity_id)
     {
         $activity = Activity::where('id', $activity_id)->first();
+        $activity_name = $activity->name;
+        $activity_description = $activity->description;
+        $course_name =  $activity->coursegrade->course->name;
+        $grade_name =  $activity->coursegrade->grade->name;
+
+        $coursegrade_id = $activity->coursegrade_id;
 
         $subjectstudents = Subjectstudent::where('coursegrade_id', $activity->coursegrade_id)->get();
 
@@ -30,14 +36,44 @@ class HomeworkController extends Controller
 
         $homeworks = Homework::where('activity_id', $activity_id)->sortable()->paginate(30);
 
-        return view('homework.index', compact('homeworks'));
+        return view('homework.edit', compact('homeworks','coursegrade_id','course_name','grade_name','activity_name','activity_description'));
+        //return view('homework.edit', ['homeworks' => $homeworks, 'coursegrade_id' => $coursegrade_id]);
     }
 
     public function detail($id){
 
     }
 
-    public function homeworkcourse($coursegrade_id){//no funciona aún
+    public function store(Request $request) {
+    }
+
+    public function update(Request $request) {
+        $homeworks = sizeof($request->input('id'));
+        $id = $request->input('id');
+        $activity_id = $request->input('activity_id');
+        $points = $request->input('points');
+        $PM= $request->input('PM');
+        $delivery_date = $request->input('delivery_date');
+
+        $coursegrade_id = $request->input('coursegrade_id');
+    
+        for($i = 0; $i < $homeworks; $i++){
+            Homework::where('id', $id[$i])
+            ->update([
+                'points' => $points[$i] ,
+                'PM'  => $PM[$i],
+                'delivery_date' => $delivery_date[$i],
+                ]);
+
+        }
+
+        return redirect()->action('ActivityController@courseprofessoractivity', 
+        ['coursegrade_id' => $coursegrade_id])
+        ->with('status', 'Estudiante actualizado correctamente');
+
+    }
+
+  /*  public function homeworkcourse($coursegrade_id){//no funciona aún
 
         $coursegrade = Subjectstudent::where('coursegrade_id', $coursegrade_id)->get();
         $subjectstudents = Subjectstudent::where('coursegrade_id', $coursegrade_id)->get();
@@ -58,16 +94,9 @@ class HomeworkController extends Controller
         return view('homework.course', compact('homeworks','activities','subjectstudents'));
 
 
-    }
+    }*/
 
 
-    public function update(Request $request) {
 
-  
-        
-
-        return redirect()->action('CoursegradeController@courseprofessor')->with('status', 'Estudiante actualizado correctamente');
-
-    }
 
 }
