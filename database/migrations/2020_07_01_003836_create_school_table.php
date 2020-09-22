@@ -14,10 +14,10 @@ class CreateSchoolTable extends Migration
     public function up()
     {
         DB::statement("
-                CREATE TABLE SCHOOL(
+            CREATE TABLE SCHOOL(
               id int(255) UNSIGNED NOT NULL AUTO_INCREMENT,
               name varchar(100) not null,
-              phone_number VARCHAR(100), 
+              phone_number VARCHAR(100),
               cellphone_number varchar(100),
               address varchar(300),
               vision mediumtext,
@@ -30,8 +30,8 @@ class CreateSchoolTable extends Migration
               updated_at TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
               status enum('ACTIVO','INACTIVO') not null default 'ACTIVO',
               CONSTRAINT pk_school PRIMARY KEY (id)
-              )ENGINE=InnoDb;
-            ");
+            )ENGINE=InnoDb;
+        ");
     }
 
     /**
