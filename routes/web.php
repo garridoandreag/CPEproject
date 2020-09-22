@@ -149,19 +149,12 @@ Route::group(['prefix' => 'coursegrade'], function() {
     Route::post('update', 'CoursegradeController@update')->name('coursegrade.update');
 });
 
-Route::group(['prefix' => 'activity'], function() {
-    Route::get('create', 'ActivityController@create')->name('activity.create');
-    Route::get('/', 'ActivityController@index')->name('activity.index');
-    Route::post('store', 'ActivityController@store')->name('activity.store');
-    Route::get('detail/{id}', 'ActivityController@detail')->name('activity.detail');
-    Route::get('edit/{id}', 'ActivityController@edit')->name('activity.edit');
-    Route::post('update', 'ActivityController@update')->name('activity.update');
-});
+
 
 Route::group(['prefix' => 'homework'], function() {
     Route::get('edit/{activity_id}', 'HomeworkController@edit')->name('homework.edit');
     Route::get('course/{coursegrade_id}', 'HomeworkController@homeworkcourse')->name('homework.course');
-    Route::get('detail/{id}', 'HomeworkController@detail')->name('homework.detail');
+    Route::get('detail/{activity_id}', 'HomeworkController@detail')->name('homework.detail');
     Route::post('update', 'HomeworkController@update')->name('homework.update');
     Route::post('store', 'HomeworkController@store')->name('homework.store');
 });
@@ -176,6 +169,13 @@ Route::group(['prefix' => 'courseprofessor'], function() {
     //Route::get('activity/{coursegrade_id}/{unit_id}', 'ActivityController@courseprofessoractivityunit')->name('courseprofessor.activityunit');
 });
 
+Route::group(['prefix' => 'activity'], function() {
+    Route::get('create/{employee_id?}', 'ActivityController@create')->name('activity.create');
+    Route::post('store', 'ActivityController@store')->name('activity.store');
+    Route::get('detail/{id}', 'ActivityController@detail')->name('activity.detail');
+    Route::get('edit/{id}', 'ActivityController@edit')->name('activity.edit');
+    Route::post('update', 'ActivityController@update')->name('activity.update');
+});
 
 Route::group(['prefix' => 'payment'], function() {
     Route::get('create', 'PaymentController@create')->name('payment.create');

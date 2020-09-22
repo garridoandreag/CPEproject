@@ -31,9 +31,9 @@
 
             <div class="row justify-content-md-center">
               <div class="col">
-                <a href="{{ action('CoursegradeController@courseprofessor') }}" class="btn btn-outline-primary">Regresar
+                <a href="{{ action('CoursegradeController@courseprofessor') }}" class="btn btn-outline-primary"><i class="fas fa-reply"></i>
                 </a>
-                <a href="{{ action('ActivityController@create') }}" class="btn btn-primary">Nuevo
+                <a href="{{ action('ActivityController@create', ['employee_id' => $employee_id]) }}" class="btn btn-primary">Nuevo
                 </a>
                 <div class="btn-group" role="group">
                   <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"

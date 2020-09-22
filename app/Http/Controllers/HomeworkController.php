@@ -40,7 +40,28 @@ class HomeworkController extends Controller
         //return view('homework.edit', ['homeworks' => $homeworks, 'coursegrade_id' => $coursegrade_id]);
     }
 
-    public function detail($id){
+    public function detail($activity_id){
+        $activity = Activity::where('id', $activity_id)->first();
+        $activity_name = $activity->name;
+        $activity_description = $activity->description;
+        $course_name =  $activity->coursegrade->course->name;
+        $grade_name =  $activity->coursegrade->grade->name;
+
+        $coursegrade_id = $activity->coursegrade_id;
+
+        $subjectstudents = Subjectstudent::where('coursegrade_id', $activity->coursegrade_id)->get();
+
+        foreach ($subjectstudents as $index => $subjectstudent){
+            
+            $homeworks=Homework::firstOrCreate(
+                ['activity_id' =>  $activity_id,'subjectstudent_id' => $subjectstudent->id],
+                ['student_id' => $subjectstudent->student_id, 'unit_id' => $activity->unit_id]
+            )->sortable()->paginate(30);
+        };
+
+        $homeworks = Homework::where('activity_id', $activity_id)->sortable()->paginate(30);
+
+        return view('homework.detail', compact('homeworks','coursegrade_id','course_name','grade_name','activity_id','activity_name','activity_description'));
 
     }
 
