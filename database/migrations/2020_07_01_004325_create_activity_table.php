@@ -21,6 +21,7 @@ class CreateActivityTable extends Migration
             name varchar(100) NOT NULL,
             description varchar(100),
             score decimal(10,0) not null default '0',
+            type enum('Zona','Evaluacion') not null default 'Zona',
             delivery_date date,
             created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,

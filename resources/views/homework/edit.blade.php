@@ -49,7 +49,7 @@
               <table class="table table-bordered">
                 <thead>
                   <tr>
-                    
+
                     <th scope="col">@sortablelink('unit_id','Unidad')</th>
                     <th scope="col">@sortablelink('subjectstudent_id','Estudiante')</th>
                     <th scope="col">@sortablelink('points','Puntos')</th>
@@ -64,7 +64,7 @@
                     <tr>
                       <input type="hidden" name="id[]" value="{{ $homework->id }}" />
                       <td data-label="Unidad" scope="row">
-                        {{ $homework->unit->name }}
+                        {{ $homework->activity->unit->name}}
                       </td>
                       <td data-label="Estudiante">
                         {{ $homework->subjectstudent->student->person->names }}
@@ -73,11 +73,11 @@
                       </td>
 
                       <td data-label="Puntos" scope="row">
-                        <div class="input-group input-group-sm mb-3">
+                        <div class="input-group input-group-sm">
                           <div class="input-group-prepend">
-                            <span class="input-group-text"> {{$homework->activity->score}} / </span>
+                            <span class="input-group-text"> {{ $homework->activity->score }} / </span>
                           </div>
-                        <input id="points" type="number" step="any" min="0" max="{{$homework->activity->score}}"
+                          <input id="points" type="number" step="any" min="0" max="{{ $homework->activity->score }}"
                             class="form-control form-control-sm @error('points') is-invalid @enderror" name="points[]"
                             value="{{ $homework->points ?? '' }}" autocomplete="points" autofocus>
                         </div>
@@ -113,10 +113,10 @@
 
               <br>
               <div class="form-group row mb-0">
-                <div class="col-md-6 offset-md-0">
-                  <a href="{{ action('ActivityController@courseprofessoractivity', ['coursegrade_id' => $coursegrade_id]) }}" " class="
-                    btn btn-outline-primary">Regresar </a>
+                <div class="col-md-6 offset-md-9">
 
+                  <a href="{{ action('ActivityController@courseprofessoractivity', ['coursegrade_id' => $coursegrade_id]) }}" " class="
+                    btn btn-outline-secondary">Cancelar</a>
                   <button type="submit" class="btn btn-primary">
                     @if (isset($homeworks) && is_object($homeworks))
                       Actualizar

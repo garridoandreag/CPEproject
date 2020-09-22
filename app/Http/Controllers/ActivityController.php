@@ -21,9 +21,10 @@ class ActivityController extends Controller
         return view('activity.index', compact('activities'));
     }
 
-    public function create()
+    public function create($employee_id)
     {
-        //
+        
+        return view('activity.create', compact('employee_id'));
     }
 
     public function store(Request $request)
@@ -34,20 +35,23 @@ class ActivityController extends Controller
             'name' => ['required', 'string','max:50'],
             'description' => ['required','string','max:900'],
             'score' => ['required'],
-            'delivery_date' => ['require','date'],
+            'type' => ['required'],
+            'delivery_date' => ['required','date'],
         ]);
 
+        $coursegrade_id = $data['coursegrade_id'];
         Activity::create([
             'unit_id' => $data['unit_id'],
             'coursegrade_id' => $data['coursegrade_id'],
             'name' => $data['name'],
             'description'=> $data['description'],
             'score' => $data['score'],
+            'type' => $data['type'],
             'delivery_date'=> $data['delivery_date'],
         ]);
      
-        return redirect()->route('courseprofessor.activity')
-                        ->with(['status' => 'Ciclo creado correctamente.']);
+        return redirect()->route('courseprofessor.activity', compact('coursegrade_id'))
+                        ->with(['status' => 'Actividad agregada correctamente.']);
     }
 
     public function courseprofessoractivity($coursegrade_id, $unit_id = '')
@@ -56,6 +60,7 @@ class ActivityController extends Controller
         $coursegradeprof = Coursegrade::where('id', $coursegrade_id)->first();
         $grade_name = $coursegradeprof->grade->name;
         $course_name = $coursegradeprof->course->name;
+        $employee_id = $coursegradeprof->employee_id;
 
         try{
             if(empty($unit_id)){
@@ -69,21 +74,63 @@ class ActivityController extends Controller
             return view('courseprofessor.activity',compact('coursegrade_id','grade_name','course_name'));
         }
 
-        return view('courseprofessor.activity', compact('coursegrade_id','activities','grade_name','course_name'));
+        return view('courseprofessor.activity', compact('coursegrade_id','activities','grade_name','course_name','employee_id'));
     }
 
     public function edit($id)
     {
-        //
+        $activity = \App\Activity::where('id', $id)->first();
+        $employee_id = $activity->coursegrade->employee_id;
+        $coursegrade_id = $activity->coursegrade_id;
+
+        return view('activity.create', [
+            'activity' => $activity,
+            'employee_id' => $employee_id,
+            'coursegrade_id'=> $coursegrade_id
+        ]);
     }
 
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request)
+    {       
+        $id = $request->input('id');
+        $activity = Activity::find($id);
+        
+        $data = $request->validate([
+            'unit_id' => ['required'],
+            'coursegrade_id' => ['required'],
+            'name' => ['required', 'string','max:50'],
+            'description' => ['required','string','max:900'],
+            'score' => ['required'],
+            'type' => ['required'],
+            'delivery_date' => ['required','date'],
+        ]);
+
+        $coursegrade_id = $data['coursegrade_id'];
+        $activity->unit_id =  $data['unit_id'];
+        $activity->coursegrade_id =  $data['coursegrade_id'];
+        $activity->name =  $data['name'];
+        $activity->description =  $data['description'];
+        $activity->score =  $data['score'];
+        $activity->type =  $data['type'];
+        $activity->delivery_date =  $data['delivery_date'];
+
+        $activity->update();
+     
+        return redirect()->route('courseprofessor.activity', compact('coursegrade_id'))
+                        ->with(['status' => 'Actividad actualizada correctamente.']);
+
     }
 
-    public function destroy($id)
+    public function detail($id)
     {
-        //
+        $activity = \App\Activity::where('id', $id)->first();
+        $employee_id = $activity->coursegrade->employee_id;
+        $coursegrade_id = $activity->coursegrade_id;
+
+        return view('activity.detail', [
+            'activity' => $activity,
+            'employee_id' => $employee_id,
+            'coursegrade_id'=> $coursegrade_id
+        ]);
     }
 }
