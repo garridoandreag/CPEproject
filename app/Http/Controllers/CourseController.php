@@ -6,6 +6,7 @@ use App\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Database\Eloquent\Collection;
 
 class CourseController extends Controller
 {
@@ -14,9 +15,8 @@ class CourseController extends Controller
   }
 
   public function index () {
-    $courses = DB::table('course')
-      ->select('id', 'name', 'status')
-      ->get();
+    $courses = \App\Course::orderBy('name','asc')->sortable()->paginate(10);
+
     return view('course.index', compact('courses'));
   }
 
@@ -70,4 +70,21 @@ class CourseController extends Controller
       ));
     return redirect()->action('CourseController@index')->with('status', 'Curso actualizado correctamente');
   }
+
+  public function destroy ($id){
+
+    try{
+      $course = \App\Course::where('id', $id)->first();
+
+      $course->delete();
+    }catch(\Exception $e){
+        return redirect()->route('course.index')
+        ->with(['warning' => 'No se pudo eliminar el registro, porque ya existen movimientos.']);
+    }
+
+    return redirect()->route('course.index')
+                    ->with(['status' => 'Se elimino el registro.']);
+    }
+
+
 }

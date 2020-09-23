@@ -69,6 +69,7 @@ Route::group(['prefix' => 'course'], function() {
   Route::get('/detail/{id}', 'CourseController@detail')->name('course.detail');
   Route::post('/update', 'CourseController@update')->name('course.udpate');
   Route::post('/status', 'CourseController@status')->name('course.status');
+  Route::get('/destroy/{id}', 'CourseController@destroy')->name('course.destroy');
 });
 
 Route::group(['prefix' => 'tutor'], function() {
@@ -147,6 +148,7 @@ Route::group(['prefix' => 'coursegrade'], function() {
     Route::get('detail/{id}', 'CoursegradeController@detail')->name('coursegrade.detail');
     Route::get('edit/{id}', 'CoursegradeController@edit')->name('coursegrade.edit');
     Route::post('update', 'CoursegradeController@update')->name('coursegrade.update');
+    Route::get('destroy/{id}', 'CoursegradeController@destroy')->name('coursegrade.destroy');
 });
 
 

@@ -95,6 +95,7 @@ class SchoolController extends Controller
         $id = $request->input('id');
         $school = School::find($id);
         $picture = $request->file('logo');
+
         if ($picture) {
 
             $picture_name = time() . $picture->getClientOriginalName();//colocarle un nombre unico
@@ -102,6 +103,7 @@ class SchoolController extends Controller
             Storage::disk('school')->put($picture_name, File::get($picture));//guardar en la carpeta storage (storage/app/users)
 
             $school->logo = $picture_name;
+            
         }
 
         $data = $request->validate([
@@ -123,7 +125,6 @@ class SchoolController extends Controller
         $school->vision =  $data['vision'];
         $school->mision =  $data['mision'];
         $school->history =  $data['history'];
-        $school->logo = $picture_name;
         $school->facebook_url =  $data['facebook_url'];
         $school->email =  $data['email'];
 

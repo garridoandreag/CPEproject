@@ -88,6 +88,25 @@
                   </div>
                 </div>
 
+                @if (isset($coursegrade) && is_object($coursegrade))
+
+                <div class="form-group row">
+                  <label for="course_id" class="col-md-4 col-form-label text-md-right">Curso</label>
+                  <div class="col-md-6">
+                    <select id="course" name="course" class="form-control"  @error('course_id') is-invalid @enderror" >
+                      @foreach ($courses->get() as $index => $course)
+                        <option value="{{ $index }}"
+                          {{ old('course_id', $coursegrade->course_id ?? '') == $index ? 'selected' : '' }}>
+                          {{ $course }}
+                        </option>
+                
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+
+                @else
+
                 <div class="form-group row">
                   <label for="course_id" class="col-md-4 col-form-label text-md-right">Curso</label>
                   <div class="col-md-6">
@@ -102,11 +121,12 @@
                     </select>
                   </div>
                 </div>
+                @endif
 
 
                 <div class="form-group row mb-0">
                   <div class="col-md-6 offset-md-4">
-                    <a href="{{ route('coursegrade.index') }}" class="btn btn-outline-primary">Regresar </a>
+                    <a href="{{ route('coursegrade.index') }}" class="btn btn-outline-secondary">Cancelar</a>
                     <button type="submit" class="btn btn-primary">
                       @if (isset($coursegrade) && is_object($coursegrade))
                         Actualizar
@@ -114,6 +134,9 @@
                         Guardar
                       @endif
                     </button>
+                    @if (isset($coursegrade) && is_object($coursegrade))
+                    <a href="{{action('CoursegradeController@destroy',['id' => $coursegrade->id])}}" class="btn btn-danger">Eliminar</a>
+                    @endif
 
                   </div>
                 </div>

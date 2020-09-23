@@ -86,7 +86,7 @@
                   <label for="vision" class="col-md-4 col-form-label text-md-right">Vision</label>
                   <div class="col-md-6">
                     <textarea id="vision" rows="5" class="form-control  @error('vision') is-invalid @enderror" name="vision"
-                      value="{{ $school->vision ?? '' }}" autofocus readonly></textarea>
+                      autofocus readonly>{{ $school->vision ?? '' }}</textarea>
                     @error('vision')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
@@ -99,7 +99,7 @@
                   <label for="mision" class="col-md-4 col-form-label text-md-right">Mision</label>
                   <div class="col-md-6">
                     <textarea id="mision" rows="5" class="form-control  @error('mision') is-invalid @enderror" name="mision"
-                      value="{{ $school->mision ?? '' }}" autofocus  readonly ></textarea>
+                    autofocus  readonly >{{ $school->mision ?? '' }}</textarea>
                     @error('mision')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
@@ -112,7 +112,7 @@
                   <label for="history" class="col-md-4 col-form-label text-md-right">Historia Breve</label>
                   <div class="col-md-6">
                     <textarea id="history" type="text" rows="8" class="form-control  @error('history') is-invalid @enderror" name="history"
-                      value="{{ $school->history ?? '' }}" autofocus  readonly></textarea>
+                      autofocus  readonly>{{ $school->history ?? '' }}</textarea>
                     @error('history')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
@@ -137,7 +137,7 @@
                 <div class="form-group row">
                   <label for="email" class="col-md-4 col-form-label text-md-right">Correo Electrónico</label>
                   <div class="col-md-6">
-                    <input id="email" type="text" class="form-control @error('email') is-invalid @enderror"
+                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                       name="email" value="{{ $school->email ?? '' }}" autocomplete="email" autofocus readonly>
                     @error('email')
                     <span class="invalid-feedback" role="alert">
@@ -149,7 +149,7 @@
 
                 <div class="form-group row mb-0">
                   <div class="col-md-6 offset-md-4">
-                    <a href="{{ route('school.index') }}" class="btn btn-outline-primary">Regresar </a>
+                    <a href="{{ route('school.index') }}" class="btn btn-outline-secondary">Cancelar</a>
                     <a href="{{ action('SchoolController@edit', ['id' => $school->id]) }}" class="btn btn-primary">Editar </a>
                   </div>
                 </div>

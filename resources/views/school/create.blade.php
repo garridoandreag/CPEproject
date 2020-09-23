@@ -14,9 +14,9 @@
           <div class="card">
             <div class="card-header">
               @if (isset($school) && is_object($school))
-                MODIFICAR COLEGIO
+                Modificar Colegio
               @else
-                NUEVO COLEGIO
+                Nuevo Colegio
               @endif
             </div>
 
@@ -90,7 +90,7 @@
                   <label for="vision" class="col-md-4 col-form-label text-md-right">Vision</label>
                   <div class="col-md-6">
                     <textarea id="vision" type="text" rows="5" class="form-control  @error('vision') is-invalid @enderror"
-                      name="vision" value="{{ $school->vision ?? '' }}" autofocus></textarea>
+                      name="vision" autofocus>{{ $school->vision ?? '' }}</textarea>
                     @error('vision')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
@@ -103,7 +103,7 @@
                   <label for="mision" class="col-md-4 col-form-label text-md-right">Mision</label>
                   <div class="col-md-6">
                     <textarea id="mision" type="text" rows="5" class="form-control  @error('mision') is-invalid @enderror"
-                      name="mision" value="{{ $school->mision ?? '' }}" autocomplete="mision" autofocus></textarea>
+                      name="mision" autocomplete="mision" autofocus>{{ $school->mision ?? '' }}</textarea>
                     @error('mision')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
@@ -117,7 +117,7 @@
                   <div class="col-md-6">
                     <textarea id="history" type="text" rows="8"
                       class="form-control  @error('history') is-invalid @enderror" name="history"
-                      value="{{ $school->history ?? '' }}" autofocus></textarea>
+                      autofocus>{{ $school->history ?? '' }}</textarea>
                     @error('history')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
@@ -165,7 +165,7 @@
                 <div class="form-group row">
                   <label for="email" class="col-md-4 col-form-label text-md-right">Correo Electrónico</label>
                   <div class="col-md-6">
-                    <input id="email" type="text" class="form-control @error('email') is-invalid @enderror"
+                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                       name="email" value="{{ $school->email ?? '' }}" autocomplete="email" autofocus>
                     @error('email')
                     <span class="invalid-feedback" role="alert">
@@ -177,7 +177,7 @@
 
                 <div class="form-group row mb-0">
                   <div class="col-md-6 offset-md-4">
-                    <a href="{{ route('school.index') }}" class="btn btn-outline-primary">Regresar </a>
+                    <a href="{{ route('school.index') }}" class="btn btn-outline-secondary">Cancelar</a>
                     <button type="submit" class="btn btn-primary">
                       @if (isset($school) && is_object($school))
                         Actualizar

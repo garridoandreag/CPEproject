@@ -7,9 +7,9 @@
         <div class="card">
           <div class="card-header">
             @if (isset($course) && is_object($course))
-              MODIFICAR CURSO
+              Modificar Curso
             @else
-              NUEVO CURSO
+              Nuevo Curso
             @endif
           </div>
           <div class="card-body">
@@ -39,9 +39,13 @@
               </div>
               <div class="form-group row mb-0">
                 <div class="col-md-6 offset-md-4">
+                  <a href="{{route('course.index')}}" class="btn btn-outline-secondary">Cancelar</a>
                   <button type="submit" class="btn btn-primary">
                     Guardar
                   </button>
+                  @if (isset($course) && is_object($course))
+                  <a href="{{action('CourseController@destroy',['id' => $course->id])}}" class="btn btn-danger">Eliminar</a>
+                  @endif
                 </div>
               </div>
             </form>
