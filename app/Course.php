@@ -7,7 +7,8 @@ use Kyslik\ColumnSortable\Sortable;
 
 class Course extends Model
 {
-    //
+    use Sortable;
+    
     protected $table = 'course';
         
     protected $primaryKey = 'id';

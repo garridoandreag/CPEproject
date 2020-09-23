@@ -30,10 +30,10 @@ class CoursegradeController extends Controller
         $courses = $request->input('course');
 
         $data = $request->validate([
-            'grade_id' => ['nullable'],
-            'course_id' => ['nullable'],
-            'cycle_id' => ['nullable'],
-            'employee_id' => ['nullable'],           
+            'grade_id' => ['required'],
+            'course_id' => ['required'],
+            'cycle_id' => ['required'],
+            'employee_id' => ['required'],           
         ]);
 
 
@@ -83,11 +83,50 @@ class CoursegradeController extends Controller
         return view('courseprofessor.index', compact('coursegrades'));
     }
 
-    public function edit(){
+    public function edit($id){
+        $coursegrade = \App\Coursegrade::where('id', $id)->first();
+
+        return view('coursegrade.create', [
+            'coursegrade' => $coursegrade
+        ]);
+    }
+
+    public function update(Request $request){
+
+        $id = $request->input('id');
+        $coursegrade = Coursegrade::find($id);
+
+        $data = $request->validate([
+            'grade_id' => ['required'],
+            'course_id' => ['required'],
+            'cycle_id' => ['required'],
+            'employee_id' => ['required'],           
+        ]);
+
+        $coursegrade->grade_id =  $data['grade_id'];
+        $coursegrade->course_id =  $data['course_id'];
+        $coursegrade->cycle_id =  $data['cycle_id'];
+        $coursegrade->employee_id =  $data['employee_id'];
+
+        $coursegrade->update();
+
+        return redirect()->route('coursegrade.index')
+                        ->with(['status' => 'Curso y grado actualizado correctamente.']);
 
     }
 
-    public function update(){
+    public function destroy($id){
+        try{
+            $coursegrade = \App\Coursegrade::where('id', $id)->first();
+
+            $coursegrade->delete();
+        }catch(\Exception $e){
+            return redirect()->route('coursegrade.index')
+            ->with(['warning' => 'No se pudo eliminar el registro, porque ya existen movimientos.']);
+        }
+
+        return redirect()->route('coursegrade.index')
+                         ->with(['status' => 'Se elimino el registro.']);
 
     }
 

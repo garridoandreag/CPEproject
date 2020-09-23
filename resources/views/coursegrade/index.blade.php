@@ -23,6 +23,7 @@
 
             <div class="row justify-content-md-center">
               <div class="col">
+                <a href="{{ route('admin.admin') }}" class="btn btn-outline-primary"><i class="fas fa-reply"></i></a>
                 <a href="{{ action('CoursegradeController@create') }}" class="btn btn-primary">Nuevo </a>
               </div>
               <div class="col-md-auto">
@@ -35,6 +36,12 @@
               <div class="alert alert-success">
                 {{ session('status') }}
               </div>
+            @else
+              @if (session('warning'))
+                <div class="alert alert-danger">
+                  {{ session('warning') }}
+                </div>
+              @endif
             @endif
             <table class="table table-hover">
               <thead>
@@ -51,18 +58,18 @@
                 @foreach ($coursegrades as $coursegrade)
                   <tr>
                     <td data-label="Ciclo" scope="row"><a
-                      href="{{ action('CoursegradeController@detail', ['id' => $coursegrade->id]) }}" />
-                      {{ $coursegrade->cycle->name }}
+                        href="{{ action('CoursegradeController@detail', ['id' => $coursegrade->id]) }}" />
+                      {{ $coursegrade->cycle->name }}</a>
                     </td>
 
                     <td data-label="Curso" scope="row"><a
-                      href="{{ action('CoursegradeController@detail', ['id' => $coursegrade->id]) }}" />
-                      {{ $coursegrade->course->name }}
+                        href="{{ action('CoursegradeController@detail', ['id' => $coursegrade->id]) }}" />
+                      {{ $coursegrade->course->name }}</a>
                     </td>
 
                     <td data-label="Grado" scope="row"><a
-                      href="{{ action('CoursegradeController@detail', ['id' => $coursegrade->id]) }}" />
-                      {{ $coursegrade->grade->name }}
+                        href="{{ action('CoursegradeController@detail', ['id' => $coursegrade->id]) }}" />
+                      {{ $coursegrade->grade->name }}</a>
                     </td>
 
                     <td data-label="Docente"><a
@@ -73,7 +80,7 @@
                     </td>
 
                     <td data-label="Tareas" scope="row"><a
-                      href="{{ action('HomeworkController@homeworkcourse', ['coursegrade_id' => $coursegrade->id]) }}" />
+                        href="{{ action('HomeworkController@homeworkcourse', ['coursegrade_id' => $coursegrade->id]) }}" />
                       Tareas
                     </td>
 
@@ -95,9 +102,9 @@
                 @endforeach
               </tbody>
             </table>
-
+            <br>
             {{ $coursegrades->appends(Request::except('page'))->render() }}
-
+            <br>
             <p>
               Se muestran {{ $coursegrades->count() }} de {{ $coursegrades->total() }} cursos planeados.
             </P>
@@ -115,7 +122,7 @@
         const badge = $(`#status${id}`);
         let status = badge.text().trim();
 
-        status = await axios.post('/subject/status', {
+        status = await axios.post('/coursegrade/status', {
             id,
             status
           })

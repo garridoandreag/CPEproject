@@ -22,6 +22,7 @@
           <div class="card-body">
             <div class="row justify-content-md-center">
               <div class="col">
+                <a href="{{ route('admin.admin') }}" class="btn btn-outline-primary"><i class="fas fa-reply"></i></a>
                 <a href="{{ action('SchoolController@create') }}" class="btn btn-primary">Nuevo </a>
               </div>
               <div class="col-md-auto">
@@ -63,7 +64,9 @@
 
               </tbody>
             </table>
+            <br>
             {{ $schools->appends(Request::except('page'))->render() }}
+            <br>
             <p>
               Se muestran {{ $schools->count() }} de {{ $schools->total() }} entidades del colegio.
             </P>
