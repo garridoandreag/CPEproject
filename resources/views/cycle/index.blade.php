@@ -29,6 +29,7 @@
 
             <div class="row justify-content-md-center">
               <div class="col">
+                <a href="{{ route('admin.admin') }}" class="btn btn-outline-primary"><i class="fas fa-reply"></i></a>
                 <a href="{{ action('CycleController@create') }}" class="btn btn-primary">Nuevo </a>
               </div>
               <div class="col-md-auto">
@@ -90,9 +91,9 @@
                 @endforeach
               </tbody>
             </table>
-
+            <br>
             {{ $cycles->appends(Request::except('page'))->render() }}
-
+            <br>
             <p>
               Se muestran {{ $cycles->count() }} de {{ $cycles->total() }} ciclos.
             </P>

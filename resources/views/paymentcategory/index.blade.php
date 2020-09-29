@@ -27,6 +27,7 @@
 
             <div class="row justify-content-md-center">
               <div class="col">
+                <a href="{{ route('admin.admin') }}" class="btn btn-outline-primary"><i class="fas fa-reply"></i></a>
                 <a href="{{ action('PaymentcategoryController@create') }}" class="btn btn-primary">Nuevo
                 </a>
               </div>
@@ -91,9 +92,9 @@
                 @endforeach
               </tbody>
             </table>
-
+            <br>
             {{ $paymentcategories->appends(Request::except('page'))->render() }}
-
+            <br>
             <p>
               Se muestran {{ $paymentcategories->count() }} de {{ $paymentcategories->total() }} categorias de pago.
             </P>
@@ -111,7 +112,7 @@
         const badge = $(`#status${id}`);
         let status = badge.text().trim();
 
-        status = await axios.post('/Announcement/status', {
+        status = await axios.post('/Paymentcategory/status', {
             id,
             status
           })

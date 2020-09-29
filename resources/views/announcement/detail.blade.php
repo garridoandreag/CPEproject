@@ -50,8 +50,7 @@
                   <label for="description" class="col-md-4 col-form-label text-md-right">Descripción</label>
                   <div class="col-md-6">
                     <textarea id="description" type="text" rows="10"
-                      class="form-control  @error('description') is-invalid @enderror" name="description"
-                      value="{{ $announcement->description ?? '' }}" autocomplete="description" autofocus readonly></textarea>
+                      class="form-control  @error('description') is-invalid @enderror" name="description" readonly>{{ $announcement->description ?? '' }}</textarea>
                     @error('description')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
@@ -108,7 +107,7 @@
 
                 <div class="form-group row mb-0">
                   <div class="col-md-6 offset-md-4">
-                    <a href="{{ route('announcement.index') }}" class="btn btn-outline-primary">Regresar </a>
+                    <a href="{{ route('announcement.index') }}" class="btn btn-outline-secondary">Cancelar</a>
                     <a href="{{action('AnnouncementController@edit',['id' => $announcement->id])}}" class="btn btn-primary">Editar</a>
                   </div>
                 </div>

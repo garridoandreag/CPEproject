@@ -56,8 +56,8 @@
           },
           {
             title: 'event8',
-            start: '2020-08-31',
-            end: '2020-08-07'
+            start: '2020-09-27',
+            end: '2020-09-27'
           },
           {
             title: 'event3',
@@ -81,6 +81,12 @@
             Eventos
           </div>
           <div class="card-body">
+            <div class="row justify-content-md-center">
+              <div class="col">
+                <a href="{{ route('admin.admin') }}" class="btn btn-outline-primary"><i class="fas fa-reply"></i></a>
+              </div>
+            </div>
+            <br>
             <div class="calendar-responsive">
               <div id="calendar" class="fc fc-media-screen fc-direction-ltr fc-theme-standard"></div>
             </div>
