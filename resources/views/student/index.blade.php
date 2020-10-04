@@ -49,9 +49,9 @@
                   <th scope="col">Código</th>
                   <th scope="col">Nombres</th>
                   <th scope="col">Apellidos</th>
-                  <th scope="col">Fecha Nacimiento</th>
-                  <th scope="col">Estado</th>
                   <th scope="col">Foto</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col">Asignar Cursos</th>
                 </tr>
               </thead>
               <tbody id="myTable">
@@ -71,9 +71,13 @@
                       {{ $student->person->second_surname }}
                       </a>
                     </td>
-                    <td data-label="Fecha Nacimiento"><a
-                        href="{{ action('StudentController@detail', ['id' => $student->id]) }}" />
-                      {{ $student->birthday }}
+                    <td data-label="Foto"><a href="{{ action('StudentController@detail', ['id' => $student->id]) }}" />
+                      @if ($student->person->picture)
+                        <div class="container-person_profile">
+                          <img src="{{ route('student.picture', ['filename' => $student->person->picture]) }}"
+                            class="picture_profile" />
+                        </div>
+                      @endif
                       </a>
                     </td>
                     <td data-label="Estado">
@@ -93,13 +97,12 @@
                             </span>
                       @endif
                     </td>
-                    <td data-label="Foto"><a href="{{ action('StudentController@detail', ['id' => $student->id]) }}" />
-                      @if ($student->person->picture)
-                        <div class="container-person_profile">
-                          <img src="{{ route('student.picture', ['filename' => $student->person->picture]) }}"
-                            class="picture_profile" />
-                        </div>
-                      @endif
+
+                    <td data-label="Asignar Cursos">
+                      <a class="btn btn-primary btn-sm"
+                        href="{{ action('SubjectstudentController@create', ['student_id' => $student->id]) }}" />
+                        <i class="fas fa-th-list"></i>
+                      Asignar Cursos
                       </a>
                     </td>
                   </tr>

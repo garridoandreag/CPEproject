@@ -15,4 +15,13 @@ class Grades {
         return $gradesArray;
     }
 
+    public function getAllActive(){
+        
+        $grades = Grade::get()->where('status','ACTIVO');
+        foreach($grades as $grade){
+            $gradesArray[$grade->id] = $grade->name;
+        }
+        return $gradesArray;
+    }
+
 }

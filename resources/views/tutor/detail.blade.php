@@ -168,9 +168,9 @@
 
                     <div class="form-group row mb-0">
                       <div class="col-md-6 offset-md-4">
-                        <button type="submit" class="btn btn-primary">
-                          Editar
-                        </button>
+                        <a href="{{ route('tutor.index') }}" class="btn btn-outline-secondary">Cancelar</a>
+                        <a href="{{ action('TutorController@edit', ['id' => $tutor->id]) }}"
+                          class="btn btn-primary">Editar</a>
                       </div>
                     </div>
                     <br />

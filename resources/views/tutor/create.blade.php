@@ -190,7 +190,7 @@
 
                 <br>
                 <div class="card-footer">
-                <p class="card-text text-center "><b>Estudiantes de los que es responsable:</b></p>
+                  <p class="card-text text-center "><b>Estudiantes de los que es responsable:</b></p>
                 </div>
                 <table class="table table-bordered" id="myTable">
                   <thead>
@@ -211,8 +211,7 @@
                       </td>
                       <td data-label="Parentesco" scope="row">
                         <div class="input-group input-group-sm">
-                          <select id="relationship" name="relationship[]"
-                            class="form-control ">
+                          <select id="relationship" name="relationship[]" class="form-control ">
                             @foreach ($relationships->get() as $relationship)
                               <option value="{{ $relationship }}"
                                 {{ old('relationship', $tutor->studenttutor->relationship ?? '') == $relationship ? 'selected' : '' }}>
@@ -236,7 +235,7 @@
 
                 <div class="form-group row mb-0">
                   <div class="col-md-6 offset-md-4">
-                    <a href="{{route('tutor.index')}}" class="btn btn-outline-primary">Regresar</a>
+                    <a href="{{ route('tutor.index') }}" class="btn btn-outline-secondary">Cancelar</a>
                     <button type="submit" class="btn btn-primary">
                       Guardar
                     </button>
@@ -285,17 +284,29 @@
       row++;
       var tr =
         `<tr id="${row}">
-            <td><select name="student_id[]" class="form-control select-search" id="select"></select></td>
-            <td><div class="input-group input-group-sm"><select id="relationship" name="relationship[]"
-                            class="form-control ">
-                            @foreach ($relationships->get() as $relationship)
-                              <option value="{{ $relationship }}"
-                                {{ old('relationship', $tutor->studenttutor->relationship ?? '') == $relationship ? 'selected' : '' }}>
-                                {{ $relationship }}
-                              </option>
-                            @endforeach
-                          </select></div></td>
-            <td><button type="button" onclick="removeRow(${row})" class="remove"><i class="fas fa-minus-circle"></i></button></td></tr>`;
+              <td data-label="Nombre" scope="row">
+                <select name="student_id[]" class="select-search" id="select">
+                </select>
+              </td>
+
+              <td data-label="Parentesco" scope="row">
+                          <div class="input-group input-group-sm">
+                            <select id="relationship" name="relationship[]" class="form-control ">
+                              @foreach ($relationships->get() as $relationship)
+                                <option value="{{ $relationship }}"
+                                  {{ old('relationship', $tutor->studenttutor->relationship ?? '') == $relationship ? 'selected' : '' }}>
+                                  {{ $relationship }}
+                                </option>
+                              @endforeach
+                            </select>
+                          </div>
+                        </td>
+
+              <td><button type="button" onclick="removeRow(${row})" class="remove">
+                  <i class="fas fa-minus-circle"></i>
+                  </button>
+              </td>
+            </tr>`;
       $('tbody').append(tr);
     };
 

@@ -76,6 +76,7 @@ Route::group(['prefix' => 'tutor'], function() {
     Route::get('create', 'TutorController@create')->name('tutor.create');
     Route::get('/', 'TutorController@index')->name('tutor.index');
     Route::post('store', 'TutorController@store')->name('tutor.store');
+    Route::get('edit/{id}', 'TutorController@edit')->name('tutor.edit');
     Route::get('detail/{id}', 'TutorController@detail')->name('tutor.detail');
     Route::post('update', 'TutorController@update')->name('tutor.update');
     Route::post('/search-tutor', 'TutorController@searchTutorByDPI')->name('tutor.search-tutor');
@@ -151,6 +152,13 @@ Route::group(['prefix' => 'coursegrade'], function() {
     Route::get('destroy/{id}', 'CoursegradeController@destroy')->name('coursegrade.destroy');
 });
 
+Route::group(['prefix' => 'subjectstudent'], function() {
+    Route::get('create/{student_id?}', 'SubjectstudentController@create')->name('subjectstudent.create');
+    Route::get('inscription/{student_id?}', 'SubjectstudentController@inscription')->name('subjectstudent.inscription');
+    Route::get('/', 'SubjectstudentController@index')->name('subjectstudent.index');
+    Route::get('/reportcard/{student_id?}', 'SubjectstudentController@reportcard')->name('subjectstudent.reportcard');//eliminar
+    Route::post('store', 'SubjectstudentController@store')->name('subjectstudent.store');
+});
 
 
 Route::group(['prefix' => 'homework'], function() {
