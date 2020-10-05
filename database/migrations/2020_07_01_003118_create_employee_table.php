@@ -17,7 +17,7 @@ class CreateEmployeeTable extends Migration
             CREATE TABLE EMPLOYEE(
             id int(255) unsigned not null,
             dpi varchar(100) not null,
-            job varchar(100) not null,
+            job_id int(255) unsigned not null,
             salary decimal(10,2),
             professor BOOLEAN DEFAULT FALSE,
             created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,

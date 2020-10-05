@@ -5,6 +5,17 @@ and open the template in the editor.
 */
 
 @import url('https://fonts.googleapis.com/css2?family=Itim&family=Montserrat:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap');
+
+
+:root{
+    --navbar-color: #204075;
+    --primary-color:  #346BC2;
+    --second-color: #346BC2;
+    --third-color: #F5BA42;
+    --fourth-color: #FFFFFF ;
+    --fifth-color: #DAE2F7;
+}
 
 *{
     margin: 0;
@@ -12,7 +23,13 @@ and open the template in the editor.
     list-style: none;
     text-decoration: none;
     box-sizing: border-box;
-    font-family: 'Itim', cursive;
+    font-family: 'Nunito', cursive;
+
+}
+
+.col-form-label{
+    font-family: 'Nunito', sans-serif;
+
 }
 
 form .picture_profile{
@@ -59,6 +76,38 @@ form .picture_profile{
 }
 
 
+a .btn-menu{
+    width: 105px; height: 105px;
+
+}
+
+#menu-admin{
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+
+
+}
+
+.container-logo{
+    width: 250px;
+    height: 250px;
+    overflow: hidden;
+
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.container-logo img{
+    height: 100%;
+
+}
+
+.select-search {
+    width: 100%;
+  }
 
 
 
@@ -75,9 +124,9 @@ form .picture_profile{
     z-index: 1; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
-    background-color: #A62422; /* Black*/
+    background-color: var(--primary-color); /* Black*/
 /*    overflow-x: hidden;  Disable horizontal scroll */
-    padding-top: 60px; /* Place content 60px from the top */
+    padding-top: 70px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 
 
@@ -91,14 +140,14 @@ form .picture_profile{
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: #fff;
+    color: var(--fourth-color);
     display: block;
     transition: 0.3s;
 }
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
-    color: #f1f1f1;
+    color: var(--fourth-color);
 }
 
 /* Position and style the close button (top right corner) */
@@ -121,11 +170,19 @@ form .picture_profile{
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
+
+
 }
 
 .card-header{
-    background-color: #A62422;
-    color: white;
+    background-color: var(--second-color);
+    color: var(--fourth-color);
+    font-size: 17px
+}
+
+#announcement{
+    background-color: white;
+    color: var(--fourth-color);
 }
 
 
@@ -136,7 +193,7 @@ form .picture_profile{
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    color: #fff;
+    color: var(--fourth-color);
     transition: all 0.3s;
 }
 
@@ -171,7 +228,7 @@ form .picture_profile{
 #sidebar.active ul li a i {
     margin-right: 0;
     display: block;
-    font-size: 1.8em;
+    font-size: 1.9em;
     margin-bottom: 5px;
 }
 
@@ -179,7 +236,7 @@ form .picture_profile{
     padding: 10px !important;
 }
 
-#sidebar.active .dropdown-toggle::after {
+#sidebar.active .menu-dropdown-toggle::after {
     top: auto;
     bottom: 10px;
     right: 50%;
@@ -190,7 +247,7 @@ form .picture_profile{
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #6d7fcc;
+    background: var(--fifth-color);
 }
 
 #sidebar .sidebar-header strong {
@@ -199,36 +256,30 @@ form .picture_profile{
 }
 
 #sidebar ul.components {
-    padding: 20px 0;
-    border-bottom: 1px solid #A62523;
+    padding: 5px 0;
 }
 
 #sidebar ul li a {
-    padding: 10px;
-    font-size: 1.1em;
+    padding: 10px 40px;
+    font-size: 1.2em;
     display: block;
 }
 
 #sidebar ul li a:hover {
-    color: #A62523;
-    background: #fff;
+    color: var(--second-color);
+    background: var(--fourth-color);
 }
 
 #sidebar ul li a i {
     margin-right: 10px;
 }
 
-#sidebar ul li.active>a,
-a[aria-expanded="true"] {
-    color: #fff;
-    background: #D0A932;
-}
 
 a[data-toggle="collapse"] {
     position: relative;
 }
 
-.dropdown-toggle::after {
+.menu-dropdown-toggle::after {
     display: block;
     position: absolute;
     top: 50%;
@@ -239,13 +290,13 @@ a[data-toggle="collapse"] {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #BF8F21;
+    background: var(--third-color);
 }
 
 a.article,
 a.article:hover {
-    background: #6d7fcc !important;
-    color: #fff !important;
+    background: var(--fifth-color) !important;
+    color: var(--fourth-color) !important;
 }
 
 /* ---------------------------------------------------
@@ -253,6 +304,23 @@ a.article:hover {
 ----------------------------------------------------- */
 
 @media (max-width: 768px) {
+
+    a .btn-menu{
+        width: 35px; height: 35px;
+
+    }
+
+    #menu-admin{
+        font-size: 0.85em;
+        margin-left: 5px;
+        margin-right: 5px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        padding-left: 1px;
+        padding-right: 1px;
+        width: 83px; height: 83px;
+    }
+
     #sidebar {
         min-width: 80px;
         max-width: 80px;
@@ -266,7 +334,7 @@ a.article:hover {
     #app.active{
         margin-left: 80px;
     }
-    .dropdown-toggle::after {
+    .menu-dropdown-toggle::after {
         top: auto;
         bottom: 10px;
         right: 50%;
@@ -309,7 +377,7 @@ a.article:hover {
 
 
 
-table {
+.table {
     border: 1px solid #ccc;
     border-collapse: collapse;
     margin: 0;
@@ -318,39 +386,40 @@ table {
     table-layout: fixed;
 }
 
-table caption {
+.table caption {
     font-size: 1.5em;
     margin: .5em 0 .75em;
 }
 
-table tr {
+.table tr {
     background-color: #f8f8f8;
     border: 1px solid #ddd;
     padding: .35em;
 }
 
-table th,
-table td {
+.table th,
+.table td {
     padding: .625em;
     text-align: center;
+    vertical-align: middle;
 }
 
-table th {
+.table th {
     font-size: .85em;
     letter-spacing: .1em;
     text-transform: uppercase;
 }
 
 @media screen and (max-width: 600px) {
-    table {
+    .table {
         border: 0;
     }
 
-    table caption {
+    .table caption {
         font-size: 1.3em;
     }
 
-    table thead {
+    .table thead {
         border: none;
         clip: rect(0 0 0 0);
         height: 1px;
@@ -361,21 +430,22 @@ table th {
         width: 1px;
     }
 
-    table tr {
+    .table tr {
         border-bottom: 3px solid #ddd;
         display: block;
         margin-bottom: .625em;
+
     }
 
-    table td {
+    .table td {
         border-bottom: 1px solid #ddd;
         display: block;
-        font-size: .8em;
+        font-size: .9em;
         text-align: right;
+        padding-bottom: 0.5cm;
     }
-    
 
-    table td::before {
+    .table td::before {
         /*
         * aria-label has no advantage, it won't be read inside a table
         content: attr(aria-label);
@@ -386,7 +456,7 @@ table th {
         text-transform: uppercase;
     }
 
-    table td:last-child {
+    .table td:last-child {
         border-bottom: 0;
     }
 }

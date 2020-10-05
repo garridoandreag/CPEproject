@@ -24,8 +24,8 @@ class CreateCaregiverTable extends Migration
                       created_at  timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                       updated_at  timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                       status enum('ACTIVO','INACTIVO') NOT NULL DEFAULT 'ACTIVO',
-                      PRIMARY KEY (id),
-                      KEY fk_student_caregiver (student_id)
+                      CONSTRAINT pk_caregiver PRIMARY KEY (id),
+                      CONSTRAINT fk_student_caregiver FOREIGN KEY (student_id) REFERENCES student(id)
                     ) ENGINE=InnoDB;
             ");
     }

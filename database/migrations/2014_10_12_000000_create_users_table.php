@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->enum('status', ['ACTIVO', 'INACTIVO'])->default('ACTIVO');
             $table->engine = "InnoDB";
         });
-       
+
     }
 
     /**
@@ -36,7 +36,7 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-       
+
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::drop('users');
 //        Schema::drop('estudiante_encargado');

@@ -15,7 +15,7 @@ class CreateGenderTable extends Migration
     {
         DB::statement("
             CREATE TABLE GENDER(
-            id char(20) not null,
+            `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
             name varchar(100) not null,
             created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,

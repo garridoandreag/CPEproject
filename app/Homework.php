@@ -3,11 +3,18 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Kyslik\ColumnSortable\Sortable;
 class Homework extends Model
 {
-    //
+    use Sortable;
+    
     protected $table = 'homework';
+
+    protected $primaryKey = 'id';
+
+    protected $fillable = ['activity_id','subjectstudent_id','student_id','unit_id'];
+
+    public $sortable =['activity_id','subjectstudent_id','student_id','unit_id'];
     
             // muchos a uno
     public function student() {

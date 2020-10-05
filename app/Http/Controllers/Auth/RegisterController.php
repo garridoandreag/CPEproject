@@ -35,8 +35,12 @@ use RegistersUsers;
      *
      * @return void
      */
-    public function __construct() {
+    /*public function __construct() {
         $this->middleware('guest');
+    }*/
+
+    public function __construct() {
+        $this->middleware('auth');
     }
 
     /**
@@ -48,8 +52,9 @@ use RegistersUsers;
     protected function validator(array $data) {
         return Validator::make($data, [
                     'person_id' => ['required', 'string', 'max:255'],
+                    'role_id' => ['required'],
                     'name' => ['required', 'string', 'max:255'],
-                    'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                    'email' => ['required', 'string', 'regex:/^([a-zA-Z]){3}.([a-zA-Z]){3,}/', 'max:255', 'unique:users'],
                     'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -62,7 +67,7 @@ use RegistersUsers;
      */
     protected function create(array $data) {
         return User::create([
-                    'role_id' => '1',
+                    'role_id' => $data['role_id'],
                     'person_id' => $data['person_id'],
                     'name' => $data['name'],
                     'email' => $data['email'],

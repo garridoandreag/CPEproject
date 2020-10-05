@@ -3,15 +3,28 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class Course extends Model
 {
-    //
+    use Sortable;
+    
     protected $table = 'course';
+        
+    protected $primaryKey = 'id';
+
+    protected $fillable = ['id','name','status'];
+
+    public $sortable = ['id','name','status'];
     
     // uno a muchos
-    public function subject(){
+    public function coursegrade(){
 
-        return $this->hasMany('App\Subject','course_id','id');
+        return $this->hasMany('App\Coursegrade','course_id','id');
     }    
+
+    public function grade()
+    {
+        return $this->belongsToMany('App\Grade', 'pensum', 'course_id', 'grade_id');
+    }
 }

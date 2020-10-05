@@ -3,28 +3,29 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
+
 
 class StudentTutor extends Model {
 
-    //
-
+    use Sortable;
+    
     protected $table = 'studenttutor';
 
-    public function payment_student() {
+    protected $fillable = ['student_id','tutor_id','relationship','status'];
+
+    public $sortable = ['student_id','tutor_id','relationship','status'];
+
+    public function paymentstudent() {
         return $this->hasMany('App\Payment','student_id','student_id');
     }
 
-    public function payment_tutor() {
+    public function paymenttutor() {
         return $this->hasMany('App\Payment','tutor_id','tutor_id');
     }
 
-    // muchos a uno
     public function student() {
-        return $this->belongsTo('App\Student','student_id');
-    }  
-    
-    // muchos a uno
-    public function tutor() {
-        return $this->belongsTo('App\Tutor','tutor_id');
-    }  
+
+        return $this->belongsTo('App\Student', 'student_id','id');
+    }
 }

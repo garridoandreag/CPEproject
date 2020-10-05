@@ -3,16 +3,24 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class Cycle extends Model
 {
-    //
+    use Sortable;
+
     protected $table = 'cycle';
+
+    protected $primaryKey = 'id';
+
+    protected $fillable = ['name','school_id','start_date','end_date', 'status'];
+
+    public $sortable = ['name','school_id','start_date','end_date','status'];
     
     // uno a muchos
-    public function subject(){
+    public function coursegrade(){
 
-        return $this->hasMany('App\Subject','cycle_id','id');
+        return $this->hasMany('App\Coursegrade','cycle_id','id');
     }    
 
     // muchos a uno
