@@ -29,7 +29,7 @@
 
             <div class="row justify-content-md-center">
               <div class="col">
-                <a href="{{ action('RegisterController@create') }}" class="btn btn-primary">Nuevo </a>
+                <a href="{{ route('register') }}" class="btn btn-primary">Nuevo </a>
               </div>
               <div class="col-md-auto">
                 <input class="form-control" id="myInput" type="text" placeholder="Buscar...">

@@ -13,7 +13,7 @@ class GradeSeeder extends Seeder
     {
         for($i = 1; $i <= 6 ; $i++){
             DB::table('grade')->insert(array(
-                'name' => $i.'° PRIMARIA',
+                'name' => $i.'° Primaria',
                 'section' => 'A'
             ));
         }

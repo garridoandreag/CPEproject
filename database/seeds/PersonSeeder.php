@@ -27,7 +27,7 @@ class PersonSeeder extends Seeder
 
         DB::table('users')->insert(array(
             'name' => 'CPE',
-            'email' => 'CPE'.'@gmail.com',
+            'email' => 'CPE'.'.ADM',
             'password' => Hash::make('12345678'),
             'person_id' => 1,
             'role_id' => 1,

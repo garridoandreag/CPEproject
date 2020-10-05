@@ -22,4 +22,9 @@ class Course extends Model
 
         return $this->hasMany('App\Coursegrade','course_id','id');
     }    
+
+    public function grade()
+    {
+        return $this->belongsToMany('App\Grade', 'pensum', 'course_id', 'grade_id');
+    }
 }

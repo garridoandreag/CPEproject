@@ -19,7 +19,7 @@ class CreateSubjectTable extends Migration
             grade_id int(255) UNSIGNED NOT NULL,
             course_id int(255) UNSIGNED NOT NULL,
             cycle_id int(255) UNSIGNED NOT NULL,
-            employee_id int(255) UNSIGNED NOT NULL,
+            employee_id int(255) UNSIGNED NULL DEFAULT NULL,
             created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
             status enum('ACTIVO','INACTIVO') not null default 'ACTIVO',

@@ -100,7 +100,7 @@
 
                     <td data-label="Asignar Cursos">
                       <a class="btn btn-primary btn-sm"
-                        href="{{ action('SubjectstudentController@create', ['student_id' => $student->id]) }}" />
+                        href="{{ action('SubjectstudentController@inscription', ['student_id' => $student->id]) }}" />
                         <i class="fas fa-th-list"></i>
                       Asignar Cursos
                       </a>

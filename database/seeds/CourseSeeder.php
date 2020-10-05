@@ -111,6 +111,11 @@ class CourseSeeder extends Seeder {
           )
         );
 
+        DB::table('course')->insert(array(
+          'name' => 'Medio Social y Natural'
+          )
+        );
+
         $this->command->info('La tabla COURSE ha sido rellenada.');
     }
 

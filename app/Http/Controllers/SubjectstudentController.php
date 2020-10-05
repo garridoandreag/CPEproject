@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
-use App\{Subjectstudent, Homework}; 
+use App\{Subjectstudent, Pensum, Coursegrade}; 
 
 class SubjectstudentController extends Controller
 {
@@ -21,7 +21,14 @@ class SubjectstudentController extends Controller
         return view('subjectstudent.index', compact('subjectstudents'));
     }
 
-    public function reportcard($student_id = '')
+    public function inscription($student_id)
+    {
+        $subjectstudents=Subjectstudent::select('student_id','grade_id','cycle_id')->distinct()->where('student_id', $student_id)->sortable()->paginate(30);
+
+        return view('subjectstudent.inscription', compact('subjectstudents','student_id'));
+    }
+
+    public function reportcard($student_id = '')//evluar si eliminar
     {
         $reports = DB::table('homework')
                         ->join('person','homework.student_id', '=', 'person.id')
@@ -49,7 +56,29 @@ class SubjectstudentController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $grade_id = $request->input('grade_id');
+        $cycle_id = $request->input('cycle_id');
+        $student_id = $request->input('student_id');
+
+        $data = $request->validate([
+            'grade_id' => ['required'],
+            'cycle_id' => ['required'],     
+        ]);
+
+
+        foreach(Coursegrade::where('grade_id',$grade_id)->where('cycle_id',$cycle_id)->cursor() as $coursegrade){
+            Subjectstudent::create([
+                'student_id' =>  $student_id,
+                'grade_id' => $data['grade_id'],
+                'coursegrade_id' => $coursegrade->id,
+                'cycle_id' =>  $data['cycle_id']
+            ]);
+        }
+
+        
+     
+        return redirect()->action('SubjectstudentController@inscription', ['student_id' => $student_id]) 
+                         ->with(['status' => 'Inscripción registrada con éxito.']);
     }
 
     public function show($id)
