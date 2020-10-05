@@ -31,18 +31,17 @@ Route::get('/home', function () {
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
-Route::post('/search-person', 'PersonController@searchPersonWithName');
+Route::post('/search-person', 'PersonController@searchPersonWithName')->name('search-person');;
 
 Route::get('/admin', function () {
     return view('admin.administration');
-})->name('admin.admin')->middleware('auth');;
+})->name('admin.admin')->middleware('auth','1');
 
 Route::get('/configuration','UserController@config')->name('config');
 
 Route::group(['prefix' => 'user'], function() {
     Route::post('update','UserController@update')->name('user.update');
     Route::get('/','UserController@index')->name('user.index');
-    Route::get('register','RegisterController@create')->name('user.register');
     Route::get('detail/{id}', 'UserController@detail')->name('user.detail');
     Route::get('/picture/{filename}','UserController@getImage')->name('user.picture');
 
@@ -72,10 +71,12 @@ Route::group(['prefix' => 'course'], function() {
   Route::get('/destroy/{id}', 'CourseController@destroy')->name('course.destroy');
 });
 
+
 Route::group(['prefix' => 'tutor'], function() {
     Route::get('create', 'TutorController@create')->name('tutor.create');
     Route::get('/', 'TutorController@index')->name('tutor.index');
     Route::post('store', 'TutorController@store')->name('tutor.store');
+    Route::get('edit/{id}', 'TutorController@edit')->name('tutor.edit');
     Route::get('detail/{id}', 'TutorController@detail')->name('tutor.detail');
     Route::post('update', 'TutorController@update')->name('tutor.update');
     Route::post('/search-tutor', 'TutorController@searchTutorByDPI')->name('tutor.search-tutor');
@@ -151,6 +152,13 @@ Route::group(['prefix' => 'coursegrade'], function() {
     Route::get('destroy/{id}', 'CoursegradeController@destroy')->name('coursegrade.destroy');
 });
 
+Route::group(['prefix' => 'subjectstudent'], function() {
+    Route::get('create/{student_id?}', 'SubjectstudentController@create')->name('subjectstudent.create');
+    Route::get('inscription/{student_id}', 'SubjectstudentController@inscription')->name('subjectstudent.inscription');
+    Route::get('/', 'SubjectstudentController@index')->name('subjectstudent.index');
+    Route::get('/reportcard/{student_id?}', 'SubjectstudentController@reportcard')->name('subjectstudent.reportcard');//eliminar
+    Route::post('store', 'SubjectstudentController@store')->name('subjectstudent.store');
+});
 
 
 Route::group(['prefix' => 'homework'], function() {

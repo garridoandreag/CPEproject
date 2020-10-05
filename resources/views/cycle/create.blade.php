@@ -98,7 +98,7 @@
 
                 <div class="form-group row mb-0">
                   <div class="col-md-6 offset-md-4">
-                    <a href="{{ route('cycle.index') }}" class="btn btn-outline-primary">Regresar </a>
+                    <a href="{{ route('cycle.index') }}" class="btn btn-outline-secondary">Cancelar</a>
                     <button type="submit" class="btn btn-primary">
                       @if (isset($cycle) && is_object($cycle))
                         Actualizar

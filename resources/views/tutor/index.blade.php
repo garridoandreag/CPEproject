@@ -28,6 +28,7 @@
           <div class="card-body">
             <div class="row justify-content-md-center">
               <div class="col">
+                <a class="btn btn-outline-primary" href="{{route('home')}}"><i class="fas fa-home"></i></a>
                 <a href="{{ action('TutorController@create') }}" class="btn btn-primary">Nuevo </a>
               </div>
               <div class="col-md-auto">
@@ -99,9 +100,12 @@
                 @endforeach
               </tbody>
             </table>
-
-            {{ $tutors->links() }}
-
+            <br>
+            {{ $tutors->appends(Request::except('page'))->render() }}
+            <br>
+            <p>
+              Se muestran {{ $tutors->count() }} de {{ $tutors->total() }} padres / encargados.
+            </P>
           </div>
         </div>
       </div>

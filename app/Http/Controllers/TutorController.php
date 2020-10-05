@@ -19,8 +19,6 @@ class TutorController extends Controller
 
     public function index()
     {
-        //
-
         $tutors = \App\Tutor::sortable()->paginate(10);
 
         $students = DB::table('student')
@@ -34,7 +32,6 @@ class TutorController extends Controller
 
     public function create()
     {
-        //
         return view('tutor.create');
     }
 
@@ -84,9 +81,6 @@ class TutorController extends Controller
                     'relationship' => $relationship[$i],
                 ]);
             }
-
-
-
         });
 
         return redirect()->route('tutor.index')
@@ -97,11 +91,7 @@ class TutorController extends Controller
 
     public function detail($id)
     {
-        //
         $tutor = \App\Tutor::where('id', $id)->first();
-        //        var_dump($estudiante);
-        //        die();
-        
                 return view('tutor.detail', [
                     'tutor' => $tutor
                 ]);
@@ -110,11 +100,15 @@ class TutorController extends Controller
 
     public function edit($id)
     {
-        //
+        $tutor = \App\Tutor::where('id', $id)->first();
+
+                return view('tutor.create', [
+                    'tutor' => $tutor
+                ]);
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
     }

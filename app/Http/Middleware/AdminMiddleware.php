@@ -21,7 +21,7 @@ class AdminMiddleware
         }
         else
         {
-            return redirect('/home')->with('status','No tiene acceso permitido en el módulo administrativo.');
+            return redirect('/home')->with('status','No tiene acceso permitido.');
         }
         
         

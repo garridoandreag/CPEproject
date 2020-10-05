@@ -100,7 +100,7 @@
 
                 <div class="form-group row mb-0">
                   <div class="col-md-6 offset-md-4">
-                    <a href="{{ route('paymentcategory.index') }}" class="btn btn-outline-primary">Regresar </a>
+                    <a href="{{ route('paymentcategory.index') }}" class="btn btn-outline-secondary">Cancelar</a>
                     <a href="{{action('PaymentcategoryController@edit',['id' => $paymentcategory->id])}}" class="btn btn-primary">Editar</a>
                   </div>
                 </div>

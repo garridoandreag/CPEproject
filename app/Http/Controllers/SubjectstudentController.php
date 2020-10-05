@@ -1,0 +1,103 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Collection;
+use App\{Subjectstudent, Pensum, Coursegrade}; 
+
+class SubjectstudentController extends Controller
+{
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
+    public function index()
+    {
+        $subjectstudents= Subjectstudent::sortable()->paginate(30);
+
+        return view('subjectstudent.index', compact('subjectstudents'));
+    }
+
+    public function inscription($student_id)
+    {
+        $subjectstudents=Subjectstudent::select('student_id','grade_id','cycle_id')->distinct()->where('student_id', $student_id)->sortable()->paginate(30);
+
+        return view('subjectstudent.inscription', compact('subjectstudents','student_id'));
+    }
+
+    public function reportcard($student_id = '')//evluar si eliminar
+    {
+        $reports = DB::table('homework')
+                        ->join('person','homework.student_id', '=', 'person.id')
+                        ->join('activity','homework.activity_id', '=', 'activity.id')
+                        ->rightJoin('unit','activity.unit_id', '=', 'unit.id')
+                        ->join('coursegrade','activity.coursegrade_id', '=', 'coursegrade.id')
+                        ->join('course','coursegrade.course_id', '=', 'course.id')
+                        ->select('course.name', DB::raw('SUM(homework.points) as score'),'unit.name as unit','coursegrade.cycle_id','person.names')
+                        ->where('homework.student_id','like',$student_id)
+                        ->groupBy('course.name','unit.name','coursegrade.cycle_id','person.names')
+                        ->get();
+        //$reports = Homework::where('student_id', $student_id )->first();
+        
+
+        return view('subjectstudent.reportcard', compact('reports'));
+    }
+
+    public function create($student_id)
+    {
+                return view('subjectstudent.create', [
+                    'student_id' => $student_id
+                ]);
+        
+    }
+
+    public function store(Request $request)
+    {
+        $grade_id = $request->input('grade_id');
+        $cycle_id = $request->input('cycle_id');
+        $student_id = $request->input('student_id');
+
+        $data = $request->validate([
+            'grade_id' => ['required'],
+            'cycle_id' => ['required'],     
+        ]);
+
+
+        foreach(Coursegrade::where('grade_id',$grade_id)->where('cycle_id',$cycle_id)->cursor() as $coursegrade){
+            Subjectstudent::create([
+                'student_id' =>  $student_id,
+                'grade_id' => $data['grade_id'],
+                'coursegrade_id' => $coursegrade->id,
+                'cycle_id' =>  $data['cycle_id']
+            ]);
+        }
+
+        
+     
+        return redirect()->action('SubjectstudentController@inscription', ['student_id' => $student_id]) 
+                         ->with(['status' => 'Inscripción registrada con éxito.']);
+    }
+
+    public function show($id)
+    {
+        //
+    }
+
+    public function edit($id)
+    {
+        //
+    }
+
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    public function destroy($id)
+    {
+        //
+    }
+}

@@ -82,11 +82,6 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
               <li class="nav-item">
                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
               </li>
-              @if (Route::has('register'))
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                </li>
-              @endif
             @else
               <li class="nav-item">
                 @include('includes.picture_profile')

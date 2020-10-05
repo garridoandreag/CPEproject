@@ -23,6 +23,7 @@
 
             <div class="row justify-content-md-center">
               <div class="col">
+                <a href="{{ route('admin.admin') }}" class="btn btn-outline-primary"><i class="fas fa-reply"></i></a>
                 <a href="{{ action('GradeController@create') }}" class="btn btn-primary">Nuevo </a>
               </div>
               <div class="col-md-auto">
@@ -55,7 +56,7 @@
                       {{ $grade->section }}
                       </a>
                     </td>
-                    
+
                     <td data-label="Estado">
                       @if ($grade->status == 'INACTIVO')
                         <span id="status{{ $grade->id }}" onclick="changeStatus({{ $grade->id }})"
@@ -74,9 +75,9 @@
                 @endforeach
               </tbody>
             </table>
-
+            <br>
             {{ $grades->appends(Request::except('page'))->render() }}
-
+            <br>
             <p>
               Se muestran {{ $grades->count() }} de {{ $grades->total() }} grados.
             </P>

@@ -20,7 +20,7 @@ class PersonController extends Controller
         //
     }
 
-    public function searchPersonWithName(Request $request)
+ /*   public function searchPersonWithName(Request $request)
     {
       $search = $request->input('name');
       $person = DB::table('person')
@@ -29,8 +29,23 @@ class PersonController extends Controller
         ->get();
 
       return response()->json(['data' => $person]);
-    }
+    }*/
 
+    public function searchPersonWithName(Request $request) {
+        $name = $request->input('name');
+        $persons = [];
+
+        if (strlen($name) == 0) {
+            return $persons;
+        }
+
+        $persons = DB::table('person')
+            ->select('id',DB::raw('CONCAT(IF(employee=1, "Empleado: ", "Encargado: "),first_surname," ",second_surname," ",names," ") as text'))
+            ->where('first_surname', 'like', $name.'%')
+            ->where('student','=','0')
+            ->get();
+        return $persons;
+    }
     public function create()
     {
         //

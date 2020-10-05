@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
-use App\Cycle; 
+use App\{Cycle, Coursegrade, Pensum}; 
 
 class CycleController extends Controller
 {
@@ -28,6 +28,8 @@ class CycleController extends Controller
 
     public function store(Request $request)
     {
+        $pensums = Pensum::get();
+
         $data = $request->validate([
             'name' => ['required', 'string', 'max:50'],
             'school_id' => ['required'],
@@ -36,13 +38,24 @@ class CycleController extends Controller
             
         ]);
 
-        Cycle::create([
-            'name' => $data['name'],
-            'school_id' => $data['school_id'],
-            'start_date' => $data['start_date'],
-            'end_date' => $data['end_date'],
-        ]);
-     
+        DB::transaction(function() use ($data,$pensums){
+            $cycle = Cycle::create([
+                'name' => $data['name'],
+                'school_id' => $data['school_id'],
+                'start_date' => $data['start_date'],
+                'end_date' => $data['end_date'],
+            ]);
+    
+                foreach($pensums as $pensum){
+                    Coursegrade::create([
+                        'grade_id' => $pensum->grade_id,
+                        'course_id' => $pensum->course_id,
+                        'cycle_id' => $cycle->id,
+                    ]);
+    
+                }
+        });
+
         return redirect()->route('cycle.index')
                         ->with(['status' => 'Ciclo creado correctamente.']);
     }
@@ -70,6 +83,7 @@ class CycleController extends Controller
     {
         $id = $request->input('id');
         $cycle = Cycle::find($id);
+        $pensums = Pensum::get();
 
         $data = $request->validate([
             'name' => ['required', 'string', 'max:50'],
@@ -82,6 +96,16 @@ class CycleController extends Controller
             $cycle->school_id =  $data['school_id'];
             $cycle->start_date = $data['start_date'];
             $cycle->end_date = $data['end_date'];
+
+            foreach($pensums as $pensum){
+                
+                Coursegrade::firstOrCreate([
+                    'grade_id' => $pensum->grade_id,
+                    'course_id' => $pensum->course_id,
+                    'cycle_id' => $cycle->id,
+                ]);
+
+            }
 
             $cycle->update();
 
