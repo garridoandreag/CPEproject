@@ -31,12 +31,17 @@
               </div>
             </div>
             <br>
-
             @if (session('status'))
-              <div class="alert alert-success">
-                {{ session('status') }}
+            <div class="alert alert-success">
+              {{ session('status') }}
+            </div>
+          @else
+            @if (session('warning'))
+              <div class="alert alert-danger">
+                {{ session('warning') }}
               </div>
             @endif
+          @endif
 
             @if (isset($subjectstudents))
               <table class="table table-hover">
@@ -50,16 +55,19 @@
                 <tbody id="myTable">
                   @foreach ($subjectstudents as $subjectstudent)
                     <tr>
-                      <td data-label="Ciclo" scope="row">
+                      <td data-label="Ciclo" scope="row"><a href="{{ action('SubjectstudentController@detail', ['student_id' => $student_id,'cycle_id' => $subjectstudent->cycle_id,'grade_id' => $subjectstudent->grade_id]) }}" />
                         {{ $subjectstudent->cycle->name}}
+                      </a>
                       </td>
 
-                      <td data-label="Estudiante" scope="row">
+                      <td data-label="Estudiante" scope="row"><a href="{{ action('SubjectstudentController@detail', ['student_id' => $student_id,'cycle_id' => $subjectstudent->cycle_id,'grade_id' => $subjectstudent->grade_id]) }}" />
                         {{ $subjectstudent->student->person->names }}
+                      </a>
                       </td>
 
-                      <td data-label="Grado" scope="row">
+                      <td data-label="Grado" scope="row"><a href="{{ action('SubjectstudentController@detail', ['student_id' => $student_id,'cycle_id' => $subjectstudent->cycle_id,'grade_id' => $subjectstudent->grade_id]) }}" />
                         {{ $subjectstudent->grade->name }}
+                      </a>
                       </td>
 
                     </tr>

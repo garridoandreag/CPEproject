@@ -20,7 +20,7 @@ class Coursegrade extends Model
     // muchos a uno
     public function employee() {
 
-        return $this->belongsTo('App\Employee','employee_id');
+        return $this->belongsTo('App\Employee','employee_id','id');
     }
     
     // muchos a uno

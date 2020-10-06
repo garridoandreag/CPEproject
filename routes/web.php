@@ -3,20 +3,10 @@
 use Illuminate\Support\Facades\Route;
 
 /*
-  |--------------------------------------------------------------------------
-  | Web Routes
-  |--------------------------------------------------------------------------
-  |
-  | Here is where you can register web routes for your application. These
-  | routes are loaded by the RouteServiceProvider within a group which
-  | contains the "web" middleware group. Now create something great!
-  |
- */
-
 Route::get('/', function () {
     return view('welcome');
 });
-
+*/
 /*Route::group(['middleware' => ['auth', '1']], function() {
     Route::get('/', function () {
         return view('admin.dashboard');
@@ -24,15 +14,15 @@ Route::get('/', function () {
 });
 */
 
-Route::get('/home', function () {
-    return view('home');
-});
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
-Route::post('/search-person', 'PersonController@searchPersonWithName')->name('search-person');;
+Route::get('/home', function () {
+    return view('home');
+})->middleware('auth');
+Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
 
+Route::post('/search-person', 'PersonController@searchPersonWithName')->name('search-person');;
 Route::get('/admin', function () {
     return view('admin.administration');
 })->name('admin.admin')->middleware('auth','1');
@@ -144,10 +134,10 @@ Route::group(['prefix' => 'event'], function () {
 // esto esta pendiente aún
 Route::group(['prefix' => 'coursegrade'], function() {
     Route::get('create', 'CoursegradeController@create')->name('coursegrade.create');
-    Route::get('/', 'CoursegradeController@index')->name('coursegrade.index');
+    Route::get('detail/{cycle_id}/{grade_id}', 'CoursegradeController@detail')->name('coursegrade.detail');
+    Route::get('/menu/{cycle_id?}', 'CoursegradeController@menu')->name('coursegrade.menu');
     Route::post('store', 'CoursegradeController@store')->name('coursegrade.store');
-    Route::get('detail/{id}', 'CoursegradeController@detail')->name('coursegrade.detail');
-    Route::get('edit/{id}', 'CoursegradeController@edit')->name('coursegrade.edit');
+    Route::get('edit/{cycle_id}/{grade_id}', 'CoursegradeController@edit')->name('coursegrade.edit');
     Route::post('update', 'CoursegradeController@update')->name('coursegrade.update');
     Route::get('destroy/{id}', 'CoursegradeController@destroy')->name('coursegrade.destroy');
 });
@@ -158,6 +148,8 @@ Route::group(['prefix' => 'subjectstudent'], function() {
     Route::get('/', 'SubjectstudentController@index')->name('subjectstudent.index');
     Route::get('/reportcard/{student_id?}', 'SubjectstudentController@reportcard')->name('subjectstudent.reportcard');//eliminar
     Route::post('store', 'SubjectstudentController@store')->name('subjectstudent.store');
+    Route::get('detail/{student_id}/{cycle_id}/{grade_id}', 'SubjectstudentController@detail')->name('subjectstudent.detail');
+    Route::get('destroy/{student_id}/{cycle_id}/{grade_id}', 'SubjectstudentController@destroy')->name('subjectstudent.destroy');
 });
 
 
