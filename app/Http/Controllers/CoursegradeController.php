@@ -14,11 +14,31 @@ class CoursegradeController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function detail($cycle_id, $grade_id)
     {
-        $coursegrades= Coursegrade::sortable()->paginate(30);
+        $coursegrades=Coursegrade::where([['cycle_id',$cycle_id],['grade_id',$grade_id]])
+        ->sortable()->paginate(30);
 
-        return view('coursegrade.index', compact('coursegrades'));
+        return view('coursegrade.detail', compact('coursegrades','cycle_id', 'grade_id'));
+    }
+
+    public function menu($cycle_id = ''){
+
+        try{
+            if(empty($cycle_id)){
+                $coursegrades=Coursegrade::select('grade_id','cycle_id')->distinct()
+                ->orderBy('cycle_id','desc')->orderBy('grade_id','desc')
+                ->paginate(30);
+            }else{
+                $coursegrades=Coursegrade::select('grade_id','cycle_id')->distinct()->where('cycle_id',$cycle_id)
+                ->orderBy('cycle_id','desc')->orderBy('grade_id','desc')
+                ->paginate(30);
+            }
+            
+        }catch(\Exception $e){
+            return view('coursegrade.menu');
+        }
+        return view('coursegrade.menu', compact('coursegrades'));
     }
 
     public function create(){
@@ -53,27 +73,18 @@ class CoursegradeController extends Controller
                          ->with(['status' => 'Cursos y grados asignados correctamente.']);
     }
 
-
-    public function detail($id){
-        $coursegrade = \App\Coursegrade::where('id', $id)->first();
-
-        return view('coursegrade.detail', [
-            'coursegrade' => $coursegrade
-        ]);
-
-    }
-
     public function courseprofessor($cycle_id = ''){
 
         $user = \Auth::user();
         
         $id = $user->person_id;
 
+
         try{
             if(empty($cycle_id)){
-                $coursegrades=Coursegrade::where('employee_id', $id )->firstOrFail()->sortable()->paginate(10);
+                $coursegrades=Coursegrade::where('employee_id', $id )->sortable()->paginate(10);
             }else{
-                $coursegrades=Coursegrade::where('employee_id', $id )->where('cycle_id',$cycle_id)->firstOrFail()->sortable()->paginate(10);
+                $coursegrades=Coursegrade::where('employee_id', $id )->where('cycle_id',$cycle_id)->sortable()->paginate(10);
             }
             
         }catch(\Exception $e){
@@ -83,34 +94,31 @@ class CoursegradeController extends Controller
         return view('courseprofessor.index', compact('coursegrades'));
     }
 
-    public function edit($id){
-        $coursegrade = \App\Coursegrade::where('id', $id)->first();
+    public function edit($cycle_id,$grade_id){
+        $coursegrades=Coursegrade::where([['cycle_id',$cycle_id],['grade_id',$grade_id]])
+        ->sortable()->paginate(30);
 
-        return view('coursegrade.create', [
-            'coursegrade' => $coursegrade
-        ]);
+        return view('coursegrade.create', compact('coursegrades','cycle_id','grade_id'));
     }
 
     public function update(Request $request){
 
+        $coursegrades = sizeof($request->input('id'));
         $id = $request->input('id');
-        $coursegrade = Coursegrade::find($id);
+        $employee_id = $request->input('employee_id');
 
-        $data = $request->validate([
-            'grade_id' => ['required'],
-            'course_id' => ['required'],
-            'cycle_id' => ['required'],
-            'employee_id' => ['required'],           
-        ]);
 
-        $coursegrade->grade_id =  $data['grade_id'];
-        $coursegrade->course_id =  $data['course_id'];
-        $coursegrade->cycle_id =  $data['cycle_id'];
-        $coursegrade->employee_id =  $data['employee_id'];
+        for($i = 0; $i < $coursegrades; $i++){
+            $datos = Coursegrade::where('id', $id[$i])
+            ->update([
+                'employee_id' => $employee_id[$i] ,
+                ]);
+        }
 
-        $coursegrade->update();
+        $cycle_id = $request->input('cycle');
+        $grade_id = $request->input('grade');
 
-        return redirect()->route('coursegrade.index')
+        return redirect()->action('CoursegradeController@detail', ['cycle_id' => $cycle_id,'grade_id' => $grade_id])
                         ->with(['status' => 'Curso y grado actualizado correctamente.']);
 
     }

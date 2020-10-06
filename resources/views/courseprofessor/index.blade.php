@@ -82,8 +82,8 @@
 
                       <td data-label="Docente"><a
                           href="{{ action('ActivityController@courseprofessoractivity', ['coursegrade_id' => $coursegrade->id]) }}" />
-                        {{ $coursegrade->employee->person->names }}
-                        {{ $coursegrade->employee->person->first_surname }}
+                        {{ $coursegrade->employee->person->names ?? '' }}
+                        {{ $coursegrade->employee->person->first_surname ?? '' }}
                         </a>
                       </td>
 

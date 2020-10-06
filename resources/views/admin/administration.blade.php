@@ -65,7 +65,7 @@
               <br>
               Empleados</a>
 
-            <a href="{{ route('coursegrade.index') }}" class="btn btn-light" id="menu-admin">
+            <a href="{{ route('coursegrade.menu') }}" class="btn btn-light" id="menu-admin">
               <img src="images/clase.png" class="btn-menu">
               <br>
               Asignación</a>

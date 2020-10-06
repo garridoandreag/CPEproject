@@ -81,9 +81,13 @@ class SubjectstudentController extends Controller
                          ->with(['status' => 'Inscripción registrada con éxito.']);
     }
 
-    public function show($id)
+    public function detail($student_id,$cycle_id,$grade_id)
     {
-        //
+        $subjectstudent=Subjectstudent::where('student_id', $student_id)->where('cycle_id', $cycle_id)->where('grade_id', $grade_id)->first();
+
+        return view('subjectstudent.detail', [
+            'student_id' => $student_id,'subjectstudent' => $subjectstudent
+        ]);
     }
 
     public function edit($id)
@@ -96,8 +100,28 @@ class SubjectstudentController extends Controller
         //
     }
 
-    public function destroy($id)
+    public function destroy($student_id,$cycle_id,$grade_id)
     {
-        //
+        try{
+                $subjectstudents = DB::table('Subjectstudent')
+                                    ->where([
+                                        ['student_id','=',$student_id],
+                                        ['cycle_id','=', $cycle_id],
+                                        ['grade_id','=',$grade_id],
+                                        ])->sharedLock()->get();
+                //var_dump($subjectstudents);
+                //die();
+
+                $subjectstudents->delete();
+
+          }catch(\Exception $e){
+              return redirect()->action('SubjectstudentController@inscription', ['student_id' => $student_id]) 
+              ->with(['warning' => 'No se pudo eliminar el registro, porque ya existen movimientos.']);
+          }
+      
+          return redirect()->action('SubjectstudentController@inscription', ['student_id' => $student_id]) 
+                          ->with(['status' => 'Se elimino el registro.']);
     }
+      
 }
+
