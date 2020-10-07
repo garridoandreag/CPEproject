@@ -28,20 +28,26 @@ class SubjectstudentController extends Controller
         return view('subjectstudent.inscription', compact('subjectstudents','student_id'));
     }
 
-    public function reportcard($student_id = '')//evluar si eliminar
-    {
-        $reports = DB::table('homework')
-                        ->join('person','homework.student_id', '=', 'person.id')
-                        ->join('activity','homework.activity_id', '=', 'activity.id')
-                        ->rightJoin('unit','activity.unit_id', '=', 'unit.id')
-                        ->join('coursegrade','activity.coursegrade_id', '=', 'coursegrade.id')
+    public function reportcard($student_id = '')
+    {   
+       /* $reports = DB::table('subjectstudent')
+                        ->join('coursegrade','subjectstudent.coursegrade_id', '=', 'coursegrade.id')
                         ->join('course','coursegrade.course_id', '=', 'course.id')
-                        ->select('course.name', DB::raw('SUM(homework.points) as score'),'unit.name as unit','coursegrade.cycle_id','person.names')
-                        ->where('homework.student_id','like',$student_id)
-                        ->groupBy('course.name','unit.name','coursegrade.cycle_id','person.names')
+                        ->leftJoin('homework','subjectstudent.id', '=', 'homework.subjectstudent_id')
+                        ->leftJoin('unit','homework.unit_id', '=', 'unit.id')
+                        ->select('course.name','unit.name as unit', DB::raw('SUM(homework.points) as score'))
+                        ->where('subjectstudent.student_id','like',$student_id)
+                        ->groupBy('course.name','unit.name')
                         ->get();
-        //$reports = Homework::where('student_id', $student_id )->first();
-        
+
+   */
+
+  $reports = DB::table('reportcard')
+                ->where('reportcard.student_id','like',$student_id)
+                ->get();
+                        
+
+
 
         return view('subjectstudent.reportcard', compact('reports'));
     }

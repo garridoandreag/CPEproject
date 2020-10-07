@@ -94,28 +94,7 @@ class HomeworkController extends Controller
 
     }
 
-  /*  public function homeworkcourse($coursegrade_id){//no funciona aún
-
-        $coursegrade = Subjectstudent::where('coursegrade_id', $coursegrade_id)->get();
-        $subjectstudents = Subjectstudent::where('coursegrade_id', $coursegrade_id)->get();
-
-        $activities = Activity::where('coursegrade_id', $coursegrade_id)->orderBy('id', 'ASC')->get();
-
-
-        foreach($activities as $activity){
-            foreach ($subjectstudents as $subjectstudent){
-            
-                $homeworks=Homework::firstOrCreate(
-                    ['activity_id' =>  $activity->id,'subjectstudent_id' => $subjectstudent->id],
-                    ['student_id' => $subjectstudent->student_id, 'unit_id' => $activity->unit_id]
-                )->sortable()->paginate(30);
-            };
-        }
-
-        return view('homework.course', compact('homeworks','activities','subjectstudents'));
-
-
-    }*/
+  
 
 
 

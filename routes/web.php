@@ -152,23 +152,16 @@ Route::group(['prefix' => 'subjectstudent'], function() {
     Route::get('destroy/{student_id}/{cycle_id}/{grade_id}', 'SubjectstudentController@destroy')->name('subjectstudent.destroy');
 });
 
-
 Route::group(['prefix' => 'homework'], function() {
     Route::get('edit/{activity_id}', 'HomeworkController@edit')->name('homework.edit');
-    Route::get('course/{coursegrade_id}', 'HomeworkController@homeworkcourse')->name('homework.course');
     Route::get('detail/{activity_id}', 'HomeworkController@detail')->name('homework.detail');
     Route::post('update', 'HomeworkController@update')->name('homework.update');
     Route::post('store', 'HomeworkController@store')->name('homework.store');
 });
 
-
-
 Route::group(['prefix' => 'courseprofessor'], function() {
     Route::get('/{cycle_id?}', 'CoursegradeController@courseprofessor')->name('courseprofessor.index');
     Route::get('activity/{coursegrade_id?}/{unit_id?}', 'ActivityController@courseprofessoractivity')->name('courseprofessor.activity');
-
-    //Route::get('activity/{unit_id}', 'ActivityController@courseprofessoractivityunit')->name('courseprofessor.activityunit');
-    //Route::get('activity/{coursegrade_id}/{unit_id}', 'ActivityController@courseprofessoractivityunit')->name('courseprofessor.activityunit');
 });
 
 Route::group(['prefix' => 'activity'], function() {

@@ -75,9 +75,10 @@
                       </a>
                     </td>
 
-                    <td data-label="Tareas" scope="row"><a
-                        href="{{ action('HomeworkController@homeworkcourse', ['coursegrade_id' => $coursegrade->id]) }}" />
-                      Tareas
+                    <td data-label="Tareas" scope="row"><a class="btn btn-primary btn-sm"
+                      href="{{ action('ActivityController@courseprofessoractivity', ['coursegrade_id' => $coursegrade->id]) }}" />
+                      <i class="fas fa-spell-check"></i>Tareas
+                    </a>
                     </td>
 
                     <td data-label="Estado">

@@ -127,12 +127,13 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
     <ul class="components">
 
       <li>
-
+        @if(Auth::user()->role_id == 1)
         <a href="{{ route('admin.admin') }}">
           <i class="fas fa-users-cog"></i>
 
           Menú Admón.
         </a>
+        @endif
 
         <a href="{{ route('student.index') }}">
           <i class="fas fa-user-graduate"></i>
@@ -145,15 +146,12 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
           Padres
         </a>
 
+        @if(Auth::user()->role_id == 3)
         <a href="{{ route('courseprofessor.index') }}">
           <i class="fas fa-chalkboard-teacher"></i>
-          Cursos
+          Mis Cursos
         </a>
-
-        <a href="{{ route('course.index') }}">
-          <i class="fas fa-chalkboard-teacher"></i>
-          Cursos
-        </a>
+        @endif
 
         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="menu-dropdown-toggle">
           <i class="fas fa-wallet"></i>
@@ -161,7 +159,7 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
         </a>
         <ul class="collapse list-unstyled" id="pageSubmenu">
           <li>
-            <a href="#">Page 1</a>
+          <a href="{{route('payment.index')}}">Control de Pagos</a>
           </li>
           <li>
             <a href="#">Page 2</a>

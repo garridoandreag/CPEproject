@@ -59,6 +59,8 @@ class ActivityController extends Controller
 
         $coursegradeprof = Coursegrade::where('id', $coursegrade_id)->first();
         $grade_name = $coursegradeprof->grade->name;
+        $grade_id = $coursegradeprof->grade_id;
+        $cycle_id = $coursegradeprof->cycle_id;
         $course_name = $coursegradeprof->course->name;
         $employee_id = $coursegradeprof->employee_id;
 
@@ -74,7 +76,7 @@ class ActivityController extends Controller
             return view('courseprofessor.activity',compact('coursegrade_id','grade_name','course_name'));
         }
 
-        return view('courseprofessor.activity', compact('coursegrade_id','activities','grade_name','course_name','employee_id'));
+        return view('courseprofessor.activity', compact('coursegrade_id','activities','grade_name','course_name','employee_id','grade_id','cycle_id'));
     }
 
     public function edit($id)

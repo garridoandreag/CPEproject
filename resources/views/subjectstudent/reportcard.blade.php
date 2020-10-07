@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+  @inject('units','App\Services\Units')
   <script>
     $(document).ready(function() {
       $("#myInput").on("keyup", function() {
@@ -44,30 +44,45 @@
             @endif
 
             @if (isset($reports))
-              <table class="table table-hover">
-
-                <thead>
-                  <tr>
-                    <th scope="col">@sortablelink('course_id','Curso')</th>
-                    @foreach ($reports as $report)
-                      <th scope="col">@sortablelink('course_id',$report->unit)
-                      </th>
-                    @endforeach
-                  </tr>
-                </thead>
-                <tbody id="myTable">
+            <table class="table table-hover table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">@sortablelink('name','Asignatura')</th>
+                  <th scope="col">@sortablelink('bloque1','1° Bloque')</th>
+                  <th scope="col">@sortablelink('bloque2','2° Bloque')</th>
+                  <th scope="col">@sortablelink('bloque3','3° Bloque')</th>
+                  <th scope="col">@sortablelink('bloque4','4° Bloque')</th>
+                  <th scope="col">@sortablelink('total','Nota Final')</th>
+                </tr>
+              </thead>
+              <tbody id="myTable">
+                @foreach ($reports as $report)
                   <tr>
                     <td data-label="Curso" scope="row">
                       {{ $report->name }}
                     </td>
-                    @foreach ($reports as $report)
-                      <td data-label="Nota" scope="row">
-                        {{ $report->score }}
-                      </td>
-                    @endforeach
+                    <td data-label="1° Bloque" scope="row">
+                      {{ $report->bloque1 }}
+                    </td>
+                    <td data-label="2° Bloque" scope="row">
+                      {{ $report->bloque2 }}
+                    </td>
+                    <td data-label="3° Bloque" scope="row">
+                      {{ $report->bloque3 }}
+                    </td>
+                    <td data-label="4° Bloque" scope="row">
+                      {{ $report->bloque4 }}
+                    </td>
+                    <td data-label="Nota Final" scope="row">
+                      {{ $report->total }}
+                    </td>
                   </tr>
-                </tbody>
-              </table>
+                @endforeach
+
+
+              </tbody>
+
+            </table>
             @else
               <br>
               <p class="text-center">No se encontraron datos</p>

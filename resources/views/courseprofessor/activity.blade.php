@@ -31,10 +31,18 @@
 
             <div class="row justify-content-md-center">
               <div class="col">
+                @if(Auth::user()->role_id == 3)
                 <a href="{{ action('CoursegradeController@courseprofessor') }}" class="btn btn-outline-primary"><i class="fas fa-reply"></i>
                 </a>
                 <a href="{{ action('ActivityController@create', ['employee_id' => $employee_id]) }}" class="btn btn-primary">Nuevo
                 </a>
+                @else
+                  @if(Auth::user()->role_id == 1)
+                  <a href="{{ action('CoursegradeController@detail', ['cycle_id' => $cycle_id,'grade_id' => $grade_id]) }}" class="btn btn-outline-primary"><i class="fas fa-reply"></i>
+                  </a>
+                  @endif
+                @endif
+
                 <div class="btn-group" role="group">
                   <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
