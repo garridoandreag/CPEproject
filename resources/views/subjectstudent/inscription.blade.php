@@ -50,6 +50,7 @@
                     <th scope="col">@sortablelink('cycle_id','Ciclo')</th>
                     <th scope="col">@sortablelink('student_id','Estudiante')</th>
                     <th scope="col">@sortablelink('grade_id','Grado')</th>
+                    <th scope="col">@sortablelink('','Opcion')</th>
                   </tr>
                 </thead>
                 <tbody id="myTable">
@@ -62,6 +63,11 @@
 
                       <td data-label="Estudiante" scope="row"><a href="{{ action('SubjectstudentController@detail', ['student_id' => $student_id,'cycle_id' => $subjectstudent->cycle_id,'grade_id' => $subjectstudent->grade_id]) }}" />
                         {{ $subjectstudent->student->person->names }}
+                      </a>
+                      </td>
+
+                      <td data-label="Grado" scope="row"><a href="{{ action('SubjectstudentController@detail', ['student_id' => $student_id,'cycle_id' => $subjectstudent->cycle_id,'grade_id' => $subjectstudent->grade_id]) }}" />
+                        {{ $subjectstudent->grade->name }}
                       </a>
                       </td>
 

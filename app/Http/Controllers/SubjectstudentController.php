@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
-use App\{Subjectstudent, Pensum, Coursegrade}; 
+use App\{Subjectstudent, Coursegrade, School}; 
 
 class SubjectstudentController extends Controller
 {
@@ -28,28 +28,41 @@ class SubjectstudentController extends Controller
         return view('subjectstudent.inscription', compact('subjectstudents','student_id'));
     }
 
-    public function reportcard($student_id = '')
+
+    public function reportcardPDF($cycle_id,$student_id){
+
+        $school = School::find(1);
+
+        $student = DB::table('person')->where('id','like',$student_id)->get();
+
+        $reports = DB::table('reportcard')
+        ->where('reportcard.student_id','like',$student_id)
+        ->where('reportcard.cycle_id','like',$cycle_id)
+        ->get();
+
+        
+        $professor= DB::table('reportprofessor')
+        ->join('person','reportprofessor.employee_id','person.id')
+        ->where('reportprofessor.student_id','like',$student_id)
+        ->where('reportprofessor.cycle_id','like',$cycle_id)
+        ->get();
+
+        $subject = Subjectstudent::where('cycle_id',$cycle_id)->where('student_id',$student_id)->first();
+        $grade = $subject->coursegrade->grade;
+        $cycle= $subject->coursegrade->cycle;
+
+
+        $pdf = \PDF::loadView('/report/reportcardpdf',compact('reports','school','student','professor','grade','cycle'));
+        return $pdf->download('boletaNotas.pdf');
+    }
+
+    public function reportcard($cycle_id,$student_id)
     {   
-       /* $reports = DB::table('subjectstudent')
-                        ->join('coursegrade','subjectstudent.coursegrade_id', '=', 'coursegrade.id')
-                        ->join('course','coursegrade.course_id', '=', 'course.id')
-                        ->leftJoin('homework','subjectstudent.id', '=', 'homework.subjectstudent_id')
-                        ->leftJoin('unit','homework.unit_id', '=', 'unit.id')
-                        ->select('course.name','unit.name as unit', DB::raw('SUM(homework.points) as score'))
-                        ->where('subjectstudent.student_id','like',$student_id)
-                        ->groupBy('course.name','unit.name')
+        $reports = DB::table('reportcard')
+                        ->where('reportcard.student_id','like',$student_id)
                         ->get();
-
-   */
-
-  $reports = DB::table('reportcard')
-                ->where('reportcard.student_id','like',$student_id)
-                ->get();
                         
-
-
-
-        return view('subjectstudent.reportcard', compact('reports'));
+        return view('subjectstudent.reportcard', compact('reports','student_id','cycle_id'));
     }
 
     public function create($student_id)

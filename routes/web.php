@@ -146,7 +146,7 @@ Route::group(['prefix' => 'subjectstudent'], function() {
     Route::get('create/{student_id?}', 'SubjectstudentController@create')->name('subjectstudent.create');
     Route::get('inscription/{student_id}', 'SubjectstudentController@inscription')->name('subjectstudent.inscription');
     Route::get('/', 'SubjectstudentController@index')->name('subjectstudent.index');
-    Route::get('/reportcard/{student_id?}', 'SubjectstudentController@reportcard')->name('subjectstudent.reportcard');//eliminar
+    Route::get('/reportcard/{cycle_id}/{student_id}', 'SubjectstudentController@reportcard')->name('subjectstudent.reportcard');//eliminar
     Route::post('store', 'SubjectstudentController@store')->name('subjectstudent.store');
     Route::get('detail/{student_id}/{cycle_id}/{grade_id}', 'SubjectstudentController@detail')->name('subjectstudent.detail');
     Route::get('destroy/{student_id}/{cycle_id}/{grade_id}', 'SubjectstudentController@destroy')->name('subjectstudent.destroy');
@@ -180,3 +180,5 @@ Route::group(['prefix' => 'payment'], function() {
     
 
 });
+
+Route::name('reportcardpdf')->get('/reportcardpdf/{cycle_id}/{student_id}','SubjectstudentController@reportcardPDF');
