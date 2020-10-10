@@ -34,14 +34,14 @@
               </div>
 
               <div class="form-group row">
-                <label for="rol_id" class="col-md-4 col-form-label text-md-right">Rol</label>
+                <label for="role_id" class="col-md-4 col-form-label text-md-right">Rol</label>
                 <div class="col-md-6">
-                  <select id="rol_id" name="rol_id" class="form-control  @error('rol_id') is-invalid @enderror">
-                    @foreach ($roles->get() as $index => $rol)
+                  <select id="role_id" name="role_id" class="form-control  @error('role_id') is-invalid @enderror">
+                    @foreach ($roles->get() as $index => $role)
 
                       <option value="{{ $index }}"
-                        {{ old('rol_id', $user->rol_id ?? '') == $index ? 'selected' : '' }}>
-                        {{ $rol }}
+                        {{ old('role_id', $user->role_id ?? '') == $index ? 'selected' : '' }}>
+                        {{ $role }}
                       </option>
 
                     @endforeach

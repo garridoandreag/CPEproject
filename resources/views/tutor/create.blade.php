@@ -5,14 +5,7 @@
   @inject('students','App\Services\Students')
   @inject('genders','App\Services\Genders')
   @inject('relationships','App\Services\Relationships')
-  <style>
-    .select-search {
-      width: 100%;
-    }
-
-  </style>
-  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js" defer></script>
+ 
   <div class="container">
     <div class="row justify-content-center ">
 
@@ -205,9 +198,19 @@
                   </thead>
                   <tbody>
                     <tr id="1">
-                      <td data-label="Nombre" scope="row">
-                        <select name="student_id[]" class="select-search" id="select">
-                        </select>
+                      <td data-label="Estudiante" scope="row">
+                        <div class="input-group input-group-sm">
+                          <select id="student_id" name="student_id[]" class="form-control ">
+                            @foreach ($students->get() as $index => $student)
+
+                            <option value="{{ $index }}"
+                              {{ old('student_id', $tutor->studenttutor->student_id ?? '') == $index ? 'selected' : '' }}>
+                              {{ $student }}
+                            </option>
+    
+                          @endforeach
+                          </select>
+                        </div>
                       </td>
                       <td data-label="Parentesco" scope="row">
                         <div class="input-group input-group-sm">
@@ -251,30 +254,6 @@
     </div>
   </div>
   <script>
-    $(document).ready(function() {
-      const select = $('#select');
-      select.select2({
-        theme: "classic",
-        ajax: {
-          type: 'POST',
-          url: '/student/search-student',
-          data: function(params) {
-            return {
-              code: params.term,
-            };
-          },
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
-          processResults: function(data) {
-            return {
-              results: data
-            };
-          }
-        }
-      });
-    });
-
     var row = 1;
     $('.addRow').on('click', function() {
       addRow();
@@ -284,10 +263,20 @@
       row++;
       var tr =
         `<tr id="${row}">
-              <td data-label="Nombre" scope="row">
-                <select name="student_id[]" class="select-search" id="select">
-                </select>
-              </td>
+          <td data-label="Estudiante" scope="row">
+                        <div class="input-group input-group-sm">
+                          <select id="student_id" name="student_id[]" class="form-control ">
+                            @foreach ($students->get() as $index => $student)
+
+                            <option value="{{ $index }}"
+                              {{ old('student_id', $tutor->studenttutor->student_id ?? '') == $index ? 'selected' : '' }}>
+                              {{ $student }}
+                            </option>
+    
+                          @endforeach
+                          </select>
+                        </div>
+                      </td>
 
               <td data-label="Parentesco" scope="row">
                           <div class="input-group input-group-sm">

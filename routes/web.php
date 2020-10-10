@@ -51,7 +51,7 @@ Route::group(['prefix' => 'student'], function() {
     Route::get('/Coursegrades', 'StudentController@getCoursegrades');
     Route::post('/search-student', 'StudentController@searchStudentByCode')->name('student.search-student');
     Route::get('grade', 'StudentController@grade')->name('student.grade');
-    Route::get('list/{grade_id}/{cycle_id}', 'StudentController@list')->name('student.list');
+    Route::get('list/{grade_id}/{cycle_id?}', 'StudentController@list')->name('student.list');
 });
 
 Route::group(['prefix' => 'course'], function() {
@@ -149,7 +149,7 @@ Route::group(['prefix' => 'subjectstudent'], function() {
     Route::get('create/{student_id?}', 'SubjectstudentController@create')->name('subjectstudent.create');
     Route::get('inscription/{student_id}', 'SubjectstudentController@inscription')->name('subjectstudent.inscription');
     Route::get('/', 'SubjectstudentController@index')->name('subjectstudent.index');
-    Route::get('/reportcard/{cycle_id}/{student_id}', 'SubjectstudentController@reportcard')->name('subjectstudent.reportcard');//eliminar
+    Route::get('/reportcard/{cycle_id?}/{student_id?}', 'SubjectstudentController@reportcard')->name('subjectstudent.reportcard');//eliminar
     Route::post('store', 'SubjectstudentController@store')->name('subjectstudent.store');
     Route::get('detail/{student_id}/{cycle_id}/{grade_id}', 'SubjectstudentController@detail')->name('subjectstudent.detail');
     Route::get('destroy/{student_id}/{cycle_id}/{grade_id}', 'SubjectstudentController@destroy')->name('subjectstudent.destroy');

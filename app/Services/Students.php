@@ -13,6 +13,6 @@ class Students {
         foreach($students as $student){
             $studentsArray[$student->id] = $student->person->names.' '.$student->person->first_surname.' '.$student->person->second_surname;
         }
-        return $students;
+        return $studentsArray;
     }
 }

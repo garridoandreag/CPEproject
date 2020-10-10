@@ -118,39 +118,25 @@ class StudentController extends Controller {
 
 
         try{
-            if(empty($cycle_id)){
-                if($role_id == 3){
-                    $subjectstudents=Subjectstudent::join('coursegrade','subjecstudent.coursegrade_id','coursegrade.id')
-                                                    ->where('coursegrade.employee_id', $id )
-                                                    ->where('coursegrade.grade_id',$grade_id)
-                                                    ->sortable()->paginate(10);
-                }else{
-                    $subjectstudents=Subjectstudent::join('coursegrade','subjecstudent.coursegrade_id','coursegrade.id')
-                                                    ->where('coursegrade.grade_id',$grade_id)
-                                                    ->sortable()->paginate(10);
-                }
+            if(isset($cycle_id) && is_object($cycle_id)){
+                $liststudents = \App\Liststudent::where('liststudent.cycle_id','like',$cycle_id)
+                ->where('cycle_id','like',$cycle_id)
+                ->where('grade_id','like',$grade_id)
+                ->select('id','student_code','names','first_surname','second_surname','cycle_id','cycle','grade_id','grade','picture')
+                ->sortable()->paginate(15);
+
             }else{
-
-                if($role_id == 3){
-                    $subjectstudents=Subjectstudent::join('coursegrade','subjecstudent.coursegrade_id','coursegrade.id')
-                                                    ->where('coursegrade.employee_id', $id )
-                                                    ->where('coursegrade.grade_id',$grade_id)
-                                                    ->where('coursegrade.cycle_id',$cycle_id)
-                                                    ->sortable()->paginate(10);
-                }else{
-                    $subjectstudents=Subjectstudent::join('coursegrade','subjecstudent.coursegrade_id','coursegrade.id')
-                                                    ->where('coursegrade.grade_id',$grade_id)
-                                                    ->where('coursegrade.cycle_id',$cycle_id)
-                                                    ->sortable()->paginate(10);
-                }
-
+                $liststudents = \App\Liststudent::where('liststudent.cycle_id','like',$cycle_id)
+                ->where('grade_id','like',$grade_id)
+                ->select('id','student_code','names','first_surname','second_surname','cycle_id','cycle','grade_id','grade','picture')
+                ->sortable()->paginate(15);
             }
             
         }catch(\Exception $e){
-            return view('student.grade');
+            return view('student.list');
         }
 
-        return view('student.list', compact('subjectstudents'));
+        return view('student.list', compact('liststudents','grade_id'));
     }
 
     public function grade() {

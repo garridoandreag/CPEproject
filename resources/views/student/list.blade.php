@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@inject('cycles', 'App\Services\Cycles')
   <style>
     .status {
       cursor: pointer;
@@ -24,13 +25,26 @@
       <div class="col-md-12">
 
         <div class="card">
-          <div class="card-header">Estudiantes
+          <div class="card-header">Listado de Estudiantes
           </div>
 
           <div class="card-body">
             <div class="row justify-content-md-center">
               <div class="col">
-                <a href="{{ action('StudentController@create') }}" class="btn btn-primary">Nuevo </a>
+                <a class="btn btn-outline-primary" href="{{route('home')}}"><i class="fas fa-home"></i></a>
+                <div class="btn-group" role="group">
+                  <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Elegir Ciclo
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                    @foreach ($cycles->getAll() as $index => $cycle)
+                      <a class="dropdown-item"
+                        href="{{ action('StudentController@list', ['grade_id' => $grade_id, 'cycle_id' => $index]) }}">{{ $cycle }}</a>
+                    @endforeach
+
+                  </div>
+                </div>
               </div>
               <div class="col-md-auto">
                 <input class="form-control" id="myInput" type="text" placeholder="Buscar...">
@@ -50,43 +64,53 @@
                   <th scope="col">@sortablelink('names','Nombre')</th>
                   <th scope="col">@sortablelink('first_surname','Apellidos')</th>
                   <th scope="col">@sortablelink('picture','Foto')</th>
-                  <th scope="col">@sortablelink('cycle','Ciclo')</th>
                   <th scope="col">@sortablelink('grade','Grado')</th>
+                  <th scope="col">@sortablelink('cycle','Ciclo')</th>
+                  <th scope="col">@sortablelink('','Opciones')</th>
                 </tr>
               </thead>
               <tbody id="myTable">
-                @foreach ($liststudents as $student)
+                @foreach ($liststudents as $liststudent)
                   <tr>
                     <td data-label="Código" scope="row">
-                      {{ $student->student_code }}
+                      {{  $liststudent->student_code }}
                     </td>
 
                     <td data-label="Nombre">
-                      {{ $student->names }}
+                      {{  $liststudent->names }}
                     </td>
 
                     <td data-label="Apellidos">
-                      {{ $student->first_surname }}
-                      {{ $student->second_surname }}
+                      {{  $liststudent->first_surname }}
+                      {{  $liststudent->second_surname }}
                     </td>
 
                     <td data-label="Foto">
-                      @if ($student->picture)
+                      @if ( $liststudent->picture)
                         <div class="container-person_profile">
-                          <img src="{{ route('student.picture', ['filename' => $student->picture]) }}"
+                          <img src="{{ route('student.picture', ['filename' =>  $liststudent->picture]) }}"
                             class="picture_profile" />
                         </div>
                       @endif
                     </td>
 
+                    <td data-label="Grado">
+                      {{  $liststudent->grade }}
+                    </td>
 
+                    <td data-label="Ciclo">
+                      {{  $liststudent->cycle}}
+                    </td>
+                    
                     <td data-label="Opciones">
                       <a class="btn btn-primary btn-sm"
-                      href="{{ action('SubjectstudentController@reportcard', ['cycle_id' => $student->cycle_id,'student_id' => $student->id]) }}" />
+                      href="{{ action('SubjectstudentController@reportcard', ['cycle_id' =>  $liststudent->cycle_id,'student_id' =>  $liststudent->id]) }}" />
                       <i class="fas fa-th-list"></i>
                     Boleta de Notas
                     </a>
                     </td>
+
+
 
                   </tr>
                 @endforeach

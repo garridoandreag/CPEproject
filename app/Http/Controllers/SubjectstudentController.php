@@ -29,9 +29,11 @@ class SubjectstudentController extends Controller
     }
 
 
-    public function reportcardPDF($cycle_id,$student_id){
+    public function reportcardPDF($cycle_id='',$student_id=''){
 
-        $school = School::find(1);
+        try{
+
+            $school = School::find(1);
 
         $student = DB::table('person')->where('id','like',$student_id)->get();
 
@@ -53,17 +55,40 @@ class SubjectstudentController extends Controller
 
 
         $pdf = \PDF::loadView('/report/reportcardpdf',compact('reports','school','student','professor','grade','cycle'));
+        }catch(\Exception $e){
+            return redirect()->action('SubjectstudentController@reportcard', ['cycle_id' => $cycle_id,'student_id' => $student_id]) 
+                          ->with(['warning' => 'No hay datos']);
+        }
+        
         return $pdf->download('boletaNotas.pdf');
     }
 
-    public function reportcard($cycle_id,$student_id)
+    public function reportcard($cycle_id='',$student_id='')
     {   
         $reports = DB::table('reportcard')
                         ->where('reportcard.student_id','like',$student_id)
                         ->where('reportcard.cycle_id','like',$cycle_id)
                         ->get();
+
+
+        $student = DB::table('person')->where('id','like',$student_id)->get();
+
+        $professor= DB::table('reportprofessor')
+        ->join('person','reportprofessor.employee_id','person.id')
+        ->where('reportprofessor.student_id','like',$student_id)
+        ->where('reportprofessor.cycle_id','like',$cycle_id)
+        ->get();
+
+        try{
+            $subject = Subjectstudent::where('cycle_id',$cycle_id)->where('student_id',$student_id)->first();
+            $grade = $subject->coursegrade->grade;
+            $cycle= $subject->coursegrade->cycle;
+        }catch(\Exception $e){
+            $grade = '';
+            $cycle= '';
+        }
                         
-        return view('subjectstudent.reportcard', compact('reports','student_id','cycle_id'));
+        return view('subjectstudent.reportcard', compact('reports','student_id','cycle_id','student','professor','grade','cycle'));
     }
 
     public function create($student_id)

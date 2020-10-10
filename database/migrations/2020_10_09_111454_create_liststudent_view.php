@@ -15,7 +15,7 @@ class CreateListstudentView extends Migration
     {
         DB::statement("
         CREATE VIEW LISTSTUDENT AS(
-            SELECT distinct S.ID, S.STUDENT_CODE, P.NAMES, P.FIRST_SURNAME, P.SECOND_SURNAME,C.ID COURSE_ID, C.NAME COURSE, G.ID GRADE_ID,G.NAME GRADE
+            SELECT distinct S.ID id, S.STUDENT_CODE student_code, P.NAMES names, P.FIRST_SURNAME first_surname, P.SECOND_SURNAME second_surname, C.ID cycle_id, C.NAME CYCLE, G.ID grade_id,G.NAME GRADE, P.PICTURE
             FROM SUBJECTSTUDENT SS
             INNER JOIN PERSON P ON P.ID=SS.STUDENT_ID
             INNER JOIN STUDENT S ON S.ID=SS.STUDENT_ID

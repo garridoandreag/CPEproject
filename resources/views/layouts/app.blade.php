@@ -94,7 +94,7 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                                       document.getElementById('logout-form').submit();">
                     {{ __('Logout') }}
                   </a>
 
@@ -127,47 +127,59 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
     <ul class="components">
 
       <li>
-        @if(Auth::user()->role_id == 1)
-        <a href="{{ route('admin.admin') }}">
-          <i class="fas fa-users-cog"></i>
+        @if (Auth::user()->role_id == 1)
+          <a href="{{ route('admin.admin') }}">
+            <i class="fas fa-users-cog"></i>
 
-          Menú Admón.
-        </a>
+            Menú Admón.
+          </a>
         @endif
 
-        <a href="{{ route('student.index') }}">
+        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="menu-dropdown-toggle">
           <i class="fas fa-user-graduate"></i>
-
           Estudiantes
         </a>
+        <ul class="collapse list-unstyled" id="pageSubmenu">
+          @if (Auth::user()->role_id == 1)
+          <li>
+            <a href="{{ route('student.index') }}">Registro e Incripción</a>
+          </li>
+          @endif
+          <li>
+            <a href="{{ route('student.grade') }}">Grados</a>
+          </li>
+        </ul>
 
+        @if ((Auth::user()->role_id == 1) || (Auth::user()->role_id == 3))
         <a href="{{ route('tutor.index') }}">
           <i class="fa fa-user"></i>
           Padres
         </a>
-
-        @if(Auth::user()->role_id == 3)
-        <a href="{{ route('courseprofessor.index') }}">
-          <i class="fas fa-chalkboard-teacher"></i>
-          Mis Cursos
-        </a>
         @endif
 
-        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="menu-dropdown-toggle">
-          <i class="fas fa-wallet"></i>
-          Colegiatura
-        </a>
-        <ul class="collapse list-unstyled" id="pageSubmenu">
-          <li>
-          <a href="{{route('payment.index')}}">Control de Pagos</a>
-          </li>
-          <li>
-            <a href="#">Page 2</a>
-          </li>
-          <li>
-            <a href="#">Page 3</a>
-          </li>
-        </ul>
+
+        @if (Auth::user()->role_id == 3)
+          <a href="{{ route('courseprofessor.index') }}">
+            <i class="fas fa-chalkboard-teacher"></i>
+            Mis Cursos
+          </a>
+        @endif
+
+        @if (Auth::user()->role_id == 1)
+          <a href="{{ route('payment.index') }}">
+            <i class="fas fa-wallet"></i>
+            Colegiatura
+          </a>
+        @endif
+
+        
+        @if (Auth::user()->role_id == 4)
+          <a href="{{ route('payment.index') }}">
+            <i class="fas fa-wallet"></i>
+            Mis Pagos de Colegiatura
+          </a>
+        @endif
+
       </li>
     </ul>
   </div>

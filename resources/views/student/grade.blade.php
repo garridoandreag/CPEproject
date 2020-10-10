@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@inject('grades', 'App\Services\Grades')
+  @inject('grades', 'App\Services\Grades')
   <script>
     $(document).ready(function() {
       $("#myInput").on("keyup", function() {
@@ -13,21 +13,20 @@
     });
 
   </script>
-
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header">Administración</div>
+          <div class="card-header">Estudiantes por Grado</div>
           <div class="card-body">
 
-            @foreach ($grades->getAllActive() as $index => $grade)
 
-              <a href="#" class="btn btn-light" id="menu-admin">{{ $grade }}
-                <img src="images/1.png" class="btn-menu">
+              @foreach ($grades->getAllActive() as $index => $grade)
+
+              <a href="{{ action('StudentController@list', ['grade_id' => $index]) }}" class="btn btn-light" id="menu-admin">{{ $grade }}
+                <img src="{{URL::asset('images/'.$index.'.png')}}" class="btn-menu">
                 <br>
-              </a>
-
+                </a>
             @endforeach
 
           </div>

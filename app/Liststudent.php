@@ -12,5 +12,5 @@ class Liststudent extends Model
     
     protected $table = 'liststudent';
 
-    public $sortable = ['student_code','names','first_surname','second_surname','cycle','grade'];
+    public $sortable = ['id','student_code','names','first_surname','second_surname','cycle_id','cycle','grade_id','grade','picture'];
 }
