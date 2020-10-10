@@ -17,7 +17,7 @@
         <br>
       <div class="col-md-3">
 
-        @if(is_object($announcements->get()))
+        
         
         @foreach ($announcements->get() as $index => $announcement)
           <div class="card border-primary mb-3">
@@ -35,7 +35,7 @@
             </div>
           </div>
         @endforeach
-        @endif
+ 
 
       </div>
     </div>

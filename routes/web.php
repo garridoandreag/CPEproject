@@ -5,8 +5,8 @@ use Illuminate\Support\Facades\Route;
 /*
 Route::get('/', function () {
     return view('welcome');
-});
-*/
+});*/
+
 /*Route::group(['middleware' => ['auth', '1']], function() {
     Route::get('/', function () {
         return view('admin.dashboard');
@@ -17,9 +17,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', function () {
+Route::get('/', function () {
     return view('home');
 })->middleware('auth');
+
 Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::post('/search-person', 'PersonController@searchPersonWithName')->name('search-person');;
@@ -49,6 +50,8 @@ Route::group(['prefix' => 'student'], function() {
     Route::get('detail/{id}', 'StudentController@detail')->name('student.detail');
     Route::get('/Coursegrades', 'StudentController@getCoursegrades');
     Route::post('/search-student', 'StudentController@searchStudentByCode')->name('student.search-student');
+    Route::get('grade', 'StudentController@grade')->name('student.grade');
+    Route::get('list/{grade_id}/{cycle_id}', 'StudentController@list')->name('student.list');
 });
 
 Route::group(['prefix' => 'course'], function() {

@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
-use App\{Student, Person, Caregiver};
+use App\{Student, Person, Caregiver, Liststudent};
 
 class StudentController extends Controller {
 
@@ -16,7 +16,7 @@ class StudentController extends Controller {
     }
 
     public function index() {
-        $students = \App\Student::sortable()->paginate(2);
+        $students = \App\Student::sortable()->paginate(15);
 
         return view('student.index', compact('students'));
     }
@@ -62,14 +62,14 @@ class StudentController extends Controller {
 
         DB::transaction(function() use ($data,$picture_name,$caregivers,$name_caregivers, $surname_caregivers,$relationship,$phone_number) {
             $person = Person::create([
-                'favorite_name' => strtoupper($data['favorite_name']),
-                'names' => strtoupper($data['names']),
-                'first_surname' => strtoupper($data['first_surname']),
-                'second_surname' => strtoupper($data['second_surname']),
+                'favorite_name' => $data['favorite_name'],
+                'names' => $data['names'],
+                'first_surname' => $data['first_surname'],
+                'second_surname' => $data['second_surname'],
                 'phone_number' => $data['phone_number'],
                 'country_code' => '320',
                 'subdivision_code' => $data['subdivision_code'],
-                'home_address' => strtoupper($data['home_address']),
+                'home_address' => $data['home_address'],
                 'picture' => $picture_name,
                 'gender_id' => $data['gender_id'],
                 'student' => '1'
@@ -84,10 +84,10 @@ class StudentController extends Controller {
             for($i = 0; $i < $caregivers; $i++){
                 Caregiver::create([
                     'student_id' => $person->id,
-                    'name' => strtoupper($name_caregivers[$i]),
-                    'surname'  => strtoupper($surname_caregivers[$i]),
-                    'relationship' => strtoupper($relationship[$i]),
-                    'phone_number' => strtoupper($phone_number[$i])
+                    'name' => $name_caregivers[$i],
+                    'surname'  => $surname_caregivers[$i],
+                    'relationship' => $relationship[$i],
+                    'phone_number' => $phone_number[$i]
                 ]);
             }
     });
@@ -106,6 +106,56 @@ class StudentController extends Controller {
         return view('student.detail', [
             'student' => $student
         ]);
+    }
+
+
+    public function list($grade_id,$cycle_id = '') {
+
+        $user = \Auth::user();
+        
+        $id = $user->person_id;
+        $role_id = $user->role_id;
+
+
+        try{
+            if(empty($cycle_id)){
+                if($role_id == 3){
+                    $subjectstudents=Subjectstudent::join('coursegrade','subjecstudent.coursegrade_id','coursegrade.id')
+                                                    ->where('coursegrade.employee_id', $id )
+                                                    ->where('coursegrade.grade_id',$grade_id)
+                                                    ->sortable()->paginate(10);
+                }else{
+                    $subjectstudents=Subjectstudent::join('coursegrade','subjecstudent.coursegrade_id','coursegrade.id')
+                                                    ->where('coursegrade.grade_id',$grade_id)
+                                                    ->sortable()->paginate(10);
+                }
+            }else{
+
+                if($role_id == 3){
+                    $subjectstudents=Subjectstudent::join('coursegrade','subjecstudent.coursegrade_id','coursegrade.id')
+                                                    ->where('coursegrade.employee_id', $id )
+                                                    ->where('coursegrade.grade_id',$grade_id)
+                                                    ->where('coursegrade.cycle_id',$cycle_id)
+                                                    ->sortable()->paginate(10);
+                }else{
+                    $subjectstudents=Subjectstudent::join('coursegrade','subjecstudent.coursegrade_id','coursegrade.id')
+                                                    ->where('coursegrade.grade_id',$grade_id)
+                                                    ->where('coursegrade.cycle_id',$cycle_id)
+                                                    ->sortable()->paginate(10);
+                }
+
+            }
+            
+        }catch(\Exception $e){
+            return view('student.grade');
+        }
+
+        return view('student.list', compact('subjectstudents'));
+    }
+
+    public function grade() {
+
+        return view('student.grade');
     }
 
     public function edit($id) {

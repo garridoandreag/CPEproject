@@ -62,8 +62,8 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <button type="button" id="sidebarCollapse" class="btn btn-info">
-          <i class="fas fa-align-left"></i>
+        <button type="button" id="sidebarCollapse" class="btn btn-outline-warning">
+          <i class="fas fa-star-half-alt"></i>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">

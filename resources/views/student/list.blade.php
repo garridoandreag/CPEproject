@@ -46,70 +46,48 @@
             <table class="table table-hover table-bordered">
               <thead>
                 <tr>
-                  <th scope="col">Código</th>
-                  <th scope="col">Nombres</th>
-                  <th scope="col">Apellidos</th>
-                  <th scope="col">Foto</th>
-                  <th scope="col">Estado</th>
-                  <th scope="col">Asignar Cursos</th>
+                  <th scope="col">@sortablelink('student_code','Código')</th>
+                  <th scope="col">@sortablelink('names','Nombre')</th>
+                  <th scope="col">@sortablelink('first_surname','Apellidos')</th>
+                  <th scope="col">@sortablelink('picture','Foto')</th>
+                  <th scope="col">@sortablelink('cycle','Ciclo')</th>
+                  <th scope="col">@sortablelink('grade','Grado')</th>
                 </tr>
               </thead>
               <tbody id="myTable">
-                @foreach ($students as $student)
+                @foreach ($liststudents as $student)
                   <tr>
-                    <td data-label="Código" scope="row"><a
-                        href="{{ action('StudentController@detail', ['id' => $student->id]) }}" />
+                    <td data-label="Código" scope="row">
                       {{ $student->student_code }}
                     </td>
-                    <td data-label="Nombres"><a href="{{ action('StudentController@detail', ['id' => $student->id]) }}" />
-                      {{ $student->person->names }}
-                      </a>
+
+                    <td data-label="Nombre">
+                      {{ $student->names }}
                     </td>
-                    <td data-label="Apellidos"><a
-                        href="{{ action('StudentController@detail', ['id' => $student->id]) }}" />
-                      {{ $student->person->first_surname }}
-                      {{ $student->person->second_surname }}
-                      </a>
+
+                    <td data-label="Apellidos">
+                      {{ $student->first_surname }}
+                      {{ $student->second_surname }}
                     </td>
-                    <td data-label="Foto"><a href="{{ action('StudentController@detail', ['id' => $student->id]) }}" />
-                      @if ($student->person->picture)
+
+                    <td data-label="Foto">
+                      @if ($student->picture)
                         <div class="container-person_profile">
-                          <img src="{{ route('student.picture', ['filename' => $student->person->picture]) }}"
+                          <img src="{{ route('student.picture', ['filename' => $student->picture]) }}"
                             class="picture_profile" />
                         </div>
                       @endif
-                      </a>
-                    </td>
-                    <td data-label="Estado">
-                      @if ($student->status == 'INACTIVO')
-                        <span id="status{{ $student->id }}" onclick="changeStatus({{ $student->id }})"
-                          class="status badge badge-danger">
-                          <span id="status{{ $student->id }}" onclick="changeStatus({{ $student->id }})"
-                            class="status badge badge-danger">
-                            <span id="status{{ $student->id }}" onclick="changeStatus({{ $student->id }})"
-                              class="status badge badge-danger">
-                              {{ $student->status }}
-                            </span>
-                          @else
-                            <span id="status{{ $student->id }}" onclick="changeStatus({{ $student->id }})"
-                              class="status badge badge-success">
-                              {{ $student->status }}
-                            </span>
-                      @endif
                     </td>
 
-                    <td data-label="Asignar Cursos">
+
+                    <td data-label="Opciones">
                       <a class="btn btn-primary btn-sm"
-                        href="{{ action('SubjectstudentController@inscription', ['student_id' => $student->id]) }}" />
-                        <i class="fas fa-th-list"></i>
-                      Asignar Cursos
-                      </a>
-                      <a class="btn btn-primary btn-sm"
-                      href="{{ action('SubjectstudentController@reportcard', ['student_id' => $student->id]) }}" />
+                      href="{{ action('SubjectstudentController@reportcard', ['cycle_id' => $student->cycle_id,'student_id' => $student->id]) }}" />
                       <i class="fas fa-th-list"></i>
                     Boleta de Notas
                     </a>
                     </td>
+
                   </tr>
                 @endforeach
 
@@ -119,10 +97,10 @@
             </table>
             <br>
 
-            {{ $students->appends(Request::except('page'))->render() }}
+            {{ $liststudents->appends(Request::except('page'))->render() }}
             <br>
             <p>
-              Se muestran {{ $students->count() }} de {{ $students->total() }} estudiantes.
+              Se muestran {{ $liststudents->count() }} de {{ $liststudents->total() }} estudiantes.
             </P>
 
           </div>

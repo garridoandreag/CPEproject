@@ -60,6 +60,7 @@ class SubjectstudentController extends Controller
     {   
         $reports = DB::table('reportcard')
                         ->where('reportcard.student_id','like',$student_id)
+                        ->where('reportcard.cycle_id','like',$cycle_id)
                         ->get();
                         
         return view('subjectstudent.reportcard', compact('reports','student_id','cycle_id'));

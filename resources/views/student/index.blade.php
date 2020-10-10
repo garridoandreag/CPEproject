@@ -104,11 +104,6 @@
                         <i class="fas fa-th-list"></i>
                       Asignar Cursos
                       </a>
-                      <a class="btn btn-primary btn-sm"
-                      href="{{ action('SubjectstudentController@reportcard', ['student_id' => $student->id]) }}" />
-                      <i class="fas fa-th-list"></i>
-                    Boleta de Notas
-                    </a>
                     </td>
                   </tr>
                 @endforeach
