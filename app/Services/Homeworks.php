@@ -19,6 +19,7 @@ class Homeworks {
                       ->join('course','coursegrade.course_id','course.id')
                       ->where('coursegrade.employee_id','like',$id)
                       ->where('coursegrade.cycle_id','like',3)
+                      ->where('homework.points','=',0)
                       ->select('course.name as asignatura',DB::Raw('COUNT(homework.id) cantidad'))
                       ->groupBy('course.name')
                       ->get();

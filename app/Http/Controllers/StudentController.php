@@ -72,7 +72,7 @@ class StudentController extends Controller {
                 'home_address' => $data['home_address'],
                 'picture' => $picture_name,
                 'gender_id' => $data['gender_id'],
-                'student' => '1'
+                'student' => 1,
             ]);
 
             $student = $person->student()->create([

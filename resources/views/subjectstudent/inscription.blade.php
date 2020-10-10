@@ -23,8 +23,10 @@
 
             <div class="row justify-content-md-center">
               <div class="col">
+                @if (Auth::user()->role_id == 1)
                 <a href="{{ action('StudentController@index') }}" class="btn btn-outline-primary"><i class="fas fa-reply"></i></a>
                 <a href="{{ action('SubjectstudentController@create', ['student_id' => $student_id]) }}" class="btn btn-primary">Nuevo </a>
+                @endif
               </div>
               <div class="col-md-auto">
                 <input class="form-control" id="myInput" type="text" placeholder="Buscar...">
@@ -71,8 +73,9 @@
                       </a>
                       </td>
 
-                      <td data-label="Grado" scope="row"><a href="{{ action('SubjectstudentController@detail', ['student_id' => $student_id,'cycle_id' => $subjectstudent->cycle_id,'grade_id' => $subjectstudent->grade_id]) }}" />
-                        {{ $subjectstudent->grade->name }}
+                      <td data-label="Grado" scope="row"><a  class="btn btn-primary btn-sm" href="{{ action('SubjectstudentController@reportcard', ['student_id' => $student_id,'cycle_id' => $subjectstudent->cycle_id]) }}" />
+                        <i class="fas fa-book-open"></i>
+                        Boleta de Notas
                       </a>
                       </td>
 
@@ -84,7 +87,7 @@
               {{ $subjectstudents->appends(Request::except('page'))->render() }}
               <br>
               <p>
-                Se muestran {{ $subjectstudents->count() }} de {{ $subjectstudents->total() }} cursos.
+                Ha cursado o esta cursando {{ $subjectstudents->total() }} materias.
               </P>
             @else
               <br>

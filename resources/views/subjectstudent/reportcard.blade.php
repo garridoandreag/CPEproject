@@ -74,7 +74,7 @@
               <table class="table table-hover table-bordered">
                 <thead>
                   <tr>
-                    <th scope="col">@sortablelink('name','Asignatura')</th>
+                    <th scope="col">@sortablelink('course.name','Asignatura')</th>
                     <th scope="col">@sortablelink('bloque1','1° Bloque')</th>
                     <th scope="col">@sortablelink('bloque2','2° Bloque')</th>
                     <th scope="col">@sortablelink('bloque3','3° Bloque')</th>

@@ -8,7 +8,7 @@
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <title>{{ config('app.name', 'Colegio Pequeñas Estrellas') }}</title>
+  <title>Colegio Pequeñas Estrellas</title>
 
   <!-- Scripts -->
   <script src="{{ asset('js/app.js') }}" defer></script>
@@ -50,7 +50,7 @@ function closeNav() {
 <body>
   <div id="app">
     <nav class="navbar navbar-expand-md navbar-dark shadow-sm" style="background-color: var(--navbar-color);">
-
+      @inject('studenttutors', 'App\Services\Students')
       <!-- background: rgb(253,29,45);
 background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%, rgba(252,176,69,1) 33%, rgba(95,167,52,1) 51%, rgba(9,231,240,1) 71%, rgba(131,58,180,1) 90%);-->
       <div class="container">
@@ -94,7 +94,7 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                       document.getElementById('logout-form').submit();">
+                                                           document.getElementById('logout-form').submit();">
                     {{ __('Logout') }}
                   </a>
 
@@ -141,20 +141,28 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
         </a>
         <ul class="collapse list-unstyled" id="pageSubmenu">
           @if (Auth::user()->role_id == 1)
-          <li>
-            <a href="{{ route('student.index') }}">Registro e Incripción</a>
-          </li>
+            <li>
+              <a href="{{ route('student.index') }}">Registro e Incripción</a>
+            </li>
           @endif
-          <li>
-            <a href="{{ route('student.grade') }}">Grados</a>
-          </li>
+
+          @if (Auth::user()->role_id == 4)
+            @foreach ($studenttutors->getMyStudents() as $index => $student)
+              <li>
+                <a
+                  href="{{ action('SubjectstudentController@inscription', ['student_id' => $index]) }}">{{ $student }}</a>
+              </li>
+            @endforeach
+          @endif
+
+
         </ul>
 
-        @if ((Auth::user()->role_id == 1) || (Auth::user()->role_id == 3))
-        <a href="{{ route('tutor.index') }}">
-          <i class="fa fa-user"></i>
-          Padres
-        </a>
+        @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 3)
+          <a href="{{ route('tutor.index') }}">
+            <i class="fa fa-user"></i>
+            Padres
+          </a>
         @endif
 
 
@@ -172,7 +180,7 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
           </a>
         @endif
 
-        
+
         @if (Auth::user()->role_id == 4)
           <a href="{{ route('payment.index') }}">
             <i class="fas fa-wallet"></i>

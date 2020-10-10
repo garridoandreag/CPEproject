@@ -76,7 +76,6 @@
   </table>
 
   <hr>
-  <br>
   <div class="contenido">
     <table class="table table-hover table-bordered">
       <thead>

@@ -22,6 +22,7 @@ Route::get('/', function () {
 })->middleware('auth');
 
 Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::post('/search-person', 'PersonController@searchPersonWithName')->name('search-person');;
 Route::get('/admin', function () {
@@ -179,8 +180,9 @@ Route::group(['prefix' => 'payment'], function() {
     Route::get('create', 'PaymentController@create')->name('payment.create');
     Route::get('/', 'PaymentController@index')->name('payment.index');
     Route::get('detail/{id}', 'PaymentController@detail')->name('payment.detail');
+    Route::get('edit/{id}', 'PaymentController@edit')->name('payment.edit');
     Route::post('store', 'PaymentController@store')->name('payment.store');
-    
+    Route::post('update', 'PaymentController@update')->name('payment.update');
 
 });
 

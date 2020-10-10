@@ -40,6 +40,7 @@ class SubjectstudentController extends Controller
         $reports = DB::table('reportcard')
         ->where('reportcard.student_id','like',$student_id)
         ->where('reportcard.cycle_id','like',$cycle_id)
+        ->orderBy('reportcard.id','asc')
         ->get();
 
         
@@ -68,6 +69,7 @@ class SubjectstudentController extends Controller
         $reports = DB::table('reportcard')
                         ->where('reportcard.student_id','like',$student_id)
                         ->where('reportcard.cycle_id','like',$cycle_id)
+                        ->orderBy('reportcard.id','asc')
                         ->get();
 
 
