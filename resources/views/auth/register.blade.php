@@ -105,6 +105,7 @@
 
               <div class="form-group row mb-0">
                 <div class="col-md-6 offset-md-4">
+                  <a href="{{ route('user.index') }}" class="btn btn-outline-secondary">Cancelar</a>
                   <button type="submit" class="btn btn-primary">
                     Registrar
                   </button>

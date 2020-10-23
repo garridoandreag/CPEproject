@@ -146,6 +146,12 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
             </li>
           @endif
 
+          @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 3)
+          <li>
+            <a href="{{ route('student.grade') }}">Grados</a>
+          </li>
+        @endif
+
           @if (Auth::user()->role_id == 4)
             @foreach ($studenttutors->getMyStudents() as $index => $student)
               <li>

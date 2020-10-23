@@ -50,10 +50,13 @@
               <br>
               Avisos</a>
 
+              @if(Auth::user()->role_id == 2)
             <a href="{{ route('event.index') }}" class="btn btn-light" id="menu-admin">
               <img src="images/calendario.png" class="btn-menu">
               <br>
               Eventos</a>
+
+              @endif
 
             <a href="{{ route('paymentcategory.index') }}" class="btn btn-light" id="menu-admin">
               <img src="images/cuenta.png" class="btn-menu">

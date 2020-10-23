@@ -55,6 +55,7 @@ class StudentController extends Controller {
         $picture = $request->file('picture');
         $picture_name = 'student.png';
 
+
         if ($picture) {
             $picture_name = time() . $picture->getClientOriginalName();//colocarle un nombre unico
             Storage::disk('users')->put($picture_name, File::get($picture));//guardar en la carpeta storage (storage/app/users)
@@ -72,7 +73,7 @@ class StudentController extends Controller {
                 'home_address' => $data['home_address'],
                 'picture' => $picture_name,
                 'gender_id' => $data['gender_id'],
-                'student' => 1,
+                'student' => '1',
             ]);
 
             $student = $person->student()->create([
