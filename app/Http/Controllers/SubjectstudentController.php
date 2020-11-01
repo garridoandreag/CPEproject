@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
-use App\{Subjectstudent, Pensum, Coursegrade}; 
+use App\{Subjectstudent, Coursegrade, School}; 
 
 class SubjectstudentController extends Controller
 {
@@ -28,22 +28,69 @@ class SubjectstudentController extends Controller
         return view('subjectstudent.inscription', compact('subjectstudents','student_id'));
     }
 
-    public function reportcard($student_id = '')//evluar si eliminar
-    {
-        $reports = DB::table('homework')
-                        ->join('person','homework.student_id', '=', 'person.id')
-                        ->join('activity','homework.activity_id', '=', 'activity.id')
-                        ->rightJoin('unit','activity.unit_id', '=', 'unit.id')
-                        ->join('coursegrade','activity.coursegrade_id', '=', 'coursegrade.id')
-                        ->join('course','coursegrade.course_id', '=', 'course.id')
-                        ->select('course.name', DB::raw('SUM(homework.points) as score'),'unit.name as unit','coursegrade.cycle_id','person.names')
-                        ->where('homework.student_id','like',$student_id)
-                        ->groupBy('course.name','unit.name','coursegrade.cycle_id','person.names')
-                        ->get();
-        //$reports = Homework::where('student_id', $student_id )->first();
-        
 
-        return view('subjectstudent.reportcard', compact('reports'));
+    public function reportcardPDF($cycle_id='',$student_id=''){
+
+        try{
+
+            $school = School::find(1);
+
+        $student = DB::table('person')->where('id','like',$student_id)->get();
+
+        $reports = DB::table('reportcard')
+        ->where('reportcard.student_id','like',$student_id)
+        ->where('reportcard.cycle_id','like',$cycle_id)
+        ->orderBy('reportcard.id','asc')
+        ->get();
+
+        
+        $professor= DB::table('reportprofessor')
+        ->join('person','reportprofessor.employee_id','person.id')
+        ->where('reportprofessor.student_id','like',$student_id)
+        ->where('reportprofessor.cycle_id','like',$cycle_id)
+        ->get();
+
+        $subject = Subjectstudent::where('cycle_id',$cycle_id)->where('student_id',$student_id)->first();
+        $grade = $subject->coursegrade->grade;
+        $cycle= $subject->coursegrade->cycle;
+
+
+        $pdf = \PDF::loadView('/report/reportcardpdf',compact('reports','school','student','professor','grade','cycle'));
+        }catch(\Exception $e){
+            return redirect()->action('SubjectstudentController@reportcard', ['cycle_id' => $cycle_id,'student_id' => $student_id]) 
+                          ->with(['warning' => 'No hay datos']);
+        }
+        
+        return $pdf->download('boletaNotas.pdf');
+    }
+
+    public function reportcard($cycle_id='',$student_id='')
+    {   
+        $reports = DB::table('reportcard')
+                        ->where('reportcard.student_id','like',$student_id)
+                        ->where('reportcard.cycle_id','like',$cycle_id)
+                        ->orderBy('reportcard.id','asc')
+                        ->get();
+
+
+        $student = DB::table('person')->where('id','like',$student_id)->get();
+
+        $professor= DB::table('reportprofessor')
+        ->join('person','reportprofessor.employee_id','person.id')
+        ->where('reportprofessor.student_id','like',$student_id)
+        ->where('reportprofessor.cycle_id','like',$cycle_id)
+        ->get();
+
+        try{
+            $subject = Subjectstudent::where('cycle_id',$cycle_id)->where('student_id',$student_id)->first();
+            $grade = $subject->coursegrade->grade;
+            $cycle= $subject->coursegrade->cycle;
+        }catch(\Exception $e){
+            $grade = '';
+            $cycle= '';
+        }
+                        
+        return view('subjectstudent.reportcard', compact('reports','student_id','cycle_id','student','professor','grade','cycle'));
     }
 
     public function create($student_id)

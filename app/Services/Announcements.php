@@ -9,7 +9,6 @@ class Announcements {
         
         $announcements = Announcement::get()->where('status','ACTIVO');
         
-        $announcementsArray[''] = '';
 
         foreach($announcements as $announcement){
             $announcementsArray[$announcement->id] = $announcement;

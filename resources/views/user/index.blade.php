@@ -49,8 +49,6 @@
                   <th scope="col">@sortablelink('name','Nombre a mostrar')</th>
                   <th scope="col">@sortablelink('names','Nombre Completo')</th>
                   <th scope="col">@sortablelink('role_id','Rol')</th>
-                  <th scope="col">@sortablelink('start_date','Fecha Inicio')</th>
-                  <th scope="col">@sortablelink('end_date','Fecha Fin')</th>
                   <th scope="col">@sortablelink('status','Estado')</th>
                 </tr>
               </thead>
@@ -77,14 +75,7 @@
                       {{ $user->role->name }}
                       </a>
                     </td>
-                    <td data-label="Nombre Completo"><a href="{{ action('UserController@detail', ['id' => $user->id]) }}" />
-                      {{$user->person->student}}
-                      </a>
-                    </td>
-                    <td data-label="Creado"><a href="{{ action('UserController@detail', ['id' => $user->id]) }}" />
-                      {{ $user->created_at }}
-                      </a>
-                    </td>
+
                     <td data-label="Estado">
                       @if ($user->status == 'INACTIVO')
                         <span id="status{{ $user->id }}" onclick="changeStatus({{ $user->id }})"

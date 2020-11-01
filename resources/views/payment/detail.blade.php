@@ -25,11 +25,7 @@
           <div class="card">
 
             <div class="card-header">
-              @if (isset($payment) && is_object($payment))
-                Modificar pago
-              @else
-                Nuevo pago
-              @endif
+              Detalles del pago
             </div>
 
             <div class="card-body">
@@ -48,7 +44,7 @@
                   <label for="paymentcategory_id" class="col-md-4 col-form-label text-md-right">Categoría</label>
                   <div class="col-md-6">
                     <select id="paymentcategory_id" name="paymentcategory_id"
-                      class="form-control  @error('paymentcategory_id') is-invalid @enderror">
+                      class="form-control  @error('paymentcategory_id') is-invalid @enderror" disabled>
                       @foreach ($paymentcategories->get() as $index => $paymentcategory)
 
                         <option value="{{ $index }}"
@@ -64,7 +60,7 @@
                 <div class="form-group row">
                   <label for="cycle_id" class="col-md-4 col-form-label text-md-right">Ciclo</label>
                   <div class="col-md-6">
-                    <select id="cycle_id" name="cycle_id" class="form-control  @error('cycle_id') is-invalid @enderror">
+                    <select id="cycle_id" name="cycle_id" class="form-control  @error('cycle_id') is-invalid @enderror" disabled>
                       @foreach ($cycles->get() as $index => $cycle)
 
                         <option value="{{ $index }}"
@@ -87,7 +83,7 @@
                       </div>
                       <input id="amount" type="number" step="any"
                         class="form-control @error('amount') is-invalid @enderror" name="amount"
-                        value="{{ $payment->amount ?? '' }}" required autocomplete="amount" autofocus>
+                        value="{{ $payment->amount ?? '' }}" required autocomplete="amount" autofocus readonly>
                     </div>
                     @error('amount')
                     <span class="invalid-feedback" role="alert">
@@ -101,7 +97,7 @@
                   <label for="code_reference" class="col-md-4 col-form-label text-md-right">Código de Referencia</label>
                   <div class="col-md-6">
                     <input id="code_reference" type="text" class="form-control @error('code_reference') is-invalid @enderror"
-                      name="code_reference" value="{{ $payment->code_reference ?? '' }}" required autocomplete="code_reference" autofocus>
+                      name="code_reference" value="{{ $payment->code_reference ?? '' }}" required autocomplete="code_reference" autofocus readonly>
 
                     @error('code_reference')
                     <span class="invalid-feedback" role="alert">
@@ -114,7 +110,12 @@
                 <div class="form-group row">
                   <label for="student_id" class="col-md-4 col-form-label text-md-right">Estudiante</label>
                   <div class="col-md-6">
-                    <select name="student_id" class="select-search" id="select">
+                    <select name="student_id" class="select-search" id="select"  disabled>
+                      <option value="{{ $payment->student_id ?? ''}}">
+                      {{ $payment->student->person->names  ?? ''}}
+                      {{ $payment->student->person->first_surname  ?? ''}}
+                      {{ $payment->student->person->second_surname  ?? ''}}
+                    </option>
                     </select>
 
                     @error('student_id')
@@ -128,7 +129,12 @@
                 <div class="form-group row">
                   <label for="tutor_id" class="col-md-4 col-form-label text-md-right">Padre (Encargado) </label>
                   <div class="col-md-6">
-                    <select name="tutor_id" class="select-search" id="select-tutor">
+                    <select name="tutor_id" class="select-search" id="select-tutor"  disabled>
+                      <option value="{{ $payment->tutor_id ?? ''}}">
+                        {{ $payment->tutor->person->names  ?? ''}}
+                        {{ $payment->tutor->person->first_surname  ?? ''}}
+                        {{ $payment->tutor->person->second_surname  ?? ''}}
+                      </option>
                     </select>
 
                     @error('tutor_id')
@@ -143,14 +149,8 @@
                 <div class="form-group row mb-0">
                   <div class="col-md-6 offset-md-4">
                     <a href="{{ route('payment.index') }}" class="btn btn-outline-secondary">Cancelar </a>
-                    <button type="submit" class="btn btn-primary">
-                      @if (isset($payment) && is_object($payment))
-                        Actualizar
-                      @else
-                        Guardar
-                      @endif
-                    </button>
-
+                    <a href="{{ action('PaymentController@edit', ['id' => $payment->id]) }}"
+                      class="btn btn-primary">Editar</a>
                   </div>
                 </div>
                 <br />

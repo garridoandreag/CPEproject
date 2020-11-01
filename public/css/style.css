@@ -12,7 +12,7 @@ and open the template in the editor.
     --navbar-color: #204075;
     --primary-color:  #346BC2;
     --second-color: #346BC2;
-    --third-color: #F5BA42;
+    --third-color:#3F80E8;
     --fourth-color: #FFFFFF ;
     --fifth-color: #DAE2F7;
 }
@@ -288,8 +288,8 @@ a[data-toggle="collapse"] {
 }
 
 ul ul a {
-    font-size: 0.9em !important;
-    padding-left: 30px !important;
+    font-size: 0.98em !important;
+    padding-left: 35px !important;
     background: var(--third-color);
 }
 
