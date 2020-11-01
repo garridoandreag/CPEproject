@@ -1,153 +1,182 @@
 @extends('layouts.app')
 
 @section('content')
-  @inject('professors','App\Services\Professors')
-  @inject('cycles','App\Services\Cycles')
-  @inject('grades','App\Services\Grades')
-  @inject('courses','App\Services\Courses')
+@inject('professors','App\Services\Professors')
+
+  <script>
+    $(document).ready(function() {
+      $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+
+  </script>
 
   <div class="container">
-    <div class="row justify-content-center ">
+    <div class="row justify-content-center">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">Planeación de cursos</div>
+          <div class="card-body">
 
-      <div class="col-md-8">
+            <div class="row justify-content-md-center">
+              <div class="col">
+                <a href="{{ route('admin.admin') }}" class="btn btn-outline-primary"><i class="fas fa-reply"></i></a>
+              </div>
+              <div class="col-md-auto">
+                <input class="form-control" id="myInput" type="text" placeholder="Buscar...">
+              </div>
+            </div>
+            <br>
 
-        @if (session('message'))
-          <div class="alert alert-success">
-            {{ session('message') }}
-          </div>
-        @endif
-        <div class="card-group">
-          <div class="card">
-
-            <div class="card-header">
-              @if (isset($coursegrade) && is_object($coursegrade))
-                Modificar Profesores y Cursos
-              @else
-                Nueva Profesores y Cursos
+            @if (session('status'))
+              <div class="alert alert-success">
+                {{ session('status') }}
+              </div>
+            @else
+              @if (session('warning'))
+                <div class="alert alert-danger">
+                  {{ session('warning') }}
+                </div>
               @endif
-            </div>
+            @endif
 
-            <div class="card-body">
+            <form id="homeworkForm" method="POST"
+            action="{{ isset($coursegrades) ? route('coursegrade.update') : route('coursegrade.store') }}"
+            enctype="multipart/form-data" aria-label="tareas">
+            {{ csrf_field() }}
 
-              <form id="coursegradeForm" method="POST"
-                action="{{ isset($coursegrade) ? route('coursegrade.update') : route('coursegrade.store') }}"
-                enctype="multipart/form-data" aria-label="Ciclos">
-                {{ csrf_field() }}
+            <input type="hidden" name="cycle" value="{{ $cycle_id }}" />
+            <input type="hidden" name="grade" value="{{ $grade_id }}" />
 
-                @if (isset($coursegrade) && is_object($coursegrade))
-                  <input type="hidden" name="id" value="{{ $coursegrade->id }}" /><br>
-                @endif
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">@sortablelink('cycle_id','Ciclo')</th>
+                  <th scope="col">@sortablelink('course_id','Curso')</th>
+                  <th scope="col">@sortablelink('grade_id','Grado')</th>
+                  <th scope="col">@sortablelink('employee_id','Docente')</th>
+                  <th scope="col">@sortablelink('homework','Tareas')</th>
+                  <th scope="col">@sortablelink('status','Estado')</th>
+                </tr>
+              </thead>
+              <tbody id="myTable">
+                @foreach ($coursegrades as $coursegrade)
+                  <tr>
+                    <input type="hidden" name="id[]" value="{{ $coursegrade->id }}" />
+                    <td data-label="Ciclo" scope="row">
+                      {{ $coursegrade->cycle->name }}
+                    </td>
 
-                <div class="form-group row">
-                  <label for="cycle_id" class="col-md-4 col-form-label text-md-right">Ciclo</label>
-                  <div class="col-md-6">
-                    <select id="cycle_id" name="cycle_id" class="form-control  @error('cycle_id') is-invalid @enderror">
-                      @foreach ($cycles->get() as $index => $cycle)
+                    <td data-label="Curso" scope="row">
+                      {{ $coursegrade->course->name }}
+                    </td>
 
-                        <option value="{{ $index }}"
-                          {{ old('cycle_id', $coursegrade->cycle_id ?? '') == $index ? 'selected' : '' }}>
-                          {{ $cycle }}
-                        </option>
+                    <td data-label="Grado" scope="row">
+                      {{ $coursegrade->grade->name }}
+                    </td>
 
-                      @endforeach
-                    </select>
-                  </div>
-                </div>
+                    <td data-label="Docente">
+                          <select id="employee_id" name="employee_id[]"
+                            class="form-control form-control-sm  @error('employee_id') is-invalid @enderror">
+                            @foreach ($professors->get() as $index => $employee)
+                              <option value="{{ $index }}"
+                                {{ old('employee_id', $coursegrade->employee_id ?? '') == $index ? 'selected' : '' }}>
+                                {{ $employee }}
+                              </option>
+                            @endforeach
+                          </select>
+                    </td>
 
-                <div class="form-group row">
-                  <label for="grade_id" class="col-md-4 col-form-label text-md-right">Grado</label>
-                  <div class="col-md-6">
-                    <select id="grade_id" name="grade_id" class="form-control  @error('grade_id') is-invalid @enderror">
-                      @foreach ($grades->get() as $index => $grade)
+                    <td data-label="Tareas" scope="row"><a
+                        href="{{ action('HomeworkController@homeworkcourse', ['coursegrade_id' => $coursegrade->id]) }}" />
+                      Tareas
+                    </td>
 
-                        <option value="{{ $index }}"
-                          {{ old('grade_id', $coursegrade->grade_id ?? '') == $index ? 'selected' : '' }}>
-                          {{ $grade }}
-                        </option>
-
-                      @endforeach
-                    </select>
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                  <label for="employee_id" class="col-md-4 col-form-label text-md-right">Docente</label>
-                  <div class="col-md-6">
-                    <select id="employee_id" name="employee_id"
-                      class="form-control  @error('employee_id') is-invalid @enderror">
-                      @foreach ($professors->get() as $index => $employee)
-
-                        <option value="{{ $index }}"
-                          {{ old('employee_id', $coursegrade->employee_id ?? '') == $index ? 'selected' : '' }}>
-                          {{ $employee }}
-                        </option>
-
-                      @endforeach
-
-                    </select>
-                  </div>
-                </div>
-
-                @if (isset($coursegrade) && is_object($coursegrade))
-
-                <div class="form-group row">
-                  <label for="course_id" class="col-md-4 col-form-label text-md-right">Curso</label>
-                  <div class="col-md-6">
-                    <select id="course" name="course" class="form-control"  @error('course_id') is-invalid @enderror" >
-                      @foreach ($courses->get() as $index => $course)
-                        <option value="{{ $index }}"
-                          {{ old('course_id', $coursegrade->course_id ?? '') == $index ? 'selected' : '' }}>
-                          {{ $course }}
-                        </option>
-                
-                      @endforeach
-                    </select>
-                  </div>
-                </div>
-
-                @else
-
-                <div class="form-group row">
-                  <label for="course_id" class="col-md-4 col-form-label text-md-right">Curso</label>
-                  <div class="col-md-6">
-                    <select id="course" name="course[]" class="custom-select" multiple="multiple">
-                      @foreach ($courses->get() as $index => $course)
-                        <option value="{{ $index }}"
-                          {{ old('course_id', $coursegrade->course_id ?? '') == $index ? 'selected' : '' }}>
-                          {{ $course }}
-                        </option>
-                
-                      @endforeach
-                    </select>
-                  </div>
-                </div>
-                @endif
-
-
-                <div class="form-group row mb-0">
-                  <div class="col-md-6 offset-md-4">
-                    <a href="{{ route('coursegrade.index') }}" class="btn btn-outline-secondary">Cancelar</a>
-                    <button type="submit" class="btn btn-primary">
-                      @if (isset($coursegrade) && is_object($coursegrade))
-                        Actualizar
+                    <td data-label="Estado">
+                      @if ($coursegrade->status == 'INACTIVO')
+                        <span id="status{{ $coursegrade->id }}" onclick="changeStatus({{ $coursegrade->id }})"
+                          class="status badge badge-danger">
+                          {{ $coursegrade->status }}
+                        </span>
                       @else
-                        Guardar
+                        <span id="status{{ $coursegrade->id }}" onclick="changeStatus({{ $coursegrade->id }})"
+                          class="status badge badge-success">
+                          {{ $coursegrade->status }}
+                        </span>
                       @endif
-                    </button>
-                    @if (isset($coursegrade) && is_object($coursegrade))
-                    <a href="{{action('CoursegradeController@destroy',['id' => $coursegrade->id])}}" class="btn btn-danger">Eliminar</a>
-                    @endif
+                    </td>
 
-                  </div>
-                </div>
-                <br />
+                  </tr>
+                @endforeach
+              </tbody>
+            </table>
+
+            <br>
+            <div class="form-group row mb-0">
+              <div class="col-md-6 offset-md-9">
+                <a href="{{ action('CoursegradeController@detail', ['cycle_id' => $cycle_id,'grade_id' => $grade_id]) }}" " class="
+                  btn btn-outline-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-primary">
+                  @if (isset($coursegrades) && is_object($coursegrades))
+                    Actualizar
+                  @else
+                    Guardar
+                  @endif
+                </button>
+
+              </div>
             </div>
-            </form>
+
+          </form>
+
+
+            <br>
+            {{ $coursegrades->appends(Request::except('page'))->render() }}
+            <br>
+            <p>
+              Se muestran {{ $coursegrades->count() }} de {{ $coursegrades->total() }} cursos planeados.
+            </P>
+
           </div>
+
         </div>
       </div>
     </div>
   </div>
-  </div>
+
+  <script>
+    async function changeStatus(id) {
+      try {
+        const badge = $(`#status${id}`);
+        let status = badge.text().trim();
+
+        status = await axios.post('/coursegrade/status', {
+            id,
+            status
+          })
+          .then(data => {
+            const response = data.data;
+            const {
+              status
+            } = response.data;
+
+            badge
+              .removeClass(status === 'INACTIVO' ? 'badge-success' : 'badge-danger')
+              .addClass(status === 'INACTIVO' ? 'badge-danger' : 'badge-success');
+            badge.text(status);
+
+            return status;
+          })
+          .catch(err => console.error(err));
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+  </script>
 
 @endsection

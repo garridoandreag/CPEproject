@@ -116,7 +116,6 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
 
     <!--  CORTE DEL EXPERIMENTO -->
 
-
     <main class="py-4">
       @yield('content')
     </main>
