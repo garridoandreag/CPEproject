@@ -49,7 +49,7 @@
                 <div class="col-md-6">
                   @include('includes.picture_profile')
                   <input id="picture" type="file" class="form-control @error('picture') is-invalid @enderror"
-                    name="picture" required>
+                    name="picture" value="{{ Auth::user()->person->picture ?? '' }}">
                   @error('picture')
                   <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -60,6 +60,7 @@
 
               <div class="form-group row mb-0">
                 <div class="col-md-6 offset-md-4">
+                  <a href="{{ route('home') }}" " class="btn btn-outline-secondary">Cancelar</a>
                   <button type="submit" class="btn btn-primary">
                     Actualizar
                   </button>

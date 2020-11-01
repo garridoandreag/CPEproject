@@ -43,16 +43,16 @@ class TutorController extends Controller
         $relationship = $request->input('relationship');
 
         $data = $request->validate([
-            'names' => ['required', 'string', 'max:50'],
-            'first_surname' => ['required', 'string', 'max:50'],
-            'second_surname' => ['required', 'string', 'max:50'],
-            'phone_number' => ['required', 'string', 'max:8'],
+            'names' => ['nullable', 'string', 'max:50'],
+            'first_surname' => ['nullable', 'string', 'max:50'],
+            'second_surname' => ['nullable', 'string', 'max:50'],
+            'phone_number' => ['nullable', 'string', 'max:8'],
             'cellphone_number' => ['nullable', 'string', 'max:8'],
-            'subdivision_name' => ['required'],
-            'gender_id' => ['required'],
-            'home_address' => ['required', 'string', 'max:250'],
-            'dpi' => ['required', 'string', 'regex:/^[1-9]{1}\d{12}/','unique:tutor,dpi,'],
-            'occupation' => ['required', 'string', 'max:50'],
+            'subdivision_code' => ['nullable'],
+            'gender_id' => ['nullable'],
+            'home_address' => ['nullable', 'string', 'max:250'],
+            'dpi' => ['nullable', 'string', 'regex:/^[1-9]{1}\d{12}/','unique:tutor,dpi,'],
+            'occupation' => ['nullable', 'string', 'max:50'],
         ]);
 
         DB::transaction(function() use ($data,$students, $student_id,$relationship) {
@@ -62,8 +62,8 @@ class TutorController extends Controller
                 'second_surname' => $data['second_surname'],
                 'phone_number' => $data['phone_number'],
                 'cellphone_number' => $data['cellphone_number'],
-                'country_name' => '320',
-                'subdivision_name' => $data['subdivision_name'],
+                'country_code' => '320',
+                'subdivision_code' => $data['subdivision_code'],
                 'home_address' => $data['home_address'],
                 'gender_id' => $data['gender_id'],
                 'tutor' => '1'
@@ -84,7 +84,7 @@ class TutorController extends Controller
         });
 
         return redirect()->route('tutor.index')
-        ->with(['status' => 'Estudiante creado correctamente']);
+        ->with(['status' => 'Encargado creado correctamente']);
 
     }
 

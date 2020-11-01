@@ -51,11 +51,11 @@ use RegistersUsers;
      */
     protected function validator(array $data) {
         return Validator::make($data, [
-                    'person_id' => ['required', 'string', 'max:255'],
-                    'role_id' => ['required'],
-                    'name' => ['required', 'string', 'max:255'],
-                    'email' => ['required', 'string', 'regex:/^([a-zA-Z]){3}.([a-zA-Z]){3,}/', 'max:255', 'unique:users'],
-                    'password' => ['required', 'string', 'min:8', 'confirmed'],
+                    'person_id' => ['nullable'],
+                    'role_id' => ['nullable'],
+                    'name' => ['nullable', 'string', 'max:255'],
+                    'email' => ['nullable', 'string', 'regex:/^([a-zA-Z]){3}.([a-zA-Z]){3,}/', 'max:255', 'unique:users'],
+                    'password' => ['nullable', 'string', 'min:4', 'confirmed'],
         ]);
     }
 

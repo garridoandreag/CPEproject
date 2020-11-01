@@ -5,8 +5,8 @@ use Illuminate\Support\Facades\Route;
 /*
 Route::get('/', function () {
     return view('welcome');
-});
-*/
+});*/
+
 /*Route::group(['middleware' => ['auth', '1']], function() {
     Route::get('/', function () {
         return view('admin.dashboard');
@@ -17,10 +17,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', function () {
+Route::get('/', function () {
     return view('home');
 })->middleware('auth');
+
 Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::post('/search-person', 'PersonController@searchPersonWithName')->name('search-person');;
 Route::get('/admin', function () {
@@ -49,6 +51,8 @@ Route::group(['prefix' => 'student'], function() {
     Route::get('detail/{id}', 'StudentController@detail')->name('student.detail');
     Route::get('/Coursegrades', 'StudentController@getCoursegrades');
     Route::post('/search-student', 'StudentController@searchStudentByCode')->name('student.search-student');
+    Route::get('grade', 'StudentController@grade')->name('student.grade');
+    Route::get('list/{grade_id}/{cycle_id?}', 'StudentController@list')->name('student.list');
 });
 
 Route::group(['prefix' => 'course'], function() {
@@ -146,29 +150,22 @@ Route::group(['prefix' => 'subjectstudent'], function() {
     Route::get('create/{student_id?}', 'SubjectstudentController@create')->name('subjectstudent.create');
     Route::get('inscription/{student_id}', 'SubjectstudentController@inscription')->name('subjectstudent.inscription');
     Route::get('/', 'SubjectstudentController@index')->name('subjectstudent.index');
-    Route::get('/reportcard/{student_id?}', 'SubjectstudentController@reportcard')->name('subjectstudent.reportcard');//eliminar
+    Route::get('/reportcard/{cycle_id?}/{student_id?}', 'SubjectstudentController@reportcard')->name('subjectstudent.reportcard');//eliminar
     Route::post('store', 'SubjectstudentController@store')->name('subjectstudent.store');
     Route::get('detail/{student_id}/{cycle_id}/{grade_id}', 'SubjectstudentController@detail')->name('subjectstudent.detail');
     Route::get('destroy/{student_id}/{cycle_id}/{grade_id}', 'SubjectstudentController@destroy')->name('subjectstudent.destroy');
 });
 
-
 Route::group(['prefix' => 'homework'], function() {
     Route::get('edit/{activity_id}', 'HomeworkController@edit')->name('homework.edit');
-    Route::get('course/{coursegrade_id}', 'HomeworkController@homeworkcourse')->name('homework.course');
     Route::get('detail/{activity_id}', 'HomeworkController@detail')->name('homework.detail');
     Route::post('update', 'HomeworkController@update')->name('homework.update');
     Route::post('store', 'HomeworkController@store')->name('homework.store');
 });
 
-
-
 Route::group(['prefix' => 'courseprofessor'], function() {
     Route::get('/{cycle_id?}', 'CoursegradeController@courseprofessor')->name('courseprofessor.index');
     Route::get('activity/{coursegrade_id?}/{unit_id?}', 'ActivityController@courseprofessoractivity')->name('courseprofessor.activity');
-
-    //Route::get('activity/{unit_id}', 'ActivityController@courseprofessoractivityunit')->name('courseprofessor.activityunit');
-    //Route::get('activity/{coursegrade_id}/{unit_id}', 'ActivityController@courseprofessoractivityunit')->name('courseprofessor.activityunit');
 });
 
 Route::group(['prefix' => 'activity'], function() {
@@ -183,7 +180,10 @@ Route::group(['prefix' => 'payment'], function() {
     Route::get('create', 'PaymentController@create')->name('payment.create');
     Route::get('/', 'PaymentController@index')->name('payment.index');
     Route::get('detail/{id}', 'PaymentController@detail')->name('payment.detail');
+    Route::get('edit/{id}', 'PaymentController@edit')->name('payment.edit');
     Route::post('store', 'PaymentController@store')->name('payment.store');
-    
+    Route::post('update', 'PaymentController@update')->name('payment.update');
 
 });
+
+Route::name('reportcardpdf')->get('/reportcardpdf/{cycle_id}/{student_id}','SubjectstudentController@reportcardPDF');

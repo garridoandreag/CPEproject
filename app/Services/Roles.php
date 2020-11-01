@@ -7,7 +7,7 @@ class Roles {
     
     public function get(){
         
-        $roles = Role::get();
+        $roles = Role::get()->where('status','ACTIVO');
         
         foreach($roles as $role){
             $rolesArray[$role->id] = $role->name;

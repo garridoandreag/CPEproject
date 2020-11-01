@@ -87,4 +87,13 @@ class UserController extends Controller {
         ]);
     }
 
+    public function detail($id)
+    {
+        $user = User::where('id', $id)->first();
+
+        return view('user.detail', [
+            'user' => $user
+        ]);
+    }
+
 }

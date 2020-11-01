@@ -13,7 +13,7 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
         <div class="card">
-          <div class="card-header">{{ __('Registro') }}</div>
+          <div class="card-header">Detalle del Usuario</div>
 
           <div class="card-body">
             <form method="POST" action="{{ route('register') }}">
@@ -23,6 +23,8 @@
                 <label for="person_id" class="col-md-4 col-form-label text-md-right">Person a asignar </label>
                 <div class="col-md-6">
                   <select name="person_id" class="select-search" id="select-person">
+                    <option value="{{ $user->person->names ?? ''}}">
+                  </option>
                   </select>
 
                   @error('person_id')
@@ -54,7 +56,7 @@
 
                 <div class="col-md-6">
                   <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                    value="{{ old('name') }}" required autocomplete="name" autofocus>
+                    value="{{ $user->name }}" required autocomplete="name" autofocus>
 
                   @error('name')
                   <span class="invalid-feedback" role="alert">
@@ -69,7 +71,7 @@
 
                 <div class="col-md-6">
                   <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email"
-                    value="{{ old('email') }}" required autocomplete="email">
+                    value="{{  $user->email }}" required autocomplete="email">
 
                   @error('email')
                   <span class="invalid-feedback" role="alert">
