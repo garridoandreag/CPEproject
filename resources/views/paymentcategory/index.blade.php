@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-  <script src="{{ asset('js/app.js') }}"></script>
   <script>
     $(document).ready(function() {
       $("#myInput").on("keyup", function() {
@@ -11,13 +10,14 @@
         });
       });
     });
-
-    .status {
-      cursor: pointer;
-    }
-
   </script>
 
+<style>
+  .status {
+    cursor: pointer;
+  }
+
+</style>
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-12">
@@ -112,7 +112,7 @@
         const badge = $(`#status${id}`);
         let status = badge.text().trim();
 
-        status = await axios.post('/Paymentcategory/status', {
+        status = await axios.post('/paymentcategory/status', {
             id,
             status
           })

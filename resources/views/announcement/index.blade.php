@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-  <script src="{{ asset('js/app.js') }}"></script>
   <script>
     $(document).ready(function() {
       $("#myInput").on("keyup", function() {
@@ -114,7 +113,7 @@
         const badge = $(`#status${id}`);
         let status = badge.text().trim();
 
-        status = await axios.post('/Announcement/status', {
+        status = await axios.post('/announcement/status', {
             id,
             status
           })
