@@ -85,6 +85,24 @@ class GradeController extends Controller
     }
 
 
+    public function status (Request $request) {
+        $status = $request->input('status');
+        $id = $request->input('id');
+    
+        $status = ($status == 'ACTIVO') ? 'INACTIVO' : 'ACTIVO';
+    
+        $course = DB::table('grade')->where('id', $id)
+          ->update(array(
+            'status' => $status,
+          ));
+    
+        return response()->json(
+          [
+            'data' => ['status' => $status]
+          ]
+        );
+      }
+
     public function destroy($id)
     {
             $grade = Grade::find($id);

@@ -35,6 +35,8 @@ Route::group(['prefix' => 'user'], function() {
     Route::post('update','UserController@update')->name('user.update');
     Route::get('/','UserController@index')->name('user.index');
     Route::get('detail/{id}', 'UserController@detail')->name('user.detail');
+    Route::get('edit/{id}', 'UserController@edit')->name('user.edit');
+    Route::post('updateToUser','UserController@updateToUser')->name('user.updateToUser');
     Route::get('/picture/{filename}','UserController@getImage')->name('user.picture');
 
 });
@@ -84,6 +86,7 @@ Route::group(['prefix' => 'grade'], function() {
     Route::get('detail/{id}', 'GradeController@detail')->name('grade.detail');
     Route::post('update', 'GradeController@update')->name('grade.update');
     Route::get('delete/{id}', 'GradeController@destroy')->name('grade.destroy');
+    Route::post('/status','GradeController@status')->name('grade.status');
 });
 
 Route::group(['prefix' => 'school'], function() {
@@ -102,6 +105,7 @@ Route::group(['prefix' => 'cycle'], function() {
     Route::get('detail/{id}', 'CycleController@detail')->name('cycle.detail');
     Route::get('edit/{id}', 'CycleController@edit')->name('cycle.edit');
     Route::post('update', 'CycleController@update')->name('cycle.update');
+    Route::post('/status','CycleController@status')->name('cycle.status');
 });
 
 Route::group(['prefix' => 'announcement'], function() {
@@ -111,6 +115,7 @@ Route::group(['prefix' => 'announcement'], function() {
     Route::get('detail/{id}', 'AnnouncementController@detail')->name('announcement.detail');
     Route::get('edit/{id}', 'AnnouncementController@edit')->name('announcement.edit');
     Route::post('update', 'AnnouncementController@update')->name('announcement.update');
+    Route::post('/status', 'AnnouncementController@status')->name('announcement.status');
 });
 
 Route::group(['prefix' => 'paymentcategory'], function() {
@@ -120,6 +125,7 @@ Route::group(['prefix' => 'paymentcategory'], function() {
     Route::get('detail/{id}', 'PaymentcategoryController@detail')->name('paymentcategory.detail');
     Route::get('edit/{id}', 'PaymentcategoryController@edit')->name('paymentcategory.edit');
     Route::post('update', 'PaymentcategoryController@update')->name('paymentcategory.update');
+    Route::post('/status','PaymentcategoryController@status')->name('paymentcategory.status');
 });
 
 Route::group(['prefix' => 'employee'], function() {

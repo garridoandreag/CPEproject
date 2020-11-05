@@ -93,6 +93,26 @@ class AnnouncementController extends Controller
                     ->with(['status' => 'Aviso actualizado correctamente.']);
     }
 
+    
+  public function status (Request $request) {
+    $status = $request->input('status');
+    $id = $request->input('id');
+
+    $status = ($status == 'ACTIVO') ? 'INACTIVO' : 'ACTIVO';
+
+    $course = DB::table('announcement')->where('id', $id)
+      ->update(array(
+        'status' => $status,
+      ));
+
+    return response()->json(
+      [
+        'data' => ['status' => $status]
+      ]
+    );
+  }
+  
+
     public function destroy($id)
     {
         //
