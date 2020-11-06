@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
-@inject('roles','App\Services\roles')
-<style>
+  @inject('roles','App\Services\roles')
+  <style>
     .select-search {
       width: 100%;
     }
@@ -16,13 +16,21 @@
           <div class="card-header">{{ __('Registro') }}</div>
 
           <div class="card-body">
-            <form method="POST" action="{{ route('register') }}">
+            <form method="POST" action="{{ isset($user) ? route('user.updateToUser') : route('register') }}">
               @csrf
+
+              @if (isset($user) && is_object($user))
+                <input type="hidden" name="id" value="{{ $user->id }}" /><br>
+              @endif
 
               <div class="form-group row">
                 <label for="person_id" class="col-md-4 col-form-label text-md-right">Person a asignar </label>
                 <div class="col-md-6">
                   <select name="person_id" class="select-search" id="select-person">
+                    <option value="{{ $user->person->id ?? '' }}">
+                      {{ $user->person->names ?? '' }}
+                      {{ $user->person->first_surname ?? '' }}
+                      {{ $user->person->second_surname ?? '' }}
                   </select>
 
                   @error('person_id')
@@ -39,8 +47,7 @@
                   <select id="role_id" name="role_id" class="form-control  @error('role_id') is-invalid @enderror">
                     @foreach ($roles->get() as $index => $role)
 
-                      <option value="{{ $index }}"
-                        {{ old('role_id', $user->role_id ?? '') == $index ? 'selected' : '' }}>
+                      <option value="{{ $index }}" {{ old('role_id', $user->role_id ?? '') == $index ? 'selected' : '' }}>
                         {{ $role }}
                       </option>
 
@@ -54,7 +61,7 @@
 
                 <div class="col-md-6">
                   <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                    value="{{ old('name') }}" required autocomplete="name" autofocus>
+                    value="{{ $user->name ?? '' }}" required autocomplete="name" autofocus>
 
                   @error('name')
                   <span class="invalid-feedback" role="alert">
@@ -69,7 +76,7 @@
 
                 <div class="col-md-6">
                   <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email"
-                    value="{{ old('email') }}" required autocomplete="email">
+                    value="{{ $user->email ?? '' }}" required autocomplete="email">
 
                   @error('email')
                   <span class="invalid-feedback" role="alert">
@@ -107,7 +114,12 @@
                 <div class="col-md-6 offset-md-4">
                   <a href="{{ route('user.index') }}" class="btn btn-outline-secondary">Cancelar</a>
                   <button type="submit" class="btn btn-primary">
-                    Registrar
+
+                    @if (isset($user) && is_object($user))
+                      Actualizar
+                    @else
+                      Registrar
+                    @endif
                   </button>
                 </div>
               </div>
@@ -119,10 +131,10 @@
   </div>
 
   <script>
-          $(document).ready(function() {
+    $(document).ready(function() {
       const select = $('#select-person');
       select.select2({
- 
+
         ajax: {
           type: 'POST',
           url: '/search-person',
@@ -142,5 +154,6 @@
         }
       });
     });
-</script>
+
+  </script>
 @endsection
