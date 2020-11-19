@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Services;
-use App\Paymentcategory;
+use App\PaymentCategory;
 
 class Paymentcategories {
     

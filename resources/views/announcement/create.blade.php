@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  @inject('cycles','App\Services\cycles')
+  @inject('cycles','App\Services\Cycles')
 
   <div class="container">
     <div class="row justify-content-center ">

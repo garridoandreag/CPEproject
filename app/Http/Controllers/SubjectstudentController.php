@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
-use App\{Subjectstudent, Coursegrade, School}; 
+use App\{SubjectStudent, Coursegrade, School}; 
 
 class SubjectstudentController extends Controller
 {
@@ -23,7 +23,7 @@ class SubjectstudentController extends Controller
 
     public function inscription($student_id)
     {
-        $subjectstudents=Subjectstudent::select('student_id','grade_id','cycle_id')->distinct()->where('student_id', $student_id)->sortable()->paginate(30);
+        $subjectstudents=SubjectStudent::select('student_id','grade_id','cycle_id')->distinct()->where('student_id', $student_id)->sortable()->paginate(30);
 
         return view('subjectstudent.inscription', compact('subjectstudents','student_id'));
     }
@@ -114,7 +114,7 @@ class SubjectstudentController extends Controller
 
 
         foreach(Coursegrade::where('grade_id',$grade_id)->where('cycle_id',$cycle_id)->cursor() as $coursegrade){
-            Subjectstudent::create([
+            SubjectStudent::create([
                 'student_id' =>  $student_id,
                 'grade_id' => $data['grade_id'],
                 'coursegrade_id' => $coursegrade->id,

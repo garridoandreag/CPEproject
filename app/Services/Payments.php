@@ -18,7 +18,7 @@ class Payments {
             inner join paymentcategory pc on pc.id=pay.paymentcategory_id
             where pay.cycle_id like 3
             and pc.id like ?
-            and Date_format(PC.PAYMENT_DATE,'%d/%M') <= Date_format(now(),'%d/%M')
+            and Date_format(pc.payment_date,'%d/%M') <= Date_format(now(),'%d/%M')
             )",  [1] );
 
 

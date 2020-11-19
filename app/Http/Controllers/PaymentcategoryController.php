@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
-use App\Paymentcategory; 
+use App\PaymentCategory; 
 
 class PaymentcategoryController extends Controller
 {
@@ -16,7 +16,7 @@ class PaymentcategoryController extends Controller
 
     public function index()
     {
-        $paymentcategories = \App\Paymentcategory::sortable()->paginate(30);
+        $paymentcategories = \App\PaymentCategory::sortable()->paginate(30);
 
         return view('paymentcategory.index', compact('paymentcategories'));
     }
@@ -36,7 +36,7 @@ class PaymentcategoryController extends Controller
             
         ]);
 
-        Paymentcategory::create([
+        PaymentCategory::create([
             'name' => $data['name'],
             'description' => $data['description'],
             'payment_date' => $data['payment_date'],
@@ -49,7 +49,7 @@ class PaymentcategoryController extends Controller
 
     public function detail($id)
     {
-        $paymentcategory = \App\Paymentcategory::where('id', $id)->first();
+        $paymentcategory = \App\PaymentCategory::where('id', $id)->first();
 
         return view('paymentcategory.detail', [
             'paymentcategory' => $paymentcategory
@@ -58,7 +58,7 @@ class PaymentcategoryController extends Controller
 
     public function edit($id)
     {
-        $paymentcategory = \App\Paymentcategory::where('id', $id)->first();
+        $paymentcategory = \App\PaymentCategory::where('id', $id)->first();
         
         return view('paymentcategory.create', [
             'paymentcategory' => $paymentcategory
@@ -68,7 +68,7 @@ class PaymentcategoryController extends Controller
     public function update(Request $request)
     {
         $id = $request->input('id');
-        $paymentcategory= Paymentcategory::find($id);
+        $paymentcategory= PaymentCategory::find($id);
 
         $data = $request->validate([
             'name' => ['required', 'string', 'max:50'],

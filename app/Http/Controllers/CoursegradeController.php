@@ -24,7 +24,7 @@ class CoursegradeController extends Controller
 
     public function menu($cycle_id = ''){
 
-        try{
+      
             if(empty($cycle_id)){
                 $coursegrades=Coursegrade::select('grade_id','cycle_id')->distinct()
                 ->orderBy('cycle_id','desc')->orderBy('grade_id','desc')
@@ -35,9 +35,7 @@ class CoursegradeController extends Controller
                 ->paginate(30);
             }
             
-        }catch(\Exception $e){
-            return view('coursegrade.menu');
-        }
+
         return view('coursegrade.menu', compact('coursegrades'));
     }
 

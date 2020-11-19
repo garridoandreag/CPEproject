@@ -102,7 +102,7 @@
         const badge = $(`#status${id}`);
         let status = badge.text().trim();
 
-        status = await axios.post('/grade/status', {
+        status = await axios.post('grade/status', {
             id,
             status
           })

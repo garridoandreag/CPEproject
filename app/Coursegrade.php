@@ -9,7 +9,7 @@ class Coursegrade extends Model
 {
     use Sortable;
     
-    protected $table = 'Coursegrade';
+    protected $table = 'coursegrade';
     
     protected $primaryKey = 'id';
 

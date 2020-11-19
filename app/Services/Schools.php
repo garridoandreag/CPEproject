@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Services;
-use App\SChool;
+use App\School;
 
 class Schools {
     

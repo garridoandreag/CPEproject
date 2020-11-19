@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-  @inject('roles','App\Services\roles')
+  @inject('roles','App\Services\Roles')
   <style>
     .select-search {
       width: 100%;

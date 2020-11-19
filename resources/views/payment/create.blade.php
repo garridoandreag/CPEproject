@@ -169,7 +169,7 @@
       select.select2({
         ajax: {
           type: 'POST',
-          url: '/student/search-student',
+          url: 'student/search-student',
           data: function(params) {
             return {
               code: params.term,
@@ -193,7 +193,7 @@
  
         ajax: {
           type: 'POST',
-          url: '/tutor/search-tutor',
+          url: 'tutor/search-tutor',
           data: function(params) {
             return {
               dpi: params.term,

@@ -43,7 +43,7 @@ class CourseController extends Controller
     return redirect()->action('CourseController@index')->with('status', 'Curso creado correctamente');
   }
 
-  public function status (Request $request) {
+  public function status(Request $request) {
     $status = $request->input('status');
     $id = $request->input('id');
 
