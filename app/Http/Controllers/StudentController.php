@@ -49,7 +49,7 @@ class StudentController extends Controller {
             'name_caregiver' => ['nullable'],
             'surname_caregiver' =>  ['nullable'],
             'relationship' =>  ['nullable'],
-            'phone_number_caregiver' =>  ['nullable'],
+            'phone_number_caregiver' =>  ['nullable','max:8'],
         ]);
 
         $picture = $request->file('picture');
@@ -154,18 +154,18 @@ class StudentController extends Controller {
                 ]);
     }
 
-    public function searchStudentByCode(Request $request) {
-      $code = $request->input('code');
+    public function searchStudentBySurname(Request $request) {
+      $surname = $request->input('surname');
       $persons = [];
 
-      if (strlen($code) == 0) {
+      if (strlen($surname) == 0) {
         return $persons;
       }
 
       $persons = DB::table('person')
         ->join('student', 'student.id', '=', 'person.id')
-        ->select('person.id',DB::raw('CONCAT(student.student_code," - ", person.first_surname," ",person.names) as text'))
-        ->where('student.student_code', 'like', $code.'%')
+        ->select('person.id',DB::raw('CONCAT(person.first_surname," ",person.second_surname," ",person.names," - ", student.student_code) as text'))
+        ->where('person.first_surname', 'like', $surname.'%')
         ->get();
       return $persons;
     }
@@ -197,10 +197,10 @@ class StudentController extends Controller {
             'birthday' => ['required'],
             'picture' => ['nullable'],
             'grade_id' => ['nullable'],
-            'name_caregiver' => ['nullable', 'string', 'max:50'],
-            'surname_caregiver' =>  ['nullable', 'string', 'max:50'],
-            'relationship' =>  ['nullable', 'string', 'max:50'],
-            'phone_number_caregiver' =>  ['nullable', 'string', 'max:8'],
+            'name_caregiver' => ['nullable'],
+            'surname_caregiver' =>  ['nullable'],
+            'relationship' =>  ['nullable'],
+            'phone_number_caregiver' => ['nullable','max:8'],
         ]);
 
         if ($picture) {
@@ -229,9 +229,9 @@ class StudentController extends Controller {
         for($i = 0; $i < $caregivers; $i++){
             Caregiver::updateOrCreate([
                 'student_id' => $person->id,
-                'name' => strtoupper($name_caregivers[$i]),
-                'surname'  => strtoupper($surname_caregivers[$i]),
-                'relationship' => strtoupper($relationship[$i]),
+                'name' => $name_caregivers[$i],
+                'surname'  => $surname_caregivers[$i],
+                'relationship' => $relationship[$i],
                 'phone_number' => $phone_number[$i]
             ]);
         }

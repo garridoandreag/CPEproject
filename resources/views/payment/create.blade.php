@@ -172,7 +172,7 @@
           url: '/student/search-student',
           data: function(params) {
             return {
-              code: params.term,
+              surname: params.term,
             };
           },
           headers: {
@@ -196,7 +196,7 @@
           url: '/tutor/search-tutor',
           data: function(params) {
             return {
-              dpi: params.term,
+              surname: params.term,
             };
           },
           headers: {

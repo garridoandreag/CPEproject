@@ -52,7 +52,7 @@ Route::group(['prefix' => 'student'], function() {
     Route::get('picture/{filename}','StudentController@getImage')->name('student.picture');
     Route::get('detail/{id}', 'StudentController@detail')->name('student.detail');
     Route::get('/Coursegrades', 'StudentController@getCoursegrades');
-    Route::post('/search-student', 'StudentController@searchStudentByCode')->name('student.search-student');
+    Route::post('/search-student', 'StudentController@searchStudentBySurname')->name('student.search-student');
     Route::get('grade', 'StudentController@grade')->name('student.grade');
     Route::get('list/{grade_id}/{cycle_id?}', 'StudentController@list')->name('student.list');
 });
@@ -75,7 +75,7 @@ Route::group(['prefix' => 'tutor'], function() {
     Route::get('edit/{id}', 'TutorController@edit')->name('tutor.edit')->middleware('auth','1');
     Route::get('detail/{id}', 'TutorController@detail')->name('tutor.detail');
     Route::post('update', 'TutorController@update')->name('tutor.update')->middleware('auth','1');
-    Route::post('/search-tutor', 'TutorController@searchTutorByDPI')->name('tutor.search-tutor');
+    Route::post('/search-tutor', 'TutorController@searchTutorBySurname')->name('tutor.search-tutor');
 });
 
 Route::group(['prefix' => 'grade'], function() {

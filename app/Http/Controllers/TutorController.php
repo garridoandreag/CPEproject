@@ -113,18 +113,18 @@ class TutorController extends Controller
         //
     }
 
-    public function searchTutorByDPI(Request $request) {
-        $dpi = $request->input('dpi');
+    public function searchTutorBySurname(Request $request) {
+        $surname = $request->input('surname');
         $persons = [];
   
-        if (strlen($dpi) == 0) {
+        if (strlen($surname) == 0) {
           return $persons;
         }
   
         $persons = DB::table('person')
           ->join('tutor', 'tutor.id', '=', 'person.id')
-          ->select('person.id',DB::raw('CONCAT(tutor.dpi ," - ", person.first_surname," ",person.names) as text'))
-          ->where('tutor.dpi', 'like', $dpi.'%')
+          ->select('person.id',DB::raw('CONCAT(person.first_surname," ",person.second_surname," ",person.names," - ",tutor.dpi) as text'))
+          ->where('person.first_surname', 'like', $surname.'%')
           ->get();
         return $persons;
       }
