@@ -180,10 +180,18 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
         @endif
 
         @if (Auth::user()->role_id == 1)
-          <a href="{{ route('payment.index') }}">
-            <i class="fas fa-wallet"></i>
-            Colegiatura
-          </a>
+        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="menu-dropdown-toggle">
+          <i class="fas fa-wallet"></i>
+          Colegiatura
+        </a>
+          <ul class="collapse list-unstyled" id="pageSubmenu">      
+            <li>
+              <a href="{{ route('payment.index') }}">Registro de Pagos</a>
+            </li>
+            <li>
+              <a href="{{ action('PaymentController@menureport') }}">Reportería</a>
+            </li>
+          </ul>
         @endif
 
 

@@ -189,7 +189,9 @@ Route::group(['prefix' => 'payment'], function() {
     Route::get('edit/{id}', 'PaymentController@edit')->name('payment.edit')->middleware('auth','1');
     Route::post('store', 'PaymentController@store')->name('payment.store');
     Route::post('update', 'PaymentController@update')->name('payment.update');
+    Route::get('menureport','PaymentController@menureport')->name('payment.menureport');
 
 });
 
 Route::name('reportcardpdf')->get('/reportcardpdf/{cycle_id}/{student_id}','SubjectstudentController@reportcardPDF');
+Route::name('reportpaymentxcategorypdf')->post('/reportpaymentxcategorypdf','PaymentController@reportpaymentxcategorypdf');

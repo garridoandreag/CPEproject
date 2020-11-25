@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Auth;
-use App\Payment;
+use App\{Payment,School,Cycle,PaymentCategory};
 
 
 class PaymentController extends Controller
@@ -121,6 +121,42 @@ class PaymentController extends Controller
 
         return $nopayments;
     }
+
+    public function menureport() {
+        return view('payment.menureport');
+    }
+
+    public function reportpaymentxcategorypdf(Request $request){
+
+      // try{
+        $cycle_id = $request->input('cycle_id');
+        $category_id= $request->input('paymentcategory_id');
+        
+        $school = School::find(1);
+        $cycle = Cycle::find($cycle_id);
+        $category = PaymentCategory::find($category_id);
+
+        $reports = DB::table('person')
+        ->join('student','person.id','student.id')
+        ->whereNotIn('person.id', function ($query) use($cycle_id,$category_id ) {
+            $query->select('student_id')
+                  ->from('payment')
+                  ->where([
+                      ['cycle_id','=',$cycle_id],
+                      ['paymentcategory_id','=',$category_id]
+                      ]);
+        })->get();
+    
+
+        $pdf = \PDF::loadView('/report/reportpaymentxcategorypdf',compact('reports','school','cycle','category'));
+     //   }catch(\Exception $e){
+     //       return redirect()->action('PaymentController@index') 
+      //      ->with(['warning' => 'No hay datos']);
+      //  }
+        
+        return $pdf->download('ReporteFaltaPagoCategoria.pdf');
+    }
+
 
     public function destroy($id)
     {
