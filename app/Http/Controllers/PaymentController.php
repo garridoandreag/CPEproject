@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Auth;
-use App\{Payment,School,Cycle,PaymentCategory};
+use App\{Payment,School,Cycle,PaymentCategory,Grade};
 
 
 class PaymentController extends Controller
@@ -138,6 +138,12 @@ class PaymentController extends Controller
 
         $reports = DB::table('person')
         ->join('student','person.id','student.id')
+        ->join('subjectstudent', function ($join) use($cycle_id) {
+            $join->on('person.id', '=', 'subjectstudent.student_id')
+                 ->where('subjectstudent.cycle_id', '=', $cycle_id);
+        })
+        ->join('grade','subjectstudent.grade_id','grade.id')
+        ->select('person.names', 'person.first_surname', 'person.second_surname','grade.name')
         ->whereNotIn('person.id', function ($query) use($cycle_id,$category_id ) {
             $query->select('student_id')
                   ->from('payment')
@@ -145,7 +151,9 @@ class PaymentController extends Controller
                       ['cycle_id','=',$cycle_id],
                       ['paymentcategory_id','=',$category_id]
                       ]);
-        })->get();
+        })->groupBy('person.names', 'person.first_surname', 'person.second_surname','grade.name')
+         ->havingRaw('max(subjectstudent.grade_id)')
+        ->get();
     
 
         $pdf = \PDF::loadView('/report/reportpaymentxcategorypdf',compact('reports','school','cycle','category'));

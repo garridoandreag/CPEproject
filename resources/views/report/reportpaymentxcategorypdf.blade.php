@@ -73,6 +73,7 @@
       <thead>
         <tr>
           <th scope="col">Estudiante</th>
+          <th scope="col">Grado</th>
         </tr>
       </thead>
       <tbody id="myTable">
@@ -82,6 +83,9 @@
               {{ $report->names }}
               {{ $report->first_surname }}
               {{ $report->second_surname }}
+            </td>
+            <td data-label="Grado" scope="row">
+              {{ $report->name }}
             </td>
             
           </tr>
