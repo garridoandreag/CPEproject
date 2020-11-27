@@ -29,26 +29,28 @@
       padding: 8px;
       background: #b9c9fe;
       border-top: 4px solid #aabcfe;
-      border-bottom: 1px solid  rgb(41, 41, 41);
-      color:  rgb(0, 0, 0);
+      border-bottom: 1px solid rgb(41, 41, 41);
+      color: rgb(0, 0, 0);
     }
 
     .table td {
-      padding: 4px;
-      font-size: 12px;
+      padding: 6px;
+      font-size: 13px;
       background: #ffffff;
       border-bottom: 1px solid rgb(170, 170, 170);
-      color:  rgb(41, 41, 41);
+      color: rgb(41, 41, 41);
     }
 
     tr:hover td {
       background: #d0dafd;
       color: #339;
+
     }
 
     img.mediana {
-      width: 80px;
-      height: 80px;
+      width: 100px;
+      height: 100px;
+      border: 3px solid rgb(255, 255, 255);
     }
 
   </style>
@@ -61,8 +63,9 @@
         <img class="mediana" src="{{ route('school.logo', ['filename' => $school->logo]) }}" />
       </td>
       <td>
-      <h3>Reporte: Falta de pago de {{$category->name}} {{$cycle->name}}</h3>
-      
+        <h2>Reporte</h2>
+        <h3>Falta de Pago de {{ $category->name }} {{ $cycle->name }}</h3>
+        <h5>{{ $now }}</h5>
       </td>
     </tr>
   </table>
@@ -74,6 +77,8 @@
         <tr>
           <th scope="col">Estudiante</th>
           <th scope="col">Grado</th>
+          <th scope="col">Padres/Encargados</th>
+          <th scope="col">Contacto Padres/Encargados</th>
         </tr>
       </thead>
       <tbody id="myTable">
@@ -87,7 +92,21 @@
             <td data-label="Grado" scope="row">
               {{ $report->name }}
             </td>
-            
+            <td data-label="Padres/Encargados" scope="row">
+              @foreach ($tutors as $tutor)
+              @if($report->id == $tutor->student_id)
+              {{ $tutor->names.' '.$tutor->first_surname}}<br>
+              @endif
+              @endforeach
+            </td>
+            <td data-label="Contacto Padres/Encargados" scope="row">
+              @foreach ($tutors as $tutor)
+              @if($report->id == $tutor->student_id)
+              {{$tutor->cellphone_number }}<br>
+              @endif
+              @endforeach
+            </td>
+
           </tr>
         @endforeach
       </tbody>

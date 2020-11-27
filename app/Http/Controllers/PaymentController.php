@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -9,11 +10,12 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Auth;
-use App\{Payment,School,Cycle,PaymentCategory,Grade};
+use App\{Payment,School,Cycle,PaymentCategory,StudentTutor};
 
 
 class PaymentController extends Controller
-{
+{  
+
     public function __construct() {
         $this->middleware('auth');
     }
@@ -129,6 +131,7 @@ class PaymentController extends Controller
     public function reportpaymentxcategorypdf(Request $request){
 
       // try{
+        $now = Carbon::now();
         $cycle_id = $request->input('cycle_id');
         $category_id= $request->input('paymentcategory_id');
         
@@ -143,7 +146,7 @@ class PaymentController extends Controller
                  ->where('subjectstudent.cycle_id', '=', $cycle_id);
         })
         ->join('grade','subjectstudent.grade_id','grade.id')
-        ->select('person.names', 'person.first_surname', 'person.second_surname','grade.name')
+        ->select('student.id','person.names', 'person.first_surname', 'person.second_surname','grade.name','student.student_code')
         ->whereNotIn('person.id', function ($query) use($cycle_id,$category_id ) {
             $query->select('student_id')
                   ->from('payment')
@@ -151,12 +154,13 @@ class PaymentController extends Controller
                       ['cycle_id','=',$cycle_id],
                       ['paymentcategory_id','=',$category_id]
                       ]);
-        })->groupBy('person.names', 'person.first_surname', 'person.second_surname','grade.name')
+        })->groupBy('student.id','person.names', 'person.first_surname', 'person.second_surname','grade.name','student.student_code')
          ->havingRaw('max(subjectstudent.grade_id)')
         ->get();
     
+        $tutors =  DB::table('datatutor')->get();
 
-        $pdf = \PDF::loadView('/report/reportpaymentxcategorypdf',compact('reports','school','cycle','category'));
+        $pdf = \PDF::loadView('/report/reportpaymentxcategorypdf',compact('reports','school','cycle','category','now','tutors'));
      //   }catch(\Exception $e){
      //       return redirect()->action('PaymentController@index') 
       //      ->with(['warning' => 'No hay datos']);
