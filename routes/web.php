@@ -55,6 +55,7 @@ Route::group(['prefix' => 'student'], function() {
     Route::post('/search-student', 'StudentController@searchStudentBySurname')->name('student.search-student');
     Route::get('grade', 'StudentController@grade')->name('student.grade');
     Route::get('list/{grade_id}/{cycle_id?}', 'StudentController@list')->name('student.list');
+    Route::get('/destroy/{id}', 'StudentController@destroy')->name('student.destroy')->middleware('auth','1');
 });
 
 Route::group(['prefix' => 'course'], function() {
@@ -150,6 +151,14 @@ Route::group(['prefix' => 'coursegrade'], function() {
     Route::get('edit/{cycle_id}/{grade_id}', 'CoursegradeController@edit')->name('coursegrade.edit');
     Route::post('update', 'CoursegradeController@update')->name('coursegrade.update');
     Route::get('destroy/{id}', 'CoursegradeController@destroy')->name('coursegrade.destroy');
+});
+
+Route::group(['prefix' => 'pensum'], function() {
+    Route::get('create', 'PensumController@create')->name('pensum.create')->middleware('auth','1');
+    Route::get('/detail/{grade_id}', 'PensumController@detail')->name('pensum.detail')->middleware('auth','1');
+    Route::get('/menu', 'PensumController@menu')->name('pensum.menu')->middleware('auth','1');
+    Route::get('edit/{grade_id}', 'PensumController@edit')->name('pensum.edit')->middleware('auth','1');
+    Route::post('update', 'PensumController@update')->name('pensum.update')->middleware('auth','1');
 });
 
 Route::group(['prefix' => 'subjectstudent'], function() {

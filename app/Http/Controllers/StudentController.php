@@ -42,10 +42,9 @@ class StudentController extends Controller {
             'subdivision_code' => ['required'],
             'gender_id' => ['required'],
             'home_address' => ['required', 'string', 'max:250'],
-            'student_code' => ['required', 'string', 'max:15','unique:student,student_code,'],
+            'student_code' => ['nullable', 'string', 'max:15','unique:student,student_code,'],
             'birthday' => ['required'],
             'picture' => ['nullable'],
-            'grade_id' => ['nullable'],
             'name_caregiver' => ['nullable'],
             'surname_caregiver' =>  ['nullable'],
             'relationship' =>  ['nullable'],
@@ -78,7 +77,6 @@ class StudentController extends Controller {
 
             $student = $person->student()->create([
                 'student_code' => $data['student_code'],
-                'grade_id'  => $data['grade_id'],
                 'birthday' => $data['birthday']
             ]);
 
@@ -193,10 +191,9 @@ class StudentController extends Controller {
             'subdivision_code' => ['required'],
             'gender_id' => ['required'],
             'home_address' => ['required', 'string', 'max:250'],
-            'student_code' => ['required', 'string', 'max:15'],
+            'student_code' => ['nullable', 'string', 'max:15'],
             'birthday' => ['required'],
             'picture' => ['nullable'],
-            'grade_id' => ['nullable'],
             'name_caregiver' => ['nullable'],
             'surname_caregiver' =>  ['nullable'],
             'relationship' =>  ['nullable'],
@@ -221,7 +218,6 @@ class StudentController extends Controller {
         $person->home_address =  $data['home_address'];
         $student->student_code =  $data['student_code'];
         $student->birthday =  $data['birthday'];
-        $student->grade_id =  $data['grade_id'];
 
         $person->update();
         $student->update();
@@ -238,6 +234,33 @@ class StudentController extends Controller {
 
         return redirect()->action('StudentController@index')->with('status', 'Estudiante actualizado correctamente');
     }
+
+
+    
+  public function destroy($id){
+
+    try{
+      $student = \App\Student::where('id', $id)->first();
+
+     
+
+     
+
+      \App\Caregiver::where('student_id',$id)->delete();
+
+      $student->delete();
+
+      \App\Person::where('id',$id)->delete();
+
+    }catch(\Exception $e){
+        return redirect()->route('student.index')
+        ->with(['warning' => 'No se pudo eliminar el registro, porque ya existen movimientos.']);
+    }
+
+    return redirect()->route('student.index')
+                    ->with(['status' => 'Se elimino el registro.']);
+    }
+
 
 
 

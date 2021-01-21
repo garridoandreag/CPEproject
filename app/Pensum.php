@@ -14,4 +14,14 @@ class Pensum extends Model
 
     protected $fillable = ['grade_id','course_id'];
 
+        // muchos a uno
+        public function grade() {
+            return $this->belongsTo('App\Grade','grade_id');
+        }
+        
+        // muchos a uno
+        public function course() {
+            return $this->belongsTo('App\Course','course_id');
+        }
+
 }

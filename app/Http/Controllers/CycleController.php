@@ -51,6 +51,7 @@ class CycleController extends Controller
                         'grade_id' => $pensum->grade_id,
                         'course_id' => $pensum->course_id,
                         'cycle_id' => $cycle->id,
+                        'status' => $pensum->status
                     ]);
     
                 }
@@ -103,6 +104,7 @@ class CycleController extends Controller
                     'grade_id' => $pensum->grade_id,
                     'course_id' => $pensum->course_id,
                     'cycle_id' => $cycle->id,
+                    'status' => $pensum->status
                 ]);
 
             }
