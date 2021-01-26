@@ -139,8 +139,27 @@ class StudentController extends Controller {
     }
 
     public function grade() {
+        $user = \Auth::user();
+        $role_id =  $user->role_id;
+        
+        if($role_id == 1){
+            $employeegrades = DB::table('grade')
+            ->select('id')
+            ->where('status', 'ACTIVO')
+            ->get();
+        }else {
+            $employee_id = $user->person_id;
 
-        return view('student.grade');
+            $employeegrades = DB::table('grade')
+                    ->select('id')
+                    ->whereRaw('id = any (SELECT grade_id FROM coursegrade 
+                                            WHERE employee_id like ?
+                                            AND status like "ACTIVO")',$employee_id )
+                    ->get();
+        }
+
+
+        return view('student.grade',compact('employeegrades'));
     }
 
     public function edit($id) {

@@ -3,6 +3,7 @@
 @section('content')
   @inject('paymentcategories','App\Services\Paymentcategories')
   @inject('cycles','App\Services\Cycles')
+  @inject('students','App\Services\Students')
   <script>
     $(document).ready(function() {
       $("#myInput").on("keyup", function() {
@@ -102,6 +103,57 @@
                             <option value="{{ $index3 }}"
                               {{ old('paymentcategory_id', $payment->paymentcategory_id ?? '') == $index3 ? 'selected' : '' }}>
                               {{ $paymentcategory }}
+                            </option>
+
+                          @endforeach
+                        </select>
+                      </div>
+                    </td>
+                    <td scope="row">
+                      <div class="form-group row mb-0">
+                        <div class="col-md-6 offset-md-4">
+                          <button type="submit" class="btn btn-primary">
+                            Descargar
+                          </button>
+      
+                        </div>
+                      </div>
+                    </td>
+                  </form>
+                </tr>
+                <tr>
+                  <form id="gradeForm" method="POST" action="{{ route('reportpaymentstudentpdf') }}" enctype="multipart/form-data">
+                    <td scope="row">
+                      Pagos por Estudiante
+                    </td>
+                    <td scope="row">
+                      <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"> Ciclo </span>
+                        </div>
+                        <select id="cycle_id" name="cycle_id"
+                          class="form-control  @error('cycle_id') is-invalid @enderror">
+                          @foreach ($cycles->get() as $index4 => $cycle)
+                            <option value="{{ $index4 }}"
+                              {{ old('cycle_id', $payment->cycle_id ?? '') == $index2 ? 'selected' : '' }}>
+                              {{ $cycle }}
+                            </option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </td>
+                    <td scope="row">
+                      <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"> Estudiante </span>
+                        </div>
+                        <select id="student_id" name="student_id"
+                          class="form-control  @error('student_id') is-invalid @enderror">
+                          @foreach ($students->get() as $index5 => $student)
+
+                            <option value="{{ $index5 }}"
+                              {{ old('student_id', $payment->student_id ?? '') == $index3 ? 'selected' : '' }}>
+                              {{ $student }}
                             </option>
 
                           @endforeach

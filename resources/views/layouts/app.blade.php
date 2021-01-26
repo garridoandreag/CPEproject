@@ -164,7 +164,7 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
 
         </ul>
 
-        @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 3)
+        @if (Auth::user()->role_id == 1)
           <a href="{{ route('tutor.index') }}">
             <i class="fa fa-user"></i>
             Padres

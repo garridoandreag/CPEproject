@@ -71,10 +71,10 @@ Route::group(['prefix' => 'course'], function() {
 
 Route::group(['prefix' => 'tutor'], function() {
     Route::get('create', 'TutorController@create')->name('tutor.create')->middleware('auth','1');
-    Route::get('/', 'TutorController@index')->name('tutor.index');
+    Route::get('/', 'TutorController@index')->name('tutor.index')->middleware('auth','1');
     Route::post('store', 'TutorController@store')->name('tutor.store')->middleware('auth','1');
     Route::get('edit/{id}', 'TutorController@edit')->name('tutor.edit')->middleware('auth','1');
-    Route::get('detail/{id}', 'TutorController@detail')->name('tutor.detail');
+    Route::get('detail/{id}', 'TutorController@detail')->name('tutor.detail')->middleware('auth','1');
     Route::post('update', 'TutorController@update')->name('tutor.update')->middleware('auth','1');
     Route::post('/search-tutor', 'TutorController@searchTutorBySurname')->name('tutor.search-tutor');
 });
@@ -193,14 +193,15 @@ Route::group(['prefix' => 'activity'], function() {
 
 Route::group(['prefix' => 'payment'], function() {
     Route::get('create', 'PaymentController@create')->name('payment.create')->middleware('auth','1');
-    Route::get('/', 'PaymentController@index')->name('payment.index');
+    Route::get('/', 'PaymentController@index')->name('payment.index')->middleware('auth','1');
     Route::get('detail/{id}', 'PaymentController@detail')->name('payment.detail');
     Route::get('edit/{id}', 'PaymentController@edit')->name('payment.edit')->middleware('auth','1');
-    Route::post('store', 'PaymentController@store')->name('payment.store');
-    Route::post('update', 'PaymentController@update')->name('payment.update');
-    Route::get('menureport','PaymentController@menureport')->name('payment.menureport');
+    Route::post('store', 'PaymentController@store')->name('payment.store')->middleware('auth','1');
+    Route::post('update', 'PaymentController@update')->name('payment.update')->middleware('auth','1');
+    Route::get('menureport','PaymentController@menureport')->name('payment.menureport')->middleware('auth','1');
 
 });
 
-Route::name('reportcardpdf')->get('/reportcardpdf/{cycle_id}/{student_id}','SubjectstudentController@reportcardPDF');
-Route::name('reportpaymentxcategorypdf')->post('/reportpaymentxcategorypdf','PaymentController@reportpaymentxcategorypdf');
+Route::name('reportcardpdf')->get('/reportcardpdf/{cycle_id}/{student_id}','SubjectstudentController@reportcardPDF')->middleware('auth','1');
+Route::name('reportpaymentxcategorypdf')->post('/reportpaymentxcategorypdf','PaymentController@reportpaymentxcategorypdf')->middleware('auth','1');
+Route::name('reportpaymentstudentpdf')->post('/reportpaymentstudentpdf','PaymentController@reportpaymentstudentpdf')->middleware('auth','1');

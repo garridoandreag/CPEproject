@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Auth;
-use App\{Payment,School,Cycle,PaymentCategory,StudentTutor};
+use App\{Payment,School,Cycle,PaymentCategory,StudentTutor,Student};
 
 
 class PaymentController extends Controller
@@ -130,7 +130,7 @@ class PaymentController extends Controller
 
     public function reportpaymentxcategorypdf(Request $request){
 
-      // try{
+       try{
         $now = Carbon::now();
         $cycle_id = $request->input('cycle_id');
         $category_id= $request->input('paymentcategory_id');
@@ -161,14 +161,44 @@ class PaymentController extends Controller
         $tutors =  DB::table('datatutor')->get();
 
         $pdf = \PDF::loadView('/report/reportpaymentxcategorypdf',compact('reports','school','cycle','category','now','tutors'));
-     //   }catch(\Exception $e){
-     //       return redirect()->action('PaymentController@index') 
-      //      ->with(['warning' => 'No hay datos']);
-      //  }
+        }catch(\Exception $e){
+            return redirect()->action('PaymentController@index') 
+            ->with(['warning' => 'No hay datos']);
+        }
         
         return $pdf->download('ReporteFaltaPagoCategoria.pdf');
     }
 
+    
+    public function reportpaymentstudentpdf(Request $request){
+
+       try{
+         $now = Carbon::now();
+         $cycle_id = $request->input('cycle_id');
+         $student_id= $request->input('student_id');
+         
+         $school = School::find(1);
+         $cycle = Cycle::find($cycle_id);
+         $student = Student::find($student_id);
+ 
+         $reports = DB::table('paymentcategory')
+                    ->select('name')
+                    ->selectRaw('IF((SELECT pay.paymentcategory_id 
+                    FROM payment pay 
+                    WHERE pay.student_id LIKE ? 
+                    AND paymentcategory.id=pay.paymentcategory_id
+                    AND pay.cycle_id=?),"CANCELADO","PENDIENTE") as estado',[$student_id,$cycle_id])
+                    ->get();
+     
+ 
+         $pdf = \PDF::loadView('/report/reportpaymentstudentpdf',compact('reports','school','cycle','student','now'));
+       }catch(\Exception $e){
+            return redirect()->action('PaymentController@index') 
+           ->with(['warning' => 'No hay datos']);
+       }
+         
+         return $pdf->download('Reporte.pdf');
+     }
 
     public function destroy($id)
     {
