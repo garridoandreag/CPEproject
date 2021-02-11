@@ -16,10 +16,14 @@ class DatabaseSeeder extends Seeder
         $this->call('SubdivisionSeeder');
         $this->call('GenderSeeder');
         $this->call('GradeSeeder');
+        $this->call('JobSeeder');
         $this->call('PersonSeeder');
         $this->call('SchoolSeeder');
         $this->call('CourseSeeder');
+        $this->call('PensumcoursegroupSeeder');
+        $this->call('PaymentcategorySeeder');
         $this->call('pensumSeeder');
         $this->call('UnitSeeder');
+
     }
 }

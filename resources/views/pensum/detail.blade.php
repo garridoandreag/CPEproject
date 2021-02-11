@@ -23,7 +23,7 @@
 
             <div class="row justify-content-md-center">
               <div class="col">
-                <a href="{{ route('admin.admin') }}" class="btn btn-outline-primary"><i class="fas fa-reply"></i></a>
+                <a href="{{ route('pensum.menu') }}" class="btn btn-outline-primary"><i class="fas fa-reply"></i></a>
                 <a href="{{ action('PensumController@edit', ['grade_id' => $grade_id]) }}" class="btn btn-primary">Modificar</a>
               </div>
               <div class="col-md-auto">
@@ -48,6 +48,7 @@
                 <tr>
                   <th scope="col">@sortablelink('grade_id','Grado')</th>
                   <th scope="col">@sortablelink('course_id','Curso')</th>
+                  <th scope="col">@sortablelink('pensumcoursegroup_id','Agrupación')</th>
                 </tr>
               </thead>
               <tbody id="myTable">
@@ -61,6 +62,9 @@
                       {{ $pensum->course->name }}</a>
                     </td>
 
+                    <td data-label="Curso" scope="row">
+                      {{ $pensum->pensumcoursegroup->name}}</a>
+                    </td>
                   </tr>
                 @endforeach
               </tbody>

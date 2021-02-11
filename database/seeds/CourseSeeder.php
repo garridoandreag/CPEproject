@@ -32,6 +32,11 @@ class CourseSeeder extends Seeder {
         );
 
         DB::table('course')->insert(array(
+          'name' => 'Medio Social y Natural'
+          )
+        );
+
+        DB::table('course')->insert(array(
           'name' => 'Expresión Artística'
           )
         );
@@ -112,9 +117,147 @@ class CourseSeeder extends Seeder {
         );
 
         DB::table('course')->insert(array(
-          'name' => 'Medio Social y Natural'
+          'name' => 'Percepción'
           )
         );
+
+        DB::table('course')->insert(array(
+          'name' => 'Motrocidad'
+          )
+        );
+
+        DB::table('course')->insert(array(
+          'name' => 'Razonamiento Lógico'
+          )
+        );
+
+        
+        DB::table('course')->insert(array(
+          'name' => 'Concepto de Número'
+          )
+        );
+
+        
+        DB::table('course')->insert(array(
+          'name' => 'Toma de Dictados'
+          )
+        );
+
+        
+        DB::table('course')->insert(array(
+          'name' => 'Iniciación a la lectoescritura'
+          )
+        );
+
+        
+        DB::table('course')->insert(array(
+          'name' => 'Desarrollo de Sintaxis'
+          )
+        );
+
+        
+        DB::table('course')->insert(array(
+          'name' => 'Iniciación de comprensión Lectora'
+          )
+        );
+
+        
+        DB::table('course')->insert(array(
+          'name' => 'Trazo de Letra Script'
+          )
+        );
+
+        
+        DB::table('course')->insert(array(
+          'name' => 'Trazo de Letra Cursiva'
+          )
+        );
+
+        
+        DB::table('course')->insert(array(
+          'name' => 'Correspondencia Trazo-Sonido'
+          )
+        );
+
+        
+        DB::table('course')->insert(array(
+          'name' => 'Desarrollo del Vocabulario'
+          )
+        );
+
+        
+        DB::table('course')->insert(array(
+          'name' => 'Toma de Dictado'
+          )
+        );
+
+        DB::table('course')->insert(array(
+          'name' => 'Identificación con su entorno Natural'
+          )
+        );
+
+        DB::table('course')->insert(array(
+          'name' => 'Desarrollo de la Autonomía Personal'
+          )
+        );
+
+        DB::table('course')->insert(array(
+          'name' => 'Civismo'
+          )
+        );
+
+        DB::table('course')->insert(array(
+          'name' => 'Desarrollo de Valores'
+          )
+        );
+
+        DB::table('course')->insert(array(
+          'name' => 'Sensopercepción'
+          )
+        );
+
+        DB::table('course')->insert(array(
+          'name' => 'Comunicación'
+          )
+        );
+
+        DB::table('course')->insert(array(
+          'name' => 'Apreciación'
+          )
+        );
+
+        DB::table('course')->insert(array(
+          'name' => 'Utilización correcta de diferentes Técnicas'
+          )
+        );
+
+        DB::table('course')->insert(array(
+          'name' => 'Dominio corporal'
+          )
+        );
+
+        DB::table('course')->insert(array(
+          'name' => 'Discriminación Precepto-Motriz'
+          )
+        );
+
+        DB::table('course')->insert(array(
+          'name' => 'Habilidad Coordinativa'
+          )
+        );
+
+        DB::table('course')->insert(array(
+          'name' => 'Inglés L-3'
+          )
+        );
+
+        DB::table('course')->insert(array(
+          'name' => 'Asistencia'
+          )
+        );
+
+
+
 
         $this->command->info('La tabla COURSE ha sido rellenada.');
     }

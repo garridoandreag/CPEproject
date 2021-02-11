@@ -33,7 +33,7 @@ class SubjectstudentController extends Controller
 
         try{
 
-            $school = School::find(1);
+        $school = School::find(1);
 
         $student = DB::table('person')->where('id','like',$student_id)->get();
 

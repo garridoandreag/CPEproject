@@ -33,6 +33,9 @@ class CreateSubdivisionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subdivision');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        Schema::drop('subdivision');
+//        Schema::drop('estudiante_encargado');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

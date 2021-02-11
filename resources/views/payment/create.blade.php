@@ -65,7 +65,7 @@
                   <label for="cycle_id" class="col-md-4 col-form-label text-md-right">Ciclo</label>
                   <div class="col-md-6">
                     <select id="cycle_id" name="cycle_id" class="form-control  @error('cycle_id') is-invalid @enderror">
-                      @foreach ($cycles->get() as $index => $cycle)
+                      @foreach ($cycles->getAll() as $index => $cycle)
 
                         <option value="{{ $index }}"
                           {{ old('cycle_id', $payment->cycle_id ?? '') == $index ? 'selected' : '' }}>

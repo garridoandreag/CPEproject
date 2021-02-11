@@ -2,6 +2,7 @@
 
 @section('content')
   @inject('courses','App\Services\Courses')
+  @inject('pensumcoursegroups', 'App\Services\Pensumcoursegroups')
   <script>
     $(document).ready(function() {
       $("#myInput").on("keyup", function() {
@@ -23,8 +24,17 @@
 
             <div class="row justify-content-md-center">
               <div class="col">
-                <a href="{{ route('admin.admin') }}" class="btn btn-outline-primary"><i class="fas fa-reply"></i></a>
+                <a href="{{ action('PensumController@detail', ['grade_id' => $grade_id]) }}" class="btn btn-outline-primary"><i class="fas fa-reply"></i></a>
                 <a href="#" class="btn btn-primary">Modificar</a>
+                <div class="media">
+                  <div class="media-body">
+                    <br>
+                    La modificación del pensum afectará a los siguientes ciclos escolares:
+                    @foreach ($cycles as $cycle)
+                        {{$cycle->name}}
+                    @endforeach
+                  </div>
+                </div>
               </div>
               <div class="col-md-auto">
                 <input class="form-control" id="myInput" type="text" placeholder="Buscar...">
@@ -57,6 +67,7 @@
                   <th scope="col">@sortablelink('grade_id','Grado')</th>
                   <th scope="col">@sortablelink('course_id','Curso')</th>
                   <th scope="col">@sortablelink('courseorder','Orden Boleta')</th>
+                  <th scope="col">@sortablelink('coursegroup_id','Agrupar')</th>
                 </tr>
               </thead>
               <tbody id="myTable">
@@ -69,7 +80,8 @@
 
                     <td data-label="Curso">
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="{{ $pensum->course_id }}" name="course_id[]" {{ $pensum->status == 'ACTIVO' ? 'checked' : 'unchecked' }}>
+                        <input class="form-check-input" type="checkbox" value="{{ $pensum->course_id }}" name="course_id[]" {{ $pensum->status == 'ACTIVO' ? 'checked' : 'unchecked' }} />
+                        
                         <label class="form-check-label" for="flexCheckChecked">
                           {{ $pensum->course->name }}
                         </label>
@@ -85,6 +97,20 @@
                       </div>
 
                     </td>
+                    
+                    <td data-label="Agrupar">
+
+                      <select id="pensumcoursegroup_id" name="pensumcoursegroup_id[]"
+                      class="form-control form-control-sm  @error('pensumcoursegroup_id') is-invalid @enderror">
+                      @foreach ($pensumcoursegroups->get() as $index => $pensumcoursegroup)
+                        <option value="{{ $index }}"
+                          {{ old('pensumcoursegroup_id', $pensum->pensumcoursegroup_id ?? '') == $index ? 'selected' : '' }}>
+                          {{ $pensumcoursegroup }}
+                        </option>
+                      @endforeach
+                    </select>
+                    </td>
+
 
                   </tr>
 
@@ -95,7 +121,7 @@
             <br>
             <div class="form-group row mb-0">
               <div class="col-md-6 offset-md-9">
-                <a href="{{ action('PensumController@detail', ['grade_id' => $grade_id]) }}" " class="
+                <a href="{{ action('PensumController@detail', ['grade_id' => $grade_id]) }}" class="
                   btn btn-outline-secondary">Cancelar</a>
                 <button type="submit" class="btn btn-primary">
                   @if (isset($pensums) && is_object($pensums))
@@ -124,5 +150,7 @@
       </div>
     </div>
   </div>
+<script>
 
+</script>
 @endsection

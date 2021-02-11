@@ -24,4 +24,9 @@ class Pensum extends Model
             return $this->belongsTo('App\Course','course_id');
         }
 
+        // muchos a uno
+        public function pensumcoursegroup() {
+            return $this->belongsTo('App\Pensumcoursegroup','pensumcoursegroup_id');
+        }
+
 }

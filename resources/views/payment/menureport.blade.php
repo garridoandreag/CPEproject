@@ -60,7 +60,7 @@
                         <span class="input-group-text"> Ciclo </span>
                       </div>
                       <select id="cycle_id" name="cycle_id" class="form-control  @error('cycle_id') is-invalid @enderror">
-                        @foreach ($cycles->get() as $index => $cycle)
+                        @foreach ($cycles->getAll() as $index => $cycle)
                           <option value="{{ $index }}"
                             {{ old('cycle_id', $payment->cycle_id ?? '') == $index ? 'selected' : '' }}>
                             {{ $cycle }}
@@ -82,7 +82,7 @@
                         </div>
                         <select id="cycle_id" name="cycle_id"
                           class="form-control  @error('cycle_id') is-invalid @enderror">
-                          @foreach ($cycles->get() as $index2 => $cycle)
+                          @foreach ($cycles->getAll() as $index2 => $cycle)
                             <option value="{{ $index2 }}"
                               {{ old('cycle_id', $payment->cycle_id ?? '') == $index2 ? 'selected' : '' }}>
                               {{ $cycle }}
@@ -133,7 +133,7 @@
                         </div>
                         <select id="cycle_id" name="cycle_id"
                           class="form-control  @error('cycle_id') is-invalid @enderror">
-                          @foreach ($cycles->get() as $index4 => $cycle)
+                          @foreach ($cycles->getAll() as $index4 => $cycle)
                             <option value="{{ $index4 }}"
                               {{ old('cycle_id', $payment->cycle_id ?? '') == $index2 ? 'selected' : '' }}>
                               {{ $cycle }}

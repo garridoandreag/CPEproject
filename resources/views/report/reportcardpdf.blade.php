@@ -25,23 +25,26 @@
       height: 100px;
 
     }
+
     .table th {
       font-size: 14px;
-      font-weight: normal;
+      font-weight: bold;
       padding: 8px;
-      background: #b9c9fe;
-      border-top: 4px solid #aabcfe;
+      background: #74A0FD;
+      border-top: 4px solid #74A0FD;
       border-bottom: 1px solid #fff;
-      color: #039;
+      color:black;
     }
+
     .table td {
       padding: 4px;
       font-size: 13px;
       background: #e8edff;
       border-bottom: 1px solid #fff;
-      color: #669;
+      color: black;
       border-top: 1px solid transparent;
     }
+
     tr:hover td {
       background: #d0dafd;
       color: #339;
@@ -107,8 +110,24 @@
         </tr>
       </thead>
       <tbody id="myTable">
+        {{ $i = 0 }}
+        {{ $j = 0 }}
         @foreach ($reports as $report)
+
+          @if ($i < 1 && $j != $report->pensumcoursegroup_id && $report->pensumcoursegroup_id<>1)
+            <tr>
+              <td colspan="6" style="background: #C1D4FD"><b>{{ $report->pensumcoursegroup }}</b></td>
+            </tr>
+            {{ $i = $i + 1 }}
+            {{ $j = $report->pensumcoursegroup_id }}
+
+          @else
+            {{ $i = 0 }}
+
+         
+
           <tr>
+
             <td data-label="Curso" scope="row">
               {{ $report->name }}
             </td>
@@ -128,6 +147,7 @@
               {{ $report->total }}
             </td>
           </tr>
+          @endif
         @endforeach
 
       </tbody>
