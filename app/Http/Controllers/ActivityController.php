@@ -73,10 +73,10 @@ class ActivityController extends Controller
 
             }
         }catch(\Exception $e){
-            return view('courseprofessor.activity',compact('coursegrade_id','grade_name','course_name'));
+            return view('courseprofessor.activity',compact('coursegrade_id','grade_name','course_name','coursegradeprof'));
         }
 
-        return view('courseprofessor.activity', compact('coursegrade_id','activities','grade_name','course_name','employee_id','grade_id','cycle_id'));
+        return view('courseprofessor.activity', compact('coursegrade_id','activities','grade_name','course_name','employee_id','grade_id','cycle_id','coursegradeprof'));
     }
 
     public function edit($id)

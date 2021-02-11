@@ -36,6 +36,9 @@ class CreateCycleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cycle');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        Schema::drop('cycle');
+//        Schema::drop('estudiante_encargado');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

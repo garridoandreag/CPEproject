@@ -37,8 +37,10 @@ class CreateCountriesTable extends Migration
     public function down()
     {
 
-        Schema::dropIfExists('country');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        Schema::drop('country');
 //        Schema::drop('estudiante_encargado');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 
     }
 }

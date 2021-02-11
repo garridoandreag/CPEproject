@@ -18,6 +18,23 @@ class GradeSeeder extends Seeder
             ));
         }
         
+        DB::table('grade')->insert(array(
+            'name' => 'Conejos',
+            'section' => 'A'
+            )
+          );
+
+        DB::table('grade')->insert(array(
+            'name' => 'Tigres',
+            'section' => 'A'
+        ));
+
+        DB::table('grade')->insert(array(
+            'name' => 'Osos',
+            'section' => 'A'
+        ));        
+
+          
         $this->command->info('La tabla GRADE ha sido rellenada.');
     }
 }

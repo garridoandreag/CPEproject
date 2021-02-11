@@ -7,7 +7,7 @@ class Cycles {
     
     public function get(){
         
-        $cycles = Cycle::get()->where('status','ACTIVO');
+        $cycles = Cycle::where('status','ACTIVO')->orderBy('id','desc')->get();
         $cyclesArray['']='Selecciona un ciclo escolar';
         
         foreach($cycles as $cycle){
@@ -18,7 +18,7 @@ class Cycles {
 
     public function getAll(){
         
-        $cycles = Cycle::get();
+        $cycles = Cycle::orderBy('id', 'desc')->get();
         
         foreach($cycles as $cycle){
             $cyclesArray[$cycle->id] = $cycle->name;

@@ -73,6 +73,11 @@
               <br>
               Asignación</a>
 
+              <a href="{{ route('pensum.menu') }}" class="btn btn-light" id="menu-admin">
+                <img src="images/pensum.png" class="btn-menu">
+                <br>
+                Pensum</a>
+
           </div>
         </div>
       </div>

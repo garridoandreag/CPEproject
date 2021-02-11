@@ -51,6 +51,7 @@ class CycleController extends Controller
                         'grade_id' => $pensum->grade_id,
                         'course_id' => $pensum->course_id,
                         'cycle_id' => $cycle->id,
+                        'status' => $pensum->status
                     ]);
     
                 }
@@ -83,7 +84,7 @@ class CycleController extends Controller
     {
         $id = $request->input('id');
         $cycle = Cycle::find($id);
-        $pensums = Pensum::get();
+        $pensums = Pensum::get()->where('status','ACTIVO');
 
         $data = $request->validate([
             'name' => ['required', 'string', 'max:50'],
@@ -96,13 +97,18 @@ class CycleController extends Controller
             $cycle->school_id =  $data['school_id'];
             $cycle->start_date = $data['start_date'];
             $cycle->end_date = $data['end_date'];
+            if($request->has('main')){
+                $cycle->main = 1;
+            }else{
+                $cycle->main = 0;
+            }
 
             foreach($pensums as $pensum){
                 
                 Coursegrade::firstOrCreate([
                     'grade_id' => $pensum->grade_id,
                     'course_id' => $pensum->course_id,
-                    'cycle_id' => $cycle->id,
+                    'cycle_id' => $cycle->id
                 ]);
 
             }

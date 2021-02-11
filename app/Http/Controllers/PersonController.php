@@ -43,6 +43,7 @@ class PersonController extends Controller
             ->select('id',DB::raw('CONCAT(IF(employee=1, "Empleado: ", "Encargado: "),first_surname," ",second_surname," ",names," ") as text'))
             ->where('first_surname', 'like', $name.'%')
             ->where('student','=','0')
+            ->where('tutor','=','0')
             ->get();
         return $persons;
     }

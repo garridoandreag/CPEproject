@@ -80,6 +80,7 @@
                     <th scope="col">@sortablelink('bloque3','3° Bloque')</th>
                     <th scope="col">@sortablelink('bloque4','4° Bloque')</th>
                     <th scope="col">@sortablelink('total','Nota Final')</th>
+                    <th scope="col">@sortablelink('promedio','Promedio Actual')</th>
                   </tr>
                 </thead>
                 <tbody id="myTable">
@@ -102,6 +103,9 @@
                       </td>
                       <td data-label="Nota Final" scope="row">
                         {{ $report->total }}
+                      </td>
+                      <td data-label="Promedio Actual" scope="row">
+                        {{ $report->promedio }}
                       </td>
                     </tr>
                   @endforeach

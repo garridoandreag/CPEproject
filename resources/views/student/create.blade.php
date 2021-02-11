@@ -196,27 +196,11 @@
                 <br />
 
                 <div class="form-group row">
-                  <label for="grade_id" class="col-md-4 col-form-label text-md-right">Grado</label>
-                  <div class="col-md-6">
-                    <select id="grade_id" name="grade_id" class="form-control  @error('grade_id') is-invalid @enderror">
-                      @foreach ($grades->get() as $index => $grade)
-
-                        <option value="{{ $index }}"
-                          {{ old('grade_id', $student->grade_id ?? '') == $index ? 'selected' : '' }}>
-                          {{ $grade }}
-                        </option>
-
-                      @endforeach
-                    </select>
-                  </div>
-                </div>
-
-                <div class="form-group row">
                   <label for="second_surname" class="col-md-4 col-form-label text-md-right">Código Estadístico</label>
 
                   <div class="col-md-6">
                     <input id="student_code" type="text" class="form-control @error('student_code') is-invalid @enderror"
-                      name="student_code" value="{{ $student->student_code ?? '' }}" required autocomplete="student_code"
+                      name="student_code" value="{{ $student->student_code ?? '' }}" autocomplete="student_code"
                       autofocus>
 
                     @error('student_code')

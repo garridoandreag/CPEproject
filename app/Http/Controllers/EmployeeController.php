@@ -42,7 +42,7 @@ class EmployeeController extends Controller
             'home_address' => ['required', 'string', 'max:250'],
             'dpi' => ['required', 'max:14'],
             'job_id' => ['required'],
-            'professor' => ['nullable'],
+            'professor' => ['required'],
             'salary' => ['nullable']
         ]);
 
@@ -57,7 +57,7 @@ class EmployeeController extends Controller
                 'subdivision_code' => $data['subdivision_code'],
                 'home_address' => $data['home_address'],
                 'gender_id' => $data['gender_id'],
-                'employee' => '1'
+                'employee' => 1,
             ]);
     
             $person->employee()->create([
@@ -96,6 +96,7 @@ class EmployeeController extends Controller
     {
         $id = $request->input('id');
         $employee = Employee::find($id);
+        $person= Person::find($id);
 
         $data = $request->validate([
             'names' => ['required', 'string', 'max:50'],
@@ -126,9 +127,11 @@ class EmployeeController extends Controller
         $employee->professor=  $data['professor'];
         $employee->salary =  $data['salary'];
         $employee->status =  $data['status'];
+        $employee->person->employee =  1;
         $employee->person->status =  $data['status'];
 
-        $employee->update();
+        $employee->save();
+        $employee->person->save();
 
     return redirect()->route('employee.index')
                     ->with(['status' => 'Empleado actualizado correctamente.']);

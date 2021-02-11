@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Course;
+use App\{Course, Grade, Pensum};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,9 +36,27 @@ class CourseController extends Controller
   }
 
   public function store (Request $request) {
-    $course = DB::table('course')->insert(array(
-        'name' => $request->input('name')
-    ));
+
+    $data = $request->validate([
+      'name' => ['required', 'string', 'max:50'],
+    ]);
+
+    $course_id = DB::table('course')->insertGetId(
+        ['name' => $data['name']]
+      );
+
+    $grades = Grade::get();
+    $pensum = Pensum::get();
+
+    foreach($grades as $grade){
+                
+      Pensum::firstOrCreate([
+          'grade_id' => $grade->id,
+          'course_id' => $course_id,
+      ]);
+
+  }
+
 
     return redirect()->action('CourseController@index')->with('status', 'Curso creado correctamente');
   }
@@ -76,7 +94,13 @@ class CourseController extends Controller
     try{
       $course = \App\Course::where('id', $id)->first();
 
-      $course->delete();
+     
+
+      Pensum::where([
+        'course_id' => $id])->delete();
+
+        $course->delete();
+
     }catch(\Exception $e){
         return redirect()->route('course.index')
         ->with(['warning' => 'No se pudo eliminar el registro, porque ya existen movimientos.']);

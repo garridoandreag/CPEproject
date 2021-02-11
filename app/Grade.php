@@ -34,4 +34,6 @@ class Grade extends Model
         return $this->belongsToMany('App\Course', 'pensum', 'grade_id', 'course_id');
     }
 
+        
+
 }
