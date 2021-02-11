@@ -39,6 +39,7 @@
                   <input type="hidden" name="id" value="{{ $employee->id }}" /><br>
                 @endif
 
+
                 <div class="form-group row">
                   <label for="names" class="col-md-4 col-form-label text-md-right">Nombre</label>
 
@@ -93,7 +94,7 @@
 
                   <div class="col-md-6">
                     <input id="dpi" type="text" class="form-control @error('dpi') is-invalid @enderror" name="dpi"
-                      value="{{ $employee->person->dpi ?? '' }}" required autocomplete="dpi" autofocus>
+                      value="{{ $employee->dpi ?? '' }}" required autocomplete="dpi" autofocus>
 
                     @error('dpi')
                     <span class="invalid-feedback" role="alert">

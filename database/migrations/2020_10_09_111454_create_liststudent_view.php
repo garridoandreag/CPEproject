@@ -15,12 +15,23 @@ class CreateListstudentView extends Migration
     {
         DB::statement("
         CREATE VIEW LISTSTUDENT AS(
-            SELECT distinct S.ID id, S.STUDENT_CODE student_code, P.NAMES names, P.FIRST_SURNAME first_surname, P.SECOND_SURNAME second_surname, C.ID cycle_id, C.NAME CYCLE, G.ID grade_id,G.NAME GRADE, P.PICTURE
-            FROM SUBJECTSTUDENT SS
-            INNER JOIN PERSON P ON P.ID=SS.STUDENT_ID
-            INNER JOIN STUDENT S ON S.ID=SS.STUDENT_ID
-            INNER JOIN CYCLE C ON C.ID=SS.CYCLE_ID
-            INNER JOIN GRADE G ON G.ID=SS.GRADE_ID
+            SELECT DISTINCT
+            `s`.`id` AS `ID`,
+            `s`.`student_code` AS `STUDENT_CODE`,
+            `p`.`names` AS `NAMES`,
+            `p`.`first_surname` AS `FIRST_SURNAME`,
+            `p`.`second_surname` AS `SECOND_SURNAME`,
+            `c`.`id` AS `CYCLE_ID`,
+            `c`.`name` AS `CYCLE`,
+            `g`.`id` AS `GRADE_ID`,
+            `g`.`name` AS `GRADE`,
+            `p`.`picture` AS `PICTURE`
+        FROM
+            ((((`cpe_bd`.`subjectstudent` `ss`
+            JOIN `cpe_bd`.`person` `p` ON ((`p`.`id` = `ss`.`student_id`)))
+            JOIN `cpe_bd`.`student` `s` ON ((`s`.`id` = `ss`.`student_id`)))
+            JOIN `cpe_bd`.`cycle` `c` ON ((`c`.`id` = `ss`.`cycle_id`)))
+            JOIN `cpe_bd`.`grade` `g` ON ((`g`.`id` = `ss`.`grade_id`)))
             );
         ");
     }

@@ -88,6 +88,8 @@ class HomeworkController extends Controller
 
         }
 
+        $insertUser = DB::select( 'call SP_UPDATED_SUBJECTSTUDENT('.$coursegrade_id.')');
+
         return redirect()->action('ActivityController@courseprofessoractivity', 
         ['coursegrade_id' => $coursegrade_id])
         ->with('status', 'Estudiante actualizado correctamente');

@@ -33,14 +33,14 @@ class SubjectstudentController extends Controller
 
         try{
 
-            $school = School::find(1);
+        $school = School::find(1);
 
         $student = DB::table('person')->where('id','like',$student_id)->get();
 
         $reports = DB::table('reportcard')
         ->where('reportcard.student_id','like',$student_id)
         ->where('reportcard.cycle_id','like',$cycle_id)
-        ->orderBy('reportcard.id','asc')
+        ->orderBy('reportcard.courseorder','asc')
         ->get();
 
         
@@ -69,7 +69,7 @@ class SubjectstudentController extends Controller
         $reports = DB::table('reportcard')
                         ->where('reportcard.student_id','like',$student_id)
                         ->where('reportcard.cycle_id','like',$cycle_id)
-                        ->orderBy('reportcard.id','asc')
+                        ->orderBy('reportcard.courseorder','asc')
                         ->get();
 
 

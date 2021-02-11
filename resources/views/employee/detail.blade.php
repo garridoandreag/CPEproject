@@ -93,7 +93,7 @@
 
                   <div class="col-md-6">
                     <input id="dpi" type="text" class="form-control @error('dpi') is-invalid @enderror" name="dpi"
-                      value="{{ $employee->person->dpi ?? '' }}" required autocomplete="dpi" autofocues readonly>
+                      value="{{ $employee->dpi ?? '' }}" required autocomplete="dpi" autofocues readonly>
 
                     @error('dpi')
                     <span class="invalid-feedback" role="alert">

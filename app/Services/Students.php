@@ -12,6 +12,7 @@ class Students {
         $students = Student::get();
 
 
+        $studentsArray['']='Seleccione a un estudiante';
         foreach($students as $student){
             $studentsArray[$student->id] = $student->person->names.' '.$student->person->first_surname.' '.$student->person->second_surname;
         }

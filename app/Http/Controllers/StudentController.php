@@ -42,14 +42,13 @@ class StudentController extends Controller {
             'subdivision_code' => ['required'],
             'gender_id' => ['required'],
             'home_address' => ['required', 'string', 'max:250'],
-            'student_code' => ['required', 'string', 'max:15','unique:student,student_code,'],
+            'student_code' => ['nullable', 'string', 'max:15','unique:student,student_code,'],
             'birthday' => ['required'],
             'picture' => ['nullable'],
-            'grade_id' => ['nullable'],
             'name_caregiver' => ['nullable'],
             'surname_caregiver' =>  ['nullable'],
             'relationship' =>  ['nullable'],
-            'phone_number_caregiver' =>  ['nullable'],
+            'phone_number_caregiver' =>  ['nullable','max:8'],
         ]);
 
         $picture = $request->file('picture');
@@ -78,7 +77,6 @@ class StudentController extends Controller {
 
             $student = $person->student()->create([
                 'student_code' => $data['student_code'],
-                'grade_id'  => $data['grade_id'],
                 'birthday' => $data['birthday']
             ]);
 
@@ -141,8 +139,27 @@ class StudentController extends Controller {
     }
 
     public function grade() {
+        $user = \Auth::user();
+        $role_id =  $user->role_id;
+        
+        if($role_id == 1){
+            $employeegrades = DB::table('grade')
+            ->select('id')
+            ->where('status', 'ACTIVO')
+            ->get();
+        }else {
+            $employee_id = $user->person_id;
 
-        return view('student.grade');
+            $employeegrades = DB::table('grade')
+                    ->select('id')
+                    ->whereRaw('id = any (SELECT grade_id FROM coursegrade 
+                                            WHERE employee_id like ?
+                                            AND status like "ACTIVO")',$employee_id )
+                    ->get();
+        }
+
+
+        return view('student.grade',compact('employeegrades'));
     }
 
     public function edit($id) {
@@ -154,18 +171,18 @@ class StudentController extends Controller {
                 ]);
     }
 
-    public function searchStudentByCode(Request $request) {
-      $code = $request->input('code');
+    public function searchStudentBySurname(Request $request) {
+      $surname = $request->input('surname');
       $persons = [];
 
-      if (strlen($code) == 0) {
+      if (strlen($surname) == 0) {
         return $persons;
       }
 
       $persons = DB::table('person')
         ->join('student', 'student.id', '=', 'person.id')
-        ->select('person.id',DB::raw('CONCAT(student.student_code," - ", person.first_surname," ",person.names) as text'))
-        ->where('student.student_code', 'like', $code.'%')
+        ->select('person.id',DB::raw('CONCAT(person.first_surname," ",person.second_surname," ",person.names," - ", student.student_code) as text'))
+        ->where('person.first_surname', 'like', $surname.'%')
         ->get();
       return $persons;
     }
@@ -193,14 +210,13 @@ class StudentController extends Controller {
             'subdivision_code' => ['required'],
             'gender_id' => ['required'],
             'home_address' => ['required', 'string', 'max:250'],
-            'student_code' => ['required', 'string', 'max:15'],
+            'student_code' => ['nullable', 'string', 'max:15'],
             'birthday' => ['required'],
             'picture' => ['nullable'],
-            'grade_id' => ['nullable'],
-            'name_caregiver' => ['nullable', 'string', 'max:50'],
-            'surname_caregiver' =>  ['nullable', 'string', 'max:50'],
-            'relationship' =>  ['nullable', 'string', 'max:50'],
-            'phone_number_caregiver' =>  ['nullable', 'string', 'max:8'],
+            'name_caregiver' => ['nullable'],
+            'surname_caregiver' =>  ['nullable'],
+            'relationship' =>  ['nullable'],
+            'phone_number_caregiver' => ['nullable','max:8'],
         ]);
 
         if ($picture) {
@@ -221,7 +237,6 @@ class StudentController extends Controller {
         $person->home_address =  $data['home_address'];
         $student->student_code =  $data['student_code'];
         $student->birthday =  $data['birthday'];
-        $student->grade_id =  $data['grade_id'];
 
         $person->update();
         $student->update();
@@ -229,15 +244,42 @@ class StudentController extends Controller {
         for($i = 0; $i < $caregivers; $i++){
             Caregiver::updateOrCreate([
                 'student_id' => $person->id,
-                'name' => strtoupper($name_caregivers[$i]),
-                'surname'  => strtoupper($surname_caregivers[$i]),
-                'relationship' => strtoupper($relationship[$i]),
+                'name' => $name_caregivers[$i],
+                'surname'  => $surname_caregivers[$i],
+                'relationship' => $relationship[$i],
                 'phone_number' => $phone_number[$i]
             ]);
         }
 
         return redirect()->action('StudentController@index')->with('status', 'Estudiante actualizado correctamente');
     }
+
+
+    
+  public function destroy($id){
+
+    try{
+      $student = \App\Student::where('id', $id)->first();
+
+     
+
+     
+
+      \App\Caregiver::where('student_id',$id)->delete();
+
+      $student->delete();
+
+      \App\Person::where('id',$id)->delete();
+
+    }catch(\Exception $e){
+        return redirect()->route('student.index')
+        ->with(['warning' => 'No se pudo eliminar el registro, porque ya existen movimientos.']);
+    }
+
+    return redirect()->route('student.index')
+                    ->with(['status' => 'Se elimino el registro.']);
+    }
+
 
 
 

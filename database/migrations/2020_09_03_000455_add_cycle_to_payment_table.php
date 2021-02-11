@@ -26,8 +26,9 @@ class AddCycleToPaymentTable extends Migration
      */
     public function down()
     {
-        Schema::table('payment', function (Blueprint $table) {
-            //
-        });
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        Schema::drop('payment');
+//        Schema::drop('estudiante_encargado');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

@@ -310,6 +310,9 @@
                     <a href="{{ route('student.index') }}" class="btn btn-outline-secondary">Cancelar</a>
                     <a href="{{ action('StudentController@edit', ['id' => $student->id]) }}"
                       class="btn btn-primary">Editar</a>
+                      <a href="{{ action('StudentController@destroy', ['id' => $student->id]) }}"
+                        class="btn btn-danger">Eliminar</a>
+                        
                   </div>
                 </div>
 

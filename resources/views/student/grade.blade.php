@@ -21,12 +21,15 @@
           <div class="card-body">
 
 
-              @foreach ($grades->getAllActive() as $index => $grade)
+            @foreach ($grades->getAllActive() as $index => $grade)
 
+            @if($employeegrades->contains('id',$index))
               <a href="{{ action('StudentController@list', ['grade_id' => $index]) }}" class="btn btn-light" id="menu-admin">{{ $grade }}
                 <img src="{{URL::asset('images/'.$index.'.png')}}" class="btn-menu">
                 <br>
                 </a>
+              @endif
+
             @endforeach
 
           </div>

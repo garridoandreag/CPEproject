@@ -15,4 +15,15 @@ class Courses {
         }
         return $coursesArray;
     }
+
+        
+    public function getOnlyCourses(){
+        
+        $courses = Course::get()->where('status','ACTIVO');
+        
+        foreach($courses as $course){
+            $coursesArray[$course->id] = $course->name;
+        }
+        return $coursesArray;
+    }
 }

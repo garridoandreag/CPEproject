@@ -31,7 +31,7 @@
                     Elegir Ciclo
                   </button>
                   <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                    @foreach ($cycles->getAll() as $index => $cycle)
+                    @foreach ($cycles->get() as $index => $cycle)
                       <a class="dropdown-item"
                         href="{{ action('CoursegradeController@courseprofessor', ['cycle_id' => $index]) }}">{{ $cycle }}</a>
                     @endforeach

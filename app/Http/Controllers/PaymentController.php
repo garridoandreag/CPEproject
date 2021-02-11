@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -9,11 +10,12 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Auth;
-use App\Payment;
+use App\{Payment,School,Cycle,PaymentCategory,StudentTutor,Student};
 
 
 class PaymentController extends Controller
-{
+{  
+
     public function __construct() {
         $this->middleware('auth');
     }
@@ -121,6 +123,82 @@ class PaymentController extends Controller
 
         return $nopayments;
     }
+
+    public function menureport() {
+        return view('payment.menureport');
+    }
+
+    public function reportpaymentxcategorypdf(Request $request){
+
+       try{
+        $now = Carbon::now();
+        $cycle_id = $request->input('cycle_id');
+        $category_id= $request->input('paymentcategory_id');
+        
+        $school = School::find(1);
+        $cycle = Cycle::find($cycle_id);
+        $category = PaymentCategory::find($category_id);
+
+        $reports = DB::table('person')
+        ->join('student','person.id','student.id')
+        ->join('subjectstudent', function ($join) use($cycle_id) {
+            $join->on('person.id', '=', 'subjectstudent.student_id')
+                 ->where('subjectstudent.cycle_id', '=', $cycle_id);
+        })
+        ->join('grade','subjectstudent.grade_id','grade.id')
+        ->select('student.id','person.names', 'person.first_surname', 'person.second_surname','grade.name','student.student_code')
+        ->whereNotIn('person.id', function ($query) use($cycle_id,$category_id ) {
+            $query->select('student_id')
+                  ->from('payment')
+                  ->where([
+                      ['cycle_id','=',$cycle_id],
+                      ['paymentcategory_id','=',$category_id]
+                      ]);
+        })->groupBy('student.id','person.names', 'person.first_surname', 'person.second_surname','grade.name','student.student_code')
+         ->havingRaw('max(subjectstudent.grade_id)')
+        ->get();
+    
+        $tutors =  DB::table('datatutor')->get();
+
+        $pdf = \PDF::loadView('/report/reportpaymentxcategorypdf',compact('reports','school','cycle','category','now','tutors'));
+        }catch(\Exception $e){
+            return redirect()->action('PaymentController@index') 
+            ->with(['warning' => 'No hay datos']);
+        }
+        
+        return $pdf->download('ReporteFaltaPagoCategoria.pdf');
+    }
+
+    
+    public function reportpaymentstudentpdf(Request $request){
+
+       try{
+         $now = Carbon::now();
+         $cycle_id = $request->input('cycle_id');
+         $student_id= $request->input('student_id');
+         
+         $school = School::find(1);
+         $cycle = Cycle::find($cycle_id);
+         $student = Student::find($student_id);
+ 
+         $reports = DB::table('paymentcategory')
+                    ->select('name')
+                    ->selectRaw('IF((SELECT pay.paymentcategory_id 
+                    FROM payment pay 
+                    WHERE pay.student_id LIKE ? 
+                    AND paymentcategory.id=pay.paymentcategory_id
+                    AND pay.cycle_id=?),"CANCELADO","PENDIENTE") as estado',[$student_id,$cycle_id])
+                    ->get();
+     
+ 
+         $pdf = \PDF::loadView('/report/reportpaymentstudentpdf',compact('reports','school','cycle','student','now'));
+       }catch(\Exception $e){
+            return redirect()->action('PaymentController@index') 
+           ->with(['warning' => 'No hay datos']);
+       }
+         
+         return $pdf->download('Reporte.pdf');
+     }
 
     public function destroy($id)
     {
