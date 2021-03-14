@@ -2,7 +2,10 @@
 
 @section('content')
   @inject('subdivisions','App\Services\Subdivisions')
-
+  @inject('students','App\Services\Students')
+  @inject('genders','App\Services\Genders')
+  @inject('relationships','App\Services\Relationships')
+ 
   <div class="container">
     <div class="row justify-content-center ">
       <div class="col-md-8">
@@ -165,6 +168,64 @@
                         @enderror
                       </div>
                     </div>
+
+                    <br>
+                    <div class="card-footer">
+                      <p class="card-text text-center "><b>Estudiantes de los que es responsable:</b></p>
+                    </div>
+                    <table class="table table-bordered" id="myTable">
+                      <thead>
+                        <tr>
+                          <th>Estudiante</th>
+                          <th>Parentesco</th>
+                          <th><a href="#" class="addRow" id="addRow">
+                              <i class="fas fa-plus-circle"></i>
+                            </a>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @if (isset($tstudents))
+                        @foreach ($tstudents as $tstudent)
+                        <tr id="1">
+                          <td data-label="Estudiante" scope="row">
+                            <div class="input-group input-group-sm">
+                              <select id="student_id" name="student_id[]" class="form-control ">
+                                @foreach ($students->get() as $index => $student)
+    
+                                <option value="{{ $index }}"
+                                  {{ old('student_id', $tstudent->student_id ?? '') == $index ? 'selected' : '' }} disabled>
+                                  {{ $student }}
+                                </option>
+        
+                              @endforeach
+                              </select>
+                              
+                            </div>
+                          </td>
+                          <td data-label="Parentesco" scope="row">
+                            <div class="input-group input-group-sm">
+                              <select id="relationship" name="relationship[]" class="form-control ">
+                                @foreach ($relationships->get() as $relationship)
+                                  <option value="{{ $relationship }}"
+                                    {{ old('relationship', $tstudent->relationship ?? '') == $relationship ? 'selected' : '' }} disabled>
+                                    {{ $relationship }}
+                                  </option>
+                                @endforeach
+                              </select>
+                            </div>
+                          </td>
+                          <td>
+                            <button type="button" onclick="removeRow(1)" class="remove"><i
+                                class="fas fa-minus-circle"></i></button>
+                          </td>
+                        </tr>
+                      @endforeach
+                      @endif
+                      </tbody>
+                    </table>
+                    <br>
+    
 
                     <div class="form-group row mb-0">
                       <div class="col-md-6 offset-md-4">

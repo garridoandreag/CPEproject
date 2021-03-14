@@ -92,8 +92,16 @@ class TutorController extends Controller
     public function detail($id)
     {
         $tutor = \App\Tutor::where('id', $id)->first();
+
+        $tstudents = DB::table('student')
+        ->join('studenttutor', 'student.id', '=', 'studenttutor.student_id')
+        ->join('person', 'student.id', '=', 'person.id')
+        ->where('studenttutor.tutor_id',$id)
+        ->get();  
+
                 return view('tutor.detail', [
-                    'tutor' => $tutor
+                    'tutor' => $tutor,
+                    'tstudents' => $tstudents
                 ]);
     }
 
@@ -123,7 +131,7 @@ class TutorController extends Controller
   
         $persons = DB::table('person')
           ->join('tutor', 'tutor.id', '=', 'person.id')
-          ->select('person.id',DB::raw('CONCAT(person.first_surname," ",person.second_surname," ",person.names," - ",tutor.dpi) as text'))
+          ->select('person.id',DB::raw('CONCAT(person.first_surname," ",person.second_surname," ",person.names," - ",IFNULL( tutor.dpi , "")) as text'))
           ->where('person.first_surname', 'like', $surname.'%')
           ->get();
         return $persons;

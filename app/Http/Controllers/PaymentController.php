@@ -45,15 +45,17 @@ class PaymentController extends Controller
             'cycle_id' => ['required'],
             'amount' => ['required','regex:/^\d+(\.\d{1,2})?$/'],
             'code_reference' => ['required','unique:payment,code_reference'],
+            'repeated' => ['nullable'],
             'student_id' => ['required'],
             'tutor_id' => ['required'],
         ]);
+
 
         Payment::create([
             'paymentcategory_id' => $data['paymentcategory_id'],
             'cycle_id' => $data['cycle_id'],
             'amount' => $data['amount'],
-            'code_reference' => $data['code_reference'],
+            'code_reference' => $request->input('code_reference'),
             'student_id' => $data['student_id'],
             'tutor_id' => $data['tutor_id'],
         ]);

@@ -56,6 +56,7 @@ class HomeworkController extends Controller
             $homeworks=Homework::firstOrCreate(
                 ['activity_id' =>  $activity_id,'subjectstudent_id' => $subjectstudent->id],
                 ['student_id' => $subjectstudent->student_id, 'unit_id' => $activity->unit_id]
+
             )->sortable()->paginate(30);
         };
 
@@ -74,6 +75,7 @@ class HomeworkController extends Controller
         $activity_id = $request->input('activity_id');
         $points = $request->input('points');
         $PM= $request->input('PM');
+        $PMStatus= $request->input('PMStatus');
         $delivery_date = $request->input('delivery_date');
 
         $coursegrade_id = $request->input('coursegrade_id');
@@ -83,6 +85,7 @@ class HomeworkController extends Controller
             ->update([
                 'points' => $points[$i] ,
                 'PM'  => $PM[$i],
+                'PMStatus'  => $PMStatus[$i],
                 'delivery_date' => $delivery_date[$i],
                 ]);
 

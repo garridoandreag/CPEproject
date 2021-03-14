@@ -59,7 +59,7 @@
                         href="{{ action('TutorController@detail', ['id' => $tutor->id]) }}" />
                         @foreach ($students as $student)
                         @if($student->tutor_id == $tutor->id)
-                        {{ $student->student_code }} - 
+                        ({{ $student->student_code }})
                         {{ $student->names }}
                         {{ $student->first_surname }}
                         @endif

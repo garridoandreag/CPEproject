@@ -21,10 +21,15 @@ class ActivityController extends Controller
         return view('activity.index', compact('activities'));
     }
 
-    public function create($employee_id)
+    public function create($employee_id,$coursegrade_id = '')
     {
-        
-        return view('activity.create', compact('employee_id'));
+        if(empty($coursegrade_id )){
+            return view('activity.create', compact('employee_id'));
+        }
+        else {
+            return view('activity.create', compact('employee_id','coursegrade_id'));
+        }
+
     }
 
     public function store(Request $request)
