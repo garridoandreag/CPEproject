@@ -14,7 +14,7 @@ class Homework extends Model
 
     protected $fillable = ['activity_id','subjectstudent_id','student_id','unit_id'];
 
-    public $sortable =['activity_id','subjectstudent_id','student_id','unit_id'];
+    public $sortable =['activity_id','subjectstudent_id','student_id','unit_id','points','PM','PMStatus'];
     
             // muchos a uno
     public function student() {

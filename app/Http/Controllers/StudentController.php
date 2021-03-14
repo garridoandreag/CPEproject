@@ -181,11 +181,14 @@ class StudentController extends Controller {
 
       $persons = DB::table('person')
         ->join('student', 'student.id', '=', 'person.id')
-        ->select('person.id',DB::raw('CONCAT(person.first_surname," ",person.second_surname," ",person.names," - ", student.student_code) as text'))
+        ->select('person.id',DB::raw('CONCAT(person.first_surname," ",person.second_surname," ",person.names," - ", IFNULL( student.student_code , "") ) as text'))
         ->where('person.first_surname', 'like', $surname.'%')
         ->get();
+
       return $persons;
     }
+
+    
 
     public function update(Request $request) {
 

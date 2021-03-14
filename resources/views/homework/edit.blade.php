@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  @inject('PMs','App\Services\PMs')
+  @inject('pmStatuses','App\Services\PMStatus')
   <script>
     $(document).ready(function() {
       $("#myInput").on("keyup", function() {
@@ -53,7 +53,8 @@
                     <th scope="col">@sortablelink('unit_id','Unidad')</th>
                     <th scope="col">@sortablelink('subjectstudent_id','Estudiante')</th>
                     <th scope="col">@sortablelink('points','Puntos')</th>
-                    <th scope="col">@sortablelink('PM','Proceso Mejora (P.M.)')</th>
+                    <th scope="col">@sortablelink('PM','Puntos PM')</th>
+                    <th scope="col">@sortablelink('PMStatus','Aplica PM')</th>
                     <th scope="col">@sortablelink('delivery_date','Fecha Entregado')</th>
                   </tr>
                 </thead>
@@ -84,13 +85,25 @@
 
                       </td>
 
-                      <td data-label="Proceso Mejora (P.M.)" scope="row">
-                        <select id="PM" name="PM[]"
-                          class="form-control form-control-sm  @error('PM') is-invalid @enderror">
-                          @foreach ($PMs->get() as $index => $PM)
+                      <td data-label="PM" scope="row">
+                        <div class="input-group input-group-sm">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"> {{ $homework->activity->score }} / </span>
+                          </div>
+                          <input id="PM" type="number" step="any" min="0" max="{{ $homework->activity->score }}"
+                            class="form-control form-control-sm @error('PM') is-invalid @enderror" name="PM[]"
+                            value="{{ $homework->PM ?? '' }}" autocomplete="PM" autofocus>
+                        </div>
 
-                            <option value="{{ $index }}" {{ old('PM', $homework->PM ?? '') == $index ? 'selected' : '' }}>
-                              {{ $PM }}
+                      </td>
+
+                      <td data-label="Proceso Mejora (P.M.)" scope="row">
+                        <select id="PMStatus" name="PMStatus[]"
+                          class="form-control form-control-sm  @error('PMStatus') is-invalid @enderror">
+                          @foreach ($pmStatuses->get() as $index => $PMStatus)
+
+                            <option value="{{ $index }}" {{ old('PMStatus', $homework->PMStatus ?? '') == $index ? 'selected' : '' }}>
+                              {{ $PMStatus }}
                             </option>
 
                           @endforeach
@@ -100,7 +113,7 @@
                       <td data-label="Fecha de Entrega" scope="row">
                         <input id="delivery_date" type="date"
                           class="form-control form-control-sm @error('delivery_date') is-invalid @enderror"
-                          name="delivery_date[]" value="{{ $homework->delivery_date ?? '' }}" autocomplete="points"
+                          name="delivery_date[]" value="{{ $homework->delivery_date ?? '' }}" {{ old('delivery_date', $homework->delivery_date ?? '') == $homework->activity->delivery_date ? 'selected' : ''}} 
                           autofocus>
                       </td>
                     </tr>

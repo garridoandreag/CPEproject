@@ -3,6 +3,7 @@
 @section('content')
   @inject('paymentcategories','App\Services\Paymentcategories')
   @inject('cycles','App\Services\Cycles')
+  @inject('existPayment', 'App\Services\Payments')
 
   <style>
     .select-search {
@@ -119,7 +120,7 @@
 
                     @error('student_id')
                     <span class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
+                    <strong>{{ $message }}</strong>
                     </span>
                     @enderror
                   </div>
@@ -127,16 +128,16 @@
 
                 <div class="form-group row">
                   <label for="tutor_id" class="col-md-4 col-form-label text-md-right">Padre (Encargado) </label>
-                  <div class="col-md-6">
-                    <select name="tutor_id" class="select-search" id="select-tutor">
-                    </select>
+                    <div class="col-md-6">
+                      <select name="tutor_id" class="select-search" id="select-tutor">
+                      </select>
 
-                    @error('tutor_id')
-                    <span class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                  </div>
+                      @error('tutor_id')
+                      <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                      </span>
+                      @enderror
+                    </div>
                 </div>
 
 
@@ -188,6 +189,30 @@
     });
 
     $(document).ready(function() {
+      const select = $('#select-tutor');
+      select.select2({
+ 
+        ajax: {
+          type: 'POST',
+          url: '/tutor/search-tutor',
+          data: function(params) {
+            return {
+              surname: params.term,
+            };
+          },
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          processResults: function(data) {
+            return {
+              results: data
+            };
+          }
+        }
+      });
+    });
+
+        $(document).ready(function() {
       const select = $('#select-tutor');
       select.select2({
  
