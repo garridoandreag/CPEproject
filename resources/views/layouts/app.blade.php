@@ -11,10 +11,10 @@
   <title>Colegio Pequeñas Estrellas</title>
 
   <!-- Scripts -->
-  <script src="{{ asset('js/app.js') }}" defer></script>
+  <script src="{{ asset('js/app.js') }}" ></script>
   <script src="{{ asset('js/jquery-3.5.1.js') }}" defer></script>
   <script src="https://kit.fontawesome.com/e4f410c930.js" crossorigin="anonymous"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
   <!--<script>

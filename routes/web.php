@@ -77,6 +77,7 @@ Route::group(['prefix' => 'tutor'], function() {
     Route::get('detail/{id}', 'TutorController@detail')->name('tutor.detail')->middleware('auth');
     Route::post('update', 'TutorController@update')->name('tutor.update')->middleware('auth');
     Route::post('/search-tutor', 'TutorController@searchTutorBySurname')->name('tutor.search-tutor');
+    Route::get('/destroystudent/{tutor_id}/{student_id}', 'TutorController@destroystudent')->name('tutor.destroystudent')->middleware('auth');
 });
 
 Route::group(['prefix' => 'grade'], function() {
@@ -199,6 +200,9 @@ Route::group(['prefix' => 'payment'], function() {
     Route::post('store', 'PaymentController@store')->name('payment.store')->middleware('auth');
     Route::post('update', 'PaymentController@update')->name('payment.update')->middleware('auth');
     Route::get('menureport','PaymentController@menureport')->name('payment.menureport')->middleware('auth');
+    Route::delete('/destroy/{id}', 'PaymentController@destroy')->name('payment.destroy')->middleware('auth');
+    Route::post('/exist', 'PaymentController@exist')->name('payment.exist');
+    Route::post('/existreceipt', 'PaymentController@existreceipt')->name('payment.existreceipt');
 
 });
 

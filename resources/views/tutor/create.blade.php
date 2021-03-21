@@ -26,6 +26,17 @@
             </div>
 
             <div class="card-body">
+              @if (session('status'))
+              <div class="alert alert-success">
+                {{ session('status') }}
+              </div>
+              @else
+              @if (session('warning'))
+                <div class="alert alert-danger">
+                  {{ session('warning') }}
+                </div>
+              @endif
+            @endif
               <form id="tutorForm" method="POST"
                 action="{{ isset($tutor) ? route('tutor.update') : route('tutor.store') }}" enctype="multipart/form-data"
                 aria-label="Configuración de mi cuenta">
@@ -197,6 +208,8 @@
                     </tr>
                   </thead>
                   <tbody>
+                    @if (isset($tstudents))
+                    @foreach ($tstudents as $tstudent)
                     <tr id="1">
                       <td data-label="Estudiante" scope="row">
                         <div class="input-group input-group-sm">
@@ -204,7 +217,7 @@
                             @foreach ($students->get() as $index => $student)
 
                             <option value="{{ $index }}"
-                              {{ old('student_id', $tutor->studenttutor->student_id ?? '') == $index ? 'selected' : '' }}>
+                              {{ old('student_id', $tstudent->student_id ?? '') == $index ? 'selected' : '' }}>
                               {{ $student }}
                             </option>
     
@@ -216,8 +229,8 @@
                         <div class="input-group input-group-sm">
                           <select id="relationship" name="relationship[]" class="form-control ">
                             @foreach ($relationships->get() as $relationship)
-                              <option value="{{ $relationship }}"
-                                {{ old('relationship', $tutor->studenttutor->relationship ?? '') == $relationship ? 'selected' : '' }}>
+                            <option value="{{ $relationship }}"
+                            {{ old('relationship', $tstudent->relationship ?? '') == $relationship ? 'selected' : '' }} >
                                 {{ $relationship }}
                               </option>
                             @endforeach
@@ -225,11 +238,13 @@
                         </div>
                       </td>
                       <td>
-                        <button type="button" onclick="removeRow(1)" class="remove"><i
-                            class="fas fa-minus-circle"></i></button>
+                            @if (isset($tstudent) && is_object($tstudent))
+                            <a href="{{action('TutorController@destroystudent',['tutor_id' => $tstudent->tutor_id,'student_id' => $tstudent->student_id])}}" class="btn btn-danger">Eliminar</a>
+                            @endif
                       </td>
                     </tr>
-
+                    @endforeach
+                    @endif
                   </tbody>
                 </table>
                 <br>

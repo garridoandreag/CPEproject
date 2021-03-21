@@ -216,8 +216,7 @@
                             </div>
                           </td>
                           <td>
-                            <button type="button" onclick="removeRow(1)" class="remove"><i
-                                class="fas fa-minus-circle"></i></button>
+
                           </td>
                         </tr>
                       @endforeach

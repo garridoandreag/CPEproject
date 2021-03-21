@@ -43,8 +43,8 @@ class TutorController extends Controller
         $relationship = $request->input('relationship');
 
         $data = $request->validate([
-            'names' => ['nullable', 'string', 'max:50'],
-            'first_surname' => ['nullable', 'string', 'max:50'],
+            'names' => ['required', 'string', 'max:50'],
+            'first_surname' => ['required', 'string', 'max:50'],
             'second_surname' => ['nullable', 'string', 'max:50'],
             'phone_number' => ['nullable', 'string', 'max:8'],
             'cellphone_number' => ['nullable', 'string', 'max:8'],
@@ -110,15 +110,74 @@ class TutorController extends Controller
     {
         $tutor = \App\Tutor::where('id', $id)->first();
 
+        $tstudents = DB::table('student')
+        ->join('studenttutor', 'student.id', '=', 'studenttutor.student_id')
+        ->join('person', 'student.id', '=', 'person.id')
+        ->where('studenttutor.tutor_id',$id)
+        ->get(); 
+
                 return view('tutor.create', [
-                    'tutor' => $tutor
+                    'tutor' => $tutor,
+                    'tstudents' => $tstudents
                 ]);
     }
 
 
     public function update(Request $request)
     {
-        //
+
+        try{
+        $students = sizeof($request->input('student_id'));
+        $student_id = $request->input('student_id');
+        $relationship = $request->input('relationship');
+        $id = $request->input('id');
+        $person = Person::where('id',$id)->first();
+        $tutor =  Tutor::where('id',$id)->first();
+
+        $data = $request->validate([
+            'names' => ['required', 'string', 'max:50'],
+            'first_surname' => ['required', 'string', 'max:50'],
+            'second_surname' => ['nullable', 'string', 'max:50'],
+            'phone_number' => ['nullable', 'string', 'max:8'],
+            'cellphone_number' => ['nullable', 'string', 'max:8'],
+            'subdivision_code' => ['nullable'],
+            'gender_id' => ['nullable'],
+            'home_address' => ['nullable', 'string', 'max:250'],
+            'dpi' => ['nullable', 'string', 'regex:/^[1-9]{1}\d{12}/','unique:tutor,dpi,'. $id],
+            'occupation' => ['nullable', 'string', 'max:50'],
+        ]);
+
+        $person->names =  $data['names'];
+        $person->first_surname =  $data['first_surname'];
+        $person->second_surname =  $data['second_surname'];
+        $person->phone_number =  $data['phone_number'];
+        $person->cellphone_number =  $data['cellphone_number'];
+        $person->subdivision_code =  $data['subdivision_code'];
+        $person->gender_id =  $data['gender_id'];
+        $person->home_address =  $data['home_address'];
+        $tutor->dpi =  $data['dpi'];
+        $tutor->occupation =  $data['occupation'];
+
+        $person->update();
+        $tutor->update();
+
+
+        
+
+        for($i = 0; $i < $students; $i++){
+            Studenttutor::updateOrCreate([
+                'tutor_id' => $person->id,
+                'student_id' => $student_id[$i],
+                'relationship' => $relationship[$i],
+            ]);
+        }
+
+    }catch(\Exception $e){
+
+    }
+        return redirect()->action('TutorController@index')->with('status', 'Padre/Encargado actualizado correctamente');
+
+
     }
 
     public function searchTutorBySurname(Request $request) {
@@ -136,6 +195,20 @@ class TutorController extends Controller
           ->get();
         return $persons;
       }
+
+    public function destroystudent($tutor_id,$student_id)
+    {
+      //  try{
+            Studenttutor::where(['tutor_id' => $tutor_id, 'student_id'=> $student_id])->delete();
+      //  }catch(\Exception $e){
+     //       return redirect()->action('TutorController@edit',['id' => $tutor_id]) 
+     //       ->with(['warning' => 'No se pudo eliminar el registro, porque ya existen movimientos.']);
+     //   }
+
+        return redirect()->action('TutorController@edit',['id' => $tutor_id]) 
+        ->with(['status' => 'Se elimino el registro.']);
+        
+    }
 
     public function destroy($id)
     {
