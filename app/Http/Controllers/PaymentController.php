@@ -235,43 +235,49 @@ class PaymentController extends Controller
     
     public function reportpaymentallpdf(Request $request){
 
-        try{
+      //  try{
          $now = Carbon::now();
          $cycle_id = $request->input('cycle_id');
-         $category_id= $request->input('paymentcategory_id');
+   
          
          $school = School::find(1);
          $cycle = Cycle::find($cycle_id);
-         $category = PaymentCategory::find($category_id);
+         $categories = PaymentCategory::where('status','ACTIVO')->orderBy('id','asc')->get();
  
-         $reports = DB::table('person')
-         ->join('student','person.id','student.id')
-         ->join('subjectstudent', function ($join) use($cycle_id) {
-             $join->on('person.id', '=', 'subjectstudent.student_id')
-                  ->where('subjectstudent.cycle_id', '=', $cycle_id);
-         })
-         ->join('grade','subjectstudent.grade_id','grade.id')
-         ->select('student.id','person.names', 'person.first_surname', 'person.second_surname','grade.name','student.student_code')
-         ->whereNotIn('person.id', function ($query) use($cycle_id,$category_id ) {
-             $query->select('student_id')
-                   ->from('payment')
-                   ->where([
-                       ['cycle_id','=',$cycle_id],
-                       ['paymentcategory_id','=',$category_id]
-                       ]);
-         })->groupBy('student.id','person.names', 'person.first_surname', 'person.second_surname','grade.name','student.student_code')
-          ->havingRaw('max(subjectstudent.grade_id)')
-         ->get();
+         $reports[''] = 'No hay datos';
+         foreach($categories as $category){
+            $reports[$category->id] = DB::table('person')
+                                    ->join('student','person.id','student.id')
+                                    ->join('subjectstudent', function ($join) use($cycle_id) {
+                                        $join->on('person.id', '=', 'subjectstudent.student_id')
+                                            ->where('subjectstudent.cycle_id', '=', $cycle_id);
+                                    })
+                                    ->join('grade','subjectstudent.grade_id','grade.id')
+                                    ->select('student.id','person.names', 'person.first_surname', 'person.second_surname','grade.name','student.student_code')
+                                    ->whereNotIn('person.id', function ($query) use($cycle_id,$category) {
+                                        $query->select('student_id')
+                                            ->from('payment')
+                                            ->where([
+                                                ['cycle_id','=',$cycle_id],
+                                                ['paymentcategory_id','=',$category->id]
+                                                ]);
+                                    })->groupBy('student.id','person.names', 'person.first_surname', 'person.second_surname','grade.name','student.student_code')
+                                    ->havingRaw('max(subjectstudent.grade_id)')
+                                    ->get();
+
+         }
+
+
      
          $tutors =  DB::table('datatutor')->get();
  
-         $pdf = \PDF::loadView('/report/reportpaymentxcategorypdf',compact('reports','school','cycle','category','now','tutors'));
-         }catch(\Exception $e){
-             return redirect()->action('PaymentController@index') 
-             ->with(['warning' => 'No hay datos']);
-         }
+         $pdf = \PDF::loadView('/report/reportpaymentallpdf',compact('reports','school','cycle','categories','now','tutors'));
+        // }catch(\Exception $e){
+       //      return redirect()->action('PaymentController@index') 
+        //     ->with(['warning' => 'No hay datos']);
+        // }
          
-         return $pdf->download('ReporteFaltaPagoCategoria.pdf');
+         return $pdf->download('ReporteFaltaPagoGeneral.pdf');
      }
 
     public function reportpaymentxcategorypdf(Request $request){

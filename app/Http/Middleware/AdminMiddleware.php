@@ -16,12 +16,12 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::user()->role_id == 1){
+        if( Auth::check() && Auth::user()->role_id == 1){
             return $next($request);
         }
         else
         {
-            return redirect('/home')->with('status','No tiene acceso permitido.');
+            return redirect('/')->with('status','No tiene acceso permitido.');
         }
         
         

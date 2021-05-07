@@ -27,9 +27,9 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Route::post('/search-person', 'PersonController@searchPersonWithName')->name('search-person');;
 Route::get('/admin', function () {
     return view('admin.administration');
-})->name('admin.admin')->middleware('auth');
+})->name('admin.admin')->middleware('auth','admin');
 
-Route::get('/configuration','UserController@config')->name('config');
+Route::get('/configuration','UserController@config')->name('config')->middleware('auth');
 
 Route::group(['prefix' => 'user'], function() {
     Route::post('update','UserController@update')->name('user.update');
@@ -44,18 +44,18 @@ Route::group(['prefix' => 'user'], function() {
 Route::get('/school/logo/{filename}', 'ShowLogoController@getImage')->name('school.logo');
 
 Route::group(['prefix' => 'student'], function() {
-    Route::get('create', 'StudentController@create')->name('student.create')->middleware('auth');
+    Route::get('create', 'StudentController@create')->name('student.create')->middleware('auth','admin');
     Route::get('/', 'StudentController@index')->name('student.index');
-    Route::post('store', 'StudentController@store')->name('student.store')->middleware('auth');
-    Route::get('edit/{id}', 'StudentController@edit')->name('student.edit')->middleware('auth');
-    Route::post('update', 'StudentController@update')->name('student.update')->middleware('auth');
-    Route::get('picture/{filename}','StudentController@getImage')->name('student.picture');
-    Route::get('detail/{id}', 'StudentController@detail')->name('student.detail');
+    Route::post('store', 'StudentController@store')->name('student.store')->middleware('auth','admin');
+    Route::get('edit/{id}', 'StudentController@edit')->name('student.edit')->middleware('auth','admin');
+    Route::post('update', 'StudentController@update')->name('student.update')->middleware('auth','admin');
+    Route::get('picture/{filename}','StudentController@getImage')->name('student.picture')->middleware('auth');
+    Route::get('detail/{id}', 'StudentController@detail')->name('student.detail')->middleware('auth');
     Route::get('/Coursegrades', 'StudentController@getCoursegrades');
     Route::post('/search-student', 'StudentController@searchStudentBySurname')->name('student.search-student');
     Route::get('grade', 'StudentController@grade')->name('student.grade');
     Route::get('list/{grade_id}/{cycle_id?}', 'StudentController@list')->name('student.list')->middleware('checkgradeprofessor');
-    Route::get('/destroy/{id}', 'StudentController@destroy')->name('student.destroy')->middleware('auth');
+    Route::get('/destroy/{id}', 'StudentController@destroy')->name('student.destroy')->middleware('auth','admin');
 });
 
 Route::group(['prefix' => 'course'], function() {
@@ -185,27 +185,28 @@ Route::group(['prefix' => 'courseprofessor'], function() {
 });
 
 Route::group(['prefix' => 'activity'], function() {
-    Route::get('create/{employee_id?}/{coursegrade_id?}', 'ActivityController@create')->name('activity.create');
-    Route::post('store', 'ActivityController@store')->name('activity.store');
+    Route::get('create/{employee_id?}/{coursegrade_id?}', 'ActivityController@create')->name('activity.create')->middleware('auth','admin');
+    Route::post('store', 'ActivityController@store')->name('activity.store')->middleware('auth','admin');
     Route::get('detail/{id}', 'ActivityController@detail')->name('activity.detail');
-    Route::get('edit/{id}', 'ActivityController@edit')->name('activity.edit');
-    Route::post('update', 'ActivityController@update')->name('activity.update');
+    Route::get('edit/{id}', 'ActivityController@edit')->name('activity.edit')->middleware('auth','admin');
+    Route::post('update', 'ActivityController@update')->name('activity.update')->middleware('auth','admin');
 });
 
 Route::group(['prefix' => 'payment'], function() {
-    Route::get('create', 'PaymentController@create')->name('payment.create')->middleware('auth');
-    Route::get('/', 'PaymentController@index')->name('payment.index')->middleware('auth');
-    Route::get('detail/{id}', 'PaymentController@detail')->name('payment.detail');
-    Route::get('edit/{id}', 'PaymentController@edit')->name('payment.edit')->middleware('auth');
-    Route::post('store', 'PaymentController@store')->name('payment.store')->middleware('auth');
-    Route::post('update', 'PaymentController@update')->name('payment.update')->middleware('auth');
-    Route::get('menureport','PaymentController@menureport')->name('payment.menureport')->middleware('auth');
-    Route::delete('/destroy/{id}', 'PaymentController@destroy')->name('payment.destroy')->middleware('auth');
-    Route::post('/exist', 'PaymentController@exist')->name('payment.exist');
-    Route::post('/existreceipt', 'PaymentController@existreceipt')->name('payment.existreceipt');
+    Route::get('create', 'PaymentController@create')->name('payment.create')->middleware('auth','admin');
+    Route::get('/', 'PaymentController@index')->name('payment.index')->middleware('auth','admin');
+    Route::get('detail/{id}', 'PaymentController@detail')->name('payment.detail')->middleware('auth','admin');
+    Route::get('edit/{id}', 'PaymentController@edit')->name('payment.edit')->middleware('auth','admin');
+    Route::post('store', 'PaymentController@store')->name('payment.store')->middleware('auth','admin');
+    Route::post('update', 'PaymentController@update')->name('payment.update')->middleware('auth','admin');
+    Route::get('menureport','PaymentController@menureport')->name('payment.menureport')->middleware('auth','admin');
+    Route::get('/destroy/{id}', 'PaymentController@destroy')->name('payment.destroy')->middleware('auth','admin');
+    Route::post('/exist', 'PaymentController@exist')->name('payment.exist')->middleware('auth','admin');
+    Route::post('/existreceipt', 'PaymentController@existreceipt')->middleware('auth','admin');
 
 });
 
 Route::name('reportcardpdf')->get('/reportcardpdf/{cycle_id}/{student_id}','SubjectstudentController@reportcardPDF')->middleware('auth');
-Route::name('reportpaymentxcategorypdf')->post('/reportpaymentxcategorypdf','PaymentController@reportpaymentxcategorypdf')->middleware('auth');
-Route::name('reportpaymentstudentpdf')->post('/reportpaymentstudentpdf','PaymentController@reportpaymentstudentpdf')->middleware('auth');
+Route::name('reportpaymentallpdf')->post('/reportpaymentallpdf','PaymentController@reportpaymentallpdf')->middleware('auth','admin');
+Route::name('reportpaymentxcategorypdf')->post('/reportpaymentxcategorypdf','PaymentController@reportpaymentxcategorypdf')->middleware('auth','admin');
+Route::name('reportpaymentstudentpdf')->post('/reportpaymentstudentpdf','PaymentController@reportpaymentstudentpdf')->middleware('auth','admin');
