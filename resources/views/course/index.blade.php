@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<script src="{{ asset('js/axios.js') }}" ></script>
   <script>
     $(document).ready(function() {
       $("#myInput").on("keyup", function() {

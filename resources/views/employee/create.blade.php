@@ -109,7 +109,7 @@
 
                   <div class="col-md-6">
                     <input id="phone_number" type="tel" class="form-control @error('phone_number') is-invalid @enderror"
-                      name="phone_number" value="{{ $employee->person->phone_number ?? '' }}" required
+                      name="phone_number" value="{{ $employee->person->phone_number ?? '' }}"
                       autocomplete="phone_number" autofocus>
 
                     @error('phone_number')
@@ -126,7 +126,7 @@
                   <div class="col-md-6">
                     <input id="cellphone_number" type="tel"
                       class="form-control @error('cellphone_number') is-invalid @enderror" name="cellphone_number"
-                      value="{{ $employee->person->cellphone_number ?? '' }}" required autocomplete="cellphone_number"
+                      value="{{ $employee->person->cellphone_number ?? '' }}" autocomplete="cellphone_number"
                       autofocus>
 
                     @error('cellphone_number')

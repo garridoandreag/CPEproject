@@ -29,6 +29,7 @@
 
             <div class="row justify-content-md-center">
               <div class="col">
+                <a href="{{ route('admin.admin') }}" class="btn btn-outline-primary"><i class="fas fa-reply"></i></a>
                 <a href="{{ route('register') }}" class="btn btn-primary">Nuevo </a>
               </div>
               <div class="col-md-auto">

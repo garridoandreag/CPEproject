@@ -106,6 +106,7 @@ class UserController extends Controller {
 
         $validate = $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
+            'role_id' => ['required'],
             'email' => ['required', 'string', 'regex:/^([a-zA-Z]){3}.([a-zA-Z]){3,}/', 'max:255', 'unique:users,email,' . $id], //PARA VALIDAR QUE EL EMAIL ES UNICO Y NO PERTENECE AL REGISTRO QUE SE ESTA ACTUALIZANDO
             'password' => ['nullable', 'string', 'min:4', 'confirmed'],
             ]);
@@ -113,17 +114,19 @@ class UserController extends Controller {
         //RECOGER LOS DATOS DEL FORMULARIO
         $name = $request->input('name');
         $email = $request->input('email');
+        $role_id = $request->input('role_id');
         $password = $request->input('password');
 
         //ASIGNAR VALORES AL OBJETO DEL USUARIO
         $user->name = $name;
         $user->email = $email;
+        $user->role_id = $role_id;
         $user->password = Hash::make( $password );
 
         //ejecutar consulta y cambios en la base de datos
         $user->update();
-        return redirect()->route('config')
-                        ->with(['message' => 'Usuario actualizado correctamente']);
+
+        return redirect()->action('UserController@index')->with('status', 'Usuario actualizado correctamente');
     }
 
 }
