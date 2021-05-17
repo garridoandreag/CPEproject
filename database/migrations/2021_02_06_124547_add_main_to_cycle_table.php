@@ -14,7 +14,7 @@ class AddMainToCycleTable extends Migration
     public function up()
     {
         Schema::table('cycle', function (Blueprint $table) {
-            $table->boolean('main');
+            $table->boolean('main')->default(0);
         });
 
     }

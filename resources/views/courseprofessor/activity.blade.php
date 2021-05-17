@@ -37,7 +37,7 @@
                 <a href="{{ action('ActivityController@create', ['employee_id' => $employee_id,'coursegrade_id' => $coursegrade_id]) }}" class="btn btn-primary">Nuevo
                 </a>
                 @else
-                  @if(Auth::user()->role_id == 1)
+                  @if(Auth::user()->role_id <= 2)
                   <a href="{{ action('CoursegradeController@detail', ['cycle_id' => $cycle_id,'grade_id' => $grade_id]) }}" class="btn btn-outline-primary"><i class="fas fa-reply"></i>
                   </a>
                   @endif

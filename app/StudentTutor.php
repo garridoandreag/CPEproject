@@ -12,7 +12,7 @@ class StudentTutor extends Model {
     
     protected $table = 'studenttutor';
 
-    protected $fillable = ['student_id','tutor_id','relationship','status'];
+    protected $fillable = ['student_id','tutor_id','relationship','no_tutor','status'];
 
     public $sortable = ['student_id','tutor_id','relationship','status'];
 

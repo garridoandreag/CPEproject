@@ -15,13 +15,20 @@ Route::get('/', function () {
 */
 
 
-Auth::routes();
+
+
 
 Route::get('/', function () {
+    return view('welcome');
+});
+
+Auth::routes();
+
+Route::get('/home', function () {
     return view('home');
 })->middleware('auth');
 
-Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
+//Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::post('/search-person', 'PersonController@searchPersonWithName')->name('search-person');;
@@ -77,7 +84,10 @@ Route::group(['prefix' => 'tutor'], function() {
     Route::get('detail/{id}', 'TutorController@detail')->name('tutor.detail')->middleware('auth');
     Route::post('update', 'TutorController@update')->name('tutor.update')->middleware('auth');
     Route::post('/search-tutor', 'TutorController@searchTutorBySurname')->name('tutor.search-tutor');
+    Route::post('/search-dad', 'TutorController@searchDadBySurname')->name('tutor.search-dad');
+    Route::post('/search-mom', 'TutorController@searchMomBySurname')->name('tutor.search-mom');
     Route::get('/destroystudent/{tutor_id}/{student_id}', 'TutorController@destroystudent')->name('tutor.destroystudent')->middleware('auth');
+    Route::get('/destroy/{id}', 'TutorController@destroy')->name('tutor.destroy')->middleware('auth');
 });
 
 Route::group(['prefix' => 'grade'], function() {
@@ -185,11 +195,11 @@ Route::group(['prefix' => 'courseprofessor'], function() {
 });
 
 Route::group(['prefix' => 'activity'], function() {
-    Route::get('create/{employee_id?}/{coursegrade_id?}', 'ActivityController@create')->name('activity.create')->middleware('auth','admin');
-    Route::post('store', 'ActivityController@store')->name('activity.store')->middleware('auth','admin');
+    Route::get('create/{employee_id?}/{coursegrade_id?}', 'ActivityController@create')->name('activity.create')->middleware('auth');
+    Route::post('store', 'ActivityController@store')->name('activity.store')->middleware('auth');
     Route::get('detail/{id}', 'ActivityController@detail')->name('activity.detail');
-    Route::get('edit/{id}', 'ActivityController@edit')->name('activity.edit')->middleware('auth','admin');
-    Route::post('update', 'ActivityController@update')->name('activity.update')->middleware('auth','admin');
+    Route::get('edit/{id}', 'ActivityController@edit')->name('activity.edit')->middleware('auth');
+    Route::post('update', 'ActivityController@update')->name('activity.update')->middleware('auth');
 });
 
 Route::group(['prefix' => 'payment'], function() {

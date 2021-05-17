@@ -35,6 +35,7 @@ class CycleController extends Controller
             'school_id' => ['required'],
             'start_date' => ['required', 'date'],
             'end_date' => ['required', 'date'],
+            'main' => ['nullable'],
             
         ]);
 
@@ -44,6 +45,7 @@ class CycleController extends Controller
                 'school_id' => $data['school_id'],
                 'start_date' => $data['start_date'],
                 'end_date' => $data['end_date'],
+                'main' => $data['main'],
             ]);
     
                 foreach($pensums as $pensum){

@@ -69,7 +69,7 @@
                   <div class="col-md-6 offset-md-4">
                     <a href="{{ action('SubjectstudentController@inscription', ['student_id' => $student_id]) }}"
                       class="btn btn-outline-secondary">Cancelar</a>
-                    @if (Auth::user()->role_id == 1)
+                    @if (Auth::user()->role_id <= 2)
                       <a href="{{ action('SubjectstudentController@destroy', ['student_id' => $student_id, 'cycle_id' => $subjectstudent->cycle_id, 'grade_id' => $subjectstudent->grade_id]) }}"
                         class="btn btn-danger">Eliminar</a>
                     @endif

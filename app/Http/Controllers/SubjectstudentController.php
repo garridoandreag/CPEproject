@@ -113,7 +113,7 @@ class SubjectstudentController extends Controller
         ]);
 
 
-        foreach(Coursegrade::where('grade_id',$grade_id)->where('cycle_id',$cycle_id)->cursor() as $coursegrade){
+        foreach(Coursegrade::where('grade_id',$grade_id)->where('cycle_id',$cycle_id)->where('status','ACTIVO')->cursor() as $coursegrade){
             Subjectstudent::create([
                 'student_id' =>  $student_id,
                 'grade_id' => $data['grade_id'],
@@ -155,11 +155,11 @@ class SubjectstudentController extends Controller
                                         ['student_id','=',$student_id],
                                         ['cycle_id','=', $cycle_id],
                                         ['grade_id','=',$grade_id],
-                                        ])->sharedLock()->get();
+                                        ])->delete();
                 //var_dump($subjectstudents);
                 //die();
 
-                $subjectstudents->delete();
+               //$subjectstudents->delete();
 
           }catch(\Exception $e){
               return redirect()->action('SubjectstudentController@inscription', ['student_id' => $student_id]) 

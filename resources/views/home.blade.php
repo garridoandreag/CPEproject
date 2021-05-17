@@ -32,7 +32,7 @@
                 <div class="card-body">
 
 
-                  @if (Auth::user()->role_id == 1)
+                  @if (Auth::user()->role_id <= 2)
                     <table class="table table-hover table-bordered">
                       <thead>
                         <tr>
