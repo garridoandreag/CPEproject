@@ -27,9 +27,6 @@
             <div class="row justify-content-md-center">
               <div class="col">
                 <a class="btn btn-outline-primary" href="{{ route('home') }}"><i class="fas fa-home"></i></a>
-                @if (Auth::user()->role_id <= 2)
-                  <a href="{{ action('PaymentController@create') }}" class="btn btn-primary">Nuevo </a>
-                @endif
               </div>
               <div class="col-md-auto">
                 <input class="form-control" id="myInput" type="text" placeholder="Buscar...">

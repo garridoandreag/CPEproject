@@ -149,7 +149,7 @@
 
             </div>
             <div class="card-footer text-muted">
-              <small class="text-muted"> Publicado en: {{ $announcement->start_time ?? ''}}</small>
+              <small class="text-muted"> Última actualización: {{ $announcement->updated_at ?? ''}}</small>
             </div>
           </div>
         

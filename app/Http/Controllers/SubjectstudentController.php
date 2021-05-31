@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
+use Carbon\Carbon;
 use App\{Subjectstudent, Coursegrade, School}; 
 
 class SubjectstudentController extends Controller
@@ -33,6 +34,8 @@ class SubjectstudentController extends Controller
 
         try{
 
+        $now = Carbon::now();
+
         $school = School::find(1);
 
         $student = DB::table('person')->where('id','like',$student_id)->get();
@@ -55,7 +58,7 @@ class SubjectstudentController extends Controller
         $cycle= $subject->coursegrade->cycle;
 
 
-        $pdf = \PDF::loadView('/report/reportcardpdf',compact('reports','school','student','professor','grade','cycle'));
+        $pdf = \PDF::loadView('/report/reportcardpdf',compact('reports','school','student','professor','grade','cycle','now'));
         }catch(\Exception $e){
             return redirect()->action('SubjectstudentController@reportcard', ['cycle_id' => $cycle_id,'student_id' => $student_id]) 
                           ->with(['warning' => 'No hay datos']);
@@ -66,6 +69,7 @@ class SubjectstudentController extends Controller
 
     public function reportcard($cycle_id='',$student_id='')
     {   
+       
         $reports = DB::table('reportcard')
                         ->where('reportcard.student_id','like',$student_id)
                         ->where('reportcard.cycle_id','like',$cycle_id)
@@ -132,19 +136,61 @@ class SubjectstudentController extends Controller
     {
         $subjectstudent=Subjectstudent::where('student_id', $student_id)->where('cycle_id', $cycle_id)->where('grade_id', $grade_id)->first();
 
+        $subjects=Subjectstudent::where('student_id', $student_id)->where('cycle_id', $cycle_id)->where('grade_id', $grade_id)->get();
+        
         return view('subjectstudent.detail', [
-            'student_id' => $student_id,'subjectstudent' => $subjectstudent
+            'student_id' => $student_id,'subjectstudent' => $subjectstudent,'subjects' => $subjects
         ]);
     }
 
-    public function edit($id)
+    public function edit($student_id,$cycle_id,$grade_id)
     {
-        //
+        $subjectstudent=Subjectstudent::where('student_id', $student_id)->where('cycle_id', $cycle_id)->where('grade_id', $grade_id)->first();
+
+        $subjects=Subjectstudent::where('student_id', $student_id)->where('cycle_id', $cycle_id)->where('grade_id', $grade_id)->get();
+   
+        return view('subjectstudent.create', [
+            'student_id' => $student_id,'subjectstudent' => $subjectstudent,'subjects' => $subjects
+        ]);
+        
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $grade_id = $request->input('grade_id');
+        $cycle_id = $request->input('cycle_id');
+        $student_id = $request->input('student_id');
+        $courses = sizeof($request->input('course_id'));
+        
+
+        if(isset($data['course_id'])){
+        foreach( $courses as $course_id){
+
+            $coursegrade = Coursegrade::where('grade_id',$grade_id)->where('cycle_id',$cycle_id)->where('course_id',$course_id)->first();
+
+            Subjectstudent::updateOrCreate([
+                'student_id' =>  $student_id,
+                'grade_id' => $grade_id,
+                'cycle_id' =>  $cycle_id,
+                'coursegrade_id' => $coursegrade->id,],
+                ['status' => 'ACTIVO']
+            );
+
+        }}
+
+        return redirect()->action('SubjectstudentController@inscription', ['student_id' => $student_id]) 
+                         ->with(['status' => 'Inscripción actualizada con éxito.']);
+        
+     }
+
+    public function destroycourse($student_id,$cycle_id,$grade_id,$course_id){
+
+        $subjectstudent=Subjectstudent::where('student_id', $student_id)->where('cycle_id', $cycle_id)->where('grade_id', $grade_id)->get();
+
+        return view('subjectstudent.detail', [
+            'student_id' => $student_id,'subjectstudent' => $subjectstudent
+        ]);
+
     }
 
     public function destroy($student_id,$cycle_id,$grade_id)

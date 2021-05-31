@@ -109,6 +109,16 @@ class PaymentcategoryController extends Controller
 
     public function destroy($id)
     {
-        //
+        try{
+            Paymentcategory::where('id', '=', $id)->delete();
+
+        }catch(\Exception $e){
+            return redirect()->route('paymentcategory.index')
+            ->with(['warning' => 'No se pudo eliminar el registro, porque ya existen movimientos.']);
+
+        }
+
+        return redirect()->route('paymentcategory.index')
+        ->with(['status' => 'Se elimino el registro.']);
     }
 }

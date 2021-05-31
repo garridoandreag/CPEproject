@@ -216,7 +216,7 @@ class PaymentController extends Controller
             where s.id not in 
             (select student_id from payment pay
             inner join paymentcategory pc on pc.id=pay.paymentcategory_id
-            where pay.cycle_id like 3
+            where pay.cycle_id like 1
             and pc.id like ?
             and Date_format(PC.PAYMENT_DATE,'%d/%M') <= Date_format(now(),'%d/%M')
             )",  [1] );
@@ -235,7 +235,7 @@ class PaymentController extends Controller
     
     public function reportpaymentallpdf(Request $request){
 
-      //  try{
+        try{
          $now = Carbon::now();
          $cycle_id = $request->input('cycle_id');
    
@@ -272,10 +272,10 @@ class PaymentController extends Controller
          $tutors =  DB::table('datatutor')->get();
  
          $pdf = \PDF::loadView('/report/reportpaymentallpdf',compact('reports','school','cycle','categories','now','tutors'));
-        // }catch(\Exception $e){
-       //      return redirect()->action('PaymentController@index') 
-        //     ->with(['warning' => 'No hay datos']);
-        // }
+         }catch(\Exception $e){
+             return redirect()->action('PaymentController@index') 
+             ->with(['warning' => 'No hay datos']);
+         }
          
          return $pdf->download('ReporteFaltaPagoGeneral.pdf');
      }
@@ -324,7 +324,7 @@ class PaymentController extends Controller
     
     public function reportpaymentstudentpdf(Request $request){
 
-       try{
+      try{
          $now = Carbon::now();
          $cycle_id = $request->input('cycle_id');
          $student_id= $request->input('student_id');
@@ -334,19 +334,30 @@ class PaymentController extends Controller
          $student = Student::find($student_id);
  
          $reports = DB::table('paymentcategory')
+                    ->where('status','ACTIVO')
                     ->select('name')
                     ->selectRaw('IF((SELECT pay.paymentcategory_id 
                     FROM payment pay 
                     WHERE pay.student_id LIKE ? 
                     AND paymentcategory.id=pay.paymentcategory_id
-                    AND pay.cycle_id=?),"CANCELADO","PENDIENTE") as estado',[$student_id,$cycle_id])
+                    AND pay.cycle_id=?),"Pagado","Pendiente") as estado',[$student_id,$cycle_id])
+                    ->selectRaw('IF((SELECT pay.paymentcategory_id 
+                    FROM payment pay 
+                    WHERE pay.student_id LIKE ? 
+                    AND paymentcategory.id=pay.paymentcategory_id
+                    AND pay.cycle_id=?),
+                    (SELECT pay.code_reference 
+                    FROM payment pay 
+                    WHERE pay.student_id LIKE ? 
+                    AND paymentcategory.id=pay.paymentcategory_id
+                    AND pay.cycle_id=?),"-") as codigoreferencia',[$student_id,$cycle_id,$student_id,$cycle_id])
                     ->get();
      
  
          $pdf = \PDF::loadView('/report/reportpaymentstudentpdf',compact('reports','school','cycle','student','now'));
        }catch(\Exception $e){
             return redirect()->action('PaymentController@index') 
-           ->with(['warning' => 'No hay datos']);
+          ->with(['warning' => 'No hay datos']);
        }
          
          return $pdf->download('Reporte.pdf');

@@ -31,11 +31,11 @@ class CoursegradeController extends Controller
         try{
             if(empty($cycle_id)){
                 $coursegrades=Coursegrade::select('grade_id','cycle_id')->distinct()
-                ->orderBy('cycle_id','desc')->orderBy('grade_id','desc')
+                ->orderBy('cycle_id','desc')->orderBy('grade_id','asc')
                 ->paginate(30);
             }else{
                 $coursegrades=Coursegrade::select('grade_id','cycle_id')->distinct()->where('cycle_id',$cycle_id)
-                ->orderBy('cycle_id','desc')->orderBy('grade_id','desc')
+                ->orderBy('cycle_id','desc')->orderBy('grade_id','asc')
                 ->paginate(30);
             }
             

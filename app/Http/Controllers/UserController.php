@@ -129,4 +129,18 @@ class UserController extends Controller {
         return redirect()->action('UserController@index')->with('status', 'Usuario actualizado correctamente');
     }
 
+    public function destroy($id)
+    {
+        try{
+            User::where('id', '=', $id)->delete();
+
+        }catch(\Exception $e){
+            return redirect()->route('user.index')
+            ->with(['warning' => 'No se pudo eliminar el registro, porque ya existen movimientos.']);
+        }
+
+        return redirect()->route('user.index')
+        ->with(['status' => 'Se elimino el registro.']);
+    }
+
 }

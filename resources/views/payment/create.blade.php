@@ -47,8 +47,8 @@
                       class="form-control  @error('paymentcategory_id') is-invalid @enderror">
                       @foreach ($paymentcategories->get() as $index => $paymentcategory)
 
-                        <option value="{{ $index }}"
-                          {{ $payment->paymentcategory_id ?? '' || old('paymentcategory_id', 0) == $index ? 'selected' : '' }}>
+                      <option value="{{ $index }}"
+                      {{ old('paymentcategory_id', $payment->paymentcategory_id ?? '') == $index ? 'selected' : '' }}>
                           {{ $paymentcategory }}
                         </option>
 

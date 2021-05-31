@@ -79,6 +79,7 @@
       <thead>
         <tr>
           <th scope="col">Categoría</th>
+          <th scope="col">Codigo de Referencia</th>
           <th scope="col">Estado</th>
         </tr>
       </thead>
@@ -87,6 +88,9 @@
           <tr>
             <td data-label="Categoría" scope="row">
               {{ $report->name }}
+            </td>
+            <td data-label="Codigo Referencia" scope="row">
+              {{ $report->codigoreferencia}}
             </td>
             <td data-label="Estado" scope="row">
               {{ $report->estado}}
