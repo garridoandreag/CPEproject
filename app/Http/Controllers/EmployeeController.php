@@ -35,7 +35,7 @@ class EmployeeController extends Controller
             'names' => ['required', 'string', 'max:50'],
             'first_surname' => ['required', 'string', 'max:50'],
             'second_surname' => ['required', 'string', 'max:50'],
-            'phone_number' => ['required', 'string', 'max:8'],
+            'phone_number' => ['nullable', 'string', 'max:8'],
             'cellphone_number' => ['nullable', 'string', 'max:8'],
             'subdivision_code' => ['required'],
             'gender_id' => ['required'],

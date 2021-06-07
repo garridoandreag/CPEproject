@@ -61,12 +61,15 @@
                   <button type="submit" class="btn btn-primary  btn-lg btn-block">
                     {{ __('Ingresar') }}
                   </button>
+<br>
+                  
 
-                 @if (Route::has('password.request'))
+          <!--      if (Route::has('password.request'))
                     <a class="btn btn-link btn-block" href="{{ route('password.request') }}">
-                      {{ __('¿Olvidaste tu contraseña?') }}
+                      { __('¿Olvidaste tu contraseña?') }}
                     </a>
-                  @endif
+                  endif
+                  -->
                 </div>
               </div>
             </form>

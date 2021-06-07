@@ -122,6 +122,10 @@
                         Guardar
                       @endif
                     </button>
+                    @if (isset($cycle) && is_object($cycle))
+                    <a href="{{ action('CycleController@destroy', ['id' => $cycle->id], ['method' => 'DELETE']) }}"
+                      class="btn btn-danger">Eliminar</a>
+                  @endif
 
                   </div>
                 </div>

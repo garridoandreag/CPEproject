@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
-use App\{Student, Person, Caregiver, Liststudent};
+use App\{Student, Person, Caregiver, Liststudent, Studenttutor};
 
 class StudentController extends Controller {
 
@@ -27,7 +27,7 @@ class StudentController extends Controller {
 
     public function store(Request $request) {
 
-        $caregivers = sizeof($request->input('name_caregiver'));
+        $caregivers = '';
         $name_caregivers = $request->input('name_caregiver');
         $surname_caregivers = $request->input('surname_caregiver');
         $relationship = $request->input('relationship');
@@ -38,7 +38,7 @@ class StudentController extends Controller {
             'names' => ['required', 'string', 'max:50'],
             'first_surname' => ['required', 'string', 'max:50'],
             'second_surname' => ['required', 'string', 'max:50'],
-            'phone_number' => ['required', 'string', 'max:8'],
+            'phone_number' => ['nullable', 'string', 'max:8'],
             'subdivision_code' => ['required'],
             'gender_id' => ['required'],
             'home_address' => ['required', 'string', 'max:250'],
@@ -49,6 +49,8 @@ class StudentController extends Controller {
             'surname_caregiver' =>  ['nullable'],
             'relationship' =>  ['nullable'],
             'phone_number_caregiver' =>  ['nullable','max:8'],
+            'dad_id' =>  ['nullable'],
+            'mom_id' =>  ['nullable'],
         ]);
 
         $picture = $request->file('picture');
@@ -80,6 +82,23 @@ class StudentController extends Controller {
                 'birthday' => $data['birthday']
             ]);
 
+            if (isset($data['dad_id'])) {
+                Studenttutor::updateOrCreate(
+                    ['student_id' =>  $person->id, 'no_tutor' => '1'],
+                    ['tutor_id' => $data['dad_id'], 'relationship' => 'Padre']
+                );
+            }
+    
+            if (isset($data['mom_id'])) {
+                Studenttutor::updateOrCreate(
+                    ['student_id' =>  $person->id, 'no_tutor' => '2'],
+                    ['tutor_id' => $data['mom_id'], 'relationship' => 'Madre']
+                );              
+            }
+    
+            if ($name_caregivers[0] != '' ) {
+                $caregivers = sizeof($request->input('name_caregiver'));
+
             for($i = 0; $i < $caregivers; $i++){
                 Caregiver::create([
                     'student_id' => $person->id,
@@ -89,6 +108,7 @@ class StudentController extends Controller {
                     'phone_number' => $phone_number[$i]
                 ]);
             }
+        }
     });
       return redirect()->route('student.index')
                         ->with(['status' => 'Estudiante creado correctamente']);
@@ -101,10 +121,31 @@ class StudentController extends Controller {
 
     public function detail($id) {
         $student = \App\Student::where('id', $id)->first();
+  
+
+        $dadstudent = DB::table('tutor')
+        //->select('studenttutor.tutor_id as tutor_id', 'person.names as names','person.first_surname as first_surname','person.second_surname as second_surname')
+        ->join('studenttutor', 'tutor.id', '=', 'studenttutor.tutor_id')
+        ->join('person', 'tutor.id', '=', 'person.id')
+        ->where('studenttutor.student_id',$id)
+        ->where('person.gender_id','2')
+        ->first();  
+
+
+        $momstudent= DB::table('tutor')
+       // ->select('studenttutor.tutor_id as tutor_id', 'person.names as names','person.first_surname as first_surname','person.second_surname as second_surname')
+        ->join('studenttutor', 'tutor.id', '=', 'studenttutor.tutor_id')
+        ->join('person', 'tutor.id', '=', 'person.id')
+        ->where('studenttutor.student_id',$id)
+        ->where('person.gender_id','1')
+        ->first();  
 
         return view('student.detail', [
-            'student' => $student
+            'student' => $student,
+            'dadstudent' => $dadstudent,
+            'momstudent' => $momstudent,
         ]);
+
     }
 
 
@@ -142,7 +183,7 @@ class StudentController extends Controller {
         $user = \Auth::user();
         $role_id =  $user->role_id;
         
-        if($role_id == 1){
+        if($role_id <= 2){
             $employeegrades = DB::table('grade')
             ->select('id')
             ->where('status', 'ACTIVO')
@@ -166,8 +207,28 @@ class StudentController extends Controller {
 
         $student = \App\Student::where('id', $id)->first();
 
+
+        $dadstudent = DB::table('tutor')
+        //->select('studenttutor.tutor_id as tutor_id', 'person.names as names','person.first_surname as first_surname','person.second_surname as second_surname')
+        ->join('studenttutor', 'tutor.id', '=', 'studenttutor.tutor_id')
+        ->join('person', 'tutor.id', '=', 'person.id')
+        ->where('studenttutor.student_id',$id)
+        ->where('person.gender_id','2')
+        ->first();  
+
+
+        $momstudent= DB::table('tutor')
+       // ->select('studenttutor.tutor_id as tutor_id', 'person.names as names','person.first_surname as first_surname','person.second_surname as second_surname')
+        ->join('studenttutor', 'tutor.id', '=', 'studenttutor.tutor_id')
+        ->join('person', 'tutor.id', '=', 'person.id')
+        ->where('studenttutor.student_id',$id)
+        ->where('person.gender_id','1')
+        ->first();  
+
                 return view('student.create', [
-                    'student' => $student
+                    'student' => $student,
+                    'dadstudent' => $dadstudent,
+                    'momstudent' => $momstudent,
                 ]);
     }
 
@@ -196,7 +257,7 @@ class StudentController extends Controller {
         $person = Person::find($id);
         $student = Student::find($id);
 
-        $caregivers = sizeof($request->input('name_caregiver'));
+        
         $name_caregivers = $request->input('name_caregiver');
         $surname_caregivers = $request->input('surname_caregiver');
         $relationship = $request->input('relationship');
@@ -209,7 +270,7 @@ class StudentController extends Controller {
             'names' => ['required', 'string', 'max:50'],
             'first_surname' => ['required', 'string', 'max:50'],
             'second_surname' => ['required', 'string', 'max:50'],
-            'phone_number' => ['required', 'string', 'max:8'],
+            'phone_number' => ['nullable', 'string', 'max:8'],
             'subdivision_code' => ['required'],
             'gender_id' => ['required'],
             'home_address' => ['required', 'string', 'max:250'],
@@ -220,6 +281,8 @@ class StudentController extends Controller {
             'surname_caregiver' =>  ['nullable'],
             'relationship' =>  ['nullable'],
             'phone_number_caregiver' => ['nullable','max:8'],
+            'dad_id' =>  ['nullable'],
+            'mom_id' =>  ['nullable'],
         ]);
 
         if ($picture) {
@@ -243,6 +306,23 @@ class StudentController extends Controller {
 
         $person->update();
         $student->update();
+     
+        if (isset($data['dad_id'])) {
+            Studenttutor::updateOrCreate(
+                ['student_id' =>  $person->id, 'no_tutor' => 1],
+                ['tutor_id' => $data['dad_id'], 'relationship' => 'Padre']
+            );
+        }
+
+        if (isset($data['mom_id'])) {
+            Studenttutor::updateOrCreate(
+                ['student_id' =>  $person->id, 'no_tutor' => 2],
+                ['tutor_id' => $data['mom_id'], 'relationship' => 'Madre']
+            );              
+        }
+
+        if ($name_caregivers[0] != '' ) {
+            $caregivers = sizeof($request->input('name_caregiver'));
 
         for($i = 0; $i < $caregivers; $i++){
             Caregiver::updateOrCreate([
@@ -253,22 +333,38 @@ class StudentController extends Controller {
                 'phone_number' => $phone_number[$i]
             ]);
         }
+    }
 
         return redirect()->action('StudentController@index')->with('status', 'Estudiante actualizado correctamente');
     }
 
+    public function status (Request $request) {
+        $status = $request->input('status');
+        $id = $request->input('id');
 
+        $status = ($status == 'ACTIVO') ? 'INACTIVO' : 'ACTIVO';
+
+    
+        $student = DB::table('student')->where('id', $id)
+          ->update(array(
+            'status' => $status,
+          ));
+    
+        return response()->json(
+          [
+            'data' => ['status' => $status]
+          ]
+        );
+    }
     
   public function destroy($id){
 
     try{
       $student = \App\Student::where('id', $id)->first();
 
-     
-
-     
-
       \App\Caregiver::where('student_id',$id)->delete();
+
+      \App\Studenttutor::where('student_id',$id)->delete();
 
       $student->delete();
 

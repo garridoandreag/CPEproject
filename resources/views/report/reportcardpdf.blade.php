@@ -92,6 +92,7 @@
             {{ $professor->names . ' ' . $professor->first_surname . ' ' . $professor->second_surname }}
           </h4>
         @endforeach
+        <h5>{{ $now }}</h5>
       </td>
     </tr>
   </table>

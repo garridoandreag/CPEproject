@@ -35,17 +35,25 @@ class CycleController extends Controller
             'school_id' => ['required'],
             'start_date' => ['required', 'date'],
             'end_date' => ['required', 'date'],
+            'main' => ['nullable'],
             
         ]);
 
-        DB::transaction(function() use ($data,$pensums){
+        DB::transaction(function() use ($data,$pensums,$request){
             $cycle = Cycle::create([
                 'name' => $data['name'],
                 'school_id' => $data['school_id'],
                 'start_date' => $data['start_date'],
                 'end_date' => $data['end_date'],
+                'main' => $data['main'],
             ]);
     
+            if($request->has('main')){
+                $cycle->main = 1;
+            }else{
+                $cycle->main = 0;
+            }
+
                 foreach($pensums as $pensum){
                     Coursegrade::create([
                         'grade_id' => $pensum->grade_id,
@@ -139,6 +147,27 @@ class CycleController extends Controller
 
     public function destroy($id)
     {
-        //
+        try{
+
+            DB::transaction(function() use ($id){
+
+            $cycle = \App\Cycle::where('id', $id)->first();
+            Coursegrade::where([
+                'cycle_id' => $id])->delete();
+
+            $cycle->delete();
+            });
+
+        }catch(\Exception $e){
+
+            return redirect()->route('cycle.index')
+            ->with(['warning' => 'No se pudo eliminar el registro, porque ya existen movimientos.']);
+
+        }
+
+        return redirect()->route('cycle.index')
+        ->with(['status' => 'Se elimino el registro.']);
+
+        
     }
 }

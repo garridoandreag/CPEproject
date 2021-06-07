@@ -20,14 +20,16 @@ class CreatePaymentTable extends Migration
             cycle_id int(255) UNSIGNED NOT NULL,
             amount decimal(10,2) not null,
             code_reference varchar(100) not null,
+            repeated tinyint(1) NOT NULL DEFAULT '0',
+            receipt_number varchar(100) NOT NULL,
             student_id int(255) UNSIGNED NOT NULL,
             tutor_id int(255) UNSIGNED NOT NULL,
             created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
             status enum('ACTIVO','INACTIVO') not null default 'ACTIVO',
             CONSTRAINT pk_payment PRIMARY KEY (id),
-            CONSTRAINT fk_payment_studenttutor1 FOREIGN KEY (student_id) REFERENCES studenttutor(student_id),
-            CONSTRAINT fk_payment_studenttutor2 FOREIGN KEY (tutor_id) REFERENCES studenttutor(tutor_id),
+            CONSTRAINT fk_payment_student FOREIGN KEY (student_id) REFERENCES student(id),
+            CONSTRAINT fk_payment_tutor FOREIGN KEY (tutor_id) REFERENCES tutor (id),
             CONSTRAINT fk_payment_paymentcategory FOREIGN KEY (paymentcategory_id) REFERENCES paymentcategory(id)
             )ENGINE=InnoDb;
             ");

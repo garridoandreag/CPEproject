@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
-use App\Grade;
+use App\{Grade, Course, Pensum};
 
 class GradeController extends Controller
 {
@@ -31,17 +31,33 @@ class GradeController extends Controller
 
     public function store(Request $request)
     {
-        //
+        try{
         $data = $request->validate([
             'name' => ['required', 'string', 'max:50'],
             'section' => ['required']
         ]);
 
-        Grade::create([
+        $grade = Grade::create([
             'name' => $data['name'],
             'section' => $data['section']
         ]);
-     
+
+        $courses = Course::get();
+        $pensum = Pensum::get();
+    
+        foreach($courses as $course){
+                    
+          Pensum::firstOrCreate([
+              'grade_id' => $grade->id,
+              'course_id' => $course->id,],
+              ['status' => 'INACTIVO'
+          ]);
+      }
+    }catch(\Exception $e){
+        return redirect()->route('grade.index')
+        ->with(['status' => 'No se pudo crear el grado.']);
+
+    }
         return redirect()->route('grade.index')
                         ->with(['status' => 'Grado agregado correctamente.']);
 
