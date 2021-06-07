@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<script src="{{ asset('js/axios.js') }}" ></script>
   <script>
     $(document).ready(function() {
       $("#myInput").on("keyup", function() {
@@ -68,13 +69,8 @@
                       @if ($course->status == 'INACTIVO')
                         <span id="status{{ $course->id }}" onclick="changeStatus({{ $course->id }})"
                           class="status badge badge-danger">
-                          <span id="status{{ $course->id }}" onclick="changeStatus({{ $course->id }})"
-                            class="status badge badge-danger">
-                            <span id="status{{ $course->id }}" onclick="changeStatus({{ $course->id }})"
-                              class="status badge badge-danger">
-                              {{ $course->status }}
-                            </span>
-                          @else
+                        </span>
+                      @else
                             <span id="status{{ $course->id }}" onclick="changeStatus({{ $course->id }})"
                               class="status badge badge-success">
                               {{ $course->status }}

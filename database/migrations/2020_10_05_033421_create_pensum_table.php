@@ -17,7 +17,8 @@ class CreatePensumTable extends Migration
             CREATE TABLE PENSUM(
             grade_id int(255) unsigned not null,
             course_id int(255) unsigned not null,
-            pensumcoursegroup_id int(10) unsigned not null,
+            courseorder int(255) unsigned not null,
+            pensumcoursegroup_id int(10) unsigned not null default 1,
             created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
             status enum('ACTIVO','INACTIVO') not null default 'ACTIVO'

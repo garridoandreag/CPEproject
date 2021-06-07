@@ -11,11 +11,12 @@
   <title>Colegio Pequeñas Estrellas</title>
 
   <!-- Scripts -->
-  <script src="{{ asset('js/app.js') }}" defer></script>
+  <script src="{{ asset('js/app.js') }}" ></script>
   <script src="{{ asset('js/jquery-3.5.1.js') }}" defer></script>
   <script src="https://kit.fontawesome.com/e4f410c930.js" crossorigin="anonymous"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
   <!--<script>
 /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
@@ -54,7 +55,7 @@ function closeNav() {
       <!-- background: rgb(253,29,45);
 background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%, rgba(252,176,69,1) 33%, rgba(95,167,52,1) 51%, rgba(9,231,240,1) 71%, rgba(131,58,180,1) 90%);-->
       <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}">
+        <a class="navbar-brand" href="{{ route('home') }}">
           Colegio Pequeñas Estrellas
           <!--{{ config('app.name', 'Laravel') }}-->
         </a>
@@ -127,7 +128,7 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
     <ul class="components">
 
       <li>
-        @if (Auth::user()->role_id == 1)
+        @if (Auth::user()->role_id <= 2 )
           <a href="{{ route('admin.admin') }}">
             <i class="fas fa-users-cog"></i>
 
@@ -140,13 +141,13 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
           Estudiantes
         </a>
         <ul class="collapse list-unstyled" id="pageSubmenu">
-          @if (Auth::user()->role_id == 1)
+          @if (Auth::user()->role_id <= 2 )
             <li>
               <a href="{{ route('student.index') }}">Registro e Incripción</a>
             </li>
           @endif
 
-          @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 3)
+          @if (Auth::user()->role_id <= 2  || Auth::user()->role_id == 3)
           <li>
             <a href="{{ route('student.grade') }}">Grados</a>
           </li>
@@ -164,7 +165,7 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
 
         </ul>
 
-        @if (Auth::user()->role_id == 1)
+        @if (Auth::user()->role_id <= 2 )
           <a href="{{ route('tutor.index') }}">
             <i class="fa fa-user"></i>
             Padres
@@ -179,7 +180,7 @@ background: linear-gradient(90deg, rgba(253,29,45,1) 0%, rgba(253,131,31,1) 15%,
           </a>
         @endif
 
-        @if (Auth::user()->role_id == 1)
+        @if (Auth::user()->role_id <= 2 )
         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="menu-dropdown-toggle">
           <i class="fas fa-wallet"></i>
           Colegiatura

@@ -18,6 +18,8 @@ class PaymentController extends Controller
 
     public function __construct() {
         $this->middleware('auth');
+
+
     }
     
     public function index()
@@ -38,25 +40,99 @@ class PaymentController extends Controller
         return view('payment.create');
     }
 
+    public function exist(Request $request){
+        $code = $request->input('code_reference');
+        $payments = DB::table('payment')
+                    ->where('code_reference',$code)
+                    ->count();
+        $message = 'Sin verificar';
+
+        if($payments > 0){
+            $message = 'DUPLICADO: Existen '.$payments.' numeros de BOLETAS iguales.';
+        }
+        else{
+            $message = 'No hay BOLETAS duplicadas.';
+        }
+    
+        return response()->json(['mensaje' => $message]);
+    }
+
+
+    public function existreceipt(Request $request){
+        $code = $request->input('receipt_number');
+        $payments = DB::table('payment')
+                    ->where('receipt_number',$code)
+                    ->count();
+        $message = 'Sin verificar';
+
+        if($payments > 0){
+            $message = 'DUPLICADO: Existen '.$payments.' numeros de RECIBOS iguales.';
+        }
+        else{
+            $message = 'No hay RECIBOS duplicados.';
+        }
+    
+        return response()->json(['mensaje' => $message]);
+    }
+ 
+
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'paymentcategory_id' => ['required'],
-            'cycle_id' => ['required'],
-            'amount' => ['required','regex:/^\d+(\.\d{1,2})?$/'],
-            'code_reference' => ['required','unique:payment,code_reference'],
-            'student_id' => ['required'],
-            'tutor_id' => ['required'],
-        ]);
+  
+        if ($request->has('repeated')) {
 
-        Payment::create([
-            'paymentcategory_id' => $data['paymentcategory_id'],
-            'cycle_id' => $data['cycle_id'],
-            'amount' => $data['amount'],
-            'code_reference' => $data['code_reference'],
-            'student_id' => $data['student_id'],
-            'tutor_id' => $data['tutor_id'],
-        ]);
+            $data = $request->validate([
+                'paymentcategory_id' => ['required'],
+                'cycle_id' => ['required'],
+                'amount' => ['required','regex:/^\d+(\.\d{1,2})?$/'],
+                'repeated' => ['nullable'],
+                'code_reference' => ['required'],
+                'receipt_number' => ['required'],
+                'student_id' => ['required'],
+                'tutor_id' => ['required'],
+            ]);
+
+            
+            
+            Payment::create([
+                'paymentcategory_id' => $data['paymentcategory_id'],
+                'cycle_id' => $data['cycle_id'],
+                'amount' => $data['amount'],
+                'repeated' => 1,
+                'code_reference' => $data['code_reference'],
+                'receipt_number' => $data['receipt_number'],
+                'student_id' => $data['student_id'],
+                'tutor_id' => $data['tutor_id'],
+            ]);
+           
+           
+        }else{
+            
+            $data = $request->validate([
+                'paymentcategory_id' => ['required'],
+                'cycle_id' => ['required'],
+                'amount' => ['required','regex:/^\d+(\.\d{1,2})?$/'],
+                'repeated' => ['nullable'],
+                'code_reference' => ['required','unique:payment,code_reference'],
+                'receipt_number' => ['required'],
+                'student_id' => ['required'],
+                'tutor_id' => ['required'],
+            ]);
+
+            Payment::create([
+                'paymentcategory_id' => $data['paymentcategory_id'],
+                'cycle_id' => $data['cycle_id'],
+                'amount' => $data['amount'],
+                'repeated' => 0,
+                'code_reference' => $data['code_reference'],
+                'receipt_number' => $data['receipt_number'],
+                'student_id' => $data['student_id'],
+                'tutor_id' => $data['tutor_id'],
+            ]);
+           
+        };
+
+
     
         return redirect()->route('payment.index')
                         ->with(['status' => 'Pago registrado correctamente.']);
@@ -80,24 +156,50 @@ class PaymentController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $data = $request->validate([
-            'paymentcategory_id' => ['required'],
-            'cycle_id' => ['required'],
-            'amount' => ['required','regex:/^\d+(\.\d{1,2})?$/'],
-            'code_reference' => ['required','unique:payment,code_reference'],
-            'student_id' => ['required'],
-            'tutor_id' => ['required'],
-        ]);
+        $id = $request->input('id');
+        $payment = \App\Payment::where('id', $id)->first();
+
+        if ($request->has('repeated')) {
+
+            $data = $request->validate([
+                'paymentcategory_id' => ['required'],
+                'cycle_id' => ['required'],
+                'amount' => ['required','regex:/^\d+(\.\d{1,2})?$/'],
+                'repeated' => ['nullable'],
+                'code_reference' => ['required'],
+                'receipt_number' => ['required'],
+                'student_id' => ['required'],
+                'tutor_id' => ['required'],
+            ]);
+           
+        }else{
+            
+            $data = $request->validate([
+                'paymentcategory_id' => ['required'],
+                'cycle_id' => ['required'],
+                'amount' => ['required','regex:/^\d+(\.\d{1,2})?$/'],
+                'repeated' => ['nullable'],
+                'code_reference' => ['required','unique:payment,code_reference,'.$id],
+                'receipt_number' => ['required'],
+                'student_id' => ['required'],
+                'tutor_id' => ['required'],
+            ]);
+           
+        };
+
 
         $payment->paymentcategory_id =  $data['paymentcategory_id'];
         $payment->cycle_id =  $data['cycle_id'];
         $payment->amount =  $data['amount'];
+        if ($request->has('repeated')) {
+            $payment->repeated = 1;
+        };
         $payment->code_reference =  $data['code_reference'];
+        $payment->receipt_number =  $data['receipt_number'];
         $payment->student_id =  $data['student_id'];
         $payment->tutor_id =  $data['tutor_id'];
-
 
         $payment->update();
 
@@ -114,7 +216,7 @@ class PaymentController extends Controller
             where s.id not in 
             (select student_id from payment pay
             inner join paymentcategory pc on pc.id=pay.paymentcategory_id
-            where pay.cycle_id like 3
+            where pay.cycle_id like 1
             and pc.id like ?
             and Date_format(PC.PAYMENT_DATE,'%d/%M') <= Date_format(now(),'%d/%M')
             )",  [1] );
@@ -127,6 +229,56 @@ class PaymentController extends Controller
     public function menureport() {
         return view('payment.menureport');
     }
+
+
+
+    
+    public function reportpaymentallpdf(Request $request){
+
+        try{
+         $now = Carbon::now();
+         $cycle_id = $request->input('cycle_id');
+   
+         
+         $school = School::find(1);
+         $cycle = Cycle::find($cycle_id);
+         $categories = PaymentCategory::where('status','ACTIVO')->orderBy('id','asc')->get();
+ 
+         $reports[''] = 'No hay datos';
+         foreach($categories as $category){
+            $reports[$category->id] = DB::table('person')
+                                    ->join('student','person.id','student.id')
+                                    ->join('subjectstudent', function ($join) use($cycle_id) {
+                                        $join->on('person.id', '=', 'subjectstudent.student_id')
+                                            ->where('subjectstudent.cycle_id', '=', $cycle_id);
+                                    })
+                                    ->join('grade','subjectstudent.grade_id','grade.id')
+                                    ->select('student.id','person.names', 'person.first_surname', 'person.second_surname','grade.name','student.student_code')
+                                    ->whereNotIn('person.id', function ($query) use($cycle_id,$category) {
+                                        $query->select('student_id')
+                                            ->from('payment')
+                                            ->where([
+                                                ['cycle_id','=',$cycle_id],
+                                                ['paymentcategory_id','=',$category->id]
+                                                ]);
+                                    })->groupBy('student.id','person.names', 'person.first_surname', 'person.second_surname','grade.name','student.student_code')
+                                    ->havingRaw('max(subjectstudent.grade_id)')
+                                    ->get();
+
+         }
+
+
+     
+         $tutors =  DB::table('datatutor')->get();
+ 
+         $pdf = \PDF::loadView('/report/reportpaymentallpdf',compact('reports','school','cycle','categories','now','tutors'));
+         }catch(\Exception $e){
+             return redirect()->action('PaymentController@index') 
+             ->with(['warning' => 'No hay datos']);
+         }
+         
+         return $pdf->download('ReporteFaltaPagoGeneral.pdf');
+     }
 
     public function reportpaymentxcategorypdf(Request $request){
 
@@ -172,7 +324,7 @@ class PaymentController extends Controller
     
     public function reportpaymentstudentpdf(Request $request){
 
-       try{
+      try{
          $now = Carbon::now();
          $cycle_id = $request->input('cycle_id');
          $student_id= $request->input('student_id');
@@ -182,19 +334,30 @@ class PaymentController extends Controller
          $student = Student::find($student_id);
  
          $reports = DB::table('paymentcategory')
+                    ->where('status','ACTIVO')
                     ->select('name')
                     ->selectRaw('IF((SELECT pay.paymentcategory_id 
                     FROM payment pay 
                     WHERE pay.student_id LIKE ? 
                     AND paymentcategory.id=pay.paymentcategory_id
-                    AND pay.cycle_id=?),"CANCELADO","PENDIENTE") as estado',[$student_id,$cycle_id])
+                    AND pay.cycle_id=?),"Pagado","Pendiente") as estado',[$student_id,$cycle_id])
+                    ->selectRaw('IF((SELECT pay.paymentcategory_id 
+                    FROM payment pay 
+                    WHERE pay.student_id LIKE ? 
+                    AND paymentcategory.id=pay.paymentcategory_id
+                    AND pay.cycle_id=?),
+                    (SELECT pay.code_reference 
+                    FROM payment pay 
+                    WHERE pay.student_id LIKE ? 
+                    AND paymentcategory.id=pay.paymentcategory_id
+                    AND pay.cycle_id=?),"-") as codigoreferencia',[$student_id,$cycle_id,$student_id,$cycle_id])
                     ->get();
      
  
          $pdf = \PDF::loadView('/report/reportpaymentstudentpdf',compact('reports','school','cycle','student','now'));
        }catch(\Exception $e){
             return redirect()->action('PaymentController@index') 
-           ->with(['warning' => 'No hay datos']);
+          ->with(['warning' => 'No hay datos']);
        }
          
          return $pdf->download('Reporte.pdf');
@@ -202,6 +365,14 @@ class PaymentController extends Controller
 
     public function destroy($id)
     {
-        //
+        try{
+            Payment::where('id', '=', $id)->delete();
+        }catch(\Exception $e){
+            return redirect()->route('payment.index')
+            ->with(['warning' => 'No se pudo eliminar el registro, porque ya existen movimientos.']);
+        }
+
+        return redirect()->route('payment.index')
+        ->with(['status' => 'Se elimino el registro.']);
     }
 }

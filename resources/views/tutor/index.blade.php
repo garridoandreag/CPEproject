@@ -29,7 +29,7 @@
             <div class="row justify-content-md-center">
               <div class="col">
                 <a class="btn btn-outline-primary" href="{{route('home')}}"><i class="fas fa-home"></i></a>
-                @if (Auth::user()->role_id == 1)
+                @if (Auth::user()->role_id <= 2)
                 <a href="{{ action('TutorController@create') }}" class="btn btn-primary">Nuevo </a>
                 @endif
               </div>
@@ -59,7 +59,7 @@
                         href="{{ action('TutorController@detail', ['id' => $tutor->id]) }}" />
                         @foreach ($students as $student)
                         @if($student->tutor_id == $tutor->id)
-                        {{ $student->student_code }} - 
+                        ({{ $student->student_code }})
                         {{ $student->names }}
                         {{ $student->first_surname }}
                         @endif

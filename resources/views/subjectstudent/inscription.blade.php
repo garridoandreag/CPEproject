@@ -23,7 +23,7 @@
 
             <div class="row justify-content-md-center">
               <div class="col">
-                @if (Auth::user()->role_id == 1)
+                @if (Auth::user()->role_id <= 2)
                 <a href="{{ action('StudentController@index') }}" class="btn btn-outline-primary"><i class="fas fa-reply"></i></a>
                 <a href="{{ action('SubjectstudentController@create', ['student_id' => $student_id]) }}" class="btn btn-primary">Nuevo </a>
                 @endif

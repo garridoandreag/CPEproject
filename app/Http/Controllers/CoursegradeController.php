@@ -31,11 +31,11 @@ class CoursegradeController extends Controller
         try{
             if(empty($cycle_id)){
                 $coursegrades=Coursegrade::select('grade_id','cycle_id')->distinct()
-                ->orderBy('cycle_id','desc')->orderBy('grade_id','desc')
+                ->orderBy('cycle_id','desc')->orderBy('grade_id','asc')
                 ->paginate(30);
             }else{
                 $coursegrades=Coursegrade::select('grade_id','cycle_id')->distinct()->where('cycle_id',$cycle_id)
-                ->orderBy('cycle_id','desc')->orderBy('grade_id','desc')
+                ->orderBy('cycle_id','desc')->orderBy('grade_id','asc')
                 ->paginate(30);
             }
             
@@ -110,8 +110,16 @@ class CoursegradeController extends Controller
     }
 
     public function edit($cycle_id,$grade_id){
-        $coursegrades=Coursegrade::where([['cycle_id',$cycle_id],['grade_id',$grade_id],['status','ACTIVO']])
+        //$coursegrades=Coursegrade::where([['cycle_id',$cycle_id],['grade_id',$grade_id],['status','ACTIVO']])
+        //->sortable()->paginate(30);
+
+        $coursegrades=Coursegrade::where([['coursegrade.cycle_id',$cycle_id],['coursegrade.grade_id',$grade_id],['coursegrade.status','ACTIVO']])
+        ->join('pensum',function($join){
+            $join->on('pensum.course_id','=','coursegrade.course_id')
+                ->on('pensum.grade_id','=','coursegrade.grade_id');
+        })->orderBy('pensum.courseorder','asc')
         ->sortable()->paginate(30);
+
 
         return view('coursegrade.create', compact('coursegrades','cycle_id','grade_id'));
     }

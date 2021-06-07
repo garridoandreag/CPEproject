@@ -26,7 +26,7 @@ class PensumController extends Controller
     public function detail($grade_id)
     {
         $pensums=Pensum::where('grade_id',$grade_id)->where('status','ACTIVO')->orderBy('courseorder')
-        ->sortable()->paginate(20);
+        ->sortable()->paginate(25);
 
         return view('pensum.detail', compact('pensums','grade_id'));
     }

@@ -66,8 +66,7 @@
       </td>
       <td>
         <h2>Reporte</h2>
-        <h3>Estado de cuenta de {{ $student->person->names }} {{ $student->person->first_surname }} {{ $student->person->second_surname }}</h3>
-        <h3>Ciclo {{ $cycle->name }}</h3>
+        <h3>Falta de Pago de {{ $cycle->name }}</h3>
         <h5>{{ $now }}</h5>
       </td>
     </tr>
@@ -78,25 +77,46 @@
     <table class="table table-hover table-bordered" style="width:100%">
       <thead>
         <tr>
-          <th scope="col">Categoría</th>
-          <th scope="col">Codigo de Referencia</th>
-          <th scope="col">Estado</th>
+          <th scope="col">Estudiante</th>
+          <th scope="col">Grado</th>
+          <th scope="col">Padres/Encargados</th>
+          <th scope="col">Contacto Padres/Encargados</th>
         </tr>
       </thead>
       <tbody id="myTable">
-        @foreach ($reports as $report)
+        @foreach ($categories as $category)
+        <tr>
+          <td colspan="4" style="background: #C1D4FD"><b>{{ $category->name }}</b></td>
+        </tr>
+
+        @foreach ($reports[$category->id] as $report)
           <tr>
-            <td data-label="Categoría" scope="row">
+            <td data-label="Estudiante" scope="row">
+              {{ $report->names }}
+              {{ $report->first_surname }}
+              {{ $report->second_surname }}
+            </td>
+            <td data-label="Grado" scope="row">
               {{ $report->name }}
             </td>
-            <td data-label="Codigo Referencia" scope="row">
-              {{ $report->codigoreferencia}}
+            <td data-label="Padres/Encargados" scope="row">
+              @foreach ($tutors as $tutor)
+              @if($report->id == $tutor->student_id)
+              {{ $tutor->names.' '.$tutor->first_surname}}<br>
+              @endif
+              @endforeach
             </td>
-            <td data-label="Estado" scope="row">
-              {{ $report->estado}}
+            <td data-label="Contacto Padres/Encargados" scope="row">
+              @foreach ($tutors as $tutor)
+              @if($report->id == $tutor->student_id)
+              {{$tutor->cellphone_number }}<br>
+              @endif
+              @endforeach
             </td>
 
           </tr>
+        @endforeach
+
         @endforeach
       </tbody>
 

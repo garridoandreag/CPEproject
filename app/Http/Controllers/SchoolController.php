@@ -131,7 +131,7 @@ class SchoolController extends Controller
         $school->update();
 
         return redirect()->route('school.index')
-                        ->with(['status' => 'Grado actualizado correctamente.']);
+                        ->with(['status' => 'Datos actualizados correctamente.']);
 
     }
 

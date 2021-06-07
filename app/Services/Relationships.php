@@ -10,7 +10,7 @@ class Relationships {
     
         $relationshipsArray['']='Selecciona una sección';
 
-            $relationshipsArray = ['Padre/Madre','Abuelo(a)','Hermano(a)','Tío(a)','Primo(a)','Amigo(a)','Vecino(a)','Otro'];
+            $relationshipsArray = ['Padre','Madre','Abuelo','Abuela','Hermano','Hermana','Tía','Tío','Primo','Prima','Otro'];
         
         return $relationshipsArray;
     }

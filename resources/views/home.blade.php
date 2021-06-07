@@ -32,7 +32,7 @@
                 <div class="card-body">
 
 
-                  @if (Auth::user()->role_id == 1)
+                  @if (Auth::user()->role_id <= 2)
                     <table class="table table-hover table-bordered">
                       <thead>
                         <tr>
@@ -149,7 +149,7 @@
 
             </div>
             <div class="card-footer text-muted">
-              <small class="text-muted"> Publicado en: {{ $announcement->start_time ?? ''}}</small>
+              <small class="text-muted"> Última actualización: {{ $announcement->updated_at ?? ''}}</small>
             </div>
           </div>
         

@@ -18,6 +18,7 @@ class CreateStudenttutorTable extends Migration
             student_id int(255) UNSIGNED NOT NULL,
             tutor_id int(255) UNSIGNED NOT NULL,
             relationship varchar(100) not null,
+            no_tutor int(255) UNSIGNED NOT NULL,
             created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
             status enum('ACTIVO','INACTIVO') not null default 'ACTIVO',

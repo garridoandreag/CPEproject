@@ -52,9 +52,9 @@ class CourseController extends Controller
                 
       Pensum::firstOrCreate([
           'grade_id' => $grade->id,
-          'course_id' => $course_id,
+          'course_id' => $course_id,],
+          ['status' => 'INACTIVO'
       ]);
-
   }
 
 

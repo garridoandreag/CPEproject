@@ -114,6 +114,11 @@
                       @endif
                     </button>
 
+                    @if (isset($paymentcategory) && is_object($paymentcategory))
+                    <a href="{{ action('PaymentcategoryController@destroy', ['id' => $paymentcategory->id], ['method' => 'DELETE']) }}"
+                      class="btn btn-danger">Eliminar</a>
+                    @endif
+
                   </div>
                 </div>
                 <br />

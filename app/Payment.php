@@ -13,20 +13,10 @@ class Payment extends Model
 
     protected $primaryKey = 'id';
 
-    protected $fillable = ['paymentcategory_id','cycle_id','amount','code_reference','student_id','tutor_id','status'];
+    protected $fillable = ['paymentcategory_id','cycle_id','amount','code_reference','repeated','receipt_number','student_id','tutor_id','status'];
 
-    public $sortable =['paymentcategory_id','cycle_id','amount','code_reference','student_id','tutor_id','status'];
+    public $sortable =['paymentcategory_id','cycle_id','amount','code_reference','repeated','receipt_number','student_id','tutor_id','status'];
     
-    // muchos a uno
-    public function studenttutor_student() {
-        return $this->belongsTo('App\StudentTutor','student_id','student_id');
-    }     
-    
-        // muchos a uno
-    public function studenttutor_tutor() {
-        return $this->belongsTo('App\StudentTutor','tutor_id','tutor_id');
-    }     
-
     public function cycle() {
         return $this->belongsTo('App\Cycle','cycle_id');
     }   

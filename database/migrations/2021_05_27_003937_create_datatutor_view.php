@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddMainToCycleTable extends Migration
+class CreateDatatutorView extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class AddMainToCycleTable extends Migration
      */
     public function up()
     {
-        Schema::table('cycle', function (Blueprint $table) {
-            $table->boolean('main')->default(0);
-        });
-
+        DB::statement("
+        CREATE VIEW datatutor AS (
+            SELECT p.names, p.first_surname, p.second_surname, p.cellphone_number, t.student_id 
+            FROM studenttutor t
+            INNER JOIN person p ON t.tutor_id=p.id
+            )
+        ");
     }
 
     /**
@@ -26,8 +29,6 @@ class AddMainToCycleTable extends Migration
      */
     public function down()
     {
-        Schema::table('cycle', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('datatutor');
     }
 }

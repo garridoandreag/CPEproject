@@ -45,4 +45,13 @@ public function getMonthPayments(){
 return $payments;
 }
 
+public function getExist($code){
+    $payments = DB::table('payment')
+                ->select(DB::raw('count(*)'))
+                ->where('code_reference',$code)
+                ->get();
+
+    return $payments;
+}
+
 }

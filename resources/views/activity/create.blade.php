@@ -57,8 +57,7 @@
 
                   <div class="col-md-6">
                     <textarea class="form-control"
-                      name="description" value="{{ $activity->description ?? '' }}" required >{{ $activity->description ?? '' }}
-                    </textarea>
+                      name="description" value="{{ $activity->description ?? '' }}" required >{{ $activity->description ?? '' }}</textarea>
 
                     @error('description')
                     <span class="invalid-feedback" role="alert">
@@ -121,7 +120,7 @@
                   <div class="col-md-6">
                     <select id="coursegrade_id" name="coursegrade_id"
                       class="form-control  @error('coursegrade_id') is-invalid @enderror">
-                      @foreach ($courseprofessors->get($employee_id) as $index => $courseprofessor)
+                      @foreach ($courseprofessors->get($employee_id,$coursegrade_id ?? '') as $index => $courseprofessor)
 
                         <option value="{{ $index }}"
                           {{ old('coursegrade_id', $activity->coursegrade_id ?? '') == $index ? 'selected' : '' }}>

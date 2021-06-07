@@ -88,6 +88,7 @@
                 <div class="col-md-6 offset-md-4">
                   <a href="{{ route('user.index') }}" class="btn btn-outline-secondary">Cancelar</a>
                   <a href="{{ action('UserController@edit', ['id' => $user->id]) }}" class="btn btn-primary">Editar </a>
+                  <a href="{{ action('UserController@destroy', ['id' => $user->id]) }}" class="btn btn-danger">Eliminar</a>
                 </div>
               </div>
             </form>
