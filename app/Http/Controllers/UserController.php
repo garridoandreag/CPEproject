@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use App\User;
          
 class UserController extends Controller {
@@ -24,6 +25,8 @@ class UserController extends Controller {
     }
 
     public function update(Request $request) {
+        try{
+        
         $user = \Auth::user();
         
         $id = $user->id;
@@ -60,10 +63,15 @@ class UserController extends Controller {
             
             $user->person->save();
 
+            $user->update();
+
         }
+    }catch(\Exception $e){
+        return redirect()->route('config')
+                        ->with(['warning' => 'El usuario NO se pudo actualizar. Error:'.$e]);
+    }
 
 //ejecutar consulta y cambios en la base de datos
-        $user->update();
         return redirect()->route('config')
                         ->with(['message' => 'Usuario actualizado correctamente']);
     }
@@ -101,6 +109,7 @@ class UserController extends Controller {
 
     public function updateToUser(Request $request) {
         
+        try{
         $id = $request->input('id');
         $user = User::where('id', $id)->first();
 
@@ -125,8 +134,30 @@ class UserController extends Controller {
 
         //ejecutar consulta y cambios en la base de datos
         $user->update();
+    }catch(\Exception $e){
+        return redirect()->action('UserController@index')->with('warning', 'El usuario no se pudo actualizar. Error '.$e);
 
+    }
         return redirect()->action('UserController@index')->with('status', 'Usuario actualizado correctamente');
+    }
+
+    public function status (Request $request) {
+        $status = $request->input('status');
+        $id = $request->input('id');
+
+        $status = ($status == 'ACTIVO') ? 'INACTIVO' : 'ACTIVO';
+
+    
+        $user = DB::table('users')->where('id', $id)
+          ->update(array(
+            'status' => $status,
+          ));
+    
+        return response()->json(
+          [
+            'data' => ['status' => $status]
+          ]
+        );
     }
 
     public function destroy($id)

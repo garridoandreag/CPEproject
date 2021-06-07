@@ -42,6 +42,12 @@ class CourseSeeder extends Seeder {
         );
 
         DB::table('course')->insert(array(
+          'name' => 'Educación Física'
+          )
+        );
+
+
+        DB::table('course')->insert(array(
           'name' => 'Formación Ciudadana'
           )
         );

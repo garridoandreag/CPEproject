@@ -338,7 +338,24 @@ class StudentController extends Controller {
         return redirect()->action('StudentController@index')->with('status', 'Estudiante actualizado correctamente');
     }
 
+    public function status (Request $request) {
+        $status = $request->input('status');
+        $id = $request->input('id');
 
+        $status = ($status == 'ACTIVO') ? 'INACTIVO' : 'ACTIVO';
+
+    
+        $student = DB::table('student')->where('id', $id)
+          ->update(array(
+            'status' => $status,
+          ));
+    
+        return response()->json(
+          [
+            'data' => ['status' => $status]
+          ]
+        );
+    }
     
   public function destroy($id){
 

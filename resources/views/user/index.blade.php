@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<script src="{{ asset('js/axios.js') }}" ></script>
   <script>
     $(document).ready(function() {
       $("#myInput").on("keyup", function() {
@@ -12,7 +13,6 @@
     });
 
   </script>
-
   <style>
     .status {
       cursor: pointer;
@@ -82,21 +82,18 @@
                       {{ $user->role->name }}
                       </a>
                     </td>
-
-                    <td data-label="Estado">
+                    <td data-label="Estado" scope="row">
                       @if ($user->status == 'INACTIVO')
                         <span id="status{{ $user->id }}" onclick="changeStatus({{ $user->id }})"
                           class="status badge badge-danger">
-                          {{ $user->status }}
                         </span>
                       @else
-                        <span id="status{{ $user->id }}" onclick="changeStatus({{ $user->id }})"
-                          class="status badge badge-success">
-                          {{ $user->status }}
-                        </span>
+                            <span id="status{{ $user->id }}" onclick="changeStatus({{ $user->id }})"
+                              class="status badge badge-success">
+                              {{ $user->status }}
+                            </span>
                       @endif
                     </td>
-
                   </tr>
                 @endforeach
               </tbody>
@@ -114,7 +111,6 @@
       </div>
     </div>
   </div>
-
   <script>
     async function changeStatus(id) {
       try {
@@ -139,8 +135,12 @@
             return status;
           })
           .catch(err => console.error(err));
+
+
+
       } catch (error) {
         console.error(error);
+
       }
     }
 

@@ -46,7 +46,7 @@ Route::group(['prefix' => 'user'], function() {
     Route::post('updateToUser','UserController@updateToUser')->name('user.updateToUser')->middleware('auth');
     Route::get('/picture/{filename}','UserController@getImage')->name('user.picture');
     Route::get('destroy/{id}', 'UserController@destroy')->name('user.destroy')->middleware('auth','admin');
-
+    Route::post('/status', 'UserController@status')->name('user.status');
 });
 
 Route::get('/school/logo/{filename}', 'ShowLogoController@getImage')->name('school.logo');
@@ -63,6 +63,7 @@ Route::group(['prefix' => 'student'], function() {
     Route::post('/search-student', 'StudentController@searchStudentBySurname')->name('student.search-student');
     Route::get('grade', 'StudentController@grade')->name('student.grade');
     Route::get('list/{grade_id}/{cycle_id?}', 'StudentController@list')->name('student.list')->middleware('checkgradeprofessor');
+    Route::post('/status', 'StudentController@status')->name('student.status');
     Route::get('/destroy/{id}', 'StudentController@destroy')->name('student.destroy')->middleware('auth','admin');
 });
 
@@ -119,6 +120,7 @@ Route::group(['prefix' => 'cycle'], function() {
     Route::get('edit/{id}', 'CycleController@edit')->name('cycle.edit')->middleware('auth');
     Route::post('update', 'CycleController@update')->name('cycle.update');
     Route::post('/status','CycleController@status')->name('cycle.status');
+    Route::get('/destroy/{id}', 'CycleController@destroy')->name('cycle.destroy')->middleware('auth');
 });
 
 Route::group(['prefix' => 'announcement'], function() {

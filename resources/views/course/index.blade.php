@@ -69,13 +69,8 @@
                       @if ($course->status == 'INACTIVO')
                         <span id="status{{ $course->id }}" onclick="changeStatus({{ $course->id }})"
                           class="status badge badge-danger">
-                          <span id="status{{ $course->id }}" onclick="changeStatus({{ $course->id }})"
-                            class="status badge badge-danger">
-                            <span id="status{{ $course->id }}" onclick="changeStatus({{ $course->id }})"
-                              class="status badge badge-danger">
-                              {{ $course->status }}
-                            </span>
-                          @else
+                        </span>
+                      @else
                             <span id="status{{ $course->id }}" onclick="changeStatus({{ $course->id }})"
                               class="status badge badge-success">
                               {{ $course->status }}
