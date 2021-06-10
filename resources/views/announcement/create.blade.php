@@ -119,6 +119,12 @@
                         Guardar
                       @endif
                     </button>
+                    @if(isset($announcement) && is_object($announcement))
+                    <a href="{{ action('AnnouncementController@destroy',['id' => $announcement->id], ['method' => 'DELETE'])  }}"
+                    class="btn btn-danger">Eliminar</a>
+                    @endif
+
+                  
 
                   </div>
                 </div>

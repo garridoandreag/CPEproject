@@ -131,6 +131,7 @@ Route::group(['prefix' => 'announcement'], function() {
     Route::get('edit/{id}', 'AnnouncementController@edit')->name('announcement.edit')->middleware('auth');
     Route::post('update', 'AnnouncementController@update')->name('announcement.update');
     Route::post('/status', 'AnnouncementController@status')->name('announcement.status');
+    Route::get('destroy/{id}','AnnouncementController@destroy')->name('announcement.destroy');
 });
 
 Route::group(['prefix' => 'paymentcategory'], function() {

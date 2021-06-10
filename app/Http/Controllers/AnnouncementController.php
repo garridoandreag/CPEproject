@@ -115,6 +115,22 @@ class AnnouncementController extends Controller
 
     public function destroy($id)
     {
-        //
+        try{
+
+            $announcement = Announcement::where('id',$id)->first();
+
+            DB::transaction( function() use($announcement){
+                $announcement->delete();
+            });
+
+        }catch(\Exception $e){
+
+            return redirect()->route('announcement.index')
+            ->with(['warning' => 'No se pudo eliminar el registro, porque ya existen movimientos.']);
+        }
+
+        return redirect()->route('announcement.index')
+        ->with(['status' => 'Se elimino el registro.']);
+
     }
 }
