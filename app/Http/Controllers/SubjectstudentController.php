@@ -160,10 +160,11 @@ class SubjectstudentController extends Controller
         $grade_id = $request->input('grade_id');
         $cycle_id = $request->input('cycle_id');
         $student_id = $request->input('student_id');
-        $courses = sizeof($request->input('course_id'));
+        $courses = $request->input('course_id');
         
 
-        if(isset($data['course_id'])){
+
+        if(isset($courses)){
         foreach( $courses as $course_id){
 
             $coursegrade = Coursegrade::where('grade_id',$grade_id)->where('cycle_id',$cycle_id)->where('course_id',$course_id)->first();
@@ -183,13 +184,24 @@ class SubjectstudentController extends Controller
         
      }
 
-    public function destroycourse($student_id,$cycle_id,$grade_id,$course_id){
+    public function destroycourse($student_id,$cycle_id,$grade_id,$coursegrade_id){
 
-        $subjectstudent=Subjectstudent::where('student_id', $student_id)->where('cycle_id', $cycle_id)->where('grade_id', $grade_id)->get();
+        $subjectstudent=Subjectstudent::where('student_id', $student_id)->where('cycle_id', $cycle_id)->where('grade_id', $grade_id)->first();
 
+        $subjects=Subjectstudent::where('student_id', $student_id)->where('cycle_id', $cycle_id)->where('grade_id', $grade_id)->get();
+
+        try{
+            $subjectdelete=Subjectstudent::where('student_id', $student_id)->where('cycle_id', $cycle_id)->where('grade_id', $grade_id)->where('coursegrade_id', $coursegrade_id)->delete();
+
+        }catch(\Exception $e){
+            return view('subjectstudent.detail', [
+                'student_id' => $student_id,'subjectstudent' => $subjectstudent,'subjects' => $subjects
+            ])->with(['status' => 'No se pudo eliminar el registro, porque ya existen movimientos.']);
+
+        }
         return view('subjectstudent.detail', [
-            'student_id' => $student_id,'subjectstudent' => $subjectstudent
-        ]);
+            'student_id' => $student_id,'subjectstudent' => $subjectstudent,'subjects' => $subjects
+        ])->with(['status' => 'Se elimino el registro.']);
 
     }
 

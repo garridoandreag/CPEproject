@@ -5,7 +5,6 @@
 @inject('grades','App\Services\grades')
 @inject('courses','App\Services\courses')
 @inject('coursegrades','App\Services\coursegrades')
-
   <div class="container">
     <div class="row justify-content-center ">
 
@@ -42,7 +41,7 @@
                   <label for="cycle_id" class="col-md-4 col-form-label text-md-right">Ciclo</label>
                   <div class="col-md-6">
                     <select id="cycle_id" name="cycle_id" class="form-control  @error('cycle_id') is-invalid @enderror" 
-                    {{ isset($subjectstudent) ? 'disabled' : '' }}>
+                    {{ isset($subjectstudent) ? 'readonly' : '' }}>
                       @foreach ($cycles->get() as $index => $cycle)
 
                         <option value="{{ $index }}"
@@ -59,7 +58,7 @@
                   <label for="grade_id" class="col-md-4 col-form-label text-md-right">Grado</label>
                   <div class="col-md-6">
                     <select id="grade_id" name="grade_id" class="form-control  @error('grade_id') is-invalid @enderror" 
-                    {{ isset($subjectstudent) ? 'disabled' : '' }}>
+                    {{ isset($subjectstudent) ? 'readonly' : '' }}>
                       @foreach ($grades->get() as $index => $grade)
 
                         <option value="{{ $index }}"
@@ -89,12 +88,11 @@
                               <tr id="1">
                                   <td data-label="Asignatura" scope="row">
                                     {{$subject->coursegrade->course->name}}
-   
                                   </td>
                                   <td>
                                       @if (isset($subject) && is_object($subject))
-                                          <a href="{{ action('SubjectstudentController@destroycourse', ['student_id' => $subject->student_id, 'cycle_id' => $subject->cycle_id, 'grade_id' => $subject->grade_id, 'course_id' => $subject->course_id]) }}"
-                                              class="btn btn-danger">Quitar curso</a>
+                                          <a href="{{ action('SubjectstudentController@destroycourse', ['student_id' => $subject->student_id, 'cycle_id' => $subject->cycle_id, 'grade_id' => $subject->grade_id, 'coursegrade_id' => $subject->coursegrade_id]) }}"
+                                              class="btn btn-danger" onclick="myFunction()">Quitar curso</a>
                                       @endif
                                   </td>
                               </tr>
