@@ -262,6 +262,10 @@
                         Guardar
                       @endif
                     </button>
+                    @if (isset($employee) && is_object($employee))
+                    <a href="{{ action('EmployeeController@destroy', ['id' => $employee->id], ['method' => 'DELETE']) }}"
+                      class="btn btn-danger">Eliminar</a>
+                  @endif
 
                   </div>
                 </div>

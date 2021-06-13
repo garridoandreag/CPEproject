@@ -131,6 +131,7 @@ Route::group(['prefix' => 'announcement'], function() {
     Route::get('edit/{id}', 'AnnouncementController@edit')->name('announcement.edit')->middleware('auth');
     Route::post('update', 'AnnouncementController@update')->name('announcement.update');
     Route::post('/status', 'AnnouncementController@status')->name('announcement.status');
+    Route::get('destroy/{id}','AnnouncementController@destroy')->name('announcement.destroy');
 });
 
 Route::group(['prefix' => 'paymentcategory'], function() {
@@ -151,6 +152,7 @@ Route::group(['prefix' => 'employee'], function() {
     Route::get('detail/{id}', 'EmployeeController@detail')->name('employee.detail');
     Route::get('edit/{id}', 'EmployeeController@edit')->name('employee.edit')->middleware('auth');
     Route::post('update', 'EmployeeController@update')->name('employee.update');
+    Route::get('destroy/{id}', 'EmployeeController@destroy')->name('employee.destroy');
 });
 
 Route::group(['prefix' => 'event'], function () {
@@ -185,7 +187,7 @@ Route::group(['prefix' => 'subjectstudent'], function() {
     Route::post('update', 'SubjectstudentController@update')->name('subjectstudent.update');
     Route::post('store', 'SubjectstudentController@store')->name('subjectstudent.store');
     Route::get('detail/{student_id}/{cycle_id}/{grade_id}', 'SubjectstudentController@detail')->name('subjectstudent.detail');
-    Route::get('destroycourse/{student_id}/{cycle_id}/{grade_id}/{course_id?}', 'SubjectstudentController@destroycourse')->name('subjectstudent.destroycourse');
+    Route::get('destroycourse/{student_id}/{cycle_id}/{grade_id}/{coursegrade_id}', 'SubjectstudentController@destroycourse')->name('subjectstudent.destroycourse');
     Route::get('destroy/{student_id}/{cycle_id}/{grade_id}', 'SubjectstudentController@destroy')->name('subjectstudent.destroy');
 });
 

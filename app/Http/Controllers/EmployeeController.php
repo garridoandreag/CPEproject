@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 use App\Http\Controllers\Input;
 use App\Employee;
 use App\Person;  
+use App\User;  
 
 class EmployeeController extends Controller
 {
@@ -141,6 +142,23 @@ class EmployeeController extends Controller
 
     public function destroy($id)
     {
-        //
+        try{
+            $employee=Employee::where('id',$id)->first();
+            $person=Person::where('id',$id)->first();
+            $user=User::where('id',$id)->first();
+
+            DB::transaction(function() use($employee, $person, $user){
+                $employee->delete();
+                $user->delete();
+                $person->delete();
+            });
+
+        }catch(\Exception $e){
+            return redirect()->route('employee.index')
+            ->with(['warning' => 'No se pudo eliminar el registro, porque ya existen movimientos.']);
+        }
+
+        return redirect()->route('employee.index')
+        ->with(['status' => 'Se elimino el registro.']);
     }
 }

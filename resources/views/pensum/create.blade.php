@@ -13,12 +13,7 @@
       });
     });
 
-    Swal.fire(
-  'Good job!',
-  'You clicked the button!',
-  'success'
-)
-
+    swal("Recuerda", "La modificación del pensum afectará algunos ciclos escolares. Los ciclos que quedarán modificados se muestran al inicio de la tabla.", "warning");
   </script>
 
   <div class="container">

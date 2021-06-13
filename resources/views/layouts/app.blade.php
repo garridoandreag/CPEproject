@@ -16,8 +16,9 @@
   <script src="https://kit.fontawesome.com/e4f410c930.js" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
+
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <!--<script>
 /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
 function openNav() {
