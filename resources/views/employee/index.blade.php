@@ -35,7 +35,14 @@
               <div class="alert alert-success">
                 {{ session('status') }}
               </div>
+              @else
+              @if (session('warning'))
+              <div class="alert alert-danger">
+                {{ session('warning') }}
+              </div>  
+              @endif
             @endif
+            
             <table class="table table-hover">
               <thead>
                 <tr>
