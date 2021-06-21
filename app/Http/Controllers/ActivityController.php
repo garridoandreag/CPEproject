@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
-use App\{Coursegrade, Activity};
+use App\{Coursegrade, Activity,Homework};
 
 class ActivityController extends Controller
 {
@@ -140,4 +140,37 @@ class ActivityController extends Controller
             'coursegrade_id'=> $coursegrade_id
         ]);
     }
+
+    public function destroy($id){
+        try{
+            $activity = Activity::find($id);
+
+            $coursegrade_id = $activity->coursegrade_id;
+
+            $coursegradeprof = Coursegrade::where('id', $coursegrade_id)->first();
+            $grade_name = $coursegradeprof->grade->name;
+            $grade_id = $coursegradeprof->grade_id;
+            $cycle_id = $coursegradeprof->cycle_id;
+            $course_name = $coursegradeprof->course->name;
+            $employee_id = $coursegradeprof->employee_id;
+
+
+            DB::transaction(function() use($activity){
+                
+                Homework::where('activity_id',$activity->id)->delete();
+                $activity->delete();
+            });
+
+        }catch(\Exception $e){
+            return redirect()->route('courseprofessor.activity',compact('coursegrade_id','grade_name','course_name','coursegradeprof'))
+                            ->with(['warning' => 'No se pudo eliminar el registro, porque ya existen movimientos.']);
+        }
+        return redirect()->route('courseprofessor.activity',compact('coursegrade_id','grade_name','course_name','coursegradeprof'))
+        ->with(['status' => 'La actividad se ha eliminado exitosamente.']);
+
+    }
+
+
+
+
 }

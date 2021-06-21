@@ -157,6 +157,10 @@
                         Guardar
                       @endif
                     </button>
+                    @if(isset($activity) && is_object($activity))
+                    <a href="{{ action('ActivityController@destroy',['id' => $activity->id], ['method' => 'DELETE'])  }}"
+                    class="btn btn-danger">Eliminar</a>
+                    @endif
 
                   </div>
                 </div>

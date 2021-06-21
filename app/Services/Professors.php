@@ -7,7 +7,7 @@ class Professors {
     
     public function get(){
         
-        $professors = Employee::get()->where('professor','1');
+        $professors = Employee::get()->where('professor','1')->where('status','ACTIVO');
 
         $professorsArray['']='Selecciona un professor';
 

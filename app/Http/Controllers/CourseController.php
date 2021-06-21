@@ -94,12 +94,12 @@ class CourseController extends Controller
     try{
       $course = \App\Course::where('id', $id)->first();
 
-     
-
+      DB::transaction(function() use($course){
       Pensum::where([
         'course_id' => $id])->delete();
 
         $course->delete();
+      });
 
     }catch(\Exception $e){
         return redirect()->route('course.index')

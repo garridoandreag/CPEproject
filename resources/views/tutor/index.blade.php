@@ -42,6 +42,12 @@
               <div class="alert alert-success">
                 {{ session('status') }}
               </div>
+              @else
+              @if (session('warning'))
+              <div class="alert alert-danger">
+                {{ session('warning') }}
+              </div>
+              @endif
             @endif
             <table class="table table-hover">
               <thead>
@@ -84,10 +90,6 @@
                     </td>
                     <td>
                       @if ($tutor->status == 'INACTIVO')
-                        <span id="status{{ $tutor->id }}" onclick="changeStatus({{ $tutor->id }})"
-                          class="status badge badge-danger">
-                        <span
-                          id="status{{$tutor->id}}" onclick="changeStatus({{$tutor->id}})" class="status badge badge-danger">
                         <span id="status{{$tutor->id}}" onclick="changeStatus({{$tutor->id}})" class="status badge badge-danger">
                           {{ $tutor->status }}
                         </span>

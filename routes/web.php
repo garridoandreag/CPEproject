@@ -88,6 +88,7 @@ Route::group(['prefix' => 'tutor'], function() {
     Route::post('/search-tutor', 'TutorController@searchTutorBySurname')->name('tutor.search-tutor');
     Route::post('/search-dad', 'TutorController@searchDadBySurname')->name('tutor.search-dad');
     Route::post('/search-mom', 'TutorController@searchMomBySurname')->name('tutor.search-mom');
+    Route::post('/status','TutorController@status')->name('tutor.status');
     Route::get('/destroystudent/{tutor_id}/{student_id}', 'TutorController@destroystudent')->name('tutor.destroystudent')->middleware('auth');
     Route::get('/destroy/{id}', 'TutorController@destroy')->name('tutor.destroy')->middleware('auth');
 });
@@ -152,6 +153,7 @@ Route::group(['prefix' => 'employee'], function() {
     Route::get('detail/{id}', 'EmployeeController@detail')->name('employee.detail');
     Route::get('edit/{id}', 'EmployeeController@edit')->name('employee.edit')->middleware('auth');
     Route::post('update', 'EmployeeController@update')->name('employee.update');
+    Route::post('/status','EmployeeController@status')->name('employee.status');
     Route::get('destroy/{id}', 'EmployeeController@destroy')->name('employee.destroy');
 });
 
@@ -209,6 +211,7 @@ Route::group(['prefix' => 'activity'], function() {
     Route::get('detail/{id}', 'ActivityController@detail')->name('activity.detail');
     Route::get('edit/{id}', 'ActivityController@edit')->name('activity.edit')->middleware('auth');
     Route::post('update', 'ActivityController@update')->name('activity.update')->middleware('auth');
+    Route::get('/destroy/{id}', 'ActivityController@destroy')->name('activity.destroy')->middleware('auth');
 });
 
 Route::group(['prefix' => 'payment'], function() {

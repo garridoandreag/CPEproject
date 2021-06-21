@@ -169,6 +169,7 @@ class TutorController extends Controller
           ->join('tutor', 'tutor.id', '=', 'person.id')
           ->select('person.id',DB::raw('CONCAT(person.first_surname," ",person.second_surname," ",person.names," - ",IFNULL( tutor.dpi , "")) as text'))
           ->where('person.first_surname', 'like', $surname.'%')
+          ->where('tutor.status', 'like', 'ACTIVO')
           ->get();
         return $persons;
       }
@@ -187,6 +188,7 @@ class TutorController extends Controller
           ->select('person.id',DB::raw('CONCAT(person.first_surname," ",person.second_surname," ",person.names," - ",IFNULL( tutor.dpi , "")) as text'))
           ->where('person.first_surname', 'like', $surname.'%')
           ->where('person.gender_id', 'like', '2')
+          ->where('tutor.status', 'like', 'ACTIVO')
           ->get();
         return $persons;
       }
@@ -205,9 +207,30 @@ class TutorController extends Controller
           ->select('person.id',DB::raw('CONCAT(person.first_surname," ",person.second_surname," ",person.names," - ",IFNULL( tutor.dpi , "")) as text'))
           ->where('person.first_surname', 'like', $surname.'%')
           ->where('person.gender_id', 'like', '1')
+          ->where('tutor.status', 'like', 'ACTIVO')
           ->get();
         return $persons;
       }
+
+
+          
+    public function status (Request $request) {
+      $status = $request->input('status');
+      $id = $request->input('id');
+
+      $status = ($status == 'ACTIVO') ? 'INACTIVO' : 'ACTIVO';
+
+      $course = DB::table('tutor')->where('id', $id)
+      ->update(array(
+          'status' => $status,
+      ));
+
+      return response()->json(
+      [
+          'data' => ['status' => $status]
+      ]
+      );
+    }
 
     public function destroystudent($tutor_id,$student_id)
     {

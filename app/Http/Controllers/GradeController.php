@@ -34,12 +34,15 @@ class GradeController extends Controller
         try{
         $data = $request->validate([
             'name' => ['required', 'string', 'max:50'],
-            'section' => ['required']
+            'section' => ['required'],
+            'scoretype' => ['required']
         ]);
 
+        DB::transaction(function() use ($data) {
         $grade = Grade::create([
             'name' => $data['name'],
-            'section' => $data['section']
+            'section' => $data['section'],
+            'scoretype' => $data['scoretype']
         ]);
 
         $courses = Course::get();
@@ -53,9 +56,12 @@ class GradeController extends Controller
               ['status' => 'INACTIVO'
           ]);
       }
+    });
+
+
     }catch(\Exception $e){
         return redirect()->route('grade.index')
-        ->with(['status' => 'No se pudo crear el grado.']);
+        ->with(['warning' => 'No se pudo crear el grado.']);
 
     }
         return redirect()->route('grade.index')
@@ -88,11 +94,13 @@ class GradeController extends Controller
 
         $data = $request->validate([
             'name' => ['required', 'string', 'max:50'],
-            'section' => ['required']
+            'section' => ['required'],
+            'scoretype' => ['required'],
         ]);
        
             $grade->name =  $data['name'];
             $grade->section =  $data['section'];
+            $grade->scoretype =  $data['scoretype'];
 
             $grade->update();
 
@@ -121,8 +129,18 @@ class GradeController extends Controller
 
     public function destroy($id)
     {
+        try{
             $grade = Grade::find($id);
-            
+
+            DB::transaction(function() use($grade){
+                Pensum::where(['grade_id' => $grade->id])->delete();
+
+                $grade->delete();
+            });
+       }catch(\Exception $e){
+            return redirect()->route('grade.index')
+            ->with(['warning' => 'No se pudo eliminar el registro, porque ya existen movimientos.']);
+      }
             return redirect()->route('grade.index')
             ->with(['status' => 'Grado eliminado correctamente.' ]);
     }

@@ -34,7 +34,7 @@ class HomeworkController extends Controller
             )->sortable()->paginate(30);
         };
 
-        $homeworks = Homework::where('activity_id', $activity_id)->sortable()->paginate(30);
+        $homeworks = Homework::where('activity_id', $activity_id)->where('status', 'ACTIVO')->sortable()->paginate(30);
 
         return view('homework.edit', compact('homeworks','coursegrade_id','course_name','grade_name','activity_name','activity_description'));
         //return view('homework.edit', ['homeworks' => $homeworks, 'coursegrade_id' => $coursegrade_id]);

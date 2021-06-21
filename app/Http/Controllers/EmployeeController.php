@@ -140,6 +140,25 @@ class EmployeeController extends Controller
 
     }
 
+    
+    public function status (Request $request) {
+        $status = $request->input('status');
+        $id = $request->input('id');
+
+        $status = ($status == 'ACTIVO') ? 'INACTIVO' : 'ACTIVO';
+
+        $course = DB::table('employee')->where('id', $id)
+        ->update(array(
+            'status' => $status,
+        ));
+
+        return response()->json(
+        [
+            'data' => ['status' => $status]
+        ]
+        );
+    }
+
     public function destroy($id)
     {
         try{

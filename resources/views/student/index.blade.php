@@ -91,10 +91,6 @@
                     </td>
                     <td data-label="Estado">
                       @if ($student->status == 'INACTIVO')
-                        <span id="status{{ $student->id }}" onclick="changeStatus({{ $student->id }})"
-                          class="status badge badge-danger">
-                          <span id="status{{ $student->id }}" onclick="changeStatus({{ $student->id }})"
-                            class="status badge badge-danger">
                             <span id="status{{ $student->id }}" onclick="changeStatus({{ $student->id }})"
                               class="status badge badge-danger">
                               {{ $student->status }}

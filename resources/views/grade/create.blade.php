@@ -67,6 +67,24 @@
                   </div>
                 </div>
 
+                <div class="form-group row">
+                  <label for="scoretype" class="col-md-4 col-form-label text-md-right">Representación de las calificaciones</label>
+                  <div class="col-md-6">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="scoretype" id="scoretype1" value="N" {{ old('scoretype', $grade->scoretype ?? '') == 'N' ? 'checked' : '' }}>
+                      <label class="form-check-label" for="scoretype1">
+                        Numérica
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="scoretype" id="scoretype2" value="C" {{ old('scoretype', $grade->scoretype ?? '') == 'C' ? 'checked' : '' }}>
+                      <label class="form-check-label" for="scoretype2">
+                        Con Letras
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
                 <div class="form-group row mb-0">
                   <div class="col-md-6 offset-md-4">
                     <a href="{{ route('grade.index') }}" class="btn btn-outline-secondary">Cancelar</a>

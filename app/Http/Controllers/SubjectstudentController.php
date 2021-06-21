@@ -40,23 +40,30 @@ class SubjectstudentController extends Controller
 
         $student = DB::table('person')->where('id','like',$student_id)->get();
 
-        $reports = DB::table('reportcard')
-        ->where('reportcard.student_id','like',$student_id)
-        ->where('reportcard.cycle_id','like',$cycle_id)
-        ->orderBy('reportcard.courseorder','asc')
-        ->get();
+        $subject = Subjectstudent::where('cycle_id',$cycle_id)->where('student_id',$student_id)->first();
+        $grade = $subject->coursegrade->grade;
+        $scoretype = $subject->coursegrade->grade->scoretype;
+        $cycle= $subject->coursegrade->cycle;
 
+        if($scoretype == 'C'){
+            $reports = DB::table('reportcard2')
+            ->where('reportcard2.student_id','like',$student_id)
+            ->where('reportcard2.cycle_id','like',$cycle_id)
+            ->orderBy('reportcard2.courseorder','asc')
+            ->get();
+        }else {
+            $reports = DB::table('reportcard')
+            ->where('reportcard.student_id','like',$student_id)
+            ->where('reportcard.cycle_id','like',$cycle_id)
+            ->orderBy('reportcard.courseorder','asc')
+            ->get();
+        }
         
         $professor= DB::table('reportprofessor')
         ->join('person','reportprofessor.employee_id','person.id')
         ->where('reportprofessor.student_id','like',$student_id)
         ->where('reportprofessor.cycle_id','like',$cycle_id)
         ->get();
-
-        $subject = Subjectstudent::where('cycle_id',$cycle_id)->where('student_id',$student_id)->first();
-        $grade = $subject->coursegrade->grade;
-        $cycle= $subject->coursegrade->cycle;
-
 
         $pdf = \PDF::loadView('/report/reportcardpdf',compact('reports','school','student','professor','grade','cycle','now'));
         }catch(\Exception $e){
@@ -70,12 +77,29 @@ class SubjectstudentController extends Controller
     public function reportcard($cycle_id='',$student_id='')
     {   
        
-        $reports = DB::table('reportcard')
-                        ->where('reportcard.student_id','like',$student_id)
-                        ->where('reportcard.cycle_id','like',$cycle_id)
-                        ->orderBy('reportcard.courseorder','asc')
-                        ->get();
+        try{
+            $subject = Subjectstudent::where('cycle_id',$cycle_id)->where('student_id',$student_id)->first();
+            $grade = $subject->coursegrade->grade;
+            $scoretype = $subject->coursegrade->grade->scoretype;
+            $cycle= $subject->coursegrade->cycle;
+        }catch(\Exception $e){
+            $grade = '';
+            $cycle= '';
+        }
 
+        if($scoretype == 'C'){
+            $reports = DB::table('reportcard2')
+            ->where('reportcard2.student_id','like',$student_id)
+            ->where('reportcard2.cycle_id','like',$cycle_id)
+            ->orderBy('reportcard2.courseorder','asc')
+            ->get();
+        }else{
+            $reports = DB::table('reportcard')
+            ->where('reportcard.student_id','like',$student_id)
+            ->where('reportcard.cycle_id','like',$cycle_id)
+            ->orderBy('reportcard.courseorder','asc')
+            ->get();
+        }
 
         $student = DB::table('person')->where('id','like',$student_id)->get();
 
@@ -84,16 +108,7 @@ class SubjectstudentController extends Controller
         ->where('reportprofessor.student_id','like',$student_id)
         ->where('reportprofessor.cycle_id','like',$cycle_id)
         ->get();
-
-        try{
-            $subject = Subjectstudent::where('cycle_id',$cycle_id)->where('student_id',$student_id)->first();
-            $grade = $subject->coursegrade->grade;
-            $cycle= $subject->coursegrade->cycle;
-        }catch(\Exception $e){
-            $grade = '';
-            $cycle= '';
-        }
-                        
+                    
         return view('subjectstudent.reportcard', compact('reports','student_id','cycle_id','student','professor','grade','cycle'));
     }
 

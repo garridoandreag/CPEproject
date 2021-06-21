@@ -349,6 +349,11 @@ class StudentController extends Controller {
           ->update(array(
             'status' => $status,
           ));
+
+          $student = DB::table('homework')->where('student_id', $id)
+          ->update(array(
+            'status' => $status,
+          ));
     
         return response()->json(
           [

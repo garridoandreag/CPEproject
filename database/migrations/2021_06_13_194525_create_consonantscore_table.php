@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGradeTable extends Migration
+class CreateConsonantscoreTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,17 @@ class CreateGradeTable extends Migration
      */
     public function up()
     {
-
         DB::statement("
-            CREATE TABLE GRADE(
-            id int(255) UNSIGNED NOT NULL AUTO_INCREMENT,
-            name varchar(100),
-            section enum('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'),
-            scoretype enum('N','C') NOT NULL DEFAULT 'N' 
+            CREATE TABLE CONSONANTSCORE(
+            id int(255) unsigned not null AUTO_INCREMENT,
+            consonant varchar(10) not null,
+            name varchar(100) not null,
+            initial_score int(255),
+            final_score int(255),
             created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
             status enum('ACTIVO','INACTIVO') not null default 'ACTIVO',
-            CONSTRAINT pk_grade PRIMARY KEY (id)
+            CONSTRAINT pk_consonantscore PRIMARY KEY (id)
             )ENGINE=InnoDb;
             ");
     }
@@ -35,6 +35,6 @@ class CreateGradeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('grade');
+        Schema::dropIfExists('consonantscore');
     }
 }
