@@ -94,7 +94,7 @@
 
                   <div class="col-md-6">
                     <input id="dpi" type="text" class="form-control @error('dpi') is-invalid @enderror" name="dpi"
-                      value="{{ $employee->dpi ?? '' }}" required autocomplete="dpi" autofocus>
+                      value="{{ $employee->dpi ?? '' }}" autocomplete="dpi" autofocus>
 
                     @error('dpi')
                     <span class="invalid-feedback" role="alert">
@@ -157,7 +157,7 @@
 
                   <div class="col-md-6">
                     <input id="home_address" type="text" class="form-control @error('home_address') is-invalid @enderror"
-                      name="home_address" value="{{ $employee->person->home_address ?? '' }}" required
+                      name="home_address" value="{{ $employee->person->home_address ?? '' }}"
                       autocomplete="home_address" autofocus>
 
                     @error('home_address')

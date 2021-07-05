@@ -24,7 +24,9 @@ class SubjectstudentController extends Controller
 
     public function inscription($student_id)
     {
-        $subjectstudents=Subjectstudent::select('student_id','grade_id','cycle_id')->distinct()->where('student_id', $student_id)->sortable()->paginate(30);
+        $subjectstudents=Subjectstudent::select('student_id','grade_id','cycle_id','status', DB::raw('MIN(id) as id'))
+                                        ->groupBy('student_id','grade_id','cycle_id','status')
+                                        ->where('student_id', $student_id)->sortable()->paginate(30);
 
         return view('subjectstudent.inscription', compact('subjectstudents','student_id'));
     }
@@ -133,7 +135,7 @@ class SubjectstudentController extends Controller
 
 
         foreach(Coursegrade::where('grade_id',$grade_id)->where('cycle_id',$cycle_id)->where('status','ACTIVO')->cursor() as $coursegrade){
-            Subjectstudent::create([
+            Subjectstudent::firstOrCreate([
                 'student_id' =>  $student_id,
                 'grade_id' => $data['grade_id'],
                 'coursegrade_id' => $coursegrade->id,
@@ -198,6 +200,34 @@ class SubjectstudentController extends Controller
                          ->with(['status' => 'Inscripción actualizada con éxito.']);
         
      }
+
+     public function status (Request $request) {
+        $status = $request->input('status');
+        $id = $request->input('id');
+
+        $status = ($status == 'ACTIVO') ? 'INACTIVO' : 'ACTIVO';
+
+        $query = Subjectstudent::where('id',$id)->get();
+
+        //DB::table('subjectstudent')->where('student_id', $query->student_id)->where('grade_id', $query->grade_id)->where('cycle_id', $query->cycle_id)->get();
+        /*$change->status = $status;
+        $change->update();*/
+
+        DB::select('call SP_UPDATE_SUBJECTSTUDENT_STATUS(?, ?)',array($id, $status));
+
+        $subjectstudent = DB::table('subjectstudent')->where('id', $id)
+          ->update(array(
+            'status' => $status,
+          ));
+
+        return response()->json(
+          [
+            'data' => ['status' => $status]
+          ]
+        );
+    }
+    
+    
 
     public function destroycourse($student_id,$cycle_id,$grade_id,$coursegrade_id){
 

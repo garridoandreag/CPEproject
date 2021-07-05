@@ -2,6 +2,7 @@
 
 @section('content')
     @inject('grades','App\Services\Grades')
+    @inject('st','App\Services\Students')
     @inject('genders','App\Services\Genders')
     @inject('subdivisions','App\Services\Subdivisions')
     <style>
@@ -228,7 +229,7 @@
                                             @foreach ($grades->get() as $index => $grade)
 
                                                 <option value="{{ $index }}"
-                                                    {{ old('grade_id', $student->grade_id ?? '') == $index ? 'selected' : '' }}>
+                                                    {{ old('grade_id', $st->getStudentGrade($student->id) ?? '') == $index ? 'selected' : '' }}>
                                                     {{ $grade }}
                                                 </option>
 

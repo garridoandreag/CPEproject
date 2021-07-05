@@ -52,7 +52,7 @@
                                         <input id="favorite_name" type="text"
                                             class="form-control @error('favorite_name') is-invalid @enderror"
                                             name="favorite_name" value="{{ $student->person->favorite_name ?? '' }}"
-                                            required autocomplete="favorite_name" autofocus>
+                                            autocomplete="favorite_name" autofocus>
 
                                         @error('favorite_name')
                                             <span class="invalid-feedback" role="alert">
@@ -149,7 +149,7 @@
                                         <input id="home_address" type="text"
                                             class="form-control @error('home_address') is-invalid @enderror"
                                             name="home_address" value="{{ $student->person->home_address ?? '' }}"
-                                            required autocomplete="home_address" autofocus>
+                                            autocomplete="home_address" autofocus>
                                         @error('phone_number')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -165,7 +165,7 @@
                                     <div class="col-md-6">
                                         <input id="birthday" type="date"
                                             class="form-control @error('birthday') is-invalid @enderror" name="birthday"
-                                            value="{{ $student->birthday ?? '' }}" required autocomplete="birthday"
+                                            value="{{ $student->birthday ?? '' }}" autocomplete="birthday"
                                             autofocus>
 
                                         @error('birthday')

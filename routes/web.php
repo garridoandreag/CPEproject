@@ -115,13 +115,15 @@ Route::group(['prefix' => 'school'], function() {
 
 Route::group(['prefix' => 'cycle'], function() {
     Route::get('create', 'CycleController@create')->name('cycle.create')->middleware('auth');
-    Route::get('/', 'CycleController@index')->name('cycle.index');
-    Route::post('store', 'CycleController@store')->name('cycle.store');
-    Route::get('detail/{id}', 'CycleController@detail')->name('cycle.detail');
+    Route::get('/', 'CycleController@index')->name('cycle.index')->middleware('auth');
+    Route::post('store', 'CycleController@store')->name('cycle.store')->middleware('auth');
+    Route::get('detail/{id}', 'CycleController@detail')->name('cycle.detail')->middleware('auth');
     Route::get('edit/{id}', 'CycleController@edit')->name('cycle.edit')->middleware('auth');
-    Route::post('update', 'CycleController@update')->name('cycle.update');
-    Route::post('/status','CycleController@status')->name('cycle.status');
+    Route::post('update', 'CycleController@update')->name('cycle.update')->middleware('auth');
+    Route::post('/status','CycleController@status')->name('cycle.status')->middleware('auth');
     Route::get('/destroy/{id}', 'CycleController@destroy')->name('cycle.destroy')->middleware('auth');
+    Route::get('createcurrent', 'CycleController@createcurrent')->name('cycle.createcurrent')->middleware('auth');
+    Route::post('updatecurrent', 'CycleController@updatecurrent')->name('cycle.updatecurrent')->middleware('auth');
 });
 
 Route::group(['prefix' => 'announcement'], function() {
@@ -189,6 +191,7 @@ Route::group(['prefix' => 'subjectstudent'], function() {
     Route::post('update', 'SubjectstudentController@update')->name('subjectstudent.update');
     Route::post('store', 'SubjectstudentController@store')->name('subjectstudent.store');
     Route::get('detail/{student_id}/{cycle_id}/{grade_id}', 'SubjectstudentController@detail')->name('subjectstudent.detail');
+    Route::post('/status','SubjectstudentController@status')->name('subjectstudent.status');
     Route::get('destroycourse/{student_id}/{cycle_id}/{grade_id}/{coursegrade_id}', 'SubjectstudentController@destroycourse')->name('subjectstudent.destroycourse');
     Route::get('destroy/{student_id}/{cycle_id}/{grade_id}', 'SubjectstudentController@destroy')->name('subjectstudent.destroy');
 });

@@ -10,7 +10,6 @@
         });
       });
     });
-
   </script>
 
   <style>
@@ -31,6 +30,7 @@
               <div class="col">
                 <a href="{{ route('admin.admin') }}" class="btn btn-outline-primary"><i class="fas fa-reply"></i></a>
                 <a href="{{ action('CycleController@create') }}" class="btn btn-primary">Nuevo </a>
+                <a href="{{ action('CycleController@createcurrent') }}" class="btn btn-warning" >Establecer Ciclo Actual</a>
               </div>
               <div class="col-md-auto">
                 <input class="form-control" id="myInput" type="text" placeholder="Buscar...">
@@ -56,12 +56,14 @@
                   <th scope="col">@sortablelink('school_id','Colegio')</th>
                   <th scope="col">@sortablelink('start_date','Fecha Inicio')</th>
                   <th scope="col">@sortablelink('end_date','Fecha Fin')</th>
+                  <th scope="col">@sortablelink('main','Caracteristicas')</th>
                   <th scope="col">@sortablelink('status','Estado')</th>
                 </tr>
               </thead>
               <tbody id="myTable">
                 @foreach ($cycles as $cycle)
                   <tr>
+      
                     <td data-label="Nombre" scope="row"><a
                         href="{{ action('CycleController@detail', ['id' => $cycle->id]) }}" />
                       {{ $cycle->name }}
@@ -78,6 +80,20 @@
                     <td data-label="Fecha Fin"><a href="{{ action('CycleController@detail', ['id' => $cycle->id]) }}" />
                       {{ $cycle->end_date }}
                       </a>
+                    </td>
+                    <td data-label="Caracteristicas">
+                      @if($cycle->current > 0)
+                      
+                      <span class="badge badge-pill badge-warning">
+                        <i class="fas fa-star"></i> ACTUAL
+                      </span>
+                      @endif
+                      <br>
+                      @if($cycle->main > 0)
+                      <span  class="badge badge-pill badge-light">
+                      PERMITE EDITAR PENSUM
+                      </span>
+                      @endif
                     </td>
                     <td data-label="Estado">
                       @if ($cycle->status == 'INACTIVO')

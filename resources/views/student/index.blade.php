@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+@inject('grades','App\Services\Grades')
+@inject('st','App\Services\Students')
 <script src="{{ asset('js/axios.js') }}" ></script>
   <style>
     .status {
@@ -59,6 +61,7 @@
                   <th scope="col">Nombres</th>
                   <th scope="col">Apellidos</th>
                   <th scope="col">Foto</th>
+                  <th scope="col">Grado</th>
                   <th scope="col">Estado</th>
                   <th scope="col">Asignar Cursos</th>
                 </tr>
@@ -88,6 +91,12 @@
                         </div>
                       @endif
                       </a>
+                    </td>
+                    <td data-label="Grado"><a href="{{ action('StudentController@detail', ['id' => $student->id]) }}" />
+                      @foreach ($grades->get() as $index => $grade)
+                          {{ old('grade_id', $st->getStudentGrade($student->id) ?? '') == $index ? $grade : '' }}
+                      @endforeach
+                    </a>
                     </td>
                     <td data-label="Estado">
                       @if ($student->status == 'INACTIVO')
@@ -135,7 +144,7 @@
       try {
         const badge = $(`#status${id}`);
         let status = badge.text().trim();
-
+        
         status = await axios.post('/student/status', {
             id,
             status

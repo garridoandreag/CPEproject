@@ -39,4 +39,24 @@ class Students {
         return $studenttutorsArray;
     }
 
+    public function getStudentGrade($student_id){
+
+        $queries = DB::table('student')
+                        ->join('subjectstudent','student.id','subjectstudent.student_id')
+                        ->leftJoin('cycle','subjectstudent.cycle_id','cycle.id')
+                        ->where('student.id','like',$student_id)
+                        ->where('cycle.current','>',0)
+                        ->select('subjectstudent.grade_id as grade_id')
+                        ->distinct()
+                        ->get();
+
+        $grade_id[0] = '';
+        foreach($queries as $query){
+            $grade_id[0] = $query->grade_id;
+        }
+
+        return $grade_id[0];
+    }
+
+
 }

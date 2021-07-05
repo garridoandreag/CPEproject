@@ -44,8 +44,7 @@ class CycleController extends Controller
                 'name' => $data['name'],
                 'school_id' => $data['school_id'],
                 'start_date' => $data['start_date'],
-                'end_date' => $data['end_date'],
-                'main' => $data['main'],
+                'end_date' => $data['end_date']
             ]);
     
             if($request->has('main')){
@@ -53,6 +52,7 @@ class CycleController extends Controller
             }else{
                 $cycle->main = 0;
             }
+            $cycle->update();
 
                 foreach($pensums as $pensum){
                     Coursegrade::create([
@@ -169,5 +169,28 @@ class CycleController extends Controller
         ->with(['status' => 'Se elimino el registro.']);
 
         
+    }
+
+
+    public function createCurrent()
+    {
+        return view('cycle.createcurrent');
+    }
+
+    public function updatecurrent(Request $request){
+
+        DB::table('cycle')->update(array(
+            'current' => 0,
+          ));
+
+          $id = $request->input('cycle_id');
+          $cycle = Cycle::find($id);
+          $cycle->current = 1;
+          $cycle->status = 'ACTIVO';
+          $cycle->update();
+
+          return redirect()->route('cycle.index')
+          ->with(['status' => 'Ahora el ciclo actual es '.$cycle->name]);
+
     }
 }

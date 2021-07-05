@@ -1,7 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+<script src="{{ asset('js/axios.js') }}" ></script>
+  <style>
+    .status {
+      cursor: pointer;
+    }
 
+  </style>
   <script>
     $(document).ready(function() {
       $("#myInput").on("keyup", function() {
@@ -72,6 +78,19 @@
                         {{ $subjectstudent->grade->name }}
                       </a>
                       </td>
+                      <td data-label="Estado">
+                        @if ($subjectstudent->status == 'INACTIVO')
+                              <span id="status{{ $subjectstudent->id }}" onclick="changeStatus({{ $subjectstudent->id }})"
+                                class="status badge badge-danger">
+                                {{ $subjectstudent->status }}
+                              </span>
+                            @else
+                              <span id="status{{ $subjectstudent->id }}" onclick="changeStatus({{ $subjectstudent->id }})"
+                                class="status badge badge-success">
+                                {{ $subjectstudent->status }}
+                              </span>
+                        @endif
+                      </td>
 
                       <td data-label="Grado" scope="row"><a  class="btn btn-primary btn-sm" href="{{ action('SubjectstudentController@reportcard', ['student_id' => $student_id,'cycle_id' => $subjectstudent->cycle_id]) }}" />
                         <i class="fas fa-book-open"></i>
@@ -100,5 +119,38 @@
       </div>
     </div>
   </div>
+  <script>
+  async function changeStatus(id) {
+      try {
+        const badge = $(`#status${id}`);
+        let status = badge.text().trim();
 
+        console.log(id,status);
+        
+        status = await axios.post('/subjectstudent/status', {
+            id,
+            status
+          })
+          .then(data => {
+            const response = data.data;
+            const {
+              status
+            } = response.data;
+
+            badge
+              .removeClass(status === 'INACTIVO' ? 'badge-success' : 'badge-danger')
+              .addClass(status === 'INACTIVO' ? 'badge-danger' : 'badge-success');
+            badge.text(status);
+
+            return status;
+          })
+          .catch(err => console.error(err));
+
+      } catch (error) {
+        console.error(error);
+
+      }
+    }
+
+  </script>
 @endsection

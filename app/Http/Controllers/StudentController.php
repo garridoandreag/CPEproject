@@ -34,16 +34,16 @@ class StudentController extends Controller {
         $phone_number = $request->input('phone_number_caregiver');
 
         $data = $request->validate([
-            'favorite_name' => ['required', 'string', 'max:50'],
+            'favorite_name' => ['nullable', 'string', 'max:50'],
             'names' => ['required', 'string', 'max:50'],
             'first_surname' => ['required', 'string', 'max:50'],
             'second_surname' => ['required', 'string', 'max:50'],
             'phone_number' => ['nullable', 'string', 'max:8'],
             'subdivision_code' => ['required'],
             'gender_id' => ['required'],
-            'home_address' => ['required', 'string', 'max:250'],
+            'home_address' => ['nullable', 'string', 'max:250'],
             'student_code' => ['nullable', 'string', 'max:15','unique:student,student_code,'],
-            'birthday' => ['required'],
+            'birthday' => ['nullable'],
             'picture' => ['nullable'],
             'name_caregiver' => ['nullable'],
             'surname_caregiver' =>  ['nullable'],
@@ -350,11 +350,6 @@ class StudentController extends Controller {
             'status' => $status,
           ));
 
-          $student = DB::table('homework')->where('student_id', $id)
-          ->update(array(
-            'status' => $status,
-          ));
-    
         return response()->json(
           [
             'data' => ['status' => $status]

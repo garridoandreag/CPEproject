@@ -460,3 +460,8 @@ a.article:hover {
         border-bottom: 0;
     }
 }
+
+.badge-outline-success {
+    color: #38c172;
+    border-color: #38c172;
+  }

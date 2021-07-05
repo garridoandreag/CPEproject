@@ -13,9 +13,9 @@ class Cycle extends Model
 
     protected $primaryKey = 'id';
 
-    protected $fillable = ['name','school_id','start_date','end_date', 'status'];
+    protected $fillable = ['name','school_id','start_date','end_date', 'status','main','current'];
 
-    public $sortable = ['name','school_id','start_date','end_date','status'];
+    public $sortable = ['name','school_id','start_date','end_date','status','main','current'];
     
     // uno a muchos
     public function coursegrade(){
