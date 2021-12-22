@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use Carbon\Carbon;
-use App\{Subjectstudent, Coursegrade, School}; 
+use App\{Subjectstudent, Coursegrade, School, Employee}; 
 
 class SubjectstudentController extends Controller
 {
@@ -61,11 +61,16 @@ class SubjectstudentController extends Controller
             ->get();
         }
         
-        $professor= DB::table('reportprofessor')
+        $professor_id= collect(DB::select('SELECT getProfessorID(?,?) AS professor_id', [$student_id,$cycle_id]))->first()->professor_id;
+        $professor = DB::table('person')
+                    ->where('id','like',$professor_id)
+                    ->get();
+
+        /*$professor= DB::table('reportprofessor')
         ->join('person','reportprofessor.employee_id','person.id')
         ->where('reportprofessor.student_id','like',$student_id)
         ->where('reportprofessor.cycle_id','like',$cycle_id)
-        ->get();
+        ->get();*/
 
         $pdf = \PDF::loadView('/report/reportcardpdf',compact('reports','school','student','professor','grade','cycle','now'));
         }catch(\Exception $e){
@@ -79,6 +84,7 @@ class SubjectstudentController extends Controller
     public function reportcard($cycle_id='',$student_id='')
     {   
        
+        try{
         try{
             $subject = Subjectstudent::where('cycle_id',$cycle_id)->where('student_id',$student_id)->first();
             $grade = $subject->coursegrade->grade;
@@ -105,12 +111,14 @@ class SubjectstudentController extends Controller
 
         $student = DB::table('person')->where('id','like',$student_id)->get();
 
-        $professor= DB::table('reportprofessor')
-        ->join('person','reportprofessor.employee_id','person.id')
-        ->where('reportprofessor.student_id','like',$student_id)
-        ->where('reportprofessor.cycle_id','like',$cycle_id)
-        ->get();
-                    
+        $professor_id= collect(DB::select('SELECT getProfessorID(?,?) AS professor_id', [$student_id,$cycle_id]))->first()->professor_id;
+        $professor = DB::table('person')
+                    ->where('id','like',$professor_id)
+                    ->get();
+    }catch(\Exception $e){
+        return back()->with(['warning' => 'No se encontró una inscripción en el ciclo indicado.']);
+        abort(204);
+    }               
         return view('subjectstudent.reportcard', compact('reports','student_id','cycle_id','student','professor','grade','cycle'));
     }
 

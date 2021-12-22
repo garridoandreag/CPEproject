@@ -80,19 +80,23 @@
         <img class="mediana" src="{{ route('school.logo', ['filename' => $school->logo]) }}" />
       </td>
       <td>
-        <h3>Boleta de Notas {{ $cycle->name }}</h3>
-        <h4>{{ $grade->name }}</h4>
+        <h4>Boleta de Notas {{ $cycle->name }}</h4>
+        <h5>Grado: {{ $grade->name }}</h5>
         @foreach ($student as $student)
-          <h4>Nombre del Estudiante:
+          <h5>Nombre del Estudiante:
             {{ $student->names . ' ' . $student->first_surname . ' ' . $student->second_surname }}
-          </h4>
+          </h5>
         @endforeach
         @foreach ($professor as $professor)
-          <h4>Nombre del Docente:
+          <h5>Nombre del Docente:
             {{ $professor->names . ' ' . $professor->first_surname . ' ' . $professor->second_surname }}
-          </h4>
+          </h5>
         @endforeach
-        <h5>{{ $now }}</h5>
+        
+      </td>
+      
+      <td style="vertical-align:text-top; text-align:right;">
+        <h6>{{ $now }}</h6>
       </td>
     </tr>
   </table>
@@ -115,12 +119,34 @@
         {{ $j = 0 }}
         @foreach ($reports as $report)
 
-          @if ($i < 1 && $j != $report->pensumcoursegroup_id && $report->pensumcoursegroup_id<>1)
+          @if ($i < 1 && $j != $report->pensumcoursegroup_id && $report->pensumcoursegroup_id != 1)
             <tr>
               <td colspan="6" style="background: #C1D4FD"><b>{{ $report->pensumcoursegroup }}</b></td>
             </tr>
+            <tr>
+              <td data-label="Curso" scope="row">
+                {{ $report->name }}
+              </td>
+              <td data-label="1° Bloque" scope="row">
+                {{ $report->bloque1 }}
+              </td>
+              <td data-label="2° Bloque" scope="row">
+                {{ $report->bloque2 }}
+              </td>
+              <td data-label="3° Bloque" scope="row">
+                {{ $report->bloque3 }}
+              </td>
+              <td data-label="4° Bloque" scope="row">
+                {{ $report->bloque4 }}
+              </td>
+              <td data-label="Nota Final" scope="row">
+                {{ $report->total }}
+              </td>
+            </tr>
             {{ $i = $i + 1 }}
             {{ $j = $report->pensumcoursegroup_id }}
+
+
 
           @else
             {{ $i = 0 }}
@@ -173,7 +199,6 @@
     </tr>
     <tr>
       <td colspan="3">
-        <br>
         <div class='box'>Observaciones:
           <br>
           <br>

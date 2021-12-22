@@ -102,7 +102,7 @@
                   <label for="unit_id" class="col-md-4 col-form-label text-md-right">Unidad</label>
                   <div class="col-md-6">
                     <select id="unit_id" name="unit_id"
-                      class="form-control  @error('unit_id') is-invalid @enderror">
+                      class="form-control  @error('unit_id') is-invalid @enderror" {{ isset($activity) ? 'readonly' : '' }}>
                       @foreach ($units->get() as $index => $unit)
 
                         <option value="{{ $index }}"
@@ -119,7 +119,7 @@
                   <label for="coursegrade_id" class="col-md-4 col-form-label text-md-right">Curso</label>
                   <div class="col-md-6">
                     <select id="coursegrade_id" name="coursegrade_id"
-                      class="form-control  @error('coursegrade_id') is-invalid @enderror">
+                      class="form-control  @error('coursegrade_id') is-invalid @enderror" {{ isset($activity) ? 'readonly' : '' }}>
                       @foreach ($courseprofessors->get($employee_id,$coursegrade_id ?? '') as $index => $courseprofessor)
 
                         <option value="{{ $index }}"

@@ -31,12 +31,12 @@ Route::get('/home', function () {
 //Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
-Route::post('/search-person', 'PersonController@searchPersonWithName')->name('search-person');;
+Route::post('/search-person', 'PersonController@searchPersonWithName')->name('search-person')->middleware('auth');
 Route::get('/admin', function () {
     return view('admin.administration');
 })->name('admin.admin')->middleware('auth','admin');
 
-Route::get('/configuration','UserController@config')->name('config')->middleware('auth');
+Route::get('/configuration','UserController@config')->name('config')->middleware('auth','userstatus');
 
 Route::group(['prefix' => 'user'], function() {
     Route::post('update','UserController@update')->name('user.update');
@@ -54,17 +54,17 @@ Route::get('/school/logo/{filename}', 'ShowLogoController@getImage')->name('scho
 Route::group(['prefix' => 'student'], function() {
     Route::get('create', 'StudentController@create')->name('student.create')->middleware('auth','admin');
     Route::get('/', 'StudentController@index')->name('student.index');
-    Route::post('store', 'StudentController@store')->name('student.store')->middleware('auth','admin');
-    Route::get('edit/{id}', 'StudentController@edit')->name('student.edit')->middleware('auth','admin');
-    Route::post('update', 'StudentController@update')->name('student.update')->middleware('auth','admin');
-    Route::get('picture/{filename}','StudentController@getImage')->name('student.picture')->middleware('auth');
-    Route::get('detail/{id}', 'StudentController@detail')->name('student.detail')->middleware('auth');
+    Route::post('store', 'StudentController@store')->name('student.store')->middleware('auth','userstatus','admin');
+    Route::get('edit/{id}', 'StudentController@edit')->name('student.edit')->middleware('auth','userstatus','admin');
+    Route::post('update', 'StudentController@update')->name('student.update')->middleware('auth','userstatus','admin');
+    Route::get('picture/{filename}','StudentController@getImage')->name('student.picture')->middleware('auth','userstatus');
+    Route::get('detail/{id}', 'StudentController@detail')->name('student.detail')->middleware('auth','userstatus');
     Route::get('/Coursegrades', 'StudentController@getCoursegrades');
     Route::post('/search-student', 'StudentController@searchStudentBySurname')->name('student.search-student');
     Route::get('grade', 'StudentController@grade')->name('student.grade');
     Route::get('list/{grade_id}/{cycle_id?}', 'StudentController@list')->name('student.list')->middleware('checkgradeprofessor');
     Route::post('/status', 'StudentController@status')->name('student.status');
-    Route::get('/destroy/{id}', 'StudentController@destroy')->name('student.destroy')->middleware('auth','admin');
+    Route::get('/destroy/{id}', 'StudentController@destroy')->name('student.destroy')->middleware('auth','userstatus','admin');
 });
 
 Route::group(['prefix' => 'course'], function() {

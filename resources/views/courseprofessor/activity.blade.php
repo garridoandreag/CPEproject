@@ -87,9 +87,10 @@
                                     <tr>
                                         <th scope="col">@sortablelink('unit_id','Unidad')</th>
                                         <th scope="col">@sortablelink('name','Actividad')</th>
+                                        <th scope="col">@sortablelink('type','Tipo')</th>
                                         <th scope="col">@sortablelink('score','Puntos')</th>
                                         <th scope="col">@sortablelink('delivery_date','Fecha Entrega')</th>
-                                        <th scope="col">Tareas</th>
+                                        <th scope="col"></th>
                                     </tr>
                                 </thead>
                                 <tbody id="myTable">
@@ -105,6 +106,11 @@
                                                 {{ $activity->name }}
                                                 </a>
                                             </td>
+                                            <td data-label="Tipo"><a
+                                                href="{{ action('ActivityController@detail', ['id' => $activity->id]) }}" />
+                                            {{ $activity->type}}
+                                            </a>
+                                            </td>
                                             <td data-label="Puntos"><a
                                                     href="{{ action('ActivityController@detail', ['id' => $activity->id]) }}" />
                                                 {{ $activity->score }}
@@ -115,7 +121,7 @@
                                                 {{ $activity->delivery_date }}
                                                 </a>
                                             </td>
-                                            <td data-label="Puntos"><a class="btn btn-primary btn-sm"
+                                            <td data-label=""><a class="btn btn-primary btn-sm"
                                                     href="{{ action('HomeworkController@edit', ['activity_id' => $activity->id]) }}" />
                                                 <i class="fas fa-list-alt"></i>
                                                 Calificar

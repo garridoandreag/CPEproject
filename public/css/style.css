@@ -465,3 +465,54 @@ a.article:hover {
     color: #38c172;
     border-color: #38c172;
   }
+
+  #header{
+    background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%);
+
+    
+  }
+  #header img {
+      width: 60px;
+  }
+
+  .text-important{
+      color: #ffffff !important;
+
+  }
+
+  #carouselmain .carousel-inner img{
+      max-height: 70vh;
+      object-fit: cover;
+      filter: grayscale(50%)
+
+  }
+
+  #carousel {
+      position: relative;
+  }
+
+  #carousel .overlay {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(0,0,0,0.5);
+      color: white;
+  }
+
+  #carousel .overlay .container,
+  #carousel .overlay .row{
+      height: 100%;
+
+  }
+
+
+  #footer {
+    background-image: linear-gradient(to top, rgba(42,82,152,1) 0%, rgba(30,60,114,0.8) 1%, rgba(30,60,114,0.5) 100%);
+
+  }
+
+  #footer a{
+      color: white;
+  }
