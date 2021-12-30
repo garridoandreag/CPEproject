@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use Carbon\Carbon;
-use App\{Subjectstudent, Coursegrade, School, Employee}; 
+use App\{Subjectstudent, Coursegrade, School, Employee, Cycle, Person}; 
 
 class SubjectstudentController extends Controller
 {
@@ -41,6 +41,8 @@ class SubjectstudentController extends Controller
         $school = School::find(1);
 
         $student = DB::table('person')->where('id','like',$student_id)->get();
+
+        $person = Person::where('id',$student_id)->first();
 
         $subject = Subjectstudent::where('cycle_id',$cycle_id)->where('student_id',$student_id)->first();
         $grade = $subject->coursegrade->grade;
@@ -78,7 +80,7 @@ class SubjectstudentController extends Controller
                           ->with(['warning' => 'No hay datos']);
         }
         
-        return $pdf->download('boletaNotas.pdf');
+        return $pdf->download($grade->name.$cycle->name.'-'.$person->first_surname.$person->names.'.pdf');
     }
 
     public function reportcard($cycle_id='',$student_id='')

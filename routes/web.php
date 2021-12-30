@@ -102,6 +102,7 @@ Route::group(['prefix' => 'grade'], function() {
     Route::post('update', 'GradeController@update')->name('grade.update');
     Route::get('delete/{id}', 'GradeController@destroy')->name('grade.destroy');
     Route::post('/status','GradeController@status')->name('grade.status');
+    Route::get('/icon/{id}', 'GradeController@getImage')->name('grade.icon');
 });
 
 Route::group(['prefix' => 'school'], function() {

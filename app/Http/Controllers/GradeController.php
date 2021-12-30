@@ -7,6 +7,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use App\{Grade, Course, Pensum};
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class GradeController extends Controller
 {
@@ -38,12 +40,22 @@ class GradeController extends Controller
             'scoretype' => ['required']
         ]);
 
-        DB::transaction(function() use ($data) {
+        DB::transaction(function() use ($data, $request) {
         $grade = Grade::create([
             'name' => $data['name'],
             'section' => $data['section'],
             'scoretype' => $data['scoretype']
         ]);
+
+        $image_path = $request->file('image_path');
+        if($image_path){
+            $image_full_path = time().$image_path->getClientOriginalName();
+
+            Storage::disk('grade')->put($image_full_path, File::get($image_path));
+
+            $grade->image_path = $image_full_path;
+            $grade->update();
+        }
 
         $courses = Course::get();
         $pensum = Pensum::get();
@@ -68,6 +80,16 @@ class GradeController extends Controller
                         ->with(['status' => 'Grado agregado correctamente.']);
 
     }
+
+    public function getImage($id){
+
+        $grade = Grade::where('id', $id)->first();
+
+        $file = Storage::disk('grade')->get($grade->image_path);
+
+        return new Response($file,200);
+    }
+
 
     public function detail($id)
     {
@@ -101,6 +123,15 @@ class GradeController extends Controller
             $grade->name =  $data['name'];
             $grade->section =  $data['section'];
             $grade->scoretype =  $data['scoretype'];
+
+            $image_path = $request->file('image_path');
+            if($image_path){
+                $image_full_path = time().$image_path->getClientOriginalName();
+
+                Storage::disk('grade')->put($image_full_path, File::get($image_path));
+
+                $grade->image_path = $image_full_path;
+            }
 
             $grade->update();
 

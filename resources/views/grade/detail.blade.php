@@ -1,96 +1,124 @@
 @extends('layouts.app')
 
 @section('content')
-  @inject('sections','App\Services\Sections')
+    @inject('sections','App\Services\Sections')
 
-  <div class="container">
-    <div class="row justify-content-center ">
+    <div class="container">
+        <div class="row justify-content-center ">
 
-      <div class="col-md-8">
+            <div class="col-md-8">
 
-        @if (session('message'))
-          <div class="alert alert-success">
-            {{ session('message') }}
-          </div>
-        @endif
-        <div class="card-group">
-          <div class="card">
-            <div class="card-header">DETALLES DEL GRADO</div>
-            <div class="card-body">
-
-              <form id="gradeForm" method="POST"
-                action="{{ isset($grade) ? route('grade.update') : route('grade.store') }}" enctype="multipart/form-data"
-                aria-label="Grados">
-                {{ csrf_field() }}
-
-
-                @if (isset($grade) && is_object($grade))
-                  <input type="hidden" name="id" value="{{ $grade->id }}" /><br>
+                @if (session('message'))
+                    <div class="alert alert-success">
+                        {{ session('message') }}
+                    </div>
                 @endif
+                <div class="card-group">
+                    <div class="card">
+                        <div class="card-header">Detalles del grado</div>
+                        <div class="card-body">
 
-                <div class="form-group row">
-                  <label for="name" class="col-md-4 col-form-label text-md-right">Nombre</label>
+                            <form id="gradeForm" method="POST"
+                                action="{{ isset($grade) ? route('grade.update') : route('grade.store') }}"
+                                enctype="multipart/form-data" aria-label="Grados">
+                                {{ csrf_field() }}
 
-                  <div class="col-md-6">
-                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                      value="{{ $grade->name ?? '' }}" required autocomplete="name" autofocus readonly>
 
-                    @error('name')
-                    <span class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                  </div>
-                </div>
+                                @if (isset($grade) && is_object($grade))
+                                    <input type="hidden" name="id" value="{{ $grade->id }}" /><br>
+                                @endif
 
-                <div class="form-group row">
-                  <label for="section" class="col-md-4 col-form-label text-md-right">Sección</label>
-                  <div class="col-md-6">
-                    <select id="section" name="section" class="form-control  @error('section') is-invalid @enderror"
-                      readonly>
-                      @foreach ($sections->get() as $section)
+                                <div class="form-group row">
+                                    <label for="name" class="col-md-4 col-form-label text-md-right">Nombre</label>
 
-                        <option value="{{ $section }}"
-                          {{ old('section', $grade->section ?? '') == $section ? 'selected' : '' }}>
-                          {{ $section }}
-                        </option>
+                                    <div class="col-md-6">
+                                        <input id="name" type="text"
+                                            class="form-control @error('name') is-invalid @enderror" name="name"
+                                            value="{{ $grade->name ?? '' }}" required autocomplete="name" autofocus
+                                            readonly>
 
-                      @endforeach
-                    </select>
-                  </div>
-                </div>
+                                        @error('name')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
 
-                <div class="form-group row">
-                  <label for="scoretype" class="col-md-4 col-form-label text-md-right">Representación de las calificaciones</label>
-                  <div class="col-md-6">
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="scoretype" id="scoretype1" value="N" {{ old('scoretype', $grade->scoretype ?? '') == 'N' ? 'checked' : '' }} disabled>
-                      <label class="form-check-label" for="scoretype1">
-                        Numérica
-                      </label>
+                                <div class="form-group row">
+                                    <label for="section" class="col-md-4 col-form-label text-md-right">Sección</label>
+                                    <div class="col-md-6">
+                                        <select id="section" name="section"
+                                            class="form-control  @error('section') is-invalid @enderror" readonly>
+                                            @foreach ($sections->get() as $section)
+
+                                                <option value="{{ $section }}"
+                                                    {{ old('section', $grade->section ?? '') == $section ? 'selected' : '' }}>
+                                                    {{ $section }}
+                                                </option>
+
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="scoretype" class="col-md-4 col-form-label text-md-right">Representación de
+                                        las calificaciones</label>
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="scoretype" id="scoretype1"
+                                                value="N"
+                                                {{ old('scoretype', $grade->scoretype ?? '') == 'N' ? 'checked' : '' }}
+                                                disabled>
+                                            <label class="form-check-label" for="scoretype1">
+                                                Numérica
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="scoretype" id="scoretype2"
+                                                value="C"
+                                                {{ old('scoretype', $grade->scoretype ?? '') == 'C' ? 'checked' : '' }}
+                                                disabled>
+                                            <label class="form-check-label" for="scoretype2">
+                                                Con Letras
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="image_path" class="col-md-4 col-form-label text-md-right">Imagen</label>
+
+                                    <div class="col-md-6">
+                                        @include('includes.picture_grade')
+                                        <input id="image_path" type="file"
+                                            class="form-control @error('image_path') is-invalid @enderror" name="image_path"
+                                            value="{{ $grade->image_path ?? '' }}" disabled>
+
+                                        @error('image_path')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-0">
+                                    <div class="col-md-6 offset-md-4">
+                                        <a href="{{ action('GradeController@index') }}"
+                                            class="btn btn-outline-secondary">Cancelar</a>
+                                        <a href="{{ action('GradeController@edit', ['id' => $grade->id]) }}"
+                                            class="btn btn-primary">Editar</a>
+                                    </div>
+                                </div>
+                                <br />
+                        </div>
+                        </form>
                     </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="scoretype" id="scoretype2" value="C" {{ old('scoretype', $grade->scoretype ?? '') == 'C' ? 'checked' : '' }} disabled>
-                      <label class="form-check-label" for="scoretype2">
-                        Con Letras
-                      </label>
-                    </div>
-                  </div>
                 </div>
-                
-                <div class="form-group row mb-0">
-                  <div class="col-md-6 offset-md-4">
-                    <a href="{{ action('GradeController@index') }}" class="btn btn-outline-secondary">Cancelar</a>
-                    <a href="{{action('GradeController@edit',['id' => $grade->id])}}" class="btn btn-primary">Editar</a>
-                  </div>
-                </div>
-                <br />
             </div>
-            </form>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-  </div>
+    </div>
 @endsection
