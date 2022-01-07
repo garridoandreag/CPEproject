@@ -26,27 +26,27 @@ Auth::routes();
 
 Route::get('/home', function () {
     return view('home');
-})->middleware('auth');
+})->middleware('auth','userstatus');
 
 //Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
-Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('auth','userstatus');
 
-Route::post('/search-person', 'PersonController@searchPersonWithName')->name('search-person')->middleware('auth');
+Route::post('/search-person', 'PersonController@searchPersonWithName')->name('search-person')->middleware('auth','userstatus');
 Route::get('/admin', function () {
     return view('admin.administration');
-})->name('admin.admin')->middleware('auth','admin');
+})->name('admin.admin')->middleware('auth','admin','userstatus');
 
 Route::get('/configuration','UserController@config')->name('config')->middleware('auth','userstatus');
 
 Route::group(['prefix' => 'user'], function() {
-    Route::post('update','UserController@update')->name('user.update');
-    Route::get('/','UserController@index')->name('user.index')->middleware('auth');
-    Route::get('detail/{id}', 'UserController@detail')->name('user.detail')->middleware('auth');
-    Route::get('edit/{id}', 'UserController@edit')->name('user.edit')->middleware('auth');
-    Route::post('updateToUser','UserController@updateToUser')->name('user.updateToUser')->middleware('auth');
-    Route::get('/picture/{filename}','UserController@getImage')->name('user.picture');
-    Route::get('destroy/{id}', 'UserController@destroy')->name('user.destroy')->middleware('auth','admin');
-    Route::post('/status', 'UserController@status')->name('user.status');
+    Route::post('update','UserController@update')->name('user.update')->middleware('auth','userstatus');
+    Route::get('/','UserController@index')->name('user.index')->middleware('auth','userstatus');
+    Route::get('detail/{id}', 'UserController@detail')->name('user.detail')->middleware('auth','userstatus');
+    Route::get('edit/{id}', 'UserController@edit')->name('user.edit')->middleware('auth','userstatus');
+    Route::post('updateToUser','UserController@updateToUser')->name('user.updateToUser')->middleware('auth','userstatus');
+    Route::get('/picture/{filename}','UserController@getImage')->name('user.picture')->middleware('auth','userstatus');
+    Route::get('destroy/{id}', 'UserController@destroy')->name('user.destroy')->middleware('auth','userstatus','admin');
+    Route::post('/status', 'UserController@status')->name('user.status')->middleware('auth','userstatus');
 });
 
 Route::get('/school/logo/{filename}', 'ShowLogoController@getImage')->name('school.logo');
@@ -59,11 +59,11 @@ Route::group(['prefix' => 'student'], function() {
     Route::post('update', 'StudentController@update')->name('student.update')->middleware('auth','userstatus','admin');
     Route::get('picture/{filename}','StudentController@getImage')->name('student.picture')->middleware('auth','userstatus');
     Route::get('detail/{id}', 'StudentController@detail')->name('student.detail')->middleware('auth','userstatus');
-    Route::get('/Coursegrades', 'StudentController@getCoursegrades');
+    Route::get('/Coursegrades', 'StudentController@getCoursegrades')->middleware('auth','userstatus');
     Route::post('/search-student', 'StudentController@searchStudentBySurname')->name('student.search-student');
     Route::get('grade', 'StudentController@grade')->name('student.grade');
-    Route::get('list/{grade_id}/{cycle_id?}', 'StudentController@list')->name('student.list')->middleware('checkgradeprofessor');
-    Route::post('/status', 'StudentController@status')->name('student.status');
+    Route::get('list/{grade_id}/{cycle_id?}', 'StudentController@list')->name('student.list')->middleware('checkgradeprofessor','auth','userstatus');
+    Route::post('/status', 'StudentController@status')->name('student.status')->middleware('auth','userstatus');
     Route::get('/destroy/{id}', 'StudentController@destroy')->name('student.destroy')->middleware('auth','userstatus','admin');
 });
 
