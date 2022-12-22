@@ -186,12 +186,12 @@ Route::group(['prefix' => 'subjectstudent'], function() {
     Route::get('inscription/{student_id}', 'SubjectstudentController@inscription')->name('subjectstudent.inscription')->middleware('auth','userstatus','admin');
     Route::get('/', 'SubjectstudentController@index')->name('subjectstudent.index')->middleware('auth','userstatus');
     Route::get('/reportcard/{cycle_id?}/{student_id?}', 'SubjectstudentController@reportcard')->name('subjectstudent.reportcard')->middleware('auth','userstatus');//eliminar
-    Route::post('update', 'SubjectstudentController@update')->name('subjectstudent.update')->middleware('auth','userstatus');
-    Route::post('store', 'SubjectstudentController@store')->name('subjectstudent.store')->middleware('auth','userstatus');
+    Route::post('update', 'SubjectstudentController@update')->name('subjectstudent.update')->middleware('auth','userstatus','admin');
+    Route::post('store', 'SubjectstudentController@store')->name('subjectstudent.store')->middleware('auth','userstatus','admin');
     Route::get('detail/{student_id}/{cycle_id}/{grade_id}', 'SubjectstudentController@detail')->name('subjectstudent.detail')->middleware('auth','userstatus');
     Route::post('/status','SubjectstudentController@status')->name('subjectstudent.status')->middleware('auth','userstatus');
-    Route::get('destroycourse/{student_id}/{cycle_id}/{grade_id}/{coursegrade_id}', 'SubjectstudentController@destroycourse')->name('subjectstudent.destroycourse')->middleware('auth','userstatus');
-    Route::get('destroy/{student_id}/{cycle_id}/{grade_id}', 'SubjectstudentController@destroy')->name('subjectstudent.destroy')->middleware('auth','userstatus');
+    Route::get('destroycourse/{student_id}/{cycle_id}/{grade_id}/{coursegrade_id}', 'SubjectstudentController@destroycourse')->name('subjectstudent.destroycourse')->middleware('auth','userstatus','admin');
+    Route::get('destroy/{student_id}/{cycle_id}/{grade_id}', 'SubjectstudentController@destroy')->name('subjectstudent.destroy')->middleware('auth','userstatus','admin');
 });
 
 Route::group(['prefix' => 'homework'], function() {
