@@ -7,73 +7,64 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-## About Laravel
+Aquí tienes una propuesta de archivo **README.md** profesional y estructurada para tu proyecto, basada en las características de un sistema de administración escolar y las tecnologías comunes que suelen utilizarse en este tipo de desarrollos web.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# CPEproject - Sistema de Administración Escolar
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**CPEproject** es una plataforma web integral diseñada para optimizar y digitalizar la gestión administrativa y académica de una institución educativa. El sistema permite centralizar la información de estudiantes, docentes, cursos y calificaciones en un solo lugar, facilitando la toma de decisiones y la comunicación interna.
 
-## Learning Laravel
+## Características Principales
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+* **Gestión de Usuarios:** Control de acceso para administradores, profesores, alumnos y padres de familia.
+* **Control Académico:** Administración de ciclos escolares, grados, secciones y asignaturas.
+* **Inscripciones y Matrículas:** Registro digital de estudiantes y gestión de expedientes.
+* **Control de Calificaciones:** Registro de notas por unidades/bimestres y generación de reportes de rendimiento.
+* **Asistencia y Reportes:** Seguimiento de la asistencia diaria y generación de boletines escolares en formato PDF.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Tecnologías Utilizadas
 
-## Laravel Sponsors
+Este proyecto fue desarrollado utilizando un stack moderno para garantizar escalabilidad y rendimiento:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+* **Frontend:**
+* [HTML5](https://developer.mozilla.org/es/docs/Web/HTML) & [CSS3](https://developer.mozilla.org/es/docs/Web/CSS) - Estructura y diseño visual.
+* [Bootstrap](https://getbootstrap.com/) - Framework para un diseño responsivo y adaptable a dispositivos móviles.
+* [JavaScript (ES6+)](https://developer.mozilla.org/es/docs/Web/JavaScript) - Interactividad y validaciones dinámicas.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
-- [云软科技](http://www.yunruan.ltd/)
 
-## Contributing
+* **Backend:**
+* [PHP](https://www.php.net/) - Lógica del lado del servidor.
+* [Laravel](https://laravel.com/) - Framework para el manejo de rutas, MVC y seguridad.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
+* **Base de Datos:**
+* [MySQL](https://www.mysql.com/) - Motor de base de datos relacional para el almacenamiento seguro de la información.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+* **Herramientas y Otros:**
+* [Composer](https://getcomposer.org/) - Manejo de dependencias.
+* [Git/GitHub](https://github.com/) - Control de versiones.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+
+## Instalación
+
+Para ejecutar este proyecto de forma local, sigue estos pasos:
+
+1. **Clonar el repositorio:**
+```bash
+git clone https://github.com/garridoandreag/CPEproject.git
+
+```
+2. **Configurar el entorno:**
+* Importa la base de datos incluida en la carpeta `/database` o `sql` a tu servidor local (XAMPP, WAMP, Laragon).
+* Configura las credenciales de conexión en el archivo de configuración (`config.php` o `.env`).
+* 
+3. **Ejecutar:**
+* Copia la carpeta en el directorio `htdocs` o `www` de tu servidor.
+* Accede a través de `http://localhost/CPEproject`.
+
+## Licencia
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
